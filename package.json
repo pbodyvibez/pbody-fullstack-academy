@@ -1,36 +1,29 @@
 {
   "name": "pbody-fullstack-academy",
   "version": "1.0.0",
-  "description": "AI-powered Full Stack Web Developer learning platform",
+  "description": "**AI-Powered Full Stack Web Developer Learning Platform**  \r Founder: Kenneth Sampson Precious  \r Learn from zero knowledge to professional developer in record time!",
   "main": "index.js",
   "scripts": {
-    "dev": "concurrently \"npm run dev:backend\" \"npm run dev:frontend\"",
-    "dev:backend": "cd backend && npm run dev",
-    "dev:frontend": "cd frontend && npm start",
-    "build": "npm run build:backend && npm run build:frontend",
-    "build:backend": "cd backend && npm run build",
-    "build:frontend": "cd frontend && npm run build",
-    "start": "node backend/src/server.js",
-    "test": "npm run test:backend && npm run test:frontend",
-    "test:backend": "cd backend && npm test",
-    "test:frontend": "cd frontend && npm test",
-    "lint": "npm run lint:backend && npm run lint:frontend",
-    "lint:backend": "cd backend && npm run lint",
-    "lint:frontend": "cd frontend && npm run lint"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [
-    "learning",
-    "full-stack",
-    "web-development",
-    "ai-tutor",
-    "education"
-  ],
-  "author": "Kenneth Sampson Precious",
-  "license": "MIT",
-  "devDependencies": {
-    "concurrently": "^8.2.0"
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pbodyvibez/pbody-fullstack-academy.git"
   },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/pbodyvibez/pbody-fullstack-academy/issues"
+  },
+  "homepage": "https://github.com/pbodyvibez/pbody-fullstack-academy#readme",
   "dependencies": {
-    "dotenv": "^17.4.2"
+    "bcrypt": "^6.0.0",
+    "cors": "^2.8.6",
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "jsonwebtoken": "^9.0.3",
+    "mongoose": "^9.7.1"
   }
 }

@@ -1,245 +1,44 @@
-import { useState } from "react";
+import React, { useState } from "react";
 
-function Signup({setPage}) {
+function Register() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
-const [name,setName] = useState("");
+  const registerUser = async () => {
+    const res = await fetch("http://localhost:5000/api/register", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, password })
+    });
 
-const [email,setEmail] = useState("");
+    const data = await res.json();
+    alert(data.message);
+  };
 
-const [password,setPassword] = useState("");
+  return (
+    <div className="container" style={{ paddingTop: "100px" }}>
 
-const signup = ()=>{
+      <h1>Register</h1>
 
-if(
+      <input
+        placeholder="Email"
+        onChange={(e) => setEmail(e.target.value)}
+        style={{ display: "block", margin: "10px 0", padding: "10px" }}
+      />
 
-name===""
+      <input
+        placeholder="Password"
+        type="password"
+        onChange={(e) => setPassword(e.target.value)}
+        style={{ display: "block", margin: "10px 0", padding: "10px" }}
+      />
 
-||
+      <button className="btn btn-primary" onClick={registerUser}>
+        Create Account
+      </button>
 
-email===""
-
-||
-
-password===""
-
-)
-
-{
-
-alert("Please fill all fields");
-
-return;
-
+    </div>
+  );
 }
 
-alert(
-
-"Welcome to PBody Academy, "
-
-+
-
-name
-
-);
-
-setPage("dashboard");
-
-}
-
-return(
-
-<div
-
-style={{
-
-maxWidth:"550px",
-
-margin:"50px auto",
-
-background:"#1e293b",
-
-padding:"40px",
-
-borderRadius:"25px",
-
-color:"white",
-
-textAlign:"center"
-
-}}
-
->
-
-<h1>
-
-🚀 Create Account
-
-</h1>
-
-
-
-<input
-
-type="text"
-
-placeholder="Full Name"
-
-value={name}
-
-onChange={(e)=>setName(e.target.value)}
-
-style={{
-
-width:"90%",
-
-padding:"18px",
-
-marginTop:"25px",
-
-fontSize:"18px",
-
-borderRadius:"12px",
-
-border:"none"
-
-}}
-
-/>
-
-
-
-<input
-
-type="email"
-
-placeholder="Email"
-
-value={email}
-
-onChange={(e)=>setEmail(e.target.value)}
-
-style={{
-
-width:"90%",
-
-padding:"18px",
-
-marginTop:"20px",
-
-fontSize:"18px",
-
-borderRadius:"12px",
-
-border:"none"
-
-}}
-
-/>
-
-
-
-<input
-
-type="password"
-
-placeholder="Password"
-
-value={password}
-
-onChange={(e)=>setPassword(e.target.value)}
-
-style={{
-
-width:"90%",
-
-padding:"18px",
-
-marginTop:"20px",
-
-fontSize:"18px",
-
-borderRadius:"12px",
-
-border:"none"
-
-}}
-
-/>
-
-
-
-<button
-
-onClick={signup}
-
-style={{
-
-marginTop:"30px",
-
-padding:"15px 40px",
-
-background:"#2563eb",
-
-color:"white",
-
-border:"none",
-
-fontSize:"20px",
-
-borderRadius:"12px",
-
-cursor:"pointer"
-
-}}
-
->
-
-Create Account
-
-</button>
-
-
-
-<p
-
-style={{
-
-marginTop:"30px",
-
-fontSize:"18px"
-
-}}
-
->
-
-Already have an account?
-
-<span
-
-style={{
-
-color:"#60a5fa",
-
-cursor:"pointer",
-
-marginLeft:"10px"
-
-}}
-
-onClick={()=>setPage("login")}
-
->
-
-Login
-
-</span>
-
-</p>
-
-</div>
-
-)
-
-}
-
-export default Signup;
+export default Register;

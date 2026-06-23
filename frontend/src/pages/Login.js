@@ -1,12 +1,18 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import API from "../api";
 
 export default function Login() {
+
+  const navigate = useNavigate();
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const login = async () => {
+
     try {
+
       const res = await API.post("/auth/login", {
         email,
         password,
@@ -16,28 +22,58 @@ export default function Login() {
 
       alert("Login successful");
 
-      window.location.reload();
+      navigate("/dashboard");
+
     } catch (err) {
-      alert(err.response?.data?.message || "Login failed");
+
+      alert(
+        err.response?.data?.message ||
+        "Login failed"
+      );
+
     }
+
   };
 
   return (
-    <div>
-      <h2>Login</h2>
+
+    <div style={{ padding: "30px" }}>
+
+      <h1>Login</h1>
 
       <input
+        type="email"
         placeholder="Email"
+        value={email}
         onChange={(e) => setEmail(e.target.value)}
       />
 
+      <br />
+      <br />
+
       <input
-        placeholder="Password"
         type="password"
+        placeholder="Password"
+        value={password}
         onChange={(e) => setPassword(e.target.value)}
       />
 
-      <button onClick={login}>Login</button>
+      <br />
+      <br />
+
+      <button onClick={login}>
+        Login
+      </button>
+
+      <br />
+      <br />
+
+      <button onClick={() => navigate("/register")}>
+        Create Account
+      </button>
+
     </div>
+
   );
+
 }

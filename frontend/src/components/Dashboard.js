@@ -1,199 +1,175 @@
-function Dashboard(){
-
-return(
-
-<div
-
-style={{
-
-color:"white",
-
-padding:"40px"
-
-}}
-
->
-
-<h1
-
-style={{
-
-fontSize:"50px"
-
-}}
-
->
-
-👋 Welcome Lucky
-
-</h1>
-
-<p
-
-style={{
-
-fontSize:"22px",
-
-color:"#cbd5e1"
-
-}}
-
->
-
-Keep learning and keep building.
-
-</p>
-
-
-<div
-
-style={{
-
-display:"flex",
-
-gap:"30px",
-
-marginTop:"50px",
-
-flexWrap:"wrap"
-
-}}
-
->
-
-<div
-
-style={{
-
-background:"#1e293b",
-
-padding:"30px",
-
-borderRadius:"20px",
-
-width:"250px"
-
-}}
-
->
-
-<h1>📚</h1>
-
-<h2>Courses</h2>
-
-<h1>6</h1>
-
-<p>Courses Enrolled</p>
-
-</div>
-
-
-<div
-
-style={{
-
-background:"#1e293b",
-
-padding:"30px",
-
-borderRadius:"20px",
-
-width:"250px"
-
-}}
-
->
-
-<h1>🏆</h1>
-
-<h2>Certificates</h2>
-
-<h1>2</h1>
-
-<p>Certificates Earned</p>
-
-</div>
-
-
-<div
-
-style={{
-
-background:"#1e293b",
-
-padding:"30px",
-
-borderRadius:"20px",
-
-width:"250px"
-
-}}
-
->
-
-<h1>📈</h1>
-
-<h2>Progress</h2>
-
-<h1>80%</h1>
-
-<p>Learning Progress</p>
-
-</div>
-
-</div>
-
-
-<div
-
-style={{
-
-marginTop:"60px",
-
-background:"#1e293b",
-
-padding:"30px",
-
-borderRadius:"20px"
-
-}}
-
->
-
-<h2>
-
-Recent Activity
-
-</h2>
-
-<ul
-
-style={{
-
-fontSize:"20px",
-
-lineHeight:"45px"
-
-}}
-
->
-
-<li>✅ Completed HTML & CSS</li>
-
-<li>✅ Completed JavaScript</li>
-
-<li>🚀 Started React Course</li>
-
-<li>🏆 Earned First Certificate</li>
-
-</ul>
-
-</div>
-
-</div>
-
-)
-
+import { useEffect, useState } from "react";
+import API from "../api";
+
+export default function Dashboard() {
+  const [data, setData] = useState(null);
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+      alert("Not logged in");
+      return;
+    }
+
+    const fetchData = async () => {
+      try {
+        const res = await API.get("/auth/profile", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        setData(res.data);
+      } catch (err) {
+        alert("Access denied");
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  const logout = () => {
+    localStorage.removeItem("token");
+    window.location.reload();
+  };
+
+  return (
+    <div>
+      <h2>Dashboard 🔐</h2>
+
+      <pre>{JSON.stringify(data, null, 2)}</pre>
+
+      <button onClick={logout}>Logout</button>
+    </div>
+  );
 }
+import { useState } from "react";
+import API from "../api";
 
-export default Dashboard;
+export default function Login() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const login = async () => {
+    try {
+      const res = await API.post("/auth/login", {
+        email,
+        password,
+      });
+
+      localStorage.setItem("token", res.data.token);
+
+      alert("Login successful");
+
+      window.location.href = "/dashboard";
+    } catch (err) {
+      alert(err.response?.data?.message || "Login failed");
+    }
+  };
+
+  return (
+    <div>
+      <h2>Login</h2>
+
+      <input
+        placeholder="Email"
+        onChange={(e) => setEmail(e.target.value)}
+      />
+
+      <input
+        placeholder="Password"
+        type="password"
+        onChange={(e) => setPassword(e.target.value)}
+      />
+
+      <button onClick={login}>Login</button>
+    </div>
+  );
+}
+import { useState } from "react";
+import API from "../api";
+
+export default function Register() {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const register = async () => {
+    try {
+      await API.post("/auth/register", {
+        name,
+        email,
+        password,
+      });
+
+      alert("User created");
+      window.location.href = "/";
+    } catch (err) {
+      alert(err.response?.data?.message || "Error");
+    }
+  };
+
+  return (
+    <div>
+      <h2>Register</h2>
+
+      <input
+        placeholder="Name"
+        onChange={(e) => setName(e.target.value)}
+      />
+
+      <input
+        placeholder="Email"
+        onChange={(e) => setEmail(e.target.value)}
+      />
+
+      <input
+        placeholder="Password"
+        type="password"
+        onChange={(e) => setPassword(e.target.value)}
+      />
+
+      <button onClick={register}>Register</button>
+    </div>
+  );
+}
+import { useEffect, useState } from "react";
+import API from "../api";
+
+export default function Dashboard() {
+  const [data, setData] = useState(null);
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+      window.location.href = "/";
+      return;
+    }
+
+    const fetchData = async () => {
+      try {
+        const res = await API.get("/auth/profile", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        setData(res.data);
+      } catch (err) {
+        localStorage.removeItem("token");
+        window.location.href = "/";
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  return (
+    <div>
+      <h2>Dashboard 🔐</h2>
+      <pre>{JSON.stringify(data, null, 2)}</pre>
+    </div>
+  );
+}

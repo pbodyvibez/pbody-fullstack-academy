@@ -1,168 +1,91 @@
+import React from "react";
+
 function Home() {
-
   return (
+    <div className="container">
 
-    <div
-      style={{
-        color:"white",
-        textAlign:"center",
-        padding:"80px 20px"
-      }}
-    >
+      {/* HERO - MAIN FOCUS */}
+      <section style={{ textAlign: "center", paddingTop: "70px" }}>
 
-      <h1
-        style={{
-          fontSize:"75px",
-          marginBottom:"10px"
-        }}
-      >
+        <h1 style={{ fontSize: "54px", fontWeight: "900" }}>
+          Become a Fullstack Developer 🚀
+        </h1>
 
-        PBody Academy
+        <p style={{ marginTop: "15px", fontSize: "18px", color: "#94a3b8" }}>
+          Learn step-by-step. Build real projects. Get industry-ready skills.
+        </p>
 
-      </h1>
+        <div style={{ marginTop: "30px" }}>
+          <button className="btn btn-primary">
+            Start Learning Path
+          </button>
+        </div>
 
+        <p style={{ marginTop: "15px", fontSize: "14px", color: "#64748b" }}>
+          No confusion. Follow a structured roadmap.
+        </p>
 
-      <h2
-        style={{
-          color:"#38bdf8",
-          fontSize:"35px"
-        }}
-      >
+      </section>
 
-        Transforming Learners Into Builders
+      {/* LEARNING PATH (VERY IMPORTANT SECTION) */}
+      <section style={{ marginTop: "90px" }}>
 
-      </h2>
+        <h2 style={{ textAlign: "center", marginBottom: "30px" }}>
+          Your Learning Path
+        </h2>
 
+        <div style={{
+          display: "flex",
+          flexDirection: "column",
+          gap: "15px"
+        }}>
 
-      <p
-        style={{
-          fontSize:"24px",
-          maxWidth:"900px",
-          margin:"30px auto",
-          lineHeight:"45px"
-        }}
-      >
+          <div className="card">
+            <h3>1. Fundamentals</h3>
+            <p>HTML, CSS, JavaScript basics</p>
+          </div>
 
-        Master HTML, CSS, JavaScript,
+          <div className="card">
+            <h3>2. Frontend Development</h3>
+            <p>React, UI building, components</p>
+          </div>
 
-        React, Node.js,
+          <div className="card">
+            <h3>3. Backend Development</h3>
+            <p>Node.js, APIs, databases</p>
+          </div>
 
-        Databases and Artificial Intelligence
+          <div className="card">
+            <h3>4. AI Integration</h3>
+            <p>Build AI-powered applications</p>
+          </div>
 
-        from beginner to professional.
+          <div className="card">
+            <h3>5. Deployment</h3>
+            <p>Go live on internet like a real developer</p>
+          </div>
 
-      </p>
+        </div>
 
+      </section>
 
-      <div>
+      {/* FINAL CTA */}
+      <section style={{ textAlign: "center", marginTop: "80px" }}>
 
-        <button
+        <h2>Ready to Start?</h2>
 
-          style={{
+        <p style={{ color: "#94a3b8", marginTop: "10px" }}>
+          Join structured learning instead of random tutorials.
+        </p>
 
-            padding:"18px 40px",
-
-            fontSize:"20px",
-
-            background:"#38bdf8",
-
-            border:"none",
-
-            borderRadius:"15px",
-
-            cursor:"pointer",
-
-            marginRight:"20px"
-
-          }}
-
-        >
-
-          Start Learning
-
+        <button className="btn btn-outline" style={{ marginTop: "20px" }}>
+          Explore Dashboard
         </button>
 
-
-
-        <button
-
-          style={{
-
-            padding:"18px 40px",
-
-            fontSize:"20px",
-
-            background:"transparent",
-
-            color:"white",
-
-            border:"1px solid white",
-
-            borderRadius:"15px",
-
-            cursor:"pointer"
-
-          }}
-
-        >
-
-          Explore Courses
-
-        </button>
-
-      </div>
-
-
-      <div
-
-        style={{
-
-          display:"flex",
-
-          justifyContent:"center",
-
-          gap:"70px",
-
-          marginTop:"80px",
-
-          flexWrap:"wrap"
-
-        }}
-
-      >
-
-        <div>
-
-          <h1>10,000+</h1>
-
-          <p>Students</p>
-
-        </div>
-
-
-        <div>
-
-          <h1>50+</h1>
-
-          <p>Courses</p>
-
-        </div>
-
-
-        <div>
-
-          <h1>95%</h1>
-
-          <p>Success Rate</p>
-
-        </div>
-
-      </div>
+      </section>
 
     </div>
-
-  )
-
+  );
 }
 
 export default Home;

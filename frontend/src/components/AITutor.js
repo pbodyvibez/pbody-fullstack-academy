@@ -1,193 +1,123 @@
-import { useState } from "react";
+import React, { useState } from "react";
 
 function AITutor() {
+  const [messages, setMessages] = useState([
+    { type: "ai", text: "Hi 👋 I'm your AI Tutor. Ask me anything." }
+  ]);
 
-  const [question, setQuestion] = useState("");
+  const [input, setInput] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  const [answer, setAnswer] = useState(
-    "Hello 👋 I am PBody AI Tutor. Ask me anything about programming."
-  );
+  const sendMessage = async () => {
+    if (!input.trim()) return;
 
-  const askAI = () => {
+    const userMessage = { type: "user", text: input };
+    setMessages((prev) => [...prev, userMessage]);
+    setInput("");
+    setLoading(true);
 
-    if(question.trim() === ""){
+    try {
+      const res = await fetch("http://localhost:5000/api/chat", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ message: input })
+      });
 
-      setAnswer("Please type a question.");
+      const data = await res.json();
 
-      return;
+      const aiMessage = {
+        type: "ai",
+        text: data.reply
+      };
 
+      setMessages((prev) => [...prev, aiMessage]);
+
+    } catch (err) {
+      setMessages((prev) => [
+        ...prev,
+        { type: "ai", text: "Error connecting to AI backend." }
+      ]);
     }
 
-    setAnswer(
-
-      "You asked:\n\n" +
-
-      question +
-
-      "\n\nThis is where OpenAI API or your backend AI response will appear."
-
-    );
-
+    setLoading(false);
   };
 
+  return (
+    <div className="container" style={{ paddingTop: "70px" }}>
 
+      <h1>AI Tutor 🤖</h1>
 
-  return(
-
-    <div
-
-      style={{
-
-        maxWidth:"900px",
-
-        margin:"50px auto",
-
-        background:"#1e293b",
-
-        padding:"40px",
-
-        borderRadius:"25px",
-
-        color:"white"
-
-      }}
-
-    >
-
-      <h1
-
-        style={{
-
-          textAlign:"center",
-
-          fontSize:"50px"
-
-        }}
-
-      >
-
-        🤖 PBody AI Tutor
-
-      </h1>
-
-
-
-      <p
-
-        style={{
-
-          textAlign:"center",
-
-          color:"#cbd5e1",
-
-          fontSize:"20px"
-
-        }}
-
-      >
-
-        Ask coding questions and get instant answers.
-
+      <p style={{ color: "#94a3b8" }}>
+        Real AI-powered coding assistant
       </p>
 
+      {/* CHAT BOX */}
+      <div style={{
+        marginTop: "30px",
+        height: "420px",
+        overflowY: "auto",
+        background: "#0f172a",
+        borderRadius: "15px",
+        padding: "15px"
+      }}>
 
+        {messages.map((msg, i) => (
+          <div key={i} style={{
+            display: "flex",
+            justifyContent: msg.type === "user" ? "flex-end" : "flex-start",
+            marginBottom: "10px"
+          }}>
+            <div style={{
+              maxWidth: "70%",
+              padding: "10px 15px",
+              borderRadius: "12px",
+              background: msg.type === "user"
+                ? "linear-gradient(90deg, #38bdf8, #6366f1)"
+                : "#1e293b",
+              color: msg.type === "user" ? "#0b1220" : "#e2e8f0"
+            }}>
+              {msg.text}
+            </div>
+          </div>
+        ))}
 
-      <textarea
+        {loading && (
+          <p style={{ color: "#94a3b8" }}>AI is typing...</p>
+        )}
 
-        placeholder="Example: Explain React Hooks"
+      </div>
 
-        value={question}
+      {/* INPUT */}
+      <div style={{
+        display: "flex",
+        gap: "10px",
+        marginTop: "15px"
+      }}>
 
-        onChange={(e)=>setQuestion(e.target.value)}
+        <input
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
+          placeholder="Ask anything..."
+          style={{
+            flex: 1,
+            padding: "12px",
+            borderRadius: "10px",
+            background: "#0b1220",
+            border: "1px solid #334155",
+            color: "white"
+          }}
+        />
 
-        style={{
-
-          width:"100%",
-
-          height:"150px",
-
-          marginTop:"30px",
-
-          padding:"20px",
-
-          fontSize:"18px",
-
-          borderRadius:"15px",
-
-          outline:"none",
-
-          resize:"none"
-
-        }}
-
-      />
-
-
-
-
-      <button
-
-        onClick={askAI}
-
-        style={{
-
-          marginTop:"20px",
-
-          padding:"15px 40px",
-
-          fontSize:"20px",
-
-          background:"#2563eb",
-
-          color:"white",
-
-          border:"none",
-
-          borderRadius:"15px",
-
-          cursor:"pointer"
-
-        }}
-
-      >
-
-        Ask AI
-
-      </button>
-
-
-
-
-      <div
-
-        style={{
-
-          marginTop:"40px",
-
-          background:"#0f172a",
-
-          padding:"30px",
-
-          borderRadius:"20px",
-
-          whiteSpace:"pre-line",
-
-          fontSize:"20px",
-
-          lineHeight:"35px"
-
-        }}
-
-      >
-
-        {answer}
+        <button className="btn btn-primary" onClick={sendMessage}>
+          Send
+        </button>
 
       </div>
 
     </div>
-
   );
-
 }
 
 export default AITutor;

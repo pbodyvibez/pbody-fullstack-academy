@@ -1,189 +1,44 @@
-function Navbar({ setPage }) {
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
 
-return (
+function Navbar() {
+  const [open, setOpen] = useState(false);
 
-<nav
+  return (
+    <nav className="navbar">
 
-style={{
+      <div className="navbar-container">
 
-background:"#1e293b",
+        <div className="logo">
+          <Link to="/">PBODY <span>Academy</span></Link>
+        </div>
 
-padding:"20px",
+        <div className={`nav-links ${open ? "active" : ""}`}>
 
-borderRadius:"20px",
+          <Link to="/" onClick={() => setOpen(false)}>Home</Link>
 
-display:"flex",
+          <Link to="/courses" onClick={() => setOpen(false)}>Courses</Link>
 
-justifyContent:"space-between",
+          <Link to="/lessons" onClick={() => setOpen(false)}>Lessons</Link>
 
-alignItems:"center",
+          <Link to="/quiz" onClick={() => setOpen(false)}>Quiz</Link>
 
-marginBottom:"30px"
+          <Link to="/ai-tutor" onClick={() => setOpen(false)}>AI Tutor</Link>
 
-}}
+          <Link to="/dashboard" onClick={() => setOpen(false)}>Dashboard</Link>
 
->
+          <Link to="/certificate" onClick={() => setOpen(false)}>Certificate</Link>
 
-<h1
+        </div>
 
-style={{
+        <div className="menu-btn" onClick={() => setOpen(!open)}>
+          ☰
+        </div>
 
-color:"#38bdf8",
+      </div>
 
-fontSize:"32px",
-
-cursor:"pointer",
-
-margin:0
-
-}}
-
-onClick={() => setPage("home")}
-
->
-
-🚀 PBody Academy
-
-</h1>
-
-
-
-<div
-
-style={{
-
-display:"flex",
-
-gap:"25px",
-
-color:"white",
-
-fontWeight:"bold",
-
-fontSize:"18px",
-
-alignItems:"center"
-
-}}
-
->
-
-<span
-
-style={{cursor:"pointer"}}
-
-onClick={() => setPage("home")}
-
->
-
-Home
-
-</span>
-
-
-
-<span
-
-style={{cursor:"pointer"}}
-
-onClick={() => setPage("courses")}
-
->
-
-Courses
-
-</span>
-
-
-
-<span
-
-style={{cursor:"pointer"}}
-
-onClick={() => setPage("lessons")}
-
->
-
-Lessons
-
-</span>
-
-
-
-<span
-
-style={{cursor:"pointer"}}
-
-onClick={() => setPage("quiz")}
-
->
-
-Quiz
-
-</span>
-
-
-
-<span
-
-style={{cursor:"pointer"}}
-
-onClick={() => setPage("dashboard")}
-
->
-
-Dashboard
-
-</span>
-
-
-
-<span
-
-style={{cursor:"pointer"}}
-
-onClick={() => setPage("ai")}
-
->
-
-AI Tutor
-
-</span>
-
-
-
-<span
-
-style={{cursor:"pointer"}}
-
-onClick={() => setPage("certificate")}
-
->
-
-Certificates
-
-</span>
-
-
-
-<span
-
-style={{cursor:"pointer"}}
-
-onClick={() => setPage("login")}
-
->
-
-Login
-
-</span>
-
-</div>
-
-</nav>
-
-)
-
+    </nav>
+  );
 }
 
 export default Navbar;

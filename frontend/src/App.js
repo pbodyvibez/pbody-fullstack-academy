@@ -1,39 +1,40 @@
-import { useState } from "react";
-import Navbar from "./components/Navbar";
-import Home from "./components/Home";
-import Courses from "./components/Courses";
-import Lessons from "./components/Lessons";
-import Quiz from "./components/Quiz";
-import Dashboard from "./components/Dashboard";
-import AITutor from "./components/AITutor";
-import Login from "./components/Login";
-import Signup from "./components/Signup";
-import Certificate from "./components/Certificate";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
-function App() {
-  const [page, setPage] = useState("home");
+import Login from "./pages/Login";
+import Register from "./pages/Register";
+import Dashboard from "./pages/Dashboard";
 
-  return (
-    <div
-      style={{
-        backgroundColor: "#0f172a",
-        minHeight: "100vh",
-        padding: "20px",
-      }}
-    >
-      <Navbar setPage={setPage} />
+// 🔐 Protected Route (FULL)
+function ProtectedRoute({ children }) {
+  const token = localStorage.getItem("token");
 
-      {page === "home" && <Home />}
-      {page === "courses" && <Courses />}
-      {page === "lessons" && <Lessons />}
-      {page === "quiz" && <Quiz setPage={setPage} />}
-      {page === "dashboard" && <Dashboard />}
-      {page === "ai" && <AITutor />}
-      {page === "login" && <Login setPage={setPage} />}
-      {page === "signup" && <Signup setPage={setPage} />}
-      {page === "certificate" && <Certificate />}
-    </div>
-  );
+  if (!token) {
+    return <Navigate to="/" replace />;
+  }
+
+  return children;
 }
 
-export default App;
+export default function App() {
+  return (
+    <BrowserRouter>
+      <Routes>
+
+        {/* PUBLIC ROUTES */}
+        <Route path="/" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+
+        {/* PROTECTED ROUTE */}
+        <Route
+          path="/dashboard"
+          element={
+            <ProtectedRoute>
+              <Dashboard />
+            </ProtectedRoute>
+          }
+        />
+
+      </Routes>
+    </BrowserRouter>
+  );
+}

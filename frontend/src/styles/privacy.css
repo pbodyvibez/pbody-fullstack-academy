@@ -1,0 +1,42 @@
+.simplePage{
+
+min-height:100vh;
+
+padding:120px 8%;
+
+background:
+linear-gradient(
+135deg,
+#020617,
+#071827
+);
+
+color:white;
+
+}
+
+
+.simplePage h1{
+
+font-size:48px;
+
+color:#38bdf8;
+
+margin-bottom:30px;
+
+}
+
+
+.simplePage p{
+
+max-width:800px;
+
+font-size:18px;
+
+line-height:1.8;
+
+color:#cbd5e1;
+
+margin-bottom:20px;
+
+}

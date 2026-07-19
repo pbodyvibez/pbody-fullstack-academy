@@ -1,0 +1,361 @@
+/* =====================================================
+PBODY FULLSTACK ACADEMY
+GLOBAL APPLICATION LAYOUT
+===================================================== */
+
+
+*{
+
+    box-sizing:border-box;
+
+}
+
+
+
+html,
+body,
+#root{
+
+
+    width:100%;
+
+    min-height:100%;
+
+    margin:0;
+
+    padding:0;
+
+    overflow-x:hidden;
+
+    background:#020617;
+
+
+}
+
+
+
+/* =====================================================
+PUBLIC LAYOUT
+===================================================== */
+
+
+.publicLayout{
+
+
+    width:100%;
+
+    min-height:100vh;
+
+
+    background:
+
+    linear-gradient(
+        135deg,
+        #020617,
+        #071827,
+        #0b2746
+    );
+
+
+}
+
+
+
+.publicContent{
+
+
+    width:100%;
+
+    min-height:100vh;
+
+
+}
+
+
+
+/* =====================================================
+PROTECTED APPLICATION LAYOUT
+===================================================== */
+
+
+.appLayout{
+
+
+    display:flex;
+
+    width:100%;
+
+    min-height:100vh;
+
+
+    background:
+
+    linear-gradient(
+        135deg,
+        #020617,
+        #071827
+    );
+
+
+}
+
+
+
+/* =====================================================
+MAIN CONTENT AREA
+===================================================== */
+
+
+.appContent{
+
+
+    margin-left:280px;
+
+
+    width:calc(100% - 280px);
+
+
+    min-height:100vh;
+
+
+    overflow-x:hidden;
+
+
+    overflow-y:visible;
+
+
+
+    background:
+
+    linear-gradient(
+        135deg,
+        #020617,
+        #071827
+    );
+
+
+
+    transition:
+
+    margin-left .35s ease,
+
+    width .35s ease;
+
+
+
+}
+
+
+
+/* =====================================================
+COLLAPSED SIDEBAR STATE
+===================================================== */
+
+
+.appLayout.collapsed .appContent{
+
+
+    margin-left:90px;
+
+
+    width:calc(100% - 90px);
+
+
+}
+
+
+
+/* =====================================================
+PAGE WRAPPER
+===================================================== */
+
+
+.appContent > *{
+
+
+    width:100%;
+
+
+}
+
+
+
+/* =====================================================
+REMOVE INTERNAL SCROLL CONFLICT
+===================================================== */
+
+
+.appContent::-webkit-scrollbar{
+
+
+    width:0;
+
+
+}
+
+
+
+
+body::-webkit-scrollbar{
+
+
+    width:10px;
+
+
+}
+
+
+
+body::-webkit-scrollbar-track{
+
+
+    background:#020617;
+
+
+}
+
+
+
+body::-webkit-scrollbar-thumb{
+
+
+    background:#2563eb;
+
+
+    border-radius:20px;
+
+
+}
+
+
+
+/* =====================================================
+PAGE TRANSITION
+===================================================== */
+
+
+.appContent{
+
+
+    animation:pageFade .35s ease;
+
+
+}
+
+
+
+@keyframes pageFade{
+
+
+from{
+
+
+    opacity:0;
+
+    transform:translateY(10px);
+
+
+}
+
+
+to{
+
+
+    opacity:1;
+
+    transform:translateY(0);
+
+
+}
+
+
+}
+
+
+
+/* =====================================================
+TABLET
+===================================================== */
+
+
+@media(max-width:992px){
+
+
+.appContent{
+
+
+    margin-left:240px;
+
+
+    width:calc(100% - 240px);
+
+
+}
+
+
+
+.appLayout.collapsed .appContent{
+
+
+    margin-left:80px;
+
+
+    width:calc(100% - 80px);
+
+
+}
+
+
+
+}
+
+
+
+/* =====================================================
+MOBILE
+===================================================== */
+
+
+@media(max-width:768px){
+
+
+.appLayout{
+
+
+    display:block;
+
+
+}
+
+
+
+.appContent{
+
+
+    margin-left:0;
+
+
+    width:100%;
+
+
+    padding-top:70px;
+
+
+}
+
+
+
+.appLayout.collapsed .appContent{
+
+
+    margin-left:0;
+
+
+    width:100%;
+
+
+}
+
+
+
+}

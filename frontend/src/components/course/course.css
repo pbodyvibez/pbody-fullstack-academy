@@ -1,0 +1,468 @@
+/* ===================================================
+PBODY FULLSTACK ACADEMY
+PREMIUM COURSE WORKSPACE + VIDEO PLAYER
+=================================================== */
+
+
+/* ================================
+VIDEO SECTION
+================================ */
+
+.videoSection{
+
+background:
+
+linear-gradient(
+135deg,
+#020617,
+#0f172a
+);
+
+padding:35px;
+
+border-radius:32px;
+
+border:1px solid rgba(255,255,255,.08);
+
+box-shadow:
+
+0 25px 60px rgba(0,0,0,.35);
+
+}
+
+
+
+/* ================================
+VIDEO HEADER
+================================ */
+
+.videoHeader{
+
+margin-bottom:30px;
+
+}
+
+
+
+.videoBadge{
+
+display:inline-block;
+
+padding:8px 18px;
+
+border-radius:30px;
+
+background:
+
+rgba(37,99,235,.2);
+
+color:#93c5fd;
+
+font-size:13px;
+
+font-weight:700;
+
+letter-spacing:1px;
+
+margin-bottom:15px;
+
+}
+
+
+
+.videoHeader h1{
+
+font-size:34px;
+
+color:white;
+
+margin-bottom:12px;
+
+}
+
+
+
+.videoHeader p{
+
+color:#94a3b8;
+
+font-size:17px;
+
+line-height:1.7;
+
+}
+
+
+
+
+
+/* ================================
+LANDSCAPE VIDEO PLAYER
+================================ */
+
+
+.videoPlayer{
+
+position:relative;
+
+width:100%;
+
+aspect-ratio:16 / 9;
+
+background:#000;
+
+border-radius:25px;
+
+overflow:hidden;
+
+border:2px solid rgba(56,189,248,.15);
+
+box-shadow:
+
+0 30px 70px rgba(0,0,0,.55);
+
+}
+
+
+
+.videoPlayer iframe,
+
+.videoPlayer video{
+
+width:100%;
+
+height:100%;
+
+display:block;
+
+border:none;
+
+object-fit:cover;
+
+}
+
+
+
+
+
+/* ================================
+VIDEO PLACEHOLDER
+================================ */
+
+
+.videoPlaceholder{
+
+height:100%;
+
+display:flex;
+
+align-items:center;
+
+justify-content:center;
+
+flex-direction:column;
+
+color:white;
+
+text-align:center;
+
+}
+
+
+
+
+.playIcon{
+
+width:80px;
+
+height:80px;
+
+display:flex;
+
+align-items:center;
+
+justify-content:center;
+
+border-radius:50%;
+
+background:
+
+linear-gradient(
+135deg,
+#2563eb,
+#7c3aed
+);
+
+font-size:35px;
+
+margin-bottom:20px;
+
+}
+
+
+
+
+
+/* ================================
+LESSON DESCRIPTION
+================================ */
+
+
+.lessonDescription{
+
+margin-top:30px;
+
+padding:28px;
+
+background:
+
+rgba(255,255,255,.04);
+
+border:1px solid rgba(255,255,255,.08);
+
+border-radius:22px;
+
+}
+
+
+
+.lessonDescription h2{
+
+font-size:25px;
+
+color:#38bdf8;
+
+margin-bottom:15px;
+
+}
+
+
+
+.lessonDescription p{
+
+font-size:16px;
+
+line-height:1.9;
+
+color:#cbd5e1;
+
+margin-bottom:25px;
+
+}
+
+
+
+
+
+/* ================================
+LESSON INFORMATION
+================================ */
+
+
+.lessonInfo{
+
+display:flex;
+
+flex-wrap:wrap;
+
+gap:15px;
+
+}
+
+
+
+.lessonInfo span{
+
+padding:
+
+10px 18px;
+
+border-radius:30px;
+
+background:
+
+rgba(37,99,235,.18);
+
+border:
+
+1px solid rgba(56,189,248,.15);
+
+color:#7dd3fc;
+
+font-weight:700;
+
+font-size:14px;
+
+}
+
+
+
+
+
+.lessonDuration{
+
+margin-top:20px;
+
+color:#93c5fd;
+
+font-weight:600;
+
+}
+
+
+
+
+
+/* ================================
+EMPTY VIDEO STATE
+================================ */
+
+
+.videoEmpty{
+
+padding:
+
+80px 30px;
+
+background:
+
+linear-gradient(
+135deg,
+#0f172a,
+#020617
+);
+
+border-radius:30px;
+
+border:
+
+1px solid rgba(56,189,248,.12);
+
+text-align:center;
+
+color:white;
+
+}
+
+
+
+.videoEmpty h2{
+
+font-size:34px;
+
+margin-bottom:15px;
+
+}
+
+
+
+.videoEmpty p{
+
+font-size:17px;
+
+color:#94a3b8;
+
+line-height:1.8;
+
+}
+
+
+
+.emptyIcon{
+
+font-size:60px;
+
+margin-bottom:20px;
+
+}
+
+
+
+
+
+/* ================================
+TABLET
+================================ */
+
+
+@media(max-width:992px){
+
+
+.videoHeader h1{
+
+font-size:28px;
+
+}
+
+
+}
+
+
+
+
+
+/* ================================
+MOBILE
+================================ */
+
+
+@media(max-width:768px){
+
+
+.videoSection{
+
+padding:20px;
+
+}
+
+
+
+.videoHeader h1{
+
+font-size:24px;
+
+}
+
+
+
+.videoHeader p{
+
+font-size:15px;
+
+}
+
+
+
+.lessonDescription{
+
+padding:20px;
+
+}
+
+
+
+.lessonInfo{
+
+flex-direction:column;
+
+}
+
+
+
+.videoEmpty{
+
+padding:50px 20px;
+
+}
+
+
+
+.videoEmpty h2{
+
+font-size:26px;
+
+}
+
+
+
+}

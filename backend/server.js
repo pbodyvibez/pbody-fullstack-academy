@@ -1,10 +1,8 @@
 require("dotenv").config();
 
-
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
-
 
 
 const paymentRoutes = require("./routes/paymentRoutes");
@@ -18,7 +16,7 @@ const app = express();
 app.use(
 cors({
 origin:[
-process.env.CLIENT_URL,
+"http://localhost:3000",
 "https://pbodyvibezai.netlify.app"
 ],
 credentials:true
@@ -31,7 +29,10 @@ app.use(express.json());
 
 
 
-// PAYMENT ROUTES
+// =====================
+// ROUTES
+// =====================
+
 
 app.use(
 "/api/payments",
@@ -40,16 +41,13 @@ paymentRoutes
 
 
 
-
-// TEST ROUTE
-
 app.get("/",(req,res)=>{
 
 res.json({
 
 success:true,
 
-message:"PBody Academy Backend Running 🚀"
+message:"PBody FullStack Academy Backend Running 🚀"
 
 });
 
@@ -58,7 +56,9 @@ message:"PBody Academy Backend Running 🚀"
 
 
 
-// DATABASE
+// =====================
+// DATABASE + SERVER
+// =====================
 
 
 mongoose
@@ -66,17 +66,15 @@ mongoose
 .then(()=>{
 
 
-console.log(
-"MongoDB Connected"
-);
+console.log("MongoDB Connected");
 
 
 app.listen(
-process.env.PORT || 5000,
+5000,
 ()=>{
 
 console.log(
-`Server running on port ${process.env.PORT || 5000}`
+"Backend running on port 5000"
 );
 
 }
@@ -87,9 +85,9 @@ console.log(
 .catch((error)=>{
 
 
-console.log(
-"Mongo Error:",
-error.message
+console.error(
+"Database connection failed:",
+error
 );
 
 

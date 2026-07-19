@@ -1,19 +1,25 @@
-const jwt = require("jsonwebtoken");
+console.log(
+"LOGIN JWT SECRET:",
+process.env.JWT_SECRET
+);
 
-module.exports = function (req, res, next) {
-  const authHeader = req.header("Authorization");
+const token = jwt.sign(
+{
+id: user._id,
+email: user.email,
+},
+process.env.JWT_SECRET,
+{
+expiresIn: "1d",
+}
+);
 
-  if (!authHeader) {
-    return res.status(401).json({ message: "No token, access denied" });
-  }
-
-  try {
-    const token = authHeader.replace("Bearer ", "");
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
-
-    req.user = decoded;
-    next();
-  } catch (err) {
-    res.status(401).json({ message: "Token is not valid" });
-  }
-};
+res.json({
+message: "Login successful",
+token,
+user: {
+id: user._id,
+name: user.name,
+email: user.email,
+},
+});

@@ -4,104 +4,90 @@ const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
 
-
 const authRoutes = require("./routes/authRoutes");
 const paymentRoutes = require("./routes/paymentRoutes");
-
+const aiRoutes = require("./routes/aiRoutes");
 
 const app = express();
 
 
-// ===============================
+// =====================================
 // MIDDLEWARE
-// ===============================
+// =====================================
 
 app.use(
-cors({
-origin:[
-"http://localhost:3000",
-"https://pbodyvibezai.netlify.app"
-],
-credentials:true
-})
+  cors({
+    origin: [
+      "http://localhost:3000",
+      "https://pbodyfullstackacademy.netlify.app",
+      "https://pbodyvibezai.netlify.app"
+    ],
+    credentials: true
+  })
 );
-
 
 app.use(express.json());
 
 
+// =====================================
+// HEALTH CHECK
+// =====================================
 
-// ===============================
-// TEST
-// ===============================
+app.get("/", (req, res) => {
 
-app.get("/",(req,res)=>{
+  res.json({
 
-res.json({
+    success: true,
 
-success:true,
+    message: "PBody Backend Online 🚀"
 
-message:"PBody Backend Online 🚀"
+  });
 
 });
 
-});
 
-
-
-// ===============================
+// =====================================
 // ROUTES
-// ===============================
+// =====================================
 
 app.use(
-"/api/auth",
-authRoutes
+  "/api/auth",
+  authRoutes
+);
+
+app.use(
+  "/api/payments",
+  paymentRoutes
+);
+
+app.use(
+  "/api/ai",
+  aiRoutes
 );
 
 
-app.use(
-"/api/payments",
-paymentRoutes
-);
-
-
-
-// ===============================
+// =====================================
 // DATABASE
-// ===============================
+// =====================================
 
 mongoose.connect(process.env.MONGO_URI)
 
-.then(()=>{
+.then(() => {
 
+  console.log("✅ MongoDB Connected");
 
-console.log("✅ MongoDB Connected");
+  const PORT = process.env.PORT || 5000;
 
+  app.listen(PORT, () => {
 
-const PORT =
-process.env.PORT || 5000;
+    console.log(`🚀 Backend running on port ${PORT}`);
 
-
-app.listen(PORT,()=>{
-
-
-console.log(
-`🚀 Server running on ${PORT}`
-);
-
-
-});
-
+  });
 
 })
 
-.catch(err=>{
+.catch((error) => {
 
-
-console.log(
-"MongoDB ERROR:",
-err.message
-);
-
+  console.log("MongoDB ERROR:", error.message);
 
 });

@@ -17,18 +17,16 @@ const User = require("../models/User");
 
 exports.initializePayment = async (req,res)=>{
 
-
 try{
+
+console.log("PAYMENT BODY RECEIVED:");
+console.log(req.body);
 
 
 const {
-
 email,
-
 currency="NGN"
-
 }=req.body;
-
 
 
 if(!email){
@@ -36,7 +34,6 @@ if(!email){
 return res.status(400).json({
 
 success:false,
-
 message:"Email is required"
 
 });
@@ -44,12 +41,13 @@ message:"Email is required"
 }
 
 
-
 const user = await User.findOne({
-
-email
-
+email: email.toLowerCase()
 });
+
+
+console.log("USER FOUND:");
+console.log(user);
 
 
 
@@ -59,12 +57,11 @@ return res.status(404).json({
 
 success:false,
 
-message:"User account not found"
+message:`User account not found for ${email}`
 
 });
 
 }
-
 
 
 

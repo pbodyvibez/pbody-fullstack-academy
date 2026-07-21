@@ -1,32 +1,26 @@
-import {useState} from "react";
-import {Link,useNavigate} from "react-router-dom";
-
-import AppLayout from "../components/layout/AppLayout";
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 
 import Logo from "../assets/images/logo.png";
 
 import {
-registerUser,
-loginUser
+ registerUser,
+ loginUser
 } from "../services/authService";
 
-
 import {
-useAuth
+ useAuth
 } from "../context/AuthContext";
-
 
 import "../styles/auth.css";
 
 
 export default function Register(){
 
-
 const navigate = useNavigate();
 
-
 const {
-login
+setSession
 }=useAuth();
 
 
@@ -66,11 +60,9 @@ setForm({
 
 
 
-
 async function handleRegister(e){
 
 e.preventDefault();
-
 
 setError("");
 
@@ -93,10 +85,7 @@ return;
 
 
 
-
-if(
-form.password !== form.confirmPassword
-){
+if(form.password !== form.confirmPassword){
 
 setError(
 "Passwords do not match."
@@ -105,8 +94,6 @@ setError(
 return;
 
 }
-
-
 
 
 
@@ -129,44 +116,55 @@ password:form.password
 
 
 
+const loginResponse =
+await loginUser({
 
-// AUTO LOGIN
+email:form.email,
 
-const result =
-await login(
-form.email,
-form.password
+password:form.password
+
+});
+
+
+
+
+
+localStorage.setItem(
+"pbody_session",
+JSON.stringify({
+
+user:loginResponse.user,
+
+token:loginResponse.token
+
+})
 );
 
 
 
-if(result.success){
+
 
 navigate("/dashboard");
 
+
+
 }
 
+catch(err){
 
 
-}
-
-catch(error){
-
-
-console.log(error);
+console.log(err);
 
 
 setError(
 
-error?.response?.data?.message ||
-
+err?.response?.data?.message ||
 "Registration failed"
 
 );
 
 
 }
-
 
 finally{
 
@@ -181,11 +179,8 @@ setLoading(false);
 
 
 
-
-
 return(
 
-<AppLayout>
 
 
 <div className="authPage">
@@ -202,10 +197,7 @@ return(
 
 
 
-
 <div className="authContainer">
-
-
 
 
 
@@ -214,17 +206,21 @@ return(
 
 <img
 src={Logo}
-alt="PBody Academy"
+alt="PBody"
 />
 
 
 <h1>
+
 PBODY FULLSTACK ACADEMY
+
 </h1>
 
 
 <p>
+
 AI Powered Engineering Academy
+
 </p>
 
 
@@ -235,10 +231,7 @@ AI Powered Engineering Academy
 
 
 
-
-<div className="authCard registerCard">
-
-
+<div className="authCard">
 
 
 
@@ -246,17 +239,25 @@ AI Powered Engineering Academy
 
 
 <span>
+
 🚀 Join The Future
+
 </span>
 
 
+
 <h2>
+
 Create Engineer Account
+
 </h2>
 
 
+
 <p>
-Start your journey into professional software engineering.
+
+Start your professional software engineering journey.
+
 </p>
 
 
@@ -273,7 +274,9 @@ Start your journey into professional software engineering.
 <div className="inputGroup">
 
 <label>
+
 Full Name
+
 </label>
 
 
@@ -281,11 +284,11 @@ Full Name
 
 name="name"
 
-placeholder="Your full name"
-
 value={form.name}
 
 onChange={handleChange}
+
+placeholder="Your full name"
 
 />
 
@@ -300,7 +303,9 @@ onChange={handleChange}
 <div className="inputGroup">
 
 <label>
+
 Email Address
+
 </label>
 
 
@@ -310,11 +315,11 @@ name="email"
 
 type="email"
 
-placeholder="developer@email.com"
-
 value={form.email}
 
 onChange={handleChange}
+
+placeholder="developer@email.com"
 
 />
 
@@ -329,7 +334,9 @@ onChange={handleChange}
 <div className="inputGroup">
 
 <label>
+
 Password
+
 </label>
 
 
@@ -339,16 +346,17 @@ name="password"
 
 type="password"
 
-placeholder="Create password"
-
 value={form.password}
 
 onChange={handleChange}
+
+placeholder="Create password"
 
 />
 
 
 </div>
+
 
 
 
@@ -358,7 +366,9 @@ onChange={handleChange}
 <div className="inputGroup">
 
 <label>
+
 Confirm Password
+
 </label>
 
 
@@ -368,17 +378,16 @@ name="confirmPassword"
 
 type="password"
 
-placeholder="Confirm password"
-
 value={form.confirmPassword}
 
 onChange={handleChange}
+
+placeholder="Confirm password"
 
 />
 
 
 </div>
-
 
 
 
@@ -398,8 +407,6 @@ error &&
 
 
 
-
-
 <button
 
 className="authButton"
@@ -410,19 +417,13 @@ disabled={loading}
 
 
 {
-
 loading
-
 ?
-
 "Creating Account..."
-
 :
-
 "Create Academy Account 🚀"
 
 }
-
 
 
 </button>
@@ -430,11 +431,7 @@ loading
 
 
 
-
-
 </form>
-
-
 
 
 
@@ -462,20 +459,20 @@ Login
 
 
 
-</div>
-
-
-
-
-
-</div>
-
 
 </div>
 
 
 
-</AppLayout>
+
+
+</div>
+
+
+
+</div>
+
+
 
 );
 

@@ -10,7 +10,6 @@ process.env.REACT_APP_API_URL ||
 
 
 
-
 // ==============================
 // INITIALIZE PAYMENT
 // ==============================

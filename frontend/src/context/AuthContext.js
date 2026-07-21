@@ -1,30 +1,38 @@
 import {
-  createContext,
-  useContext,
-  useEffect,
-  useState
+createContext,
+useContext,
+useEffect,
+useState
 } from "react";
 
 
-const AuthContext = createContext();
+import {
+loginUser
+} from "../services/authService";
 
 
-const SESSION_KEY = "pbody_session";
+
+const AuthContext=createContext();
 
 
-const SESSION_DURATION =
-30 * 24 * 60 * 60 * 1000; 
-// 30 days
+
+const SESSION_KEY="pbody_session";
+
+
+
 
 
 
 export function AuthProvider({children}){
 
 
-const [user,setUser] = useState(null);
+const [user,setUser]=useState(null);
+
+const [token,setToken]=useState(null);
+
+const [loading,setLoading]=useState(true);
 
 
-const [loading,setLoading] = useState(true);
 
 
 
@@ -49,17 +57,15 @@ JSON.parse(saved);
 
 
 
-if(
-session.user &&
-session.expiresAt > Date.now()
-){
+if(session.user && session.token){
 
 
 setUser(session.user);
 
+setToken(session.token);
 
-}
-else{
+
+}else{
 
 
 localStorage.removeItem(
@@ -70,8 +76,9 @@ SESSION_KEY
 }
 
 
+
 }
-catch{
+catch(error){
 
 
 localStorage.removeItem(
@@ -89,7 +96,54 @@ SESSION_KEY
 setLoading(false);
 
 
+
 },[]);
+
+
+
+
+
+
+
+
+
+function setSession(user,token){
+
+
+
+const session={
+
+user,
+
+token
+
+};
+
+
+
+
+localStorage.setItem(
+
+SESSION_KEY,
+
+JSON.stringify(session)
+
+);
+
+
+
+
+setUser(user);
+
+setToken(token);
+
+
+
+}
+
+
+
+
 
 
 
@@ -101,76 +155,43 @@ async function login(email,password){
 
 
 
-if(!email || !password){
-
-
-return {
-
-success:false,
-
-message:
-"Email and password are required."
-
-};
-
-
-}
+try{
 
 
 
+const response =
+await loginUser({
 
-const loggedUser = {
+email,
 
+password
 
-id:1,
-
-
-name:"Engineer",
-
-
-email
-
-
-};
+});
 
 
 
 
 
-const session = {
 
+setSession(
 
-user:loggedUser,
+response.user,
 
-
-expiresAt:
-Date.now()+SESSION_DURATION
-
-
-};
-
-
-
-
-
-localStorage.setItem(
-
-SESSION_KEY,
-
-JSON.stringify(session)
+response.token
 
 );
 
 
 
-setUser(loggedUser);
 
 
 
 return {
 
 
-success:true
+success:true,
+
+user:response.user
 
 
 };
@@ -178,6 +199,35 @@ success:true
 
 
 }
+
+catch(error){
+
+
+
+return {
+
+
+success:false,
+
+
+message:
+
+error?.response?.data?.message ||
+
+"Login failed"
+
+
+};
+
+
+
+}
+
+
+
+}
+
+
 
 
 
@@ -188,52 +238,21 @@ success:true
 function logout(){
 
 
+
 localStorage.removeItem(
 SESSION_KEY
 );
 
 
+
 setUser(null);
 
+setToken(null);
+
+
 
 }
 
-
-
-
-
-
-function refreshSession(){
-
-
-if(!user)return;
-
-
-
-const session={
-
-
-user,
-
-
-expiresAt:
-Date.now()+SESSION_DURATION
-
-
-};
-
-
-
-localStorage.setItem(
-
-SESSION_KEY,
-
-JSON.stringify(session)
-
-);
-
-
-}
 
 
 
@@ -251,16 +270,17 @@ value={{
 
 user,
 
+token,
+
 loading,
 
 login,
 
 logout,
 
-refreshSession,
+setSession,
 
-isAuthenticated:
-!!user
+isAuthenticated:!!user
 
 }}
 
@@ -276,7 +296,10 @@ isAuthenticated:
 );
 
 
+
 }
+
+
 
 
 

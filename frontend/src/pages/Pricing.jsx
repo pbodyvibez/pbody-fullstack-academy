@@ -21,7 +21,7 @@ const { user } = useAuth();
 
 
 // ==============================
-// PAYMENT START
+// START PAYMENT
 // ==============================
 
 const handleUpgrade = async(currency)=>{
@@ -42,6 +42,16 @@ return;
 try{
 
 
+console.log("Starting payment:",{
+
+email:user.email,
+
+currency
+
+});
+
+
+
 const result = await initializePayment({
 
 email:user.email,
@@ -52,15 +62,25 @@ currency
 
 
 
-if(
-result &&
-result.data &&
-result.data.authorization_url
-){
+console.log("PAYSTACK RESPONSE:", result);
 
 
-window.location.href =
-result.data.authorization_url;
+
+
+const authorizationUrl =
+
+result?.data?.authorization_url ||
+
+result?.authorization_url ||
+
+result?.data?.data?.authorization_url;
+
+
+
+if(authorizationUrl){
+
+
+window.location.href = authorizationUrl;
 
 
 return;
@@ -70,18 +90,25 @@ return;
 
 
 alert(
-"Unable to start payment."
+
+"Payment could not start."
+
 );
 
 
 
 }
+
+
 catch(error){
 
 
 console.error(
-"PAYMENT ERROR",
+
+"PAYMENT INITIALIZATION ERROR:",
+
 error
+
 );
 
 
@@ -90,7 +117,7 @@ alert(
 
 error?.response?.data?.message ||
 
-"Payment initialization failed."
+"Payment initialization failed"
 
 );
 
@@ -140,7 +167,6 @@ PBODY FULLSTACK ACADEMY
 </h2>
 
 
-
 <p>
 
 Professional Engineering Education Platform
@@ -149,7 +175,6 @@ Professional Engineering Education Platform
 
 
 </div>
-
 
 
 </div>
@@ -163,7 +188,6 @@ Professional Engineering Education Platform
 Become A Professional Software Engineer
 
 </h1>
-
 
 
 
@@ -188,7 +212,6 @@ projects and certificates.
 </h2>
 
 
-
 <p>
 
 Experience the complete engineering ecosystem.
@@ -196,9 +219,7 @@ Experience the complete engineering ecosystem.
 </p>
 
 
-
 </div>
-
 
 
 </section>
@@ -209,11 +230,7 @@ Experience the complete engineering ecosystem.
 
 
 
-
-
 <section className="pricingPlans">
-
-
 
 
 
@@ -236,14 +253,9 @@ PBody Pro Annual
 
 
 
-
 <div className="price">
 
-<span>
-
-₦
-
-</span>
+<span>₦</span>
 
 120,000
 
@@ -259,14 +271,11 @@ PBody Pro Annual
 
 
 
-
 <p>
 
 For Nigerian students and developers.
 
 </p>
-
-
 
 
 
@@ -295,9 +304,7 @@ onClick={()=>handleUpgrade("NGN")}
 
 >
 
-
 Pay ₦120,000
-
 
 </button>
 
@@ -312,11 +319,7 @@ Pay ₦120,000
 
 
 
-
-
-
 <div className="pricingCard international">
-
 
 
 <div className="planBadge">
@@ -324,7 +327,6 @@ Pay ₦120,000
 GLOBAL
 
 </div>
-
 
 
 
@@ -340,15 +342,9 @@ PBody Pro Global
 
 <div className="price">
 
-
-<span>
-
-$
-
-</span>
+<span>$</span>
 
 99
-
 
 <small>
 
@@ -372,7 +368,6 @@ For international students.
 
 
 
-
 <ul>
 
 <li>✅ Premium Courses</li>
@@ -392,24 +387,19 @@ For international students.
 
 
 
-
 <button
 
 onClick={()=>handleUpgrade("USD")}
 
 >
 
-
 Pay $99
-
 
 </button>
 
 
 
 </div>
-
-
 
 
 
@@ -422,9 +412,7 @@ Pay $99
 
 
 
-
 <section className="pricingGuarantee">
-
 
 
 <h2>
@@ -432,7 +420,6 @@ Pay $99
 Why Upgrade?
 
 </h2>
-
 
 
 
@@ -461,16 +448,13 @@ Career Ready
 
 </h3>
 
-
 <p>
 
 Build real production skills.
 
 </p>
 
-
 </div>
-
 
 
 
@@ -486,16 +470,13 @@ AI Mentor
 
 </h3>
 
-
 <p>
 
 Learn with AI assistance.
 
 </p>
 
-
 </div>
-
 
 
 
@@ -511,16 +492,13 @@ Certificates
 
 </h3>
 
-
 <p>
 
 Earn professional certificates.
 
 </p>
 
-
 </div>
-
 
 
 
@@ -536,25 +514,20 @@ Worldwide
 
 </h3>
 
-
 <p>
 
 Learn anywhere.
 
 </p>
 
-
 </div>
 
 
 
 </div>
-
 
 
 </section>
-
-
 
 
 

@@ -1,12 +1,14 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
+import AppLayout from "../components/layout/AppLayout";
 import Logo from "../assets/images/logo.png";
 
-import AppLayout from "../components/layout/AppLayout";
+import { registerUser, loginUser } from "../services/authService";
+
+import { useAuth } from "../context/AuthContext";
 
 import "../styles/auth.css";
-
 
 
 export default function Register(){
@@ -14,30 +16,29 @@ export default function Register(){
 
 const navigate = useNavigate();
 
+const { setSession } = useAuth();
 
 
-const [form,setForm]=useState({
+
+const [loading,setLoading] = useState(false);
+
+const [error,setError] = useState("");
+
+
+
+const [form,setForm] = useState({
 
 name:"",
-
 email:"",
-
 password:"",
-
 confirmPassword:""
 
 });
 
 
 
-const [error,setError]=useState("");
-
-
-
-
 
 const handleChange=(e)=>{
-
 
 setForm({
 
@@ -47,7 +48,6 @@ setForm({
 
 });
 
-
 };
 
 
@@ -55,69 +55,125 @@ setForm({
 
 
 
-
-const handleRegister=(e)=>{
+const handleRegister=async(e)=>{
 
 
 e.preventDefault();
-
-
-
-if(
-
-!form.name ||
-
-!form.email ||
-
-!form.password ||
-
-!form.confirmPassword
-
-){
-
-
-setError(
-
-"Please complete all fields"
-
-);
-
-
-return;
-
-
-}
-
-
-
-
-
-if(form.password !== form.confirmPassword){
-
-
-setError(
-
-"Passwords do not match"
-
-);
-
-
-return;
-
-
-}
-
-
 
 
 setError("");
 
 
 
-// backend registration will connect here
+if(
+!form.name ||
+!form.email ||
+!form.password ||
+!form.confirmPassword
+){
+
+setError("Please complete all fields.");
+
+return;
+
+}
 
 
-navigate("/login");
+
+
+if(form.password !== form.confirmPassword){
+
+setError("Passwords do not match.");
+
+return;
+
+}
+
+
+
+
+try{
+
+
+setLoading(true);
+
+
+
+await registerUser({
+
+name:form.name,
+
+email:form.email,
+
+password:form.password
+
+});
+
+
+
+
+
+const loginResponse =
+await loginUser({
+
+email:form.email,
+
+password:form.password
+
+});
+
+
+if(!loginResponse.success){
+
+throw new Error(
+loginResponse.message || "Auto login failed"
+);
+
+}
+
+
+setSession(
+
+loginResponse.user,
+
+loginResponse.token
+
+);
+
+
+
+
+
+navigate("/dashboard");
+
+
+
+
+
+}
+
+catch(err){
+
+
+console.error(err);
+
+
+
+setError(
+
+err?.response?.data?.message ||
+"Registration failed"
+
+);
+
+
+}
+
+finally{
+
+setLoading(false);
+
+}
 
 
 
@@ -129,98 +185,42 @@ navigate("/login");
 
 
 
-
-
-return(
-
+return (
 
 <AppLayout>
 
-
-
 <div className="authPage">
-
-
-
-
-
-<div className="authBackgroundGlow"></div>
-
-
-
-
-
 
 
 <div className="authCard registerCard">
 
 
 
-
-
-
-
 <div className="authBrand">
 
 
-<img
-
-src={Logo}
-
-alt="PBody Fullstack Academy"
-
-/>
-
+<img src={Logo} alt="PBody Academy"/>
 
 
 <h1>
-
 PBODY FULLSTACK ACADEMY
-
 </h1>
 
 
-
 <p>
-
 AI Powered Engineering Academy
-
 </p>
-
 
 
 </div>
 
 
 
-
-
-
-
-
-
-<div className="authHeading">
 
 
 <h2>
-
 Join The Engineering Community 🚀
-
 </h2>
-
-
-<p>
-
-Create your account and start building real world software skills.
-
-</p>
-
-
-</div>
-
-
-
-
 
 
 
@@ -229,196 +229,89 @@ Create your account and start building real world software skills.
 <form onSubmit={handleRegister}>
 
 
-
-
-
-
-
-<div className="inputGroup">
-
-
-<label>
-
-Full Name
-
-</label>
-
-
 <input
-
 
 name="name"
 
-type="text"
-
-placeholder="Your full name"
+placeholder="Full Name"
 
 value={form.name}
 
 onChange={handleChange}
 
-
 />
 
 
-</div>
-
-
-
-
-
-
-
-
-
-<div className="inputGroup">
-
-
-<label>
-
-Email Address
-
-</label>
-
 
 <input
-
 
 name="email"
 
 type="email"
 
-placeholder="developer@email.com"
+placeholder="Email"
 
 value={form.email}
 
 onChange={handleChange}
 
-
 />
 
 
-</div>
-
-
-
-
-
-
-
-
-
-<div className="inputGroup">
-
-
-<label>
-
-Password
-
-</label>
-
 
 <input
-
 
 name="password"
 
 type="password"
 
-placeholder="Create password"
+placeholder="Password"
 
 value={form.password}
 
 onChange={handleChange}
 
-
 />
 
 
-</div>
-
-
-
-
-
-
-
-
-
-<div className="inputGroup">
-
-
-<label>
-
-Confirm Password
-
-</label>
 
 
 <input
-
 
 name="confirmPassword"
 
 type="password"
 
-placeholder="Confirm password"
+placeholder="Confirm Password"
 
 value={form.confirmPassword}
 
 onChange={handleChange}
 
-
 />
 
 
-</div>
 
-
-
-
-
-
-
-
-
-{error && (
-
+{
+error &&
 <p className="authError">
-
 {error}
-
 </p>
-
-)}
-
+}
 
 
 
+<button disabled={loading}>
 
-
-
-
-
-<button
-
-className="authButton"
-
-type="submit"
-
->
-
-
-Create Academy Account 🚀
-
+{
+loading
+?
+"Creating Account..."
+:
+"Create Academy Account 🚀"
+}
 
 </button>
-
-
-
-
-
-
 
 
 
@@ -427,25 +320,12 @@ Create Academy Account 🚀
 
 
 
-
-
-
-
-
-<div className="authFooter">
-
-
 <p>
 
-Already have an account?
-
-{" "}
-
+Already registered?
 
 <Link to="/login">
-
 Login
-
 </Link>
 
 
@@ -456,27 +336,10 @@ Login
 </div>
 
 
-
-
-
-
-
-
-
 </div>
-
-
-
-
-
-
-
-</div>
-
 
 
 </AppLayout>
-
 
 );
 

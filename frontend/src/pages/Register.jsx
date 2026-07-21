@@ -16,6 +16,7 @@ export default function Register(){
 
 const navigate = useNavigate();
 
+
 const { setSession } = useAuth();
 
 
@@ -38,7 +39,9 @@ confirmPassword:""
 
 
 
+
 const handleChange=(e)=>{
+
 
 setForm({
 
@@ -48,7 +51,9 @@ setForm({
 
 });
 
+
 };
+
 
 
 
@@ -72,9 +77,14 @@ if(
 !form.confirmPassword
 ){
 
-setError("Please complete all fields.");
+
+setError(
+"Please complete all fields."
+);
+
 
 return;
+
 
 }
 
@@ -83,11 +93,33 @@ return;
 
 if(form.password !== form.confirmPassword){
 
-setError("Passwords do not match.");
+
+setError(
+"Passwords do not match."
+);
+
 
 return;
 
+
 }
+
+
+
+if(form.password.length < 6){
+
+
+setError(
+"Password must be at least 6 characters."
+);
+
+
+return;
+
+
+}
+
+
 
 
 
@@ -99,7 +131,9 @@ setLoading(true);
 
 
 
-await registerUser({
+
+
+const registerResponse = await registerUser({
 
 name:form.name,
 
@@ -111,10 +145,18 @@ password:form.password
 
 
 
+console.log(
+"REGISTER SUCCESS:",
+registerResponse
+);
 
 
-const loginResponse =
-await loginUser({
+
+
+
+
+
+const loginResponse = await loginUser({
 
 email:form.email,
 
@@ -123,20 +165,34 @@ password:form.password
 });
 
 
-if(!loginResponse.success){
+
+
+
+if(!loginResponse.token){
+
 
 throw new Error(
-loginResponse.message || "Auto login failed"
+"Login session could not be created."
 );
+
 
 }
 
 
-setSession(
 
-loginResponse.user,
 
-loginResponse.token
+
+localStorage.setItem(
+
+"pbody_session",
+
+JSON.stringify({
+
+user:loginResponse.user,
+
+token:loginResponse.token
+
+})
 
 );
 
@@ -144,7 +200,12 @@ loginResponse.token
 
 
 
-navigate("/dashboard");
+
+navigate("/dashboard",{
+
+replace:true
+
+});
 
 
 
@@ -162,16 +223,22 @@ console.error(err);
 setError(
 
 err?.response?.data?.message ||
+
+err.message ||
+
 "Registration failed"
 
 );
+
 
 
 }
 
 finally{
 
+
 setLoading(false);
+
 
 }
 
@@ -185,31 +252,26 @@ setLoading(false);
 
 
 
-return (
+
+return(
+
 
 <AppLayout>
+
 
 <div className="authPage">
 
 
-<div className="authCard registerCard">
 
 
 
-<div className="authBrand">
+<div className="authBackground">
 
 
-<img src={Logo} alt="PBody Academy"/>
+<div className="glowOne"></div>
 
 
-<h1>
-PBODY FULLSTACK ACADEMY
-</h1>
-
-
-<p>
-AI Powered Engineering Academy
-</p>
+<div className="glowTwo"></div>
 
 
 </div>
@@ -218,9 +280,95 @@ AI Powered Engineering Academy
 
 
 
+
+
+
+
+<div className="authContainer">
+
+
+
+
+
+<div className="authBrand">
+
+
+<img
+
+src={Logo}
+
+alt="PBody FullStack Academy"
+
+/>
+
+
+
+<h1>
+
+PBODY FULLSTACK ACADEMY
+
+</h1>
+
+
+
+<p>
+
+AI Powered Engineering Academy
+
+</p>
+
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<div className="authCard">
+
+
+
+
+
+<div className="authHeader">
+
+
+<span>
+
+🚀 Start Your Journey
+
+</span>
+
+
+
+
 <h2>
-Join The Engineering Community 🚀
+
+Join The Engineering Community
+
 </h2>
+
+
+
+
+<p>
+
+Create your account and begin your professional software engineering journey.
+
+</p>
+
+
+
+</div>
+
+
+
+
 
 
 
@@ -229,11 +377,28 @@ Join The Engineering Community 🚀
 <form onSubmit={handleRegister}>
 
 
+
+
+
+
+<div className="inputGroup">
+
+
+<label>
+
+Full Name
+
+</label>
+
+
+
 <input
+
+type="text"
 
 name="name"
 
-placeholder="Full Name"
+placeholder="Enter your full name"
 
 value={form.name}
 
@@ -243,13 +408,34 @@ onChange={handleChange}
 
 
 
-<input
+</div>
 
-name="email"
+
+
+
+
+
+
+
+
+<div className="inputGroup">
+
+
+<label>
+
+Email Address
+
+</label>
+
+
+
+<input
 
 type="email"
 
-placeholder="Email"
+name="email"
+
+placeholder="developer@email.com"
 
 value={form.email}
 
@@ -259,13 +445,34 @@ onChange={handleChange}
 
 
 
-<input
+</div>
 
-name="password"
+
+
+
+
+
+
+
+
+<div className="inputGroup">
+
+
+<label>
+
+Password
+
+</label>
+
+
+
+<input
 
 type="password"
 
-placeholder="Password"
+name="password"
+
+placeholder="Create password"
 
 value={form.password}
 
@@ -275,14 +482,34 @@ onChange={handleChange}
 
 
 
+</div>
+
+
+
+
+
+
+
+
+
+<div className="inputGroup">
+
+
+<label>
+
+Confirm Password
+
+</label>
+
+
 
 <input
 
-name="confirmPassword"
-
 type="password"
 
-placeholder="Confirm Password"
+name="confirmPassword"
+
+placeholder="Confirm password"
 
 value={form.confirmPassword}
 
@@ -292,26 +519,65 @@ onChange={handleChange}
 
 
 
+</div>
+
+
+
+
+
+
+
+
 {
+
 error &&
+
 <p className="authError">
+
 {error}
+
 </p>
+
 }
 
 
 
-<button disabled={loading}>
+
+
+
+
+
+<button
+
+className="authButton"
+
+disabled={loading}
+
+>
+
 
 {
+
 loading
+
 ?
+
 "Creating Account..."
+
 :
+
 "Create Academy Account 🚀"
+
 }
+
+
 
 </button>
+
+
+
+
+
 
 
 
@@ -320,13 +586,26 @@ loading
 
 
 
+
+
+
+
+
+<div className="authFooter">
+
+
 <p>
 
-Already registered?
+
+Already have an account?
+
 
 <Link to="/login">
+
 Login
+
 </Link>
+
 
 
 </p>
@@ -336,12 +615,36 @@ Login
 </div>
 
 
+
+
+
+
+
+
 </div>
+
+
+
+
+
+
+
+
+</div>
+
+
+
+
+
+</div>
+
 
 
 </AppLayout>
 
+
 );
+
 
 
 }

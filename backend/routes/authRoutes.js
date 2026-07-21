@@ -1,206 +1,176 @@
 const express = require("express");
+
 const router = express.Router();
 
 const bcrypt = require("bcryptjs");
-const jwt = require("jsonwebtoken");
 
 const User = require("../models/User");
-const protect = require("../middleware/authMiddleware");
 
-// ======================
+
+
+// ===============================
 // REGISTER
-// ======================
+// ===============================
 
-router.post("/register", async (req, res) => {
+router.post("/register", async(req,res)=>{
 
-  try {
 
-    const { name, email, password } = req.body;
+console.log("========== REGISTER START ==========");
 
-    const existingUser = await User.findOne({ email });
 
-    if (existingUser) {
+try{
 
-      return res.status(400).json({
-        message: "User already exists"
-      });
 
-    }
+console.log("BODY RECEIVED:");
+console.log(req.body);
 
-    const hashedPassword = await bcrypt.hash(password, 10);
 
-    const user = await User.create({
 
-      name,
+const {
+name,
+email,
+password
+}=req.body;
 
-      email,
 
-      password: hashedPassword
 
-    });
+if(!name || !email || !password){
 
-    res.status(201).json({
 
-      success: true,
+return res.status(400).json({
 
-      message: "Registration successful",
+success:false,
 
-      user: {
-
-        id: user._id,
-
-        name: user.name,
-
-        email: user.email
-
-      }
-
-    });
-
-  }
-
-  catch (err) {
-
-    res.status(500).json({
-
-      success: false,
-
-      message: err.message
-
-    });
-
-  }
+message:"Missing required fields"
 
 });
 
-// ======================
-// LOGIN
-// ======================
 
-router.post("/login", async (req, res) => {
+}
 
-  try {
 
-    const { email, password } = req.body;
 
-    const user = await User.findOne({ email });
 
-    if (!user) {
+console.log("Checking existing user...");
 
-      return res.status(400).json({
 
-        message: "User not found"
+const existingUser =
+await User.findOne({
+email
+});
 
-      });
 
-    }
 
-    const validPassword = await bcrypt.compare(
+if(existingUser){
 
-      password,
 
-      user.password
+return res.status(400).json({
 
-    );
+success:false,
 
-    if (!validPassword) {
-
-      return res.status(400).json({
-
-        message: "Invalid password"
-
-      });
-
-    }
-
-    const token = jwt.sign(
-
-      {
-
-        id: user._id,
-
-        email: user.email
-
-      },
-
-      process.env.JWT_SECRET,
-
-      {
-
-        expiresIn: "1d"
-
-      }
-
-    );
-
-    res.json({
-
-      success: true,
-
-      message: "Login successful",
-
-      token,
-
-      user: {
-
-        id: user._id,
-
-        name: user.name,
-
-        email: user.email
-
-      }
-
-    });
-
-  }
-
-  catch (err) {
-
-    res.status(500).json({
-
-      success: false,
-
-      message: err.message
-
-    });
-
-  }
+message:"User already exists"
 
 });
 
-// ======================
-// PROFILE
-// ======================
 
-router.get("/profile", protect, async (req, res) => {
+}
 
-  try {
 
-    const user = await User.findById(req.user.id).select("-password");
 
-    res.json({
 
-      success: true,
+console.log("Hashing password...");
 
-      user
 
-    });
+const hashedPassword =
+await bcrypt.hash(
+password,
+10
+);
 
-  }
 
-  catch (err) {
 
-    res.status(500).json({
 
-      success: false,
+console.log("Creating user...");
 
-      message: err.message
 
-    });
 
-  }
+const user =
+new User({
+
+name:name,
+
+email:email,
+
+password:hashedPassword
 
 });
+
+
+
+
+await user.save();
+
+
+
+console.log("USER CREATED:");
+console.log(user._id);
+
+
+
+return res.status(201).json({
+
+success:true,
+
+message:"Registration successful",
+
+user:{
+
+id:user._id,
+
+name:user.name,
+
+email:user.email
+
+}
+
+});
+
+
+
+}
+
+catch(error){
+
+
+console.log("==============================");
+
+console.log("REGISTER FAILED");
+
+console.log(error);
+
+
+console.log("==============================");
+
+
+
+return res.status(500).json({
+
+success:false,
+
+message:error.message
+
+});
+
+
+}
+
+
+
+});
+
+
+
+
+
 
 module.exports = router;

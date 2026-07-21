@@ -1,12 +1,20 @@
-import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import {useState} from "react";
+import {Link,useNavigate} from "react-router-dom";
 
 import AppLayout from "../components/layout/AppLayout";
+
 import Logo from "../assets/images/logo.png";
 
-import { registerUser, loginUser } from "../services/authService";
+import {
+registerUser,
+loginUser
+} from "../services/authService";
 
-import { useAuth } from "../context/AuthContext";
+
+import {
+useAuth
+} from "../context/AuthContext";
+
 
 import "../styles/auth.css";
 
@@ -17,17 +25,19 @@ export default function Register(){
 const navigate = useNavigate();
 
 
-const { setSession } = useAuth();
+const {
+login
+}=useAuth();
 
 
 
-const [loading,setLoading] = useState(false);
+const [loading,setLoading]=useState(false);
 
-const [error,setError] = useState("");
+const [error,setError]=useState("");
 
 
 
-const [form,setForm] = useState({
+const [form,setForm]=useState({
 
 name:"",
 email:"",
@@ -40,8 +50,7 @@ confirmPassword:""
 
 
 
-const handleChange=(e)=>{
-
+function handleChange(e){
 
 setForm({
 
@@ -51,17 +60,14 @@ setForm({
 
 });
 
-
-};
-
+}
 
 
 
 
 
 
-const handleRegister=async(e)=>{
-
+async function handleRegister(e){
 
 e.preventDefault();
 
@@ -77,48 +83,28 @@ if(
 !form.confirmPassword
 ){
 
-
 setError(
 "Please complete all fields."
 );
 
-
 return;
-
 
 }
 
 
 
 
-if(form.password !== form.confirmPassword){
-
+if(
+form.password !== form.confirmPassword
+){
 
 setError(
 "Passwords do not match."
 );
 
-
 return;
 
-
 }
-
-
-
-if(form.password.length < 6){
-
-
-setError(
-"Password must be at least 6 characters."
-);
-
-
-return;
-
-
-}
-
 
 
 
@@ -131,9 +117,7 @@ setLoading(true);
 
 
 
-
-
-const registerResponse = await registerUser({
+await registerUser({
 
 name:form.name,
 
@@ -145,107 +129,53 @@ password:form.password
 
 
 
-console.log(
-"REGISTER SUCCESS:",
-registerResponse
+
+// AUTO LOGIN
+
+const result =
+await login(
+form.email,
+form.password
 );
 
 
 
+if(result.success){
 
-
-
-
-const loginResponse = await loginUser({
-
-email:form.email,
-
-password:form.password
-
-});
-
-
-
-
-
-if(!loginResponse.token){
-
-
-throw new Error(
-"Login session could not be created."
-);
-
+navigate("/dashboard");
 
 }
 
 
 
-
-
-localStorage.setItem(
-
-"pbody_session",
-
-JSON.stringify({
-
-user:loginResponse.user,
-
-token:loginResponse.token
-
-})
-
-);
-
-
-
-
-
-
-navigate("/dashboard",{
-
-replace:true
-
-});
-
-
-
-
-
 }
 
-catch(err){
+catch(error){
 
 
-console.error(err);
-
+console.log(error);
 
 
 setError(
 
-err?.response?.data?.message ||
-
-err.message ||
+error?.response?.data?.message ||
 
 "Registration failed"
 
 );
 
 
-
 }
+
 
 finally{
 
-
 setLoading(false);
-
 
 }
 
 
-
-};
-
+}
 
 
 
@@ -255,30 +185,19 @@ setLoading(false);
 
 return(
 
-
 <AppLayout>
 
 
 <div className="authPage">
 
 
-
-
-
 <div className="authBackground">
-
 
 <div className="glowOne"></div>
 
-
 <div className="glowTwo"></div>
 
-
 </div>
-
-
-
-
 
 
 
@@ -294,29 +213,19 @@ return(
 
 
 <img
-
 src={Logo}
-
-alt="PBody FullStack Academy"
-
+alt="PBody Academy"
 />
 
 
-
 <h1>
-
 PBODY FULLSTACK ACADEMY
-
 </h1>
 
 
-
 <p>
-
 AI Powered Engineering Academy
-
 </p>
-
 
 
 </div>
@@ -327,9 +236,7 @@ AI Powered Engineering Academy
 
 
 
-
-
-<div className="authCard">
+<div className="authCard registerCard">
 
 
 
@@ -339,35 +246,21 @@ AI Powered Engineering Academy
 
 
 <span>
-
-🚀 Start Your Journey
-
+🚀 Join The Future
 </span>
 
 
-
-
 <h2>
-
-Join The Engineering Community
-
+Create Engineer Account
 </h2>
 
 
-
-
 <p>
-
-Create your account and begin your professional software engineering journey.
-
+Start your journey into professional software engineering.
 </p>
 
 
-
 </div>
-
-
-
 
 
 
@@ -377,35 +270,24 @@ Create your account and begin your professional software engineering journey.
 <form onSubmit={handleRegister}>
 
 
-
-
-
-
 <div className="inputGroup">
 
-
 <label>
-
 Full Name
-
 </label>
-
 
 
 <input
 
-type="text"
-
 name="name"
 
-placeholder="Enter your full name"
+placeholder="Your full name"
 
 value={form.name}
 
 onChange={handleChange}
 
 />
-
 
 
 </div>
@@ -415,25 +297,18 @@ onChange={handleChange}
 
 
 
-
-
-
 <div className="inputGroup">
 
-
 <label>
-
 Email Address
-
 </label>
-
 
 
 <input
 
-type="email"
-
 name="email"
+
+type="email"
 
 placeholder="developer@email.com"
 
@@ -444,11 +319,7 @@ onChange={handleChange}
 />
 
 
-
 </div>
-
-
-
 
 
 
@@ -457,20 +328,16 @@ onChange={handleChange}
 
 <div className="inputGroup">
 
-
 <label>
-
 Password
-
 </label>
-
 
 
 <input
 
-type="password"
-
 name="password"
+
+type="password"
 
 placeholder="Create password"
 
@@ -481,11 +348,7 @@ onChange={handleChange}
 />
 
 
-
 </div>
-
-
-
 
 
 
@@ -494,20 +357,16 @@ onChange={handleChange}
 
 <div className="inputGroup">
 
-
 <label>
-
 Confirm Password
-
 </label>
-
 
 
 <input
 
-type="password"
-
 name="confirmPassword"
+
+type="password"
 
 placeholder="Confirm password"
 
@@ -518,7 +377,6 @@ onChange={handleChange}
 />
 
 
-
 </div>
 
 
@@ -526,10 +384,7 @@ onChange={handleChange}
 
 
 
-
-
 {
-
 error &&
 
 <p className="authError">
@@ -539,8 +394,6 @@ error &&
 </p>
 
 }
-
-
 
 
 
@@ -579,11 +432,7 @@ loading
 
 
 
-
-
 </form>
-
-
 
 
 
@@ -596,9 +445,7 @@ loading
 
 <p>
 
-
-Already have an account?
-
+Already an engineer?
 
 <Link to="/login">
 
@@ -607,25 +454,10 @@ Login
 </Link>
 
 
-
 </p>
 
 
-
 </div>
-
-
-
-
-
-
-
-
-</div>
-
-
-
-
 
 
 
@@ -634,6 +466,9 @@ Login
 
 
 
+
+
+</div>
 
 
 </div>
@@ -642,9 +477,7 @@ Login
 
 </AppLayout>
 
-
 );
-
 
 
 }

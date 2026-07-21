@@ -2,36 +2,42 @@ const express = require("express");
 
 const router = express.Router();
 
+
 const {
-
 initializePayment,
-
 verifyPayment
-
-} = require("../controllers/paymentController");
-
+}=require("../controllers/paymentController");
 
 
-// Initialize payment
 
-router.post(
+router.get(
+"/test",
+(req,res)=>{
 
-"/initialize",
+res.json({
 
-initializePayment
+success:true,
+
+message:"Payment route working"
+
+});
+
+}
 
 );
 
 
 
-// Verify payment
+router.post(
+"/initialize",
+initializePayment
+);
+
+
 
 router.get(
-
 "/verify/:reference",
-
 verifyPayment
-
 );
 
 

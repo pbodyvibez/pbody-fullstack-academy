@@ -24,11 +24,31 @@ app.use(
 
 app.use(express.json());
 
-app.get("/", (req, res) => {
-  res.json({
-    success: true,
-    message: "PBody Academy Backend Running 🚀",
-  });
+app.get("/", (req,res)=>{
+
+res.json({
+
+success:true,
+
+message:"PBody Academy Backend Running 🚀"
+
+});
+
+});
+
+
+app.get("/api", (req,res)=>{
+
+res.json({
+
+success:true,
+
+message:"PBody API Online 🚀",
+
+version:"1.0.0"
+
+});
+
 });
 
 // Routes

@@ -14,7 +14,10 @@ import ProtectedLayout from "./components/layout/ProtectedLayout";
 
 
 
-/* PUBLIC PAGES */
+/* ================================
+PUBLIC PAGES
+================================ */
+
 import About from "./pages/About";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
@@ -22,11 +25,14 @@ import Register from "./pages/Register";
 import Pricing from "./pages/Pricing";
 import PaymentSuccess from "./pages/PaymentSuccess";
 import Contact from "./pages/Contact";
-
 import Privacy from "./pages/Privacy";
 import Terms from "./pages/Terms";
 
-/* PROTECTED PAGES */
+
+
+/* ================================
+PROTECTED PAGES
+================================ */
 
 import Dashboard from "./pages/Dashboard";
 import LearningHub from "./pages/LearningHub";
@@ -66,81 +72,22 @@ return(
 
 
 
-{/* =================================
+{/* ================================
 PUBLIC ROUTES
-================================= */}
+================================ */}
+
+
 
 <Route
-path="/about"
-element={<About />}
-/>
-
-<Route
-
 path="/"
-
 element={<Home />}
-
 />
 
 
 
 <Route
-
 path="/home"
-
 element={<Home />}
-
-/>
-
-
-
-<Route
-
-path="/login"
-
-element={<Login />}
-
-/>
-
-
-
-<Route
-
-path="/register"
-
-element={<Register />}
-
-/>
-
-
-
-<Route
-
-path="/pricing"
-
-element={<Pricing />}
-
-/>
-
-
-
-<Route
-
-path="/payment-success"
-
-element={<PaymentSuccess />}
-
-/>
-
-
-
-<Route
-
-path="/contact"
-
-element={<Contact />}
-
 />
 
 
@@ -149,20 +96,63 @@ element={<Contact />}
 path="/about"
 element={<About />}
 />
+
+
+
+<Route
+path="/login"
+element={<Login />}
+/>
+
+
+
+<Route
+path="/register"
+element={<Register />}
+/>
+
+
+
+<Route
+path="/pricing"
+element={<Pricing />}
+/>
+
+
+
+<Route
+path="/payment-success"
+element={<PaymentSuccess />}
+/>
+
+
+
+<Route
+path="/contact"
+element={<Contact />}
+/>
+
+
 
 <Route
 path="/privacy"
 element={<Privacy />}
 />
 
+
+
 <Route
 path="/terms"
 element={<Terms />}
 />
 
-{/* =================================
-PROTECTED ROUTES
-================================= */}
+
+
+
+
+{/* ================================
+PROTECTED AREA
+================================ */}
 
 
 
@@ -182,103 +172,72 @@ element={
 
 
 
-
 <Route
-
 path="/dashboard"
-
 element={<Dashboard />}
-
 />
 
 
 
 <Route
-
 path="/learning"
-
 element={<LearningHub />}
-
 />
 
 
 
 <Route
-
 path="/courses"
-
 element={<Courses />}
-
 />
 
 
 
 <Route
-
 path="/projects"
-
 element={<Projects />}
-
 />
 
 
 
 <Route
-
 path="/ai"
-
 element={<AIMentor />}
-
 />
 
 
 
 <Route
-
 path="/certificates"
-
 element={<Certificates />}
-
 />
 
 
 
 <Route
-
 path="/community"
-
 element={<Community />}
-
 />
 
 
 
 <Route
-
 path="/leaderboard"
-
 element={<Leaderboard />}
-
 />
 
 
 
 <Route
-
 path="/profile"
-
 element={<Profile />}
-
 />
 
 
 
 <Route
-
 path="/settings"
-
 element={<Settings />}
-
 />
 
 
@@ -347,9 +306,9 @@ element={
 
 
 
-{/* =================================
-UNKNOWN ROUTES
-================================= */}
+{/* ================================
+FALLBACK
+================================ */}
 
 
 
@@ -357,7 +316,17 @@ UNKNOWN ROUTES
 
 path="*"
 
-element={<Navigate to="/" replace />}
+element={
+
+<Navigate
+
+to="/"
+
+replace
+
+/>
+
+}
 
 />
 

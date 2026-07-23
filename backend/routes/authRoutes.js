@@ -9,9 +9,39 @@ const User = require("../models/User");
 
 
 
-// ======================================
-// REGISTER
-// ======================================
+// ========================================
+// CREATE JWT TOKEN
+// ========================================
+
+function createToken(user){
+
+
+return jwt.sign(
+
+{
+id:user._id,
+email:user.email
+},
+
+process.env.JWT_SECRET,
+
+{
+expiresIn:"7d"
+}
+
+);
+
+
+}
+
+
+
+
+
+
+// ========================================
+// REGISTER USER
+// ========================================
 
 router.post("/register", async(req,res)=>{
 
@@ -19,27 +49,32 @@ router.post("/register", async(req,res)=>{
 try{
 
 
-console.log("REGISTER BODY:",req.body);
-
-
-
 const {
+
 name,
+
 email,
+
 password
+
 }=req.body;
 
 
 
 
-if(!name || !email || !password){
+
+if(
+!name ||
+!email ||
+!password
+){
 
 
 return res.status(400).json({
 
 success:false,
 
-message:"All fields required"
+message:"All fields are required"
 
 });
 
@@ -51,14 +86,26 @@ message:"All fields required"
 
 
 
-const userExists =
+const cleanEmail =
+email.toLowerCase().trim();
+
+
+
+
+
+
+const existingUser =
 await User.findOne({
-email
+
+email:cleanEmail
+
 });
 
 
 
-if(userExists){
+
+
+if(existingUser){
 
 
 return res.status(400).json({
@@ -79,8 +126,11 @@ message:"Email already registered"
 
 const passwordHash =
 await bcrypt.hash(
+
 password,
+
 10
+
 );
 
 
@@ -91,9 +141,9 @@ password,
 const user =
 await User.create({
 
-name,
+name:name.trim(),
 
-email,
+email:cleanEmail,
 
 password:passwordHash
 
@@ -105,21 +155,39 @@ password:passwordHash
 
 
 
+const token =
+createToken(user);
+
+
+
+
+
+
+
 return res.status(201).json({
 
 success:true,
 
-message:"Registration successful",
+message:"Account created successfully",
+
+token,
+
 
 user:{
 
+
 id:user._id,
+
 
 name:user.name,
 
+
 email:user.email
 
+
 }
+
+
 
 });
 
@@ -127,13 +195,13 @@ email:user.email
 
 }
 
-
 catch(error){
 
 
-console.log("REGISTER ERROR:");
-
-console.log(error);
+console.log(
+"REGISTER ERROR:",
+error.message
+);
 
 
 
@@ -141,7 +209,7 @@ return res.status(500).json({
 
 success:false,
 
-message:error.message
+message:"Registration failed"
 
 });
 
@@ -160,19 +228,15 @@ message:error.message
 
 
 
-// ======================================
-// LOGIN
-// ======================================
+// ========================================
+// LOGIN USER
+// ========================================
 
 
 router.post("/login", async(req,res)=>{
 
 
 try{
-
-
-console.log("LOGIN BODY:",req.body);
-
 
 
 const {
@@ -187,8 +251,10 @@ password
 
 
 
-
-if(!email || !password){
+if(
+!email ||
+!password
+){
 
 
 return res.status(400).json({
@@ -208,11 +274,13 @@ message:"Email and password required"
 
 
 
-
 const user =
 await User.findOne({
-email
+
+email:email.toLowerCase().trim()
+
 });
+
 
 
 
@@ -225,7 +293,7 @@ return res.status(404).json({
 
 success:false,
 
-message:"User not found"
+message:"Account not found"
 
 });
 
@@ -237,7 +305,8 @@ message:"User not found"
 
 
 
-const passwordMatch =
+
+const passwordValid =
 await bcrypt.compare(
 
 password,
@@ -251,14 +320,14 @@ user.password
 
 
 
-if(!passwordMatch){
+if(!passwordValid){
 
 
 return res.status(401).json({
 
 success:false,
 
-message:"Invalid password"
+message:"Incorrect password"
 
 });
 
@@ -270,29 +339,8 @@ message:"Invalid password"
 
 
 
-
 const token =
-jwt.sign(
-
-{
-
-id:user._id,
-
-email:user.email
-
-},
-
-process.env.JWT_SECRET,
-
-{
-
-expiresIn:"7d"
-
-}
-
-);
-
-
+createToken(user);
 
 
 
@@ -305,31 +353,36 @@ success:true,
 
 token,
 
+
 user:{
+
 
 id:user._id,
 
+
 name:user.name,
+
 
 email:user.email
 
+
 }
+
+
 
 });
 
 
 
-
 }
-
-
 
 catch(error){
 
 
-console.log("LOGIN ERROR:");
-
-console.log(error);
+console.log(
+"LOGIN ERROR:",
+error.message
+);
 
 
 
@@ -337,7 +390,7 @@ return res.status(500).json({
 
 success:false,
 
-message:error.message
+message:"Login failed"
 
 });
 
@@ -345,10 +398,7 @@ message:error.message
 }
 
 
-
 });
-
-
 
 
 

@@ -4,24 +4,27 @@ import { Link, useNavigate } from "react-router-dom";
 import Logo from "../assets/images/logo.png";
 
 import {
- registerUser,
- loginUser
+registerUser
 } from "../services/authService";
 
 import {
- useAuth
+useAuth
 } from "../context/AuthContext";
 
 import "../styles/auth.css";
 
 
+
 export default function Register(){
 
+
 const navigate = useNavigate();
+
 
 const {
 setSession
 }=useAuth();
+
 
 
 
@@ -44,7 +47,9 @@ confirmPassword:""
 
 
 
+
 function handleChange(e){
+
 
 setForm({
 
@@ -54,7 +59,11 @@ setForm({
 
 });
 
+
 }
+
+
+
 
 
 
@@ -62,9 +71,13 @@ setForm({
 
 async function handleRegister(e){
 
+
 e.preventDefault();
 
+
 setError("");
+
+
 
 
 
@@ -75,25 +88,38 @@ if(
 !form.confirmPassword
 ){
 
+
 setError(
 "Please complete all fields."
 );
 
+
 return;
+
 
 }
 
 
 
-if(form.password !== form.confirmPassword){
+
+
+
+if(
+form.password !== form.confirmPassword
+){
+
 
 setError(
 "Passwords do not match."
 );
 
+
 return;
 
+
 }
+
+
 
 
 
@@ -104,6 +130,9 @@ setLoading(true);
 
 
 
+
+
+const response =
 await registerUser({
 
 name:form.name,
@@ -116,29 +145,18 @@ password:form.password
 
 
 
-const loginResponse =
-await loginUser({
-
-email:form.email,
-
-password:form.password
-
-});
 
 
 
 
+setSession(
 
-localStorage.setItem(
-"pbody_session",
-JSON.stringify({
+response.user,
 
-user:loginResponse.user,
+response.token
 
-token:loginResponse.token
-
-})
 );
+
 
 
 
@@ -150,30 +168,41 @@ navigate("/dashboard");
 
 }
 
-catch(err){
+catch(error){
 
 
-console.log(err);
+
+console.log(error);
+
 
 
 setError(
 
-err?.response?.data?.message ||
+error?.response?.data?.message ||
+
 "Registration failed"
 
 );
+
 
 
 }
 
 finally{
 
+
 setLoading(false);
 
+
 }
 
 
 }
+
+
+
+
+
 
 
 
@@ -182,8 +211,8 @@ setLoading(false);
 return(
 
 
-
 <div className="authPage">
+
 
 
 <div className="authBackground">
@@ -197,7 +226,13 @@ return(
 
 
 
+
+
+
 <div className="authContainer">
+
+
+
 
 
 
@@ -205,9 +240,13 @@ return(
 
 
 <img
+
 src={Logo}
-alt="PBody"
+
+alt="PBody Fullstack Academy"
+
 />
+
 
 
 <h1>
@@ -215,6 +254,7 @@ alt="PBody"
 PBODY FULLSTACK ACADEMY
 
 </h1>
+
 
 
 <p>
@@ -231,7 +271,13 @@ AI Powered Engineering Academy
 
 
 
+
+
+
 <div className="authCard">
+
+
+
 
 
 
@@ -240,7 +286,7 @@ AI Powered Engineering Academy
 
 <span>
 
-🚀 Join The Future
+🚀 Future Engineer Registration
 
 </span>
 
@@ -248,7 +294,7 @@ AI Powered Engineering Academy
 
 <h2>
 
-Create Engineer Account
+Create Your Engineer Account
 
 </h2>
 
@@ -256,9 +302,10 @@ Create Engineer Account
 
 <p>
 
-Start your professional software engineering journey.
+Join thousands building professional software engineering skills.
 
 </p>
+
 
 
 </div>
@@ -268,7 +315,13 @@ Start your professional software engineering journey.
 
 
 
+
+
+
 <form onSubmit={handleRegister}>
+
+
+
 
 
 <div className="inputGroup">
@@ -288,12 +341,14 @@ value={form.name}
 
 onChange={handleChange}
 
-placeholder="Your full name"
+placeholder="Enter your full name"
 
 />
 
 
 </div>
+
+
 
 
 
@@ -331,6 +386,8 @@ placeholder="developer@email.com"
 
 
 
+
+
 <div className="inputGroup">
 
 <label>
@@ -350,12 +407,14 @@ value={form.password}
 
 onChange={handleChange}
 
-placeholder="Create password"
+placeholder="Create secure password"
 
 />
 
 
 </div>
+
+
 
 
 
@@ -393,7 +452,10 @@ placeholder="Confirm password"
 
 
 
+
+
 {
+
 error &&
 
 <p className="authError">
@@ -403,6 +465,9 @@ error &&
 </p>
 
 }
+
+
+
 
 
 
@@ -417,16 +482,23 @@ disabled={loading}
 
 
 {
+
 loading
+
 ?
-"Creating Account..."
+
+"Creating Engineer Profile..."
+
 :
-"Create Academy Account 🚀"
+
+"Join PBody Academy 🚀"
 
 }
 
 
 </button>
+
+
 
 
 
@@ -437,12 +509,14 @@ loading
 
 
 
+
+
 <div className="authFooter">
 
 
 <p>
 
-Already an engineer?
+Already building?
 
 <Link to="/login">
 
@@ -460,6 +534,16 @@ Login
 
 
 
+
+
+</div>
+
+
+
+
+
+
+
 </div>
 
 
@@ -467,11 +551,6 @@ Login
 
 
 </div>
-
-
-
-</div>
-
 
 
 );

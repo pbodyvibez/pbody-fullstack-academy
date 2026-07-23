@@ -156,63 +156,37 @@ completion.choices[0].message.content
 
 }
 
-catch(error){
+catch (error) {
 
+  console.log("========== OPENAI ERROR ==========");
+  console.log("Status:", error.status);
+  console.log("Code:", error.code);
+  console.log("Message:", error.message);
 
+  if (error.response) {
+    console.log("Response:", error.response.data);
+  }
 
-console.log(
+  console.log("=================================");
 
-"AI ERROR:",
+  if (
+    error.status === 429 ||
+    error.code === "insufficient_quota"
+  ) {
+    return res.json({
+      success: true,
+      fallback: true,
+      reply:
+        "⚠️ AI Mentor is temporarily unavailable because AI credits need renewal."
+    });
+  }
 
-error.message
-
-);
-
-
-
-
-
-if(
-
-error.status===429 ||
-
-error.code==="insufficient_quota"
-
-){
-
-
-return res.json({
-
-success:true,
-
-fallback:true,
-
-reply:
-
-"⚠️ AI Mentor is temporarily unavailable because AI credits need renewal. Please continue your lesson while we restore AI access."
-
-});
-
+  return res.status(500).json({
+    success: false,
+    message: error.message
+  });
 
 }
-
-
-
-
-
-
-
-return res.status(500).json({
-
-success:false,
-
-message:"AI Mentor unavailable"
-
-});
-
-
-}
-
 
 
 });

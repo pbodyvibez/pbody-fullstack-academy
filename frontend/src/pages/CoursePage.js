@@ -17,7 +17,8 @@ import LessonNotes from "../components/course/LessonNotes";
 import LessonQuiz from "../components/course/LessonQuiz";
 import CompleteLesson from "../components/course/CompleteLesson";
 
-
+import AICourseTracker from "../components/ai/AICourseTracker";
+import AILessonTracker from "../components/ai/AILessonTracker";
 import { useProgress } from "../context/ProgressContext";
 
 
@@ -124,7 +125,9 @@ return(
 
 
 
+<AICourseTracker course={course} />
 
+<AILessonTracker lesson={currentLesson} />
 
 <CourseHeader
 

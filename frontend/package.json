@@ -3,6 +3,11 @@
   "version": "1.0.0",
   "private": true,
   "dependencies": {
+    "@capacitor/android": "^8.4.2",
+    "@capacitor/cli": "^8.4.2",
+    "@capacitor/core": "^8.4.2",
+    "@capacitor/splash-screen": "^8.0.2",
+    "@capacitor/status-bar": "^8.0.3",
     "axios": "^1.18.1",
     "cors": "^2.8.6",
     "dotenv": "^17.4.2",
@@ -14,7 +19,8 @@
     "react-router-dom": "^6.30.4",
     "react-scripts": "5.0.1",
     "swiper": "^14.0.5",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "workbox-webpack-plugin": "^7.4.1"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -33,5 +39,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@capacitor/assets": "^3.0.5"
   }
 }

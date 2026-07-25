@@ -1,100 +1,194 @@
-import { useState } from "react";
+// ===============================================
+// PBODY FULLSTACK ACADEMY
+// QUIZ ENGINE COMPONENT
+// ===============================================
+
+
+import {
+useState,
+useMemo
+} from "react";
+
 
 import "../../styles/quizEngine.css";
 
-import { useProgress } from "../../context/ProgressContext";
+
+import {
+calculateQuizResult
+} from "../../data/quizzes/quizEngine";
 
 
-export default function QuizEngine({lesson}){
+import {
+prepareQuiz
+} from "../../data/quizzes/quizUtils";
+
+
+import {
+useProgress
+} from "../../context/ProgressContext";
+
+
+import {
+useUserEngine
+} from "../../context/UserEngineContext";
+
+
+
+
+
+export default function QuizEngine({
+
+questions=[],
+
+lesson,
+
+onComplete
+
+}){
 
 
 const {
-completeLesson
+completeQuiz
 }=useProgress();
 
 
 
-const questions = lesson.quizData || [
+const {
+addXP
+}=useUserEngine();
 
-{
-question:"What does HTML stand for?",
-options:[
-"Hyper Text Markup Language",
-"High Tech Modern Language",
-"Hyper Transfer Machine Language",
-"Home Tool Markup Language"
-],
-answer:0
-},
 
-{
-question:"Which language is used for styling websites?",
-options:[
-"Python",
-"CSS",
-"Java",
-"SQL"
-],
-answer:1
-},
 
-{
-question:"React is mainly used for building what?",
-options:[
-"Databases",
-"User Interfaces",
-"Operating Systems",
-"Servers"
-],
-answer:1
+
+
+const preparedQuestions = useMemo(()=>{
+
+
+if(!questions || questions.length===0){
+
+return [];
+
 }
 
-];
+
+return prepareQuiz(questions);
+
+
+},[questions]);
 
 
 
-const [current,setCurrent]=useState(0);
 
-const [selected,setSelected]=useState(null);
 
-const [score,setScore]=useState(0);
 
-const [finished,setFinished]=useState(false);
+
+const [
+current,
+setCurrent
+]=useState(0);
+
+
+
+const [
+answers,
+setAnswers
+]=useState([]);
+
+
+
+const [
+selected,
+setSelected
+]=useState(null);
+
+
+
+const [
+finished,
+setFinished
+]=useState(false);
+
+
+
+
+
+
+
+if(preparedQuestions.length===0){
+
+
+return(
+
+<div className="quizResult">
+
+<h2>
+
+No questions available
+
+</h2>
+
+</div>
+
+);
+
+
+}
+
+
+
+
+
 
 
 
 const selectAnswer=(index)=>{
 
+
+if(selected!==null)return;
+
+
 setSelected(index);
 
+
+
+const updatedAnswers=[...answers];
+
+
+updatedAnswers[current]=index;
+
+
+setAnswers(updatedAnswers);
+
+
 };
+
+
+
+
+
+
 
 
 
 const nextQuestion=()=>{
 
 
-if(selected===null)
-return;
+if(selected===null)return;
 
 
 
-if(selected===questions[current].answer){
+if(current < preparedQuestions.length-1){
 
-setScore(score+1);
-
-}
-
-
-
-if(current < questions.length-1){
 
 setCurrent(current+1);
+
 
 setSelected(null);
 
 
-}else{
+}
+
+else{
 
 
 setFinished(true);
@@ -102,23 +196,48 @@ setFinished(true);
 
 }
 
+
 };
 
 
 
 
 
-const percentage=Math.round(
 
-(score/questions.length)*100
+
+
+if(finished){
+
+
+
+const result = calculateQuizResult(
+
+preparedQuestions,
+
+answers
 
 );
 
 
 
 
+if(result.passed){
 
-if(finished){
+
+completeQuiz?.(
+lesson?.id
+);
+
+
+addXP?.(
+result.xpEarned
+);
+
+
+}
+
+
+
 
 
 return(
@@ -129,63 +248,56 @@ return(
 <div className="resultIcon">
 
 {
-
-percentage >= 70
-
+result.passed
 ?
-
 "🏆"
-
 :
-
 "📚"
-
 }
 
 </div>
 
 
-
 <h2>
-
 Quiz Completed
-
 </h2>
-
 
 
 <h3>
 
-{score} / {questions.length}
+{result.score}
+
+/
+
+{result.totalQuestions}
 
 </h3>
 
 
+<p>
+
+Score: {result.percentage}%
+
+</p>
+
 
 <p>
 
-Score: {percentage}%
+XP Earned ⭐ {result.xpEarned}
 
 </p>
 
 
 
-{
-
-percentage >=70 &&
-
 <button
 
-onClick={()=>completeLesson(lesson)}
+onClick={()=>onComplete?.()}
 
 >
 
-Claim XP Reward 🚀
+Return To Lesson
 
 </button>
-
-}
-
 
 
 </div>
@@ -194,6 +306,16 @@ Claim XP Reward 🚀
 
 
 }
+
+
+
+
+
+
+
+const question = preparedQuestions[current];
+
+
 
 
 
@@ -205,19 +327,25 @@ return(
 <div className="quizContainer">
 
 
+
 <div className="quizHeader">
 
 
 <span>
 
-Question {current+1} / {questions.length}
+Question {current+1}
+
+/
+
+{preparedQuestions.length}
 
 </span>
 
 
+
 <h2>
 
-{lesson.title}
+{lesson?.title}
 
 </h2>
 
@@ -227,14 +355,18 @@ Question {current+1} / {questions.length}
 
 
 
+
+
+
 <div className="questionCard">
 
 
 <h3>
 
-{questions[current].question}
+{question.question}
 
 </h3>
+
 
 
 
@@ -244,14 +376,16 @@ Question {current+1} / {questions.length}
 
 {
 
-questions[current].options.map(
+question.options.map(
 
 (option,index)=>(
 
 
 <button
 
+
 key={index}
+
 
 className={
 
@@ -267,7 +401,9 @@ selected===index
 
 }
 
+
 onClick={()=>selectAnswer(index)}
+
 
 >
 
@@ -280,7 +416,9 @@ onClick={()=>selectAnswer(index)}
 
 )
 
+
 )
+
 
 }
 
@@ -293,6 +431,10 @@ onClick={()=>selectAnswer(index)}
 
 
 
+
+
+
+
 <button
 
 className="nextQuestion"
@@ -301,13 +443,14 @@ onClick={nextQuestion}
 
 >
 
+
 {
 
-current===questions.length-1
+current===preparedQuestions.length-1
 
 ?
 
-"Finish Quiz"
+"Finish Quiz 🚀"
 
 :
 
@@ -320,10 +463,12 @@ current===questions.length-1
 
 
 
+
 </div>
 
 
 );
+
 
 
 }

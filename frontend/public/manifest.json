@@ -1,0 +1,10 @@
+{
+  "short_name": "PBody",
+  "name": "PBody Fullstack Academy - AI Powered Engineering Academy",
+  "description": "Premium AI-powered software engineering education platform.",
+  "start_url": "/",
+  "display": "standalone",
+  "theme_color": "#061b4f",
+  "background_color": "#ffffff",
+  "orientation": "portrait"
+}

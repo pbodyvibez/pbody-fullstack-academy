@@ -1,0 +1,6 @@
+{
+  "appId": "com.pbody.fullstackacademy",
+  "appName": "PBody Fullstack Academy",
+  "webDir": "build",
+  "bundledWebRuntime": false
+}

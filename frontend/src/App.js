@@ -14,9 +14,9 @@ import ProtectedLayout from "./components/layout/ProtectedLayout";
 
 
 
-/* ================================
-PUBLIC PAGES
-================================ */
+// ================================
+// PUBLIC PAGES
+// ================================
 
 import About from "./pages/About";
 import Home from "./pages/Home";
@@ -30,15 +30,16 @@ import Terms from "./pages/Terms";
 
 
 
-/* ================================
-PROTECTED PAGES
-================================ */
+// ================================
+// PROTECTED PAGES
+// ================================
 
 import Dashboard from "./pages/Dashboard";
 import LearningHub from "./pages/LearningHub";
 import Courses from "./pages/Courses";
 import CoursePage from "./pages/CoursePage";
 import Lessons from "./pages/Lessons";
+import Quiz from "./pages/Quiz";
 
 import Projects from "./pages/Projects";
 import AIMentor from "./pages/AIMentor";
@@ -50,25 +51,25 @@ import Profile from "./pages/Profile";
 import Settings from "./pages/Settings";
 
 
-
 import "./styles/global.css";
+
+
 
 
 
 export default function App(){
 
 
-return(
-
+return (
 
 <>
-
 
 <ScrollRestoration />
 
 
-
 <Routes>
+
+
 
 
 
@@ -84,19 +85,10 @@ element={<Home />}
 />
 
 
-
-<Route
-path="/home"
-element={<Home />}
-/>
-
-
-
 <Route
 path="/about"
 element={<About />}
 />
-
 
 
 <Route
@@ -105,12 +97,10 @@ element={<Login />}
 />
 
 
-
 <Route
 path="/register"
 element={<Register />}
 />
-
 
 
 <Route
@@ -119,12 +109,10 @@ element={<Pricing />}
 />
 
 
-
 <Route
 path="/payment-success"
 element={<PaymentSuccess />}
 />
-
 
 
 <Route
@@ -133,12 +121,10 @@ element={<Contact />}
 />
 
 
-
 <Route
 path="/privacy"
 element={<Privacy />}
 />
-
 
 
 <Route
@@ -150,9 +136,13 @@ element={<Terms />}
 
 
 
+
+
+
 {/* ================================
-PROTECTED AREA
+AUTHENTICATED ACADEMY AREA
 ================================ */}
+
 
 
 
@@ -172,10 +162,12 @@ element={
 
 
 
+
 <Route
 path="/dashboard"
 element={<Dashboard />}
 />
+
 
 
 
@@ -186,10 +178,12 @@ element={<LearningHub />}
 
 
 
+
 <Route
 path="/courses"
 element={<Courses />}
 />
+
 
 
 
@@ -200,10 +194,20 @@ element={<Projects />}
 
 
 
+
 <Route
 path="/ai"
 element={<AIMentor />}
 />
+
+
+
+
+<Route
+path="/aitutor"
+element={<AIMentor />}
+/>
+
 
 
 
@@ -214,10 +218,12 @@ element={<Certificates />}
 
 
 
+
 <Route
 path="/community"
 element={<Community />}
 />
+
 
 
 
@@ -228,6 +234,7 @@ element={<Leaderboard />}
 
 
 
+
 <Route
 path="/profile"
 element={<Profile />}
@@ -235,10 +242,21 @@ element={<Profile />}
 
 
 
+
 <Route
 path="/settings"
 element={<Settings />}
 />
+
+
+
+
+
+
+
+{/* ================================
+PREMIUM COURSE ACCESS
+================================ */}
 
 
 
@@ -263,6 +281,8 @@ element={
 
 
 
+
+
 <Route
 
 path="/lesson/:courseId/:lessonId"
@@ -282,15 +302,24 @@ element={
 
 
 
+
+
+{/* ================================
+QUIZ SYSTEM
+================================ */}
+
+
+
+
 <Route
 
-path="/aitutor"
+path="/quiz"
 
 element={
 
 <PremiumRoute>
 
-<AIMentor />
+<Quiz />
 
 </PremiumRoute>
 
@@ -300,14 +329,18 @@ element={
 
 
 
+
+
 </Route>
 
 
 
 
 
+
+
 {/* ================================
-FALLBACK
+UNKNOWN ROUTES
 ================================ */}
 
 
@@ -332,11 +365,11 @@ replace
 
 
 
+
 </Routes>
 
 
 </>
-
 
 );
 

@@ -1,0 +1,488 @@
+/* ===============================================
+   PBODY FULLSTACK ACADEMY
+   AI ASSISTANT PREMIUM STYLES
+=============================================== */
+
+
+
+.ai-floating-button {
+
+  position: fixed;
+
+  right: 30px;
+
+  bottom: 30px;
+
+  width: 70px;
+
+  height: 70px;
+
+  border-radius: 50%;
+
+  border:none;
+
+  cursor:pointer;
+
+  font-size:32px;
+
+  background:linear-gradient(
+    135deg,
+    #0d47a1,
+    #00bcd4
+  );
+
+  color:white;
+
+  box-shadow:
+  0 15px 40px rgba(0,0,0,0.25);
+
+  z-index:9999;
+
+  transition:0.3s;
+
+}
+
+
+
+.ai-floating-button:hover{
+
+  transform:scale(1.1);
+
+}
+
+
+
+
+
+/* ===============================================
+   MAIN WINDOW
+=============================================== */
+
+
+
+.ai-assistant-window {
+
+
+position:fixed;
+
+
+right:30px;
+
+
+bottom:120px;
+
+
+width:380px;
+
+
+height:560px;
+
+
+background:white;
+
+
+border-radius:24px;
+
+
+overflow:hidden;
+
+
+display:flex;
+
+
+flex-direction:column;
+
+
+box-shadow:
+
+0 25px 60px rgba(0,0,0,0.3);
+
+
+z-index:9998;
+
+
+}
+
+
+
+
+
+
+/* ===============================================
+   HEADER
+=============================================== */
+
+
+
+.ai-header {
+
+
+padding:20px;
+
+
+background:
+
+linear-gradient(
+
+135deg,
+
+#0d47a1,
+
+#1565c0
+
+);
+
+
+color:white;
+
+
+display:flex;
+
+
+justify-content:space-between;
+
+
+align-items:center;
+
+
+}
+
+
+
+.ai-header h3 {
+
+
+margin:0;
+
+
+font-size:18px;
+
+
+}
+
+
+
+
+.ai-header span {
+
+
+background:#4caf50;
+
+
+padding:6px 12px;
+
+
+border-radius:20px;
+
+
+font-size:12px;
+
+
+}
+
+
+
+
+
+
+
+/* ===============================================
+   CHAT AREA
+=============================================== */
+
+
+
+.ai-messages {
+
+
+flex:1;
+
+
+overflow-y:auto;
+
+
+padding:20px;
+
+
+background:#f4f8ff;
+
+
+}
+
+
+
+
+
+.ai-empty {
+
+
+line-height:1.8;
+
+
+color:#555;
+
+
+}
+
+
+
+
+
+
+.ai-message,
+
+.student-message {
+
+
+max-width:85%;
+
+
+padding:12px 16px;
+
+
+border-radius:18px;
+
+
+margin-bottom:12px;
+
+
+line-height:1.5;
+
+
+font-size:14px;
+
+
+}
+
+
+
+
+.ai-message {
+
+
+background:#e3f2fd;
+
+
+color:#0d47a1;
+
+
+}
+
+
+
+.student-message {
+
+
+background:#0d47a1;
+
+
+color:white;
+
+
+margin-left:auto;
+
+
+}
+
+
+
+
+
+.ai-typing {
+
+
+font-style:italic;
+
+
+color:#777;
+
+
+font-size:13px;
+
+
+}
+
+
+
+
+
+
+/* ===============================================
+   SUGGESTIONS
+=============================================== */
+
+
+
+.ai-suggestions {
+
+
+display:flex;
+
+
+gap:8px;
+
+
+padding:10px;
+
+
+overflow-x:auto;
+
+
+border-top:1px solid #eee;
+
+
+}
+
+
+
+.ai-suggestions button {
+
+
+white-space:nowrap;
+
+
+border:none;
+
+
+padding:8px 12px;
+
+
+border-radius:20px;
+
+
+cursor:pointer;
+
+
+background:#e3f2fd;
+
+
+color:#0d47a1;
+
+
+font-size:12px;
+
+
+}
+
+
+
+.ai-suggestions button:hover {
+
+
+background:#0d47a1;
+
+
+color:white;
+
+
+}
+
+
+
+
+
+
+
+/* ===============================================
+   INPUT AREA
+=============================================== */
+
+
+
+.ai-footer {
+
+
+display:flex;
+
+
+gap:10px;
+
+
+padding:15px;
+
+
+border-top:1px solid #ddd;
+
+
+background:white;
+
+
+}
+
+
+
+
+
+.ai-footer input {
+
+
+flex:1;
+
+
+padding:12px;
+
+
+border-radius:12px;
+
+
+border:1px solid #ccc;
+
+
+outline:none;
+
+
+font-size:14px;
+
+
+}
+
+
+
+.ai-footer input:focus {
+
+
+border-color:#0d47a1;
+
+
+}
+
+
+
+
+
+
+.ai-footer button {
+
+
+padding:12px 18px;
+
+
+border:none;
+
+
+border-radius:12px;
+
+
+cursor:pointer;
+
+
+background:#0d47a1;
+
+
+color:white;
+
+
+font-weight:bold;
+
+
+}
+
+
+
+.ai-footer button:hover {
+
+
+background:#1565c0;
+
+
+}

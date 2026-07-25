@@ -1,265 +1,297 @@
-import { useLocation, useNavigate } from "react-router-dom";
-import { useState } from "react";
+// ===============================================
+// PBODY FULLSTACK ACADEMY
+// QUIZ PAGE
+// ===============================================
 
-import quizzes from "../data/quizzes";
+
+import {
+useLocation,
+useNavigate
+} from "react-router-dom";
+
 
 import AppLayout from "../components/layout/AppLayout";
 
-import { useProgress } from "../context/ProgressContext";
-import { useUserEngine } from "../context/UserEngineContext";
+
+import QuizEngine from "../components/quiz/QuizEngine";
+
+
+import quizzes from "../data/quizzes";
+
 
 import "../styles/quiz.css";
 
-export default function Quiz() {
 
-  const navigate = useNavigate();
 
-  const { completeQuiz } = useProgress();
 
-  const { addXP } = useUserEngine();
 
-  const location = useLocation();
+export default function Quiz(){
 
-  const { lesson, course } = location.state || {};
 
-  const quizBank = quizzes[lesson?.id] || [];
 
-  const [currentQuestion,setCurrentQuestion]=useState(0);
+const navigate = useNavigate();
 
-  const [score,setScore]=useState(0);
 
-  const [selected,setSelected]=useState(null);
+const location = useLocation();
 
-  const [finished,setFinished]=useState(false);
 
-  if(!lesson||quizBank.length===0){
 
-    return(
 
-      <AppLayout>
 
-        <div
-          style={{
-            color:"white",
-            padding:"60px",
-            textAlign:"center"
-          }}
-        >
+const {
 
-          No quiz available for this lesson.
+lesson,
 
-        </div>
+course,
 
-      </AppLayout>
+category="frontend"
 
-    );
+}
 
-  }
+=
 
-  const question=quizBank[currentQuestion];
+location.state || {};
 
-  const chooseAnswer=(index)=>{
 
-    if(selected!==null)return;
 
-    setSelected(index);
 
-    if(index===question.answer){
 
-      setScore(score+10);
 
-    }
 
-  };
 
-  const nextQuestion=()=>{
+// ===============================================
+// LOAD QUIZ DATA
+// ===============================================
 
-    if(currentQuestion+1>=quizBank.length){
 
-      setFinished(true);
+const selectedCategory =
 
-      return;
+quizzes[category]
 
-    }
+|| {};
 
-    setCurrentQuestion(currentQuestion+1);
 
-    setSelected(null);
 
-  };
 
-  if(finished){
+const quizQuestions =
 
-    const passed=score>=quizBank.length*5;
+selectedCategory.lesson1
 
-    if(passed){
+|| [];
 
-      completeQuiz(lesson.id);
 
-      addXP?.(20);
 
-    }
 
-    return(
 
-      <AppLayout>
 
-        <div className="quiz-container">
 
-          <div className="quiz-result">
+console.log(
 
-            <h1>
+"QUIZ SYSTEM DEBUG",
 
-              {
+{
 
-                passed
+category,
 
-                ?
+lesson,
 
-                "🎉 Quiz Passed!"
+course,
 
-                :
+allQuizzes:quizzes,
 
-                "📚 Try Again"
+quizQuestions
 
-              }
+}
 
-            </h1>
+);
 
-            <h2>
 
-              Score
 
-            </h2>
 
-            <h1>
 
-              {score}
 
-            </h1>
 
-            <button
 
-              onClick={()=>navigate("/lesson",{
 
-                state:{
+if(!lesson){
 
-                  lesson,
 
-                  course
 
-                }
+return(
 
-              })}
 
-            >
+<AppLayout>
 
-              Return to Lesson
 
-            </button>
+<div className="quiz-container">
 
-          </div>
 
-        </div>
+<div className="quiz-card">
 
-      </AppLayout>
 
-    );
+<h2>
 
-  }
+No lesson selected.
 
-  return(
+</h2>
 
-    <AppLayout>
 
-      <div className="quiz-container">
+<p>
 
-        <div className="quiz-card">
+Please open the quiz from a lesson page.
 
-          <h2>
+</p>
 
-            {question.question}
 
-          </h2>
+</div>
 
-          <div className="quiz-options">
 
-            {
+</div>
 
-              question.options.map((option,index)=>{
 
-                let cls="quiz-option";
+</AppLayout>
 
-                if(selected!==null){
 
-                  if(index===question.answer){
+);
 
-                    cls+=" correct";
 
-                  }
+}
 
-                  else if(index===selected){
 
-                    cls+=" wrong";
 
-                  }
 
-                }
 
-                return(
 
-                  <button
 
-                    key={index}
 
-                    className={cls}
+if(quizQuestions.length===0){
 
-                    onClick={()=>chooseAnswer(index)}
 
-                  >
 
-                    {option}
+return(
 
-                  </button>
 
-                );
+<AppLayout>
 
-              })
 
-            }
+<div className="quiz-container">
 
-          </div>
 
-          <button
+<div className="quiz-card">
 
-            disabled={selected===null}
 
-            onClick={nextQuestion}
+<h2>
 
-          >
+No quiz available for this lesson.
 
-            {
+</h2>
 
-              currentQuestion+1===quizBank.length
 
-              ?
+<p>
 
-              "Finish Quiz"
+Category:
 
-              :
+{category}
 
-              "Next"
+</p>
 
-            }
 
-          </button>
+</div>
 
-        </div>
 
-      </div>
+</div>
 
-    </AppLayout>
 
-  );
+</AppLayout>
+
+
+);
+
+
+}
+
+
+
+
+
+
+
+
+
+
+return(
+
+
+
+<AppLayout>
+
+
+
+<div className="quiz-container">
+
+
+
+
+
+<QuizEngine
+
+
+
+questions={quizQuestions}
+
+
+
+lesson={lesson}
+
+
+
+onComplete={()=>{
+
+
+
+navigate("/lesson",{
+
+
+
+state:{
+
+
+
+lesson,
+
+course
+
+
+
+}
+
+
+
+});
+
+
+
+}}
+
+
+
+/>
+
+
+
+
+
+
+</div>
+
+
+
+</AppLayout>
+
+
+
+);
+
+
 
 }

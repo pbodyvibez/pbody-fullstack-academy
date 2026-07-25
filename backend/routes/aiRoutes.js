@@ -1,110 +1,129 @@
+// ===============================================
+// PBODY FULLSTACK ACADEMY
+// AI ROUTES
+// ===============================================
+
 const express = require("express");
 const OpenAI = require("openai");
 
 const auth = require("../middleware/authMiddleware");
 
-
 const router = express.Router();
 
 
+// ===============================================
+// OPENAI CLIENT
+// ===============================================
 
 const client = new OpenAI({
 
-apiKey:process.env.OPENAI_API_KEY,
+  apiKey: process.env.OPENAI_API_KEY,
 
-timeout:30000
-
-});
-
-
-
-
-
-
-router.post("/chat",auth,async(req,res)=>{
-
-
-try{
-
-
-const {
-
-message,
-
-lesson,
-
-course,
-
-student
-
-}=req.body;
-
-
-
-
-
-if(!message){
-
-
-return res.status(400).json({
-
-success:false,
-
-message:"Message required"
+  timeout: 30000
 
 });
 
 
-}
+
+
+// ===============================================
+// AI CHAT
+// ===============================================
+
+router.post(
+  "/chat",
+  auth,
+  async (req, res) => {
+
+
+    console.log("🤖 AI REQUEST RECEIVED");
+
+
+    try {
+
+
+      const {
+
+        message,
+
+        lesson,
+
+        course,
+
+        student
+
+      } = req.body;
+
+
+
+      console.log(
+        "Message:",
+        message
+      );
+
+
+
+      if(!message){
+
+
+        return res.status(400).json({
+
+          success:false,
+
+          message:"Message required"
+
+        });
+
+
+      }
 
 
 
 
+      console.log(
+        "Calling OpenAI..."
+      );
 
 
 
-const completion =
-await client.chat.completions.create({
+
+      const completion = await client.chat.completions.create({
+
+        model:"gpt-4o-mini",
 
 
-model:"gpt-4o-mini",
+        temperature:0.5,
 
 
-temperature:0.5,
+        messages:[
 
 
-messages:[
+          {
 
 
-{
+            role:"system",
 
-role:"system",
 
-content:`
+            content:`
 
 You are PBody FullStack Academy AI Engineering Mentor.
 
-You teach like a senior software engineering instructor.
+You are a senior software engineering instructor.
 
-Explain concepts clearly.
-
-Use practical examples.
+Teach students clearly with practical examples.
 
 Help with:
 
-Frontend engineering.
+- Frontend development
+- Backend development
+- Databases
+- APIs
+- Artificial Intelligence
+- Software architecture
+- Debugging
+- Career growth
 
-Backend engineering.
-
-Databases.
-
-AI.
-
-Architecture.
-
-Career growth.
-
-Always finish with one useful question.
+Always encourage learning.
 
 Current course:
 
@@ -112,88 +131,133 @@ ${course?.title || "General Engineering"}
 
 Current lesson:
 
-${lesson?.title || "General"}
+${lesson?.title || "General Topic"}
+
+Student:
+
+${student?.name || "Student"}
 
 `
 
-},
+          },
 
 
-{
-
-role:"user",
-
-content:message
-
-}
+          {
 
 
-]
+            role:"user",
 
 
-});
+            content:message
 
 
+          }
 
 
+        ]
 
 
-
-return res.json({
-
-success:true,
-
-reply:
-
-completion.choices[0].message.content
-
-
-});
+      });
 
 
 
 
+      console.log(
+        "OpenAI response received"
+      );
 
-}
 
-catch (error) {
 
-  console.log("========== OPENAI ERROR ==========");
-  console.log("Status:", error.status);
-  console.log("Code:", error.code);
-  console.log("Message:", error.message);
 
-  if (error.response) {
-    console.log("Response:", error.response.data);
+      return res.json({
+
+        success:true,
+
+        reply:
+        completion.choices[0].message.content
+
+
+      });
+
+
+
+    }
+
+    catch(error){
+
+
+      console.log(
+        "========== AI ERROR =========="
+      );
+
+
+      console.log(
+        error.message
+      );
+
+
+      console.log(
+        "Status:",
+        error.status
+      );
+
+
+      console.log(
+        "Code:",
+        error.code
+      );
+
+
+      console.log(
+        "=============================="
+      );
+
+
+
+
+      if(
+
+        error.status === 429 ||
+
+        error.code === "insufficient_quota"
+
+      ){
+
+
+        return res.json({
+
+          success:true,
+
+          fallback:true,
+
+          reply:
+          "⚠️ AI Mentor is temporarily unavailable because AI credits need renewal."
+
+        });
+
+
+      }
+
+
+
+
+      return res.status(500).json({
+
+        success:false,
+
+        message:
+        error.message || "AI service failed"
+
+      });
+
+
+
+    }
+
+
   }
 
-  console.log("=================================");
-
-  if (
-    error.status === 429 ||
-    error.code === "insufficient_quota"
-  ) {
-    return res.json({
-      success: true,
-      fallback: true,
-      reply:
-        "⚠️ AI Mentor is temporarily unavailable because AI credits need renewal."
-    });
-  }
-
-  return res.status(500).json({
-    success: false,
-    message: error.message
-  });
-
-}
-
-
-});
-
-
-
-
+);
 
 
 

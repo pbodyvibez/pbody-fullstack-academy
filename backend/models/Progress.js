@@ -1,14 +1,38 @@
-import mongoose from "mongoose";
+const mongoose = require("mongoose");
 
 const progressSchema = new mongoose.Schema(
   {
-    userId: String,
-    course: String,
-    completedLessons: Number,
-    totalLessons: Number,
-    progressPercent: Number,
+    userId: {
+      type: String,
+      required: true,
+    },
+
+    course: {
+      type: String,
+      required: true,
+    },
+
+    completedLessons: {
+      type: Number,
+      default: 0,
+    },
+
+    totalLessons: {
+      type: Number,
+      required: true,
+    },
+
+    progressPercent: {
+      type: Number,
+      default: 0,
+    },
   },
-  { timestamps: true }
+  {
+    timestamps: true,
+  }
 );
 
-export default mongoose.model("Progress", progressSchema);
+module.exports = mongoose.model(
+  "Progress",
+  progressSchema
+);

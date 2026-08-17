@@ -10,9 +10,17 @@ const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
 
+
+// ======================================================
+// ROUTES
+// ======================================================
+
 const authRoutes = require("./routes/authRoutes");
 const paymentRoutes = require("./routes/paymentRoutes");
 const aiRoutes = require("./routes/aiRoutes");
+const progressRoutes = require("./routes/progress");
+const quizRoutes = require("./routes/quiz");
+const subscriptionRoutes = require("./routes/subscriptionRoutes");
 
 
 // ======================================================
@@ -56,7 +64,8 @@ app.use(
 
     origin: function(origin, callback) {
 
-      // Allow Postman/server-to-server requests
+      // Allow requests without an origin
+      // such as Postman/server-to-server
       if (!origin) {
 
         return callback(null, true);
@@ -64,7 +73,7 @@ app.use(
       }
 
 
-      // Exact origins
+      // Allow exact origins
       if (allowedOrigins.includes(origin)) {
 
         return callback(null, true);
@@ -72,7 +81,7 @@ app.use(
       }
 
 
-      // PBody Netlify previews
+      // Allow PBody Netlify preview deployments
       if (
 
         origin.endsWith(".netlify.app") &&
@@ -86,12 +95,14 @@ app.use(
       }
 
 
-      console.log("CORS BLOCKED:", origin);
+      console.log(
+        "CORS BLOCKED:",
+        origin
+      );
+
 
       return callback(
-
         new Error("Not allowed by CORS")
-
       );
 
     },
@@ -107,13 +118,15 @@ app.use(
 // BODY PARSER
 // ======================================================
 
-app.use(express.json());
+app.use(
+  express.json()
+);
 
-app.use(express.urlencoded({
-
-  extended: true
-
-}));
+app.use(
+  express.urlencoded({
+    extended: true
+  })
+);
 
 
 // ======================================================
@@ -158,11 +171,40 @@ app.get("/api", (req, res) => {
 // API ROUTES
 // ======================================================
 
-app.use("/api/auth", authRoutes);
+app.use(
+  "/api/auth",
+  authRoutes
+);
 
-app.use("/api/payments", paymentRoutes);
 
-app.use("/api/ai", aiRoutes);
+app.use(
+  "/api/payments",
+  paymentRoutes
+);
+
+
+app.use(
+  "/api/ai",
+  aiRoutes
+);
+
+
+app.use(
+  "/api/progress",
+  progressRoutes
+);
+
+
+app.use(
+  "/api/quiz",
+  quizRoutes
+);
+
+
+app.use(
+  "/api/subscriptions",
+  subscriptionRoutes
+);
 
 
 // ======================================================
@@ -191,11 +233,8 @@ app.use((req, res) => {
 app.use((error, req, res, next) => {
 
   console.error(
-
     "SERVER ERROR:",
-
     error.message
-
   );
 
 
@@ -218,28 +257,28 @@ async function startServer() {
 
   try {
 
-    console.log("Connecting to MongoDB...");
+    console.log(
+      "Connecting to MongoDB..."
+    );
 
 
     if (!process.env.MONGO_URI) {
 
       throw new Error(
-
         "MONGO_URI is missing"
-
       );
 
     }
 
 
     await mongoose.connect(
-
       process.env.MONGO_URI
-
     );
 
 
-    console.log("✅ MongoDB Connected");
+    console.log(
+      "✅ MongoDB Connected"
+    );
 
 
     app.listen(
@@ -251,9 +290,7 @@ async function startServer() {
       () => {
 
         console.log(
-
           `🚀 Backend running on port ${PORT}`
-
         );
 
       }

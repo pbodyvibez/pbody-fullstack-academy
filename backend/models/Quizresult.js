@@ -1,13 +1,37 @@
-import mongoose from "mongoose";
+const mongoose = require("mongoose");
 
 const quizResultSchema = new mongoose.Schema(
   {
-    userId: String,
-    score: Number,
-    total: Number,
-    passed: Boolean,
+    userId: {
+      type: String,
+      required: true,
+      index: true,
+    },
+
+    score: {
+      type: Number,
+      required: true,
+      min: 0,
+    },
+
+    total: {
+      type: Number,
+      required: true,
+      min: 1,
+    },
+
+    passed: {
+      type: Boolean,
+      required: true,
+    },
   },
-  { timestamps: true }
+
+  {
+    timestamps: true,
+  }
 );
 
-export default mongoose.model("QuizResult", quizResultSchema);
+module.exports = mongoose.model(
+  "QuizResult",
+  quizResultSchema
+);

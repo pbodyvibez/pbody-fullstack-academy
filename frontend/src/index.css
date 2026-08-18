@@ -2,7 +2,7 @@
 PBODY FULLSTACK ACADEMY
 GLOBAL FOUNDATION CSS
 ===================================================== */
-
+@import "./styles/theme.css";
 
 *,
 *::before,

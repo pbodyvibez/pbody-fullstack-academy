@@ -1,0 +1,261 @@
+/* =====================================================
+   PBODY FULLSTACK ACADEMY
+   PUBLIC APPLICATION LAYOUT
+   PREMIUM RESPONSIVE
+   FULL REPLACEMENT
+===================================================== */
+
+.publicLayout {
+
+  min-height: 100vh;
+
+  width: 100%;
+
+  display: flex;
+
+  flex-direction: column;
+
+  background: #020617;
+
+  color: #ffffff;
+
+  overflow-x: hidden;
+
+}
+
+
+/* =====================================================
+   PUBLIC CONTENT
+===================================================== */
+
+.publicContent {
+
+  flex: 1;
+
+  width: 100%;
+
+  min-width: 0;
+
+  overflow-x: hidden;
+
+  box-sizing: border-box;
+
+}
+
+
+/* =====================================================
+   STANDARD PUBLIC PAGE CONTAINER
+===================================================== */
+
+.publicPage {
+
+  width: 100%;
+
+  max-width: 1400px;
+
+  margin: 0 auto;
+
+  padding-left: 32px;
+
+  padding-right: 32px;
+
+  box-sizing: border-box;
+
+}
+
+
+/* =====================================================
+   PUBLIC SECTIONS
+===================================================== */
+
+.publicSection {
+
+  width: 100%;
+
+  padding-top: 80px;
+
+  padding-bottom: 80px;
+
+  box-sizing: border-box;
+
+}
+
+
+/* =====================================================
+   HERO CONTAINER
+===================================================== */
+
+.heroContainer {
+
+  width: 100%;
+
+  max-width: 1400px;
+
+  margin: 0 auto;
+
+  padding-left: 32px;
+
+  padding-right: 32px;
+
+  box-sizing: border-box;
+
+}
+
+
+/* =====================================================
+   FOOTER
+===================================================== */
+
+.publicLayout footer {
+
+  width: 100%;
+
+  margin-top: auto;
+
+}
+
+
+/* =====================================================
+   LARGE TABLET
+===================================================== */
+
+@media (max-width: 1100px) {
+
+  .publicPage {
+
+    padding-left: 24px;
+
+    padding-right: 24px;
+
+  }
+
+
+  .heroContainer {
+
+    padding-left: 24px;
+
+    padding-right: 24px;
+
+  }
+
+
+  .publicSection {
+
+    padding-top: 65px;
+
+    padding-bottom: 65px;
+
+  }
+
+}
+
+
+/* =====================================================
+   TABLET / MOBILE
+===================================================== */
+
+@media (max-width: 768px) {
+
+  .publicPage {
+
+    padding-left: 20px;
+
+    padding-right: 20px;
+
+  }
+
+
+  .heroContainer {
+
+    padding-left: 20px;
+
+    padding-right: 20px;
+
+  }
+
+
+  .publicSection {
+
+    padding-top: 55px;
+
+    padding-bottom: 55px;
+
+  }
+
+}
+
+
+/* =====================================================
+   SMALL MOBILE
+===================================================== */
+
+@media (max-width: 480px) {
+
+  .publicPage {
+
+    padding-left: 15px;
+
+    padding-right: 15px;
+
+  }
+
+
+  .heroContainer {
+
+    padding-left: 15px;
+
+    padding-right: 15px;
+
+  }
+
+
+  .publicSection {
+
+    padding-top: 45px;
+
+    padding-bottom: 45px;
+
+  }
+
+}
+
+
+/* =====================================================
+   PREVENT MEDIA OVERFLOW
+===================================================== */
+
+.publicContent img,
+.publicContent video,
+.publicContent iframe,
+.publicContent canvas {
+
+  max-width: 100%;
+
+}
+
+
+/* =====================================================
+   MOBILE TEXT SAFETY
+===================================================== */
+
+.publicContent h1,
+.publicContent h2,
+.publicContent h3,
+.publicContent h4,
+.publicContent p {
+
+  overflow-wrap: break-word;
+
+}
+
+
+/* =====================================================
+   TOUCH SAFETY
+===================================================== */
+
+.publicContent button,
+.publicContent a {
+
+  -webkit-tap-highlight-color: transparent;
+
+}

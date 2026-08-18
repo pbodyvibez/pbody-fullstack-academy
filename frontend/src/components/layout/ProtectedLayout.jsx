@@ -1,17 +1,24 @@
 import { Outlet } from "react-router-dom";
-import AppLayout from "./AppLayout";
+
+import StudentLayout from "./StudentLayout";
 
 
 export default function ProtectedLayout(){
 
+
 return(
 
-<AppLayout>
+
+<StudentLayout>
+
 
 <Outlet />
 
-</AppLayout>
+
+</StudentLayout>
+
 
 );
+
 
 }

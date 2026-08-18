@@ -1,11 +1,35 @@
+ /* =====================================================
+ PBODY FULLSTACK ACADEMY
+ PREMIUM AI ENGINEERING MENTOR
+ ===================================================== */
+
+
 .aiMentorPage{
 
-padding:40px;
+min-height:100vh;
 
-color:white;
+padding:30px;
+
+background:
+
+linear-gradient(
+135deg,
+#020617,
+#0f172a
+);
+
+color:#e2e8f0;
+
+box-sizing:border-box;
 
 }
 
+
+
+
+/* =========================
+AI HERO
+========================= */
 
 
 .aiHero{
@@ -16,96 +40,178 @@ justify-content:space-between;
 
 align-items:center;
 
+gap:40px;
+
 background:
 
 linear-gradient(
 135deg,
-#061b4f,
-#0f4caa
+#0b1f4d,
+#102a56
 );
 
-padding:50px;
+padding:40px;
 
-border-radius:30px;
+border-radius:28px;
 
-margin-bottom:40px;
+border:
+
+1px solid rgba(56,189,248,.18);
+
+box-shadow:
+
+0 25px 60px rgba(0,0,0,.35);
+
+margin-bottom:30px;
 
 }
+
 
 
 .aiBadge{
 
-background:#fbbf24;
+display:inline-flex;
 
-color:#111;
-
-display:inline-block;
-
-padding:10px 18px;
+padding:8px 18px;
 
 border-radius:30px;
 
-font-weight:700;
+background:
 
-margin-bottom:20px;
+rgba(56,189,248,.15);
+
+border:
+
+1px solid rgba(56,189,248,.25);
+
+color:#38bdf8;
+
+font-size:12px;
+
+font-weight:800;
+
+letter-spacing:1px;
+
+margin-bottom:18px;
 
 }
+
 
 
 .aiHero h1{
 
-font-size:48px;
+font-size:42px;
+
+line-height:1.2;
 
 max-width:700px;
 
+margin:0 0 15px;
+
+color:#f8fafc;
+
 }
+
 
 
 .aiHero p{
 
-font-size:18px;
-
 max-width:650px;
+
+font-size:17px;
 
 line-height:1.7;
 
+color:#cbd5e1;
+
+}
+
+
+
+
+.aiBrandMark{
+
+width:90px;
+
+height:90px;
+
+border-radius:50%;
+
+display:flex;
+
+align-items:center;
+
+justify-content:center;
+
+font-size:32px;
+
+font-weight:900;
+
+color:#38bdf8;
+
+background:
+
+rgba(56,189,248,.08);
+
+border:
+
+2px solid rgba(56,189,248,.25);
+
+box-shadow:
+
+0 0 40px rgba(56,189,248,.25);
+
 }
 
 
 
-.aiRobot{
-
-font-size:120px;
-
-}
-
+/* =========================
+WORKSPACE
+========================= */
 
 
 .aiWorkspace{
 
 display:grid;
 
-grid-template-columns:2fr 1fr;
+grid-template-columns:
 
-gap:30px;
+minmax(0,2fr) 350px;
+
+gap:25px;
+
+align-items:start;
 
 }
+
 
 
 
 .aiChatCard,
+
 .aiToolsCard{
 
-background:#101827;
+background:#111827;
 
-border-radius:25px;
+border:
+
+1px solid rgba(56,189,248,.12);
+
+border-radius:24px;
 
 padding:25px;
 
-border:1px solid rgba(255,255,255,.1);
+box-shadow:
+
+0 20px 45px rgba(0,0,0,.3);
 
 }
 
+
+
+/* =========================
+CHAT HEADER
+========================= */
 
 
 .chatHeader{
@@ -116,9 +222,33 @@ justify-content:space-between;
 
 align-items:center;
 
-border-bottom:1px solid #334155;
+padding-bottom:18px;
 
-padding-bottom:15px;
+border-bottom:
+
+1px solid rgba(148,163,184,.15);
+
+}
+
+
+
+.chatHeader h2{
+
+margin:0;
+
+font-size:22px;
+
+}
+
+
+
+.chatHeader p{
+
+margin:5px 0 0;
+
+font-size:13px;
+
+color:#94a3b8;
 
 }
 
@@ -128,34 +258,46 @@ padding-bottom:15px;
 
 color:#22c55e;
 
+font-size:13px;
+
+font-weight:700;
+
 }
 
 
 
+/* =========================
+MESSAGES
+========================= */
+
+
 .chatMessages{
 
-height:420px;
+height:430px;
 
-overflow:auto;
+overflow-y:auto;
 
-padding:20px 0;
+padding:20px 5px;
 
 }
 
 
 
 .aiMessage,
+
 .userMessage{
-
-padding:15px;
-
-border-radius:15px;
-
-margin-bottom:15px;
 
 max-width:80%;
 
+padding:15px 18px;
+
+border-radius:18px;
+
+margin-bottom:15px;
+
 line-height:1.6;
+
+font-size:15px;
 
 }
 
@@ -163,7 +305,15 @@ line-height:1.6;
 
 .aiMessage{
 
-background:#1e3a8a;
+background:
+
+rgba(37,99,235,.25);
+
+border:
+
+1px solid rgba(56,189,248,.15);
+
+color:#e2e8f0;
 
 }
 
@@ -171,19 +321,32 @@ background:#1e3a8a;
 
 .userMessage{
 
-background:#2563eb;
-
 margin-left:auto;
+
+background:
+
+linear-gradient(
+135deg,
+#2563eb,
+#1d4ed8
+);
+
+color:white;
 
 }
 
+
+
+/* =========================
+INPUT
+========================= */
 
 
 .chatInput{
 
 display:flex;
 
-gap:10px;
+gap:12px;
 
 }
 
@@ -193,15 +356,27 @@ gap:10px;
 
 flex:1;
 
-padding:15px;
+background:#020617;
 
-border-radius:12px;
+border:
 
-border:none;
-
-background:#1e293b;
+1px solid rgba(56,189,248,.2);
 
 color:white;
+
+padding:15px;
+
+border-radius:14px;
+
+outline:none;
+
+}
+
+
+
+.chatInput input:focus{
+
+border-color:#38bdf8;
 
 }
 
@@ -213,13 +388,44 @@ padding:15px 25px;
 
 border:none;
 
-border-radius:12px;
+border-radius:14px;
 
-background:#fbbf24;
+background:
+
+linear-gradient(
+135deg,
+#38bdf8,
+#2563eb
+);
+
+color:white;
+
+font-weight:800;
 
 cursor:pointer;
 
-font-weight:bold;
+}
+
+
+
+/* =========================
+TOOLS
+========================= */
+
+
+.aiToolsCard h2{
+
+margin-top:0;
+
+}
+
+
+
+.aiToolsCard p{
+
+color:#94a3b8;
+
+line-height:1.6;
 
 }
 
@@ -229,21 +435,42 @@ font-weight:bold;
 
 width:100%;
 
-padding:15px;
+padding:14px;
 
 margin-bottom:12px;
 
-background:#172554;
+background:
 
-color:white;
+rgba(56,189,248,.08);
 
-border:none;
+border:
 
-border-radius:12px;
+1px solid rgba(56,189,248,.15);
+
+color:#e2e8f0;
+
+border-radius:14px;
 
 cursor:pointer;
 
+text-align:left;
+
+transition:.25s;
+
 }
+
+
+
+.aiToolsCard button:hover{
+
+background:
+
+rgba(56,189,248,.18);
+
+transform:translateX(4px);
+
+}
+
 
 
 
@@ -253,7 +480,7 @@ margin-top:25px;
 
 display:grid;
 
-gap:12px;
+gap:10px;
 
 }
 
@@ -261,38 +488,88 @@ gap:12px;
 
 .mentorFeatures div{
 
-background:#111827;
-
 padding:12px;
 
-border-radius:10px;
+background:#0f172a;
+
+border-radius:12px;
+
+border:
+
+1px solid rgba(148,163,184,.1);
+
+color:#cbd5e1;
 
 }
 
+
+
+/* =========================
+BOTTOM
+========================= */
 
 
 .aiBottom{
 
-margin-top:40px;
+margin-top:30px;
+
+padding:35px;
 
 text-align:center;
 
-padding:40px;
+background:#111827;
 
-background:#0f172a;
+border-radius:24px;
 
-border-radius:25px;
+border:
+
+1px solid rgba(56,189,248,.12);
 
 }
 
 
-@media(max-width:900px){
+
+.aiBottom h2{
+
+color:#38bdf8;
+
+}
+
+
+
+.aiBottom p{
+
+color:#94a3b8;
+
+line-height:1.7;
+
+}
+
+
+
+/* =========================
+RESPONSIVE
+========================= */
+
+
+@media(max-width:1000px){
+
 
 .aiWorkspace{
 
 grid-template-columns:1fr;
 
 }
+
+
+.aiHero{
+
+flex-direction:column;
+
+align-items:flex-start;
+
+}
+
 
 
 .aiHero h1{
@@ -302,10 +579,12 @@ font-size:32px;
 }
 
 
-.aiRobot{
+
+.aiBrandMark{
 
 display:none;
 
 }
+
 
 }

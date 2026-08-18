@@ -1,110 +1,358 @@
-import { useNavigate } from "react-router-dom";
+// ===============================================
+// PBODY FULLSTACK ACADEMY
+// PREMIUM INTERNSHIP CENTER
+// ===============================================
 
-export default function Internship() {
+import {
+Briefcase,
+Building2,
+Rocket,
+CheckCircle,
+Clock,
+Globe
+} from "lucide-react";
 
-  const navigate = useNavigate();
 
-  const internships = [
+import {
+useAuth
+} from "../context/AuthContext";
 
-    {
-      company: "Google",
-      role: "Frontend Engineering Intern",
-      location: "Remote"
-    },
 
-    {
-      company: "Microsoft",
-      role: "Backend Engineering Intern",
-      location: "Hybrid"
-    },
+import "../styles/internship.css";
 
-    {
-      company: "Meta",
-      role: "React Developer Intern",
-      location: "Remote"
-    },
 
-    {
-      company: "Flutterwave",
-      role: "Software Engineering Intern",
-      location: "Lagos"
-    }
 
-  ];
+export default function Internship(){
 
-  return (
 
-    <div
-      style={{
-        minHeight: "100vh",
-        background: "#081420",
-        color: "white",
-        padding: "40px"
-      }}
-    >
 
-      <h1>
+const {
+user
+}=useAuth();
 
-        🚀 Internship Hub
 
-      </h1>
 
-      <p>
 
-        Find internships and begin your engineering career.
 
-      </p>
+const opportunities=[
 
-      <br/>
 
-      {
+{
+title:"Frontend Engineering Internship",
+type:"Remote",
+level:"Beginner - Intermediate",
+skills:"React • JavaScript • UI Engineering"
+},
 
-        internships.map((job,index)=>(
 
-          <div
-            key={index}
-            style={{
-              background:"#132338",
-              padding:"20px",
-              marginBottom:"20px",
-              borderRadius:"12px"
-            }}
-          >
+{
+title:"Backend Engineering Internship",
+type:"Remote",
+level:"Intermediate",
+skills:"Node.js • APIs • MongoDB"
+},
 
-            <h2>
 
-              {job.company}
+{
+title:"Full Stack Developer Internship",
+type:"Hybrid",
+level:"Advanced",
+skills:"React • Node • Database Architecture"
+}
 
-            </h2>
 
-            <h3>
+];
 
-              {job.role}
 
-            </h3>
 
-            <p>
 
-              📍 {job.location}
 
-            </p>
 
-            <button
-              onClick={() => navigate("/resume")}
-            >
 
-              Apply
+return(
 
-            </button>
 
-          </div>
 
-        ))
+<div className="internshipPage">
 
-      }
 
-    </div>
 
-  );
+
+
+<section className="internshipHero">
+
+
+<div className="careerIcon">
+
+🚀
+
+</div>
+
+
+<h1>
+
+PBody Engineering Internship Center
+
+</h1>
+
+
+
+<p>
+
+Welcome {user?.name || "Developer"}.
+Gain practical experience by working on
+real-world engineering challenges.
+
+</p>
+
+
+
+</section>
+
+
+
+
+
+
+
+
+
+<section className="internshipStats">
+
+
+
+<div>
+
+<Briefcase/>
+
+<h3>
+
+Industry Experience
+
+</h3>
+
+<p>
+
+Build projects employers value.
+
+</p>
+
+</div>
+
+
+
+
+
+<div>
+
+<Building2/>
+
+<h3>
+
+Professional Teams
+
+</h3>
+
+<p>
+
+Collaborate like a real engineer.
+
+</p>
+
+</div>
+
+
+
+
+
+<div>
+
+<Globe/>
+
+<h3>
+
+Remote Opportunities
+
+</h3>
+
+<p>
+
+Learn and work globally.
+
+</p>
+
+</div>
+
+
+
+</section>
+
+
+
+
+
+
+
+
+
+<section className="internshipListings">
+
+
+<h2>
+
+Available Internship Tracks
+
+</h2>
+
+
+
+
+
+<div className="internshipGrid">
+
+
+
+{
+
+opportunities.map((item,index)=>(
+
+
+<div 
+className="internshipCard"
+key={index}
+>
+
+
+<div className="status">
+
+<Clock size={18}/>
+
+OPEN
+
+</div>
+
+
+
+
+<h3>
+
+{item.title}
+
+</h3>
+
+
+
+
+<p>
+
+{item.type}
+
+</p>
+
+
+
+<p>
+
+{item.level}
+
+</p>
+
+
+
+<span>
+
+{item.skills}
+
+</span>
+
+
+
+
+
+
+<button>
+
+Apply Now 🚀
+
+</button>
+
+
+
+
+</div>
+
+
+
+))
+
+}
+
+
+
+</div>
+
+
+</section>
+
+
+
+
+
+
+
+
+<section className="internshipRequirements">
+
+
+
+<h2>
+
+Before Applying
+
+</h2>
+
+
+<div>
+
+
+<p>
+<CheckCircle/> Complete your developer profile
+</p>
+
+
+<p>
+<CheckCircle/> Build at least one project
+</p>
+
+
+<p>
+<CheckCircle/> Complete your learning pathway
+</p>
+
+
+<p>
+<CheckCircle/> Prepare your portfolio
+</p>
+
+
+
+</div>
+
+
+
+</section>
+
+
+
+
+
+
+
+</div>
+
+
+);
+
+
 
 }

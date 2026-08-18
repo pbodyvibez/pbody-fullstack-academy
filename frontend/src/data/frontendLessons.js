@@ -465,4 +465,8 @@ description:
 
 codeChallenge:true
 
-},
+}
+
+];
+
+export default frontend;

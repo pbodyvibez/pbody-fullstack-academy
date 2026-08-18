@@ -1,0 +1,966 @@
+/* ===============================================
+   PBODY FULLSTACK ACADEMY
+   PREMIUM AI RESUME BUILDER
+   FULL REPLACEMENT
+================================================ */
+
+.resumeBuilderPage {
+  min-height: 100vh;
+  padding: 40px 6% 80px;
+
+  background:
+    radial-gradient(
+      circle at 85% 0%,
+      rgba(56, 189, 248, 0.14),
+      transparent 30%
+    ),
+    radial-gradient(
+      circle at 0% 100%,
+      rgba(37, 99, 235, 0.1),
+      transparent 28%
+    ),
+    linear-gradient(
+      135deg,
+      #020617 0%,
+      #071827 50%,
+      #0b2746 100%
+    );
+
+  color: #ffffff;
+  position: relative;
+  overflow: hidden;
+}
+
+
+/* =================================================
+   HERO
+================================================= */
+
+.resumeHero {
+  max-width: 1050px;
+  margin: 0 auto;
+  padding: 55px 40px;
+
+  text-align: center;
+
+  border-radius: 28px;
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(15, 51, 86, 0.72),
+      rgba(5, 20, 38, 0.94)
+    );
+
+  border: 1px solid rgba(56, 189, 248, 0.18);
+
+  box-shadow:
+    0 25px 70px rgba(0, 0, 0, 0.35);
+
+  position: relative;
+  overflow: hidden;
+}
+
+
+/* =================================================
+   HERO SUBTLE LIGHT
+================================================= */
+
+.resumeHero::before {
+  content: "";
+
+  position: absolute;
+
+  width: 420px;
+  height: 420px;
+
+  top: -260px;
+  right: -170px;
+
+  border-radius: 50%;
+
+  background:
+    rgba(56, 189, 248, 0.08);
+
+  pointer-events: none;
+}
+
+
+/* =================================================
+   BRANDING
+================================================= */
+
+.resumeBuilderBrand {
+  position: relative;
+  z-index: 1;
+
+  display: inline-flex;
+
+  align-items: center;
+
+  gap: 12px;
+
+  margin-bottom: 28px;
+
+  text-align: left;
+}
+
+
+.resumeBuilderLogo {
+  width: 44px;
+  height: 44px;
+
+  object-fit: contain;
+
+  flex-shrink: 0;
+}
+
+
+.resumeBuilderBrand > div {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 3px;
+}
+
+
+.resumeBuilderBrand strong {
+  color: #ffffff;
+
+  font-size: 13px;
+
+  font-weight: 900;
+
+  letter-spacing: 1.4px;
+}
+
+
+.resumeBuilderBrand span {
+  color: #7dd3fc;
+
+  font-size: 10px;
+
+  font-weight: 800;
+
+  letter-spacing: 1.5px;
+}
+
+
+/* =================================================
+   HERO TITLE
+================================================= */
+
+.resumeHero h1 {
+  position: relative;
+  z-index: 1;
+
+  margin: 0;
+
+  font-size: clamp(40px, 5vw, 58px);
+
+  font-weight: 950;
+
+  line-height: 1.05;
+
+  background:
+    linear-gradient(
+      90deg,
+      #38bdf8,
+      #facc15
+    );
+
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+
+.resumeHero p {
+  position: relative;
+  z-index: 1;
+
+  max-width: 720px;
+
+  margin: 18px auto 30px;
+
+  color: #cbd5e1;
+
+  font-size: 18px;
+
+  line-height: 1.75;
+}
+
+
+/* =================================================
+   HERO BUTTON
+================================================= */
+
+.resumeHero button {
+  position: relative;
+  z-index: 1;
+
+  display: inline-flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  gap: 10px;
+
+  padding: 14px 26px;
+
+  border: none;
+
+  border-radius: 12px;
+
+  background:
+    linear-gradient(
+      90deg,
+      #2563eb,
+      #06b6d4
+    );
+
+  color: #ffffff;
+
+  font-size: 14px;
+
+  font-weight: 900;
+
+  cursor: pointer;
+
+  box-shadow:
+    0 10px 28px rgba(6, 182, 212, 0.18);
+
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+
+.resumeHero button:hover {
+  transform: translateY(-2px);
+
+  box-shadow:
+    0 15px 35px rgba(6, 182, 212, 0.28);
+}
+
+
+/* =================================================
+   RESUME GRID
+================================================= */
+
+.resumeGrid {
+  max-width: 1200px;
+
+  margin: 55px auto;
+
+  display: grid;
+
+  grid-template-columns:
+    repeat(4, 1fr);
+
+  gap: 20px;
+}
+
+
+/* =================================================
+   RESUME CARD
+================================================= */
+
+.resumeCard {
+  min-height: 220px;
+
+  padding: 26px;
+
+  border-radius: 20px;
+
+  background:
+    linear-gradient(
+      155deg,
+      rgba(17, 24, 39, 0.96),
+      rgba(2, 6, 23, 0.98)
+    );
+
+  border:
+    1px solid rgba(255, 255, 255, 0.08);
+
+  transition:
+    transform 0.3s ease,
+    border-color 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+
+.resumeCard:hover {
+  transform: translateY(-6px);
+
+  border-color:
+    rgba(56, 189, 248, 0.42);
+
+  box-shadow:
+    0 18px 40px rgba(0, 0, 0, 0.28);
+}
+
+
+/* =================================================
+   CARD ICON
+================================================= */
+
+.resumeCardIcon {
+  width: 42px;
+  height: 42px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  margin-bottom: 16px;
+
+  border-radius: 12px;
+
+  background:
+    rgba(56, 189, 248, 0.08);
+
+  border:
+    1px solid rgba(56, 189, 248, 0.14);
+}
+
+
+.resumeCardIcon svg {
+  width: 22px;
+  height: 22px;
+
+  color: #38bdf8;
+}
+
+
+/* =================================================
+   CARD HEADINGS
+================================================= */
+
+.resumeCard h2 {
+  margin: 0 0 15px;
+
+  color: #facc15;
+
+  font-size: 19px;
+
+  font-weight: 850;
+}
+
+
+.resumeCard p {
+  display: flex;
+
+  align-items: flex-start;
+
+  gap: 7px;
+
+  margin: 9px 0;
+
+  color: #b9c8d8;
+
+  font-size: 14px;
+
+  line-height: 1.65;
+}
+
+
+.resumeCard p strong {
+  color: #ffffff;
+
+  word-break: break-word;
+}
+
+
+/* =================================================
+   SKILL TAGS
+================================================= */
+
+.tagContainer {
+  display: flex;
+
+  flex-wrap: wrap;
+
+  gap: 7px;
+}
+
+
+.tagContainer span {
+  padding: 7px 11px;
+
+  border:
+    1px solid rgba(56, 189, 248, 0.12);
+
+  border-radius: 999px;
+
+  background:
+    rgba(56, 189, 248, 0.08);
+
+  color: #8ed8ff;
+
+  font-size: 11px;
+
+  font-weight: 700;
+}
+
+
+/* =================================================
+   ACHIEVEMENTS
+================================================= */
+
+.resumeAchievement {
+  align-items: center !important;
+}
+
+
+.resumeAchievement svg {
+  flex-shrink: 0;
+
+  color: #22c55e;
+}
+
+
+/* =================================================
+   RESUME PREVIEW
+================================================= */
+
+.resumePreview {
+  max-width: 1050px;
+
+  margin: 0 auto;
+}
+
+
+/* =================================================
+   PREVIEW HEADING
+================================================= */
+
+.resumePreviewHeading {
+  text-align: center;
+
+  margin-bottom: 28px;
+}
+
+
+.resumePreviewHeading span {
+  display: block;
+
+  margin-bottom: 7px;
+
+  color: #7dd3fc;
+
+  font-size: 10px;
+
+  font-weight: 900;
+
+  letter-spacing: 2px;
+}
+
+
+.resumePreviewHeading h2 {
+  margin: 0;
+
+  color: #ffffff;
+
+  font-size: 32px;
+
+  font-weight: 900;
+}
+
+
+.resumePreviewHeading p {
+  max-width: 620px;
+
+  margin: 9px auto 0;
+
+  color: #94a3b8;
+
+  font-size: 14px;
+
+  line-height: 1.7;
+}
+
+
+/* =================================================
+   RESUME DOCUMENT
+================================================= */
+
+.resumeDocument {
+  position: relative;
+
+  overflow: hidden;
+
+  padding: 44px;
+
+  border:
+    1px solid rgba(56, 189, 248, 0.16);
+
+  border-radius: 24px;
+
+  background:
+    linear-gradient(
+      145deg,
+      #111827,
+      #020617
+    );
+
+  box-shadow:
+    0 28px 65px rgba(0, 0, 0, 0.38);
+}
+
+
+/* =================================================
+   LARGE ACADEMY WATERMARK
+================================================= */
+
+.resumeDocument::after {
+  content: "";
+
+  position: absolute;
+
+  width: 420px;
+  height: 420px;
+
+  top: 50%;
+  left: 50%;
+
+  transform:
+    translate(-50%, -50%);
+
+  background-image:
+    url("../assets/images/logo.png");
+
+  background-repeat: no-repeat;
+
+  background-position: center;
+
+  background-size: contain;
+
+  opacity: 0.035;
+
+  pointer-events: none;
+
+  z-index: 0;
+}
+
+
+.resumeDocument > * {
+  position: relative;
+
+  z-index: 1;
+}
+
+
+/* =================================================
+   DOCUMENT BRAND
+================================================= */
+
+.resumeDocumentBrand {
+  display: flex;
+
+  align-items: center;
+
+  gap: 10px;
+
+  margin-bottom: 25px;
+}
+
+
+.resumeDocumentBrand img {
+  width: 38px;
+  height: 38px;
+
+  object-fit: contain;
+
+  flex-shrink: 0;
+}
+
+
+.resumeDocumentBrand > div {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 2px;
+}
+
+
+.resumeDocumentBrand strong {
+  color: #ffffff;
+
+  font-size: 11px;
+
+  font-weight: 900;
+
+  letter-spacing: 1.2px;
+}
+
+
+.resumeDocumentBrand span {
+  color: #6ecbfa;
+
+  font-size: 9px;
+
+  font-weight: 800;
+
+  letter-spacing: 1.2px;
+}
+
+
+/* =================================================
+   DOCUMENT HEADER
+================================================= */
+
+.resumeDocumentHeader {
+  padding-bottom: 24px;
+
+  border-bottom:
+    1px solid rgba(255, 255, 255, 0.1);
+}
+
+
+.resumeDocumentHeader h1 {
+  margin: 0;
+
+  color: #ffffff;
+
+  font-size: 42px;
+
+  font-weight: 900;
+
+  line-height: 1.1;
+}
+
+
+.resumeDocumentHeader h3 {
+  margin: 7px 0;
+
+  color: #38bdf8;
+
+  font-size: 19px;
+}
+
+
+.resumeDocumentHeader p {
+  margin: 0;
+
+  color: #94a3b8;
+
+  font-size: 13px;
+}
+
+
+/* =================================================
+   DOCUMENT CONTENT
+================================================= */
+
+.resumeDocument h2 {
+  margin:
+    28px 0 10px;
+
+  color: #ffffff;
+
+  font-size: 19px;
+
+  font-weight: 850;
+}
+
+
+.resumeDocument p {
+  margin: 0;
+
+  color: #cbd5e1;
+
+  font-size: 14px;
+
+  line-height: 1.8;
+}
+
+
+/* =================================================
+   SKILL PREVIEW
+================================================= */
+
+.resumeSkillPreview {
+  display: flex;
+
+  flex-wrap: wrap;
+
+  gap: 7px;
+
+  margin-top: 12px;
+}
+
+
+.resumeSkillPreview span {
+  padding: 7px 11px;
+
+  border:
+    1px solid rgba(56, 189, 248, 0.12);
+
+  border-radius: 999px;
+
+  background:
+    rgba(56, 189, 248, 0.08);
+
+  color: #7dd3fc;
+
+  font-size: 11px;
+
+  font-weight: 700;
+}
+
+
+/* =================================================
+   ACHIEVEMENT LIST
+================================================= */
+
+.resumeAchievementList {
+  display: grid;
+
+  gap: 9px;
+
+  padding: 0;
+
+  margin: 12px 0 0;
+
+  list-style: none;
+}
+
+
+.resumeAchievementList li {
+  display: flex;
+
+  align-items: center;
+
+  gap: 8px;
+
+  color: #cbd5e1;
+
+  font-size: 13px;
+}
+
+
+.resumeAchievementList svg {
+  flex-shrink: 0;
+
+  color: #22c55e;
+}
+
+
+/* =================================================
+   GENERATE BUTTON
+================================================= */
+
+.resumeGenerateButton {
+  display: inline-flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  gap: 9px;
+
+  margin-top: 30px;
+
+  padding: 13px 23px;
+
+  border: none;
+
+  border-radius: 12px;
+
+  background:
+    linear-gradient(
+      90deg,
+      #2563eb,
+      #06b6d4
+    );
+
+  color: #ffffff;
+
+  font-size: 13px;
+
+  font-weight: 900;
+
+  cursor: pointer;
+
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+
+.resumeGenerateButton:hover {
+  transform: translateY(-2px);
+
+  box-shadow:
+    0 14px 32px rgba(6, 182, 212, 0.24);
+}
+
+
+/* =================================================
+   TABLET
+================================================= */
+
+@media (max-width: 1100px) {
+
+  .resumeGrid {
+    grid-template-columns:
+      repeat(2, 1fr);
+  }
+
+}
+
+
+/* =================================================
+   MOBILE
+================================================= */
+
+@media (max-width: 700px) {
+
+  .resumeBuilderPage {
+    padding:
+      30px 5% 60px;
+  }
+
+
+  .resumeHero {
+    padding:
+      42px 24px;
+
+    border-radius: 22px;
+  }
+
+
+  .resumeBuilderBrand {
+    margin-bottom: 22px;
+  }
+
+
+  .resumeHero h1 {
+    font-size: 38px;
+  }
+
+
+  .resumeHero p {
+    font-size: 16px;
+  }
+
+
+  .resumeGrid {
+    grid-template-columns: 1fr;
+
+    margin:
+      40px auto;
+  }
+
+
+  .resumeCard {
+    min-height: auto;
+  }
+
+
+  .resumeDocument {
+    padding:
+      32px 22px;
+
+    border-radius: 20px;
+  }
+
+
+  .resumeDocumentHeader h1 {
+    font-size: 32px;
+  }
+
+
+  .resumePreviewHeading h2 {
+    font-size: 28px;
+  }
+
+}
+
+
+/* =================================================
+   SMALL MOBILE
+================================================= */
+
+@media (max-width: 480px) {
+
+  .resumeHero {
+    padding:
+      35px 18px;
+  }
+
+
+  .resumeBuilderBrand {
+    gap: 9px;
+  }
+
+
+  .resumeBuilderLogo {
+    width: 38px;
+    height: 38px;
+  }
+
+
+  .resumeBuilderBrand strong {
+    font-size: 11px;
+  }
+
+
+  .resumeHero h1 {
+    font-size: 32px;
+  }
+
+
+  .resumeHero button,
+  .resumeGenerateButton {
+    width: 100%;
+  }
+
+
+  .resumeDocumentBrand img {
+    width: 34px;
+    height: 34px;
+  }
+
+}
+
+
+/* =================================================
+   PRINT
+================================================= */
+
+@media print {
+
+  .resumeBuilderPage {
+    padding: 0;
+
+    background: #ffffff;
+
+    color: #111111;
+  }
+
+  .resumeHero,
+  .resumeGrid,
+  .resumePreviewHeading {
+    display: none;
+  }
+
+  .resumeDocument {
+    border: none;
+
+    border-radius: 0;
+
+    box-shadow: none;
+
+    background: #ffffff;
+
+    color: #111111;
+  }
+
+}

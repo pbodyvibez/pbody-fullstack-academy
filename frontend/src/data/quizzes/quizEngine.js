@@ -1,18 +1,26 @@
 // ===============================================
 // PBODY FULLSTACK ACADEMY
-// QUIZ ENGINE
+// QUIZ ENGINE LOGIC
 // ===============================================
 
 
 
-// Check single answer
-
 export function checkAnswer(
+
 question,
+
 selectedAnswer
+
 ){
 
-return question.answer === selectedAnswer;
+
+
+return (
+
+question.answer === selectedAnswer
+
+);
+
 
 }
 
@@ -20,7 +28,9 @@ return question.answer === selectedAnswer;
 
 
 
-// Calculate quiz result
+
+
+
 
 export function calculateQuizResult(
 
@@ -31,9 +41,14 @@ answers
 ){
 
 
+
 let score = 0;
 
 let totalXP = 0;
+
+
+
+
 
 
 
@@ -42,26 +57,42 @@ questions.forEach(
 (question,index)=>{
 
 
+
 if(
+
 checkAnswer(
+
 question,
+
 answers[index]
+
 )
+
 ){
+
 
 
 score++;
 
 
-totalXP += question.xp || 0;
+
+totalXP += question.xp || 20;
+
 
 
 }
 
 
+
 }
+
 
 );
+
+
+
+
+
 
 
 
@@ -71,12 +102,18 @@ const percentage = questions.length
 ?
 
 Math.round(
+
 (score / questions.length) * 100
+
 )
 
 :
 
 0;
+
+
+
+
 
 
 
@@ -97,10 +134,12 @@ percentage,
 xpEarned:totalXP,
 
 
-passed:percentage >= 70
+passed:percentage >=70
+
 
 
 };
+
 
 
 }
@@ -109,7 +148,9 @@ passed:percentage >= 70
 
 
 
-// Create quiz submission data
+
+
+
 
 export function createQuizSubmission(
 
@@ -120,6 +161,7 @@ lesson,
 result
 
 ){
+
 
 
 return {
@@ -144,6 +186,7 @@ passed:result.passed,
 
 
 completedAt:new Date().toISOString()
+
 
 
 };

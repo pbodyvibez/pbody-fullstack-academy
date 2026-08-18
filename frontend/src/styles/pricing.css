@@ -1,11 +1,10 @@
 /* =================================================
 PBODY FULLSTACK ACADEMY
-PREMIUM PRICING / UPGRADE PAGE
+PREMIUM PRICING PAGE
 ================================================= */
 
 
-.pricingPage,
-.upgradePage{
+.pricingPage{
 
 min-height:100vh;
 
@@ -15,14 +14,14 @@ background:
 
 radial-gradient(
 circle at top right,
-rgba(56,189,248,.18),
+rgba(56,189,248,.2),
 transparent 35%
 ),
 
 radial-gradient(
 circle at bottom left,
-rgba(37,99,235,.15),
-transparent 30%
+rgba(37,99,235,.18),
+transparent 35%
 ),
 
 linear-gradient(
@@ -32,43 +31,44 @@ linear-gradient(
 #0b2746
 );
 
-color:white;
+color:#e2e8f0;
 
 }
 
 
 
+
+
 /* =================================================
-HEADER
+HERO
 ================================================= */
 
 
 .pricingHero{
 
-max-width:1000px;
+max-width:1100px;
 
-margin:0 auto 70px;
+margin:auto;
 
-padding:70px 40px;
+padding:55px 40px;
 
 text-align:center;
+
+border-radius:35px;
 
 
 background:
 
 linear-gradient(
 145deg,
-rgba(37,99,235,.28),
-rgba(15,23,42,.85)
+rgba(37,99,235,.25),
+rgba(2,6,23,.85)
 );
-
-
-border-radius:35px;
 
 
 border:
 
-1px solid rgba(56,189,248,.25);
+1px solid rgba(56,189,248,.2);
 
 
 box-shadow:
@@ -80,12 +80,69 @@ box-shadow:
 
 
 
-.pricingHero h1{
 
+
+.pricingBrand{
+
+display:flex;
+
+justify-content:center;
+
+align-items:center;
+
+gap:15px;
+
+margin-bottom:35px;
+
+}
+
+
+
+.pricingBrand img{
+
+width:65px;
+
+height:65px;
+
+object-fit:contain;
+
+}
+
+
+
+.pricingBrand h2{
+
+margin:0;
+
+font-size:20px;
+
+color:#38bdf8;
+
+}
+
+
+
+.pricingBrand p{
+
+margin:5px 0;
+
+font-size:13px;
+
+color:#94a3b8;
+
+}
+
+
+
+
+
+.pricingHero h1{
 
 font-size:60px;
 
-font-weight:900;
+font-weight:950;
+
+line-height:1.1;
 
 margin-bottom:20px;
 
@@ -103,18 +160,16 @@ linear-gradient(
 
 -webkit-text-fill-color:transparent;
 
-
 }
+
 
 
 
 .pricingHero p{
 
-
 max-width:750px;
 
 margin:auto;
-
 
 font-size:20px;
 
@@ -122,64 +177,85 @@ line-height:1.8;
 
 color:#cbd5e1;
 
-
 }
 
 
 
 
-/* =================================================
-SUBSCRIPTION AREA
-================================================= */
+.pricingMotivation{
 
 
-.pricingGrid{
+margin:35px auto 0;
 
+padding:25px;
 
-display:grid;
+max-width:650px;
 
-
-grid-template-columns:
-
-repeat(2,340px);
-
-
-justify-content:center;
-
-
-gap:45px;
-
-
-align-items:start;
-
-
-}
-
-
-
-
-/* =================================================
-CARD DESIGN
-================================================= */
-
-
-.pricingCard{
-
-
-width:340px;
-
-
-min-height:620px;
-
-
-padding:35px;
-
-
-border-radius:32px;
+border-radius:22px;
 
 
 background:
 
+rgba(56,189,248,.08);
+
+
+border:
+
+1px solid rgba(56,189,248,.2);
+
+
+}
+
+
+
+.pricingMotivation h3{
+
+color:#facc15;
+
+margin-bottom:10px;
+
+}
+
+
+
+
+
+/* =================================================
+PLANS
+================================================= */
+
+
+.pricingPlans{
+
+display:grid;
+
+grid-template-columns:
+
+repeat(2,minmax(300px,380px));
+
+
+justify-content:center;
+
+gap:40px;
+
+margin-top:70px;
+
+}
+
+
+
+
+
+.pricingCard{
+
+padding:35px;
+
+min-height:620px;
+
+border-radius:30px;
+
+
+background:
 
 linear-gradient(
 160deg,
@@ -190,60 +266,19 @@ linear-gradient(
 
 border:
 
-1px solid rgba(255,255,255,.12);
+1px solid rgba(56,189,248,.15);
 
 
 display:flex;
 
-
 flex-direction:column;
 
-
 position:relative;
-
 
 overflow:hidden;
 
 
 transition:.35s;
-
-
-}
-
-
-
-
-
-.pricingCard::before{
-
-
-content:"";
-
-
-position:absolute;
-
-
-width:250px;
-
-
-height:250px;
-
-
-right:-120px;
-
-
-top:-120px;
-
-
-background:
-
-
-radial-gradient(
-circle,
-rgba(56,189,248,.25),
-transparent 70%
-);
-
 
 }
 
@@ -252,33 +287,24 @@ transparent 70%
 
 .pricingCard:hover{
 
-
 transform:translateY(-12px);
 
 
 box-shadow:
 
-
-0 35px 90px rgba(37,99,235,.35);
+0 35px 90px rgba(56,189,248,.25);
 
 
 border-color:#38bdf8;
-
 
 }
 
 
 
 
-
-/* PREMIUM CARD */
-
-
-.pricingCard.featured{
-
+.pricingCard.international{
 
 background:
-
 
 linear-gradient(
 160deg,
@@ -286,107 +312,65 @@ linear-gradient(
 #020617
 );
 
-
-border:
-
-2px solid #facc15;
-
-
 }
 
 
 
 
 
-.pricingCard.featured::after{
-
-
-content:"MOST POPULAR";
-
+.planBadge{
 
 position:absolute;
 
+top:20px;
 
-top:25px;
+right:20px;
 
+padding:7px 15px;
 
-right:-40px;
-
-
-background:#facc15;
-
-
-color:#020617;
-
-
-padding:8px 50px;
-
+border-radius:20px;
 
 font-size:12px;
 
-
 font-weight:900;
 
+color:#020617;
 
-transform:rotate(45deg);
-
+background:#facc15;
 
 }
 
 
 
-
-
-/* =================================================
-CARD CONTENT
-================================================= */
 
 
 .pricingCard h2{
 
-
-position:relative;
-
-
-z-index:2;
-
+margin-top:35px;
 
 text-align:center;
 
+font-size:30px;
 
-font-size:32px;
-
-
-margin-bottom:20px;
-
-
-color:#facc15;
-
+color:#38bdf8;
 
 }
+
+
 
 
 
 .price{
 
-
-position:relative;
-
-
-z-index:2;
-
-
 text-align:center;
-
 
 font-size:60px;
 
+font-weight:950;
 
-font-weight:900;
+color:#facc15;
 
-
-margin:10px 0;
-
+margin:25px 0;
 
 }
 
@@ -394,12 +378,17 @@ margin:10px 0;
 
 .price span{
 
+font-size:25px;
 
-font-size:17px;
+}
 
+
+
+.price small{
+
+font-size:16px;
 
 color:#94a3b8;
-
 
 }
 
@@ -409,140 +398,44 @@ color:#94a3b8;
 
 .pricingCard p{
 
-
-position:relative;
-
-
-z-index:2;
-
-
 text-align:center;
 
-
-color:#cbd5e1;
-
+color:#94a3b8;
 
 line-height:1.7;
 
-
-min-height:90px;
-
-
 }
 
 
 
 
 
-/* =================================================
-FEATURE LIST
-================================================= */
+.pricingCard ul{
 
+margin:30px 0;
 
-.pricingFeatures{
-
-
-margin-top:30px;
-
-
-padding:20px;
-
-
-border-radius:20px;
-
-
-background:
-
-rgba(255,255,255,.05);
-
+padding:0;
 
 }
 
 
 
-.pricingFeatures li{
-
+.pricingCard li{
 
 list-style:none;
 
-
 padding:13px 0;
 
-
-display:flex;
-
-
-gap:12px;
-
-
-align-items:center;
-
-
-color:#dbeafe;
-
+color:#cbd5e1;
 
 border-bottom:
 
-
-1px solid rgba(255,255,255,.08);
-
+1px solid rgba(56,189,248,.1);
 
 }
 
 
 
-.pricingFeatures li:last-child{
-
-
-border:none;
-
-
-}
-
-
-
-.pricingFeatures li::before{
-
-
-content:"✓";
-
-
-width:24px;
-
-
-height:24px;
-
-
-display:flex;
-
-
-align-items:center;
-
-
-justify-content:center;
-
-
-background:#2563eb;
-
-
-border-radius:50%;
-
-
-font-size:12px;
-
-
-font-weight:bold;
-
-
-}
-
-
-
-
-
-/* =================================================
-BUTTON
-================================================= */
 
 
 .pricingCard button{
@@ -550,21 +443,15 @@ BUTTON
 
 margin-top:auto;
 
-
 padding:17px;
 
 
-width:100%;
-
-
 border:none;
-
 
 border-radius:15px;
 
 
 background:
-
 
 linear-gradient(
 90deg,
@@ -573,20 +460,15 @@ linear-gradient(
 );
 
 
-color:white;
-
+color:#e2e8f0;
 
 font-weight:900;
 
-
 font-size:16px;
-
 
 cursor:pointer;
 
-
 transition:.3s;
-
 
 }
 
@@ -597,7 +479,6 @@ transition:.3s;
 
 background:
 
-
 linear-gradient(
 90deg,
 #facc15,
@@ -607,7 +488,6 @@ linear-gradient(
 
 color:#020617;
 
-
 }
 
 
@@ -615,26 +495,52 @@ color:#020617;
 
 
 /* =================================================
-BOTTOM BENEFITS SECTION
+BENEFITS
 ================================================= */
 
 
-.pricingFooter{
+.pricingGuarantee{
+
+margin-top:90px;
+
+text-align:center;
+
+}
 
 
-margin-top:80px;
 
+.pricingGuarantee h2{
+
+font-size:38px;
+
+color:#38bdf8;
+
+}
+
+
+
+.pricingGuarantee>p{
+
+color:#94a3b8;
+
+font-size:18px;
+
+}
+
+
+
+
+.guaranteeGrid{
 
 display:grid;
 
-
 grid-template-columns:
 
-repeat(3,1fr);
+repeat(4,1fr);
 
+gap:25px;
 
-gap:30px;
-
+margin-top:40px;
 
 }
 
@@ -642,11 +548,14 @@ gap:30px;
 
 
 
-.pricingFooter div{
+.guaranteeGrid div{
+
+padding:30px;
+
+border-radius:25px;
 
 
 background:
-
 
 linear-gradient(
 145deg,
@@ -655,19 +564,18 @@ linear-gradient(
 );
 
 
-padding:30px;
-
-
-border-radius:25px;
-
-
 border:
 
-1px solid rgba(255,255,255,.1);
+1px solid rgba(56,189,248,.15);
+
+}
 
 
-text-align:center;
 
+
+.guaranteeGrid h3{
+
+color:#facc15;
 
 }
 
@@ -675,32 +583,12 @@ text-align:center;
 
 
 
-.pricingFooter h3{
+.guaranteeGrid p{
 
-
-font-size:22px;
-
-
-color:#38bdf8;
-
-
-margin-bottom:15px;
-
+color:#94a3b8;
 
 }
 
-
-
-.pricingFooter p{
-
-
-color:#cbd5e1;
-
-
-line-height:1.7;
-
-
-}
 
 
 
@@ -713,37 +601,47 @@ RESPONSIVE
 @media(max-width:1000px){
 
 
-.pricingGrid{
-
+.pricingPlans{
 
 grid-template-columns:1fr;
+
+}
+
+
+.guaranteeGrid{
+
+grid-template-columns:repeat(2,1fr);
+
+}
+
+
+.pricingHero h1{
+
+font-size:42px;
+
+}
 
 
 }
 
 
 
-.pricingCard{
 
 
-width:100%;
+@media(max-width:600px){
 
 
-max-width:360px;
+.pricingPage{
 
-
-margin:auto;
-
+padding:30px 20px;
 
 }
 
 
 
-.pricingFooter{
+.pricingHero{
 
-
-grid-template-columns:1fr;
-
+padding:40px 20px;
 
 }
 
@@ -751,12 +649,17 @@ grid-template-columns:1fr;
 
 .pricingHero h1{
 
-
-font-size:42px;
-
+font-size:34px;
 
 }
 
+
+
+.guaranteeGrid{
+
+grid-template-columns:1fr;
+
+}
 
 
 }

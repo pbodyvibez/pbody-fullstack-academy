@@ -1,0 +1,688 @@
+/* ======================================================
+   PBODY FULLSTACK ACADEMY
+   PREMIUM COMMUNITY
+   ====================================================== */
+
+.communityPage {
+  min-height: 100vh;
+  background:
+    radial-gradient(
+      circle at 15% 10%,
+      rgba(14, 165, 233, 0.12),
+      transparent 28%
+    ),
+    radial-gradient(
+      circle at 85% 30%,
+      rgba(37, 99, 235, 0.12),
+      transparent 30%
+    ),
+    #020617;
+  color: #e2e8f0;
+  overflow: hidden;
+}
+
+
+/* ======================================================
+   HERO
+   ====================================================== */
+
+.communityHero {
+  position: relative;
+  min-height: 680px;
+  display: grid;
+  grid-template-columns: 1.05fr 0.95fr;
+  align-items: center;
+  gap: 70px;
+  padding: 100px 7%;
+  border-bottom: 1px solid rgba(56, 189, 248, 0.12);
+  overflow: hidden;
+}
+
+.communityHeroGlow {
+  position: absolute;
+  width: 420px;
+  height: 420px;
+  border-radius: 50%;
+  filter: blur(100px);
+  pointer-events: none;
+}
+
+.communityGlowOne {
+  top: -220px;
+  left: -180px;
+  background: rgba(14, 165, 233, 0.12);
+}
+
+.communityGlowTwo {
+  right: -200px;
+  bottom: -240px;
+  background: rgba(37, 99, 235, 0.14);
+}
+
+.communityHeroContent {
+  position: relative;
+  z-index: 2;
+  max-width: 760px;
+}
+
+.communityEyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding: 9px 15px;
+  border: 1px solid rgba(56, 189, 248, 0.2);
+  border-radius: 999px;
+  background: rgba(15, 23, 42, 0.7);
+  color: #7dd3fc;
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: 1.6px;
+  margin-bottom: 25px;
+}
+
+.communityHero h1 {
+  margin: 0;
+  font-size: clamp(48px, 6vw, 82px);
+  line-height: 0.98;
+  letter-spacing: -3px;
+  font-weight: 950;
+  color: #f8fafc;
+}
+
+.communityHero h1 span {
+  display: block;
+  margin: 12px 0;
+  background: linear-gradient(
+    90deg,
+    #38bdf8,
+    #60a5fa,
+    #22d3ee
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.communityHeroContent > p {
+  max-width: 700px;
+  margin: 30px 0 0;
+  color: #94a3b8;
+  font-size: 18px;
+  line-height: 1.9;
+}
+
+.communityHeroActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-top: 35px;
+}
+
+
+/* ======================================================
+   BUTTONS
+   ====================================================== */
+
+.communityPrimaryButton,
+.communitySecondaryButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 52px;
+  padding: 0 22px;
+  border-radius: 15px;
+  font-weight: 900;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.communityPrimaryButton {
+  border: 1px solid rgba(125, 211, 252, 0.35);
+  background: linear-gradient(
+    135deg,
+    #2563eb,
+    #0891b2
+  );
+  color: #fff;
+  box-shadow:
+    0 15px 40px rgba(37, 99, 235, 0.22);
+}
+
+.communityPrimaryButton:hover {
+  transform: translateY(-3px);
+  box-shadow:
+    0 20px 45px rgba(37, 99, 235, 0.35);
+}
+
+.communitySecondaryButton {
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  background: rgba(15, 23, 42, 0.75);
+  color: #cbd5e1;
+}
+
+.communitySecondaryButton:hover {
+  border-color: rgba(56, 189, 248, 0.4);
+  color: #7dd3fc;
+  transform: translateY(-3px);
+}
+
+
+/* ======================================================
+   NETWORK VISUAL
+   ====================================================== */
+
+.communityHeroVisual {
+  position: relative;
+  z-index: 2;
+}
+
+.communityNetworkCard {
+  position: relative;
+  padding: 28px;
+  min-height: 430px;
+  border-radius: 28px;
+  border: 1px solid rgba(56, 189, 248, 0.18);
+  background:
+    linear-gradient(
+      145deg,
+      rgba(15, 23, 42, 0.96),
+      rgba(8, 47, 73, 0.72)
+    );
+  box-shadow:
+    0 35px 100px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.04);
+}
+
+.networkCardTop {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.networkIcon {
+  width: 52px;
+  height: 52px;
+  display: grid;
+  place-items: center;
+  border-radius: 16px;
+  background: rgba(14, 165, 233, 0.12);
+  color: #38bdf8;
+}
+
+.networkCardTop span {
+  display: block;
+  color: #64748b;
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: 1.4px;
+}
+
+.networkCardTop strong {
+  display: block;
+  margin-top: 4px;
+  color: #f8fafc;
+  font-size: 15px;
+}
+
+.networkStatus {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  color: #67e8f9;
+  font-size: 9px;
+  font-weight: 900;
+}
+
+.networkStatus i {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #22d3ee;
+  box-shadow: 0 0 12px #22d3ee;
+}
+
+.networkConnections {
+  position: relative;
+  height: 300px;
+  margin-top: 25px;
+}
+
+.networkCenter {
+  position: absolute;
+  top: 105px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 125px;
+  height: 125px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  border: 1px solid rgba(56, 189, 248, 0.3);
+  background:
+    radial-gradient(
+      circle,
+      rgba(37, 99, 235, 0.25),
+      rgba(2, 6, 23, 0.9)
+    );
+  color: #38bdf8;
+  box-shadow:
+    0 0 55px rgba(14, 165, 233, 0.15);
+}
+
+.networkCenter span {
+  margin-top: 7px;
+  color: #f8fafc;
+  font-weight: 950;
+  letter-spacing: 2px;
+}
+
+.networkCenter small {
+  color: #64748b;
+  font-size: 7px;
+  letter-spacing: 1px;
+}
+
+.networkPerson {
+  position: absolute;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 15px;
+  border-radius: 13px;
+  border: 1px solid rgba(56, 189, 248, 0.14);
+  background: rgba(15, 23, 42, 0.95);
+  color: #cbd5e1;
+  font-size: 11px;
+  font-weight: 800;
+}
+
+.networkStudent {
+  top: 25px;
+  left: 0;
+}
+
+.networkEmployer {
+  top: 25px;
+  right: 0;
+}
+
+.networkEngineer {
+  bottom: 12px;
+  left: 5px;
+}
+
+.networkManager {
+  bottom: 12px;
+  right: 5px;
+}
+
+.networkLine {
+  position: absolute;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(56, 189, 248, 0.4),
+    transparent
+  );
+}
+
+.lineOne {
+  width: 130px;
+  left: 105px;
+  top: 73px;
+  transform: rotate(28deg);
+}
+
+.lineTwo {
+  width: 130px;
+  right: 105px;
+  top: 73px;
+  transform: rotate(-28deg);
+}
+
+
+/* ======================================================
+   SECTIONS
+   ====================================================== */
+
+.communityPurpose,
+.communityFeatures {
+  padding: 110px 7%;
+}
+
+.communitySectionHeading {
+  max-width: 760px;
+  margin-bottom: 55px;
+}
+
+.communitySectionHeading.centered {
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}
+
+.communitySectionHeading > span,
+.communityCTAContent > span,
+.communityTrustContent span {
+  color: #38bdf8;
+  font-size: 11px;
+  font-weight: 950;
+  letter-spacing: 2px;
+}
+
+.communitySectionHeading h2 {
+  margin: 13px 0 17px;
+  color: #f8fafc;
+  font-size: clamp(34px, 4vw, 55px);
+  line-height: 1.05;
+  letter-spacing: -2px;
+}
+
+.communitySectionHeading p {
+  color: #94a3b8;
+  font-size: 16px;
+  line-height: 1.85;
+}
+
+
+/* ======================================================
+   ROLE CARDS
+   ====================================================== */
+
+.communityRoleGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  max-width: 1450px;
+  margin: auto;
+}
+
+.communityRoleCard {
+  position: relative;
+  padding: 30px;
+  min-height: 330px;
+  border-radius: 22px;
+  border: 1px solid rgba(148, 163, 184, 0.1);
+  background:
+    linear-gradient(
+      145deg,
+      rgba(15, 23, 42, 0.88),
+      rgba(8, 47, 73, 0.38)
+    );
+  transition: 0.35s ease;
+}
+
+.communityRoleCard:hover {
+  transform: translateY(-8px);
+  border-color: rgba(56, 189, 248, 0.28);
+  box-shadow:
+    0 25px 70px rgba(0, 0, 0, 0.28);
+}
+
+.roleIcon {
+  width: 54px;
+  height: 54px;
+  display: grid;
+  place-items: center;
+  border-radius: 16px;
+  background: rgba(14, 165, 233, 0.1);
+  color: #38bdf8;
+}
+
+.roleLabel {
+  display: block;
+  margin-top: 22px;
+  color: #64748b;
+  font-size: 9px;
+  font-weight: 950;
+  letter-spacing: 1.5px;
+}
+
+.communityRoleCard h3 {
+  margin: 10px 0;
+  color: #f8fafc;
+  font-size: 22px;
+}
+
+.communityRoleCard p {
+  color: #94a3b8;
+  line-height: 1.75;
+  font-size: 14px;
+}
+
+.communityRoleCard button {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 15px;
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: #38bdf8;
+  font-weight: 850;
+  cursor: pointer;
+}
+
+
+/* ======================================================
+   FEATURES
+   ====================================================== */
+
+.communityFeatures {
+  background:
+    linear-gradient(
+      180deg,
+      rgba(15, 23, 42, 0.3),
+      rgba(8, 47, 73, 0.16)
+    );
+}
+
+.communityFeatureGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  max-width: 1400px;
+  margin: auto;
+  border: 1px solid rgba(56, 189, 248, 0.1);
+  border-radius: 24px;
+  overflow: hidden;
+}
+
+.communityFeature {
+  padding: 35px;
+  border-right: 1px solid rgba(56, 189, 248, 0.1);
+}
+
+.communityFeature:last-child {
+  border-right: none;
+}
+
+.communityFeature svg {
+  color: #38bdf8;
+}
+
+.communityFeature h3 {
+  margin: 20px 0 10px;
+  color: #f8fafc;
+  font-size: 18px;
+}
+
+.communityFeature p {
+  color: #94a3b8;
+  line-height: 1.7;
+  font-size: 14px;
+}
+
+
+/* ======================================================
+   TRUST
+   ====================================================== */
+
+.communityTrust {
+  padding: 70px 7%;
+}
+
+.communityTrustContent {
+  max-width: 1200px;
+  margin: auto;
+  padding: 40px;
+  display: flex;
+  align-items: flex-start;
+  gap: 25px;
+  border: 1px solid rgba(56, 189, 248, 0.13);
+  border-radius: 24px;
+  background: rgba(15, 23, 42, 0.65);
+}
+
+.trustIcon {
+  flex: 0 0 auto;
+  width: 60px;
+  height: 60px;
+  display: grid;
+  place-items: center;
+  border-radius: 17px;
+  background: rgba(14, 165, 233, 0.1);
+  color: #38bdf8;
+}
+
+.communityTrustContent h2 {
+  margin: 10px 0;
+  color: #f8fafc;
+  font-size: 28px;
+}
+
+.communityTrustContent p {
+  margin: 0;
+  color: #94a3b8;
+  line-height: 1.8;
+}
+
+
+/* ======================================================
+   CTA
+   ====================================================== */
+
+.communityCTA {
+  padding: 110px 7%;
+  text-align: center;
+  border-top: 1px solid rgba(56, 189, 248, 0.1);
+  background:
+    radial-gradient(
+      circle at center,
+      rgba(37, 99, 235, 0.15),
+      transparent 50%
+    );
+}
+
+.communityCTAContent {
+  max-width: 850px;
+  margin: auto;
+}
+
+.communityCTA h2 {
+  margin: 15px 0;
+  color: #f8fafc;
+  font-size: clamp(35px, 5vw, 60px);
+  line-height: 1.05;
+  letter-spacing: -2px;
+}
+
+.communityCTA p {
+  color: #94a3b8;
+  font-size: 17px;
+  line-height: 1.8;
+  margin-bottom: 30px;
+}
+
+
+/* ======================================================
+   RESPONSIVE
+   ====================================================== */
+
+@media (max-width: 1100px) {
+
+  .communityHero {
+    grid-template-columns: 1fr;
+    padding-top: 80px;
+  }
+
+  .communityHeroVisual {
+    max-width: 700px;
+  }
+
+  .communityRoleGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .communityFeatureGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .communityFeature:nth-child(2) {
+    border-right: none;
+  }
+
+  .communityFeature:nth-child(-n + 2) {
+    border-bottom: 1px solid rgba(56, 189, 248, 0.1);
+  }
+
+}
+
+
+@media (max-width: 700px) {
+
+  .communityHero {
+    padding: 70px 5%;
+  }
+
+  .communityHero h1 {
+    font-size: 48px;
+    letter-spacing: -2px;
+  }
+
+  .communityHeroContent > p {
+    font-size: 15px;
+  }
+
+  .communityNetworkCard {
+    padding: 20px;
+  }
+
+  .networkStatus {
+    display: none;
+  }
+
+  .communityRoleGrid,
+  .communityFeatureGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .communityFeature {
+    border-right: none;
+    border-bottom: 1px solid rgba(56, 189, 248, 0.1);
+  }
+
+  .communityFeature:last-child {
+    border-bottom: none;
+  }
+
+  .communityTrustContent {
+    flex-direction: column;
+    padding: 28px;
+  }
+
+  .communityPurpose,
+  .communityFeatures {
+    padding: 80px 5%;
+  }
+
+  .communityCTA {
+    padding: 80px 5%;
+  }
+
+}

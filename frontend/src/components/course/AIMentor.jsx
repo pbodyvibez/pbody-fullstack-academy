@@ -1,99 +1,168 @@
 import { useState } from "react";
+
 import "./course.css";
 
-export default function AIMentor({ course, lesson }) {
+
+
+export default function AIMentor({
+
+course,
+
+lesson
+
+}){
+
+
+
+
 
 const [input,setInput] = useState("");
 
+
+
+
 const [messages,setMessages] = useState([
 
-{
-role:"ai",
-text:`👋 Welcome to PBody AI Engineering Mentor.
 
-You are currently learning:
+
+{
+
+role:"ai",
+
+text:
+
+`Welcome to your AI Engineering Mentor.
+
+You are learning:
 
 ${course?.title || "Engineering"}
 
-Lesson:
+Current lesson:
 
-${lesson?.title || "Current Lesson"}
+${lesson?.title || "Select a lesson"}
 
-Ask me anything about this lesson.`
+Ask questions about concepts, code, debugging or projects.`
+
 }
+
+
 
 ]);
 
 
+
+
+
+
+
+
 const suggestions=[
 
-"Explain this lesson simply",
 
-"Give me real world examples",
+"Explain this concept simply",
 
-"Debug my code",
+"Give me a real world example",
 
-"Create a practice exercise",
+"Help debug my code",
 
-"Prepare interview questions",
+"Create a practice challenge",
 
-"Summarize this lesson"
+"Generate interview questions"
+
 
 ];
 
 
 
+
+
+
+
+
+
 const sendMessage=(message)=>{
+
+
 
 if(!message.trim()) return;
 
 
-setMessages((prev)=>[
+
+
+
+setMessages(prev=>[
 
 ...prev,
 
+
 {
+
 role:"student",
+
 text:message
+
 },
 
+
+
 {
+
 role:"ai",
+
 text:
 
-`🤖 AI Mentor:
+`I received your question about "${lesson?.title || "this lesson"}".
 
-I understand your question about "${lesson?.title}".
-
-This response system will connect to OpenAI API next.
-
-For now, your mentor interface is ready.`
+Your AI mentor connection is ready for API integration.`
 
 }
+
+
 
 ]);
 
 
+
+
 setInput("");
+
+
 
 };
 
 
 
+
+
+
+
+
 return(
+
+
 
 <div className="aiMentor">
 
 
+
+
+
+
+
 <div className="aiHeader">
+
+
 
 <div>
 
+
 <h2>
 
-🤖 AI Engineering Mentor
+AI Engineering Mentor
 
 </h2>
+
+
 
 <p>
 
@@ -101,7 +170,10 @@ Your personal coding assistant
 
 </p>
 
+
 </div>
+
+
 
 
 <span>
@@ -111,24 +183,41 @@ ONLINE
 </span>
 
 
+
+
 </div>
+
+
+
+
+
+
 
 
 
 <div className="chatWindow">
 
 
+
+
+
 {
 
 messages.map((message,index)=>(
 
+
+
 <div
+
+
 
 key={index}
 
+
+
 className={
 
-message.role==="ai"
+message.role === "ai"
 
 ?
 
@@ -140,18 +229,34 @@ message.role==="ai"
 
 }
 
+
+
 >
+
 
 {message.text}
 
+
+
 </div>
 
+
+
 ))
+
 
 }
 
 
+
+
+
 </div>
+
+
+
+
+
 
 
 
@@ -159,27 +264,42 @@ message.role==="ai"
 <div className="aiSuggestions">
 
 
+
+
+
 {
 
-suggestions.map((item)=>(
+suggestions.map(item=>(
+
 
 
 <button
 
+
 key={item}
 
+
 onClick={()=>sendMessage(item)}
+
+
 
 >
 
 {item}
 
+
 </button>
+
 
 
 ))
 
+
 }
+
+
+
+
 
 
 </div>
@@ -187,18 +307,35 @@ onClick={()=>sendMessage(item)}
 
 
 
+
+
+
+
+
 <div className="aiInput">
+
+
+
 
 
 <input
 
+
+
 value={input}
+
+
 
 onChange={(e)=>setInput(e.target.value)}
 
-placeholder="Ask your AI mentor anything..."
+
+
+placeholder="Ask your mentor..."
+
+
 
 onKeyDown={(e)=>{
+
 
 if(e.key==="Enter"){
 
@@ -206,14 +343,26 @@ sendMessage(input);
 
 }
 
+
 }}
+
+
 
 />
 
 
+
+
+
+
+
 <button
 
+
+
 onClick={()=>sendMessage(input)}
+
+
 
 >
 
@@ -222,12 +371,25 @@ Send
 </button>
 
 
+
+
+
+
+
 </div>
 
 
 
+
+
+
+
+
 </div>
+
+
 
 );
+
 
 }

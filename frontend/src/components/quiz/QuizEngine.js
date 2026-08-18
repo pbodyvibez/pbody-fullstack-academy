@@ -1,474 +1,641 @@
 // ===============================================
 // PBODY FULLSTACK ACADEMY
-// QUIZ ENGINE COMPONENT
+// QUIZ ENGINE
+// FULL REPLACEMENT
 // ===============================================
 
-
 import {
-useState,
-useMemo
+  useEffect,
+  useMemo,
+  useState
 } from "react";
-
 
 import "../../styles/quizEngine.css";
 
-
 import {
-calculateQuizResult
+  calculateQuizResult
 } from "../../data/quizzes/quizEngine";
 
-
 import {
-prepareQuiz
+  prepareQuiz
 } from "../../data/quizzes/quizUtils";
 
-
 import {
-useProgress
+  useProgress
 } from "../../context/ProgressContext";
 
-
 import {
-useUserEngine
+  useUserEngine
 } from "../../context/UserEngineContext";
 
 
-
-
+// ===============================================
+// COMPONENT
+// ===============================================
 
 export default function QuizEngine({
 
-questions=[],
+  questions = [],
 
-lesson,
+  lesson,
 
-onComplete
+  onComplete
 
-}){
+}) {
 
 
-const {
-completeQuiz
-}=useProgress();
+  const {
+    completeQuiz
+  } = useProgress();
 
 
+  const {
+    addXP
+  } = useUserEngine();
 
-const {
-addXP
-}=useUserEngine();
 
+  // =============================================
+  // PREPARE QUESTIONS
+  // =============================================
 
+  const quizQuestions =
+    useMemo(() => {
 
+      if (
+        Array.isArray(questions) &&
+        questions.length > 0
+      ) {
 
+        return questions;
 
-const preparedQuestions = useMemo(()=>{
+      }
 
 
-if(!questions || questions.length===0){
+      if (
+        Array.isArray(lesson?.quiz) &&
+        lesson.quiz.length > 0
+      ) {
 
-return [];
+        return lesson.quiz;
 
-}
+      }
 
 
-return prepareQuiz(questions);
+      return [];
 
+    }, [
+      questions,
+      lesson
+    ]);
 
-},[questions]);
 
+  const preparedQuestions =
+    useMemo(() => {
 
+      if (
+        quizQuestions.length === 0
+      ) {
 
+        return [];
 
+      }
 
 
+      return prepareQuiz(
+        quizQuestions
+      );
 
-const [
-current,
-setCurrent
-]=useState(0);
+    }, [
+      quizQuestions
+    ]);
 
 
+  // =============================================
+  // STATE
+  // =============================================
 
-const [
-answers,
-setAnswers
-]=useState([]);
+  const [
+    current,
+    setCurrent
+  ] = useState(0);
 
 
+  const [
+    answers,
+    setAnswers
+  ] = useState([]);
 
-const [
-selected,
-setSelected
-]=useState(null);
 
+  const [
+    selected,
+    setSelected
+  ] = useState(null);
 
 
-const [
-finished,
-setFinished
-]=useState(false);
+  const [
+    finished,
+    setFinished
+  ] = useState(false);
 
 
+  const [
+    resultRecorded,
+    setResultRecorded
+  ] = useState(false);
 
 
+  // =============================================
+  // RECORD RESULT ONCE
+  // =============================================
 
+  const result =
+    useMemo(() => {
 
+      if (
+        !finished ||
+        preparedQuestions.length === 0
+      ) {
 
-if(preparedQuestions.length===0){
+        return null;
 
+      }
 
-return(
 
-<div className="quizResult">
+      return calculateQuizResult(
+        preparedQuestions,
+        answers
+      );
 
-<h2>
+    }, [
+      finished,
+      preparedQuestions,
+      answers
+    ]);
 
-No questions available
 
-</h2>
+  useEffect(() => {
 
-</div>
+    if (
+      !finished ||
+      !result ||
+      resultRecorded
+    ) {
 
-);
+      return;
 
+    }
 
-}
 
+    setResultRecorded(true);
 
 
+    if (result.passed) {
 
+      if (
+        typeof completeQuiz ===
+        "function"
+      ) {
 
+        completeQuiz(
+          lesson?.id
+        );
 
+      }
 
 
-const selectAnswer=(index)=>{
+      if (
+        typeof addXP ===
+        "function"
+      ) {
 
+        addXP(
+          result.xpEarned
+        );
 
-if(selected!==null)return;
+      }
 
+    }
 
-setSelected(index);
+  }, [
+    finished,
+    result,
+    resultRecorded,
+    completeQuiz,
+    addXP,
+    lesson?.id
+  ]);
 
 
+  // =============================================
+  // NO QUESTIONS
+  // =============================================
 
-const updatedAnswers=[...answers];
+  if (
+    preparedQuestions.length === 0
+  ) {
 
+    return (
 
-updatedAnswers[current]=index;
+      <div className="quizResult">
 
+        <div className="resultIcon">
+          📚
+        </div>
 
-setAnswers(updatedAnswers);
+        <h2>
+          No Questions Available
+        </h2>
 
+        <p>
+          This assessment has not been
+          added yet.
+        </p>
 
-};
+      </div>
 
+    );
 
+  }
 
 
+  // =============================================
+  // SELECT ANSWER
+  // =============================================
 
+  const selectAnswer = (
+    index
+  ) => {
 
+    if (
+      selected !== null
+    ) {
 
+      return;
 
+    }
 
-const nextQuestion=()=>{
 
+    setSelected(index);
 
-if(selected===null)return;
 
+    setAnswers(
+      (previous) => {
 
+        const updated = [
+          ...previous
+        ];
 
-if(current < preparedQuestions.length-1){
 
+        updated[current] =
+          index;
 
-setCurrent(current+1);
 
+        return updated;
 
-setSelected(null);
+      }
+    );
 
+  };
 
-}
 
-else{
+  // =============================================
+  // NEXT QUESTION
+  // =============================================
 
+  const nextQuestion = () => {
 
-setFinished(true);
+    if (
+      selected === null
+    ) {
 
+      return;
 
-}
+    }
 
 
-};
+    if (
+      current <
+      preparedQuestions.length - 1
+    ) {
 
+      setCurrent(
+        (value) =>
+          value + 1
+      );
 
 
+      setSelected(null);
 
 
+      return;
 
+    }
 
 
-if(finished){
+    setFinished(true);
 
+  };
 
 
-const result = calculateQuizResult(
+  // =============================================
+  // RESULT
+  // =============================================
 
-preparedQuestions,
+  if (
+    finished &&
+    result
+  ) {
 
-answers
+    return (
 
-);
+      <div className="quizResult">
 
+        <div className="resultIcon">
 
+          {
+            result.passed
+              ? "🏆"
+              : "📚"
+          }
 
+        </div>
 
-if(result.passed){
 
+        <h2>
+          Quiz Completed
+        </h2>
 
-completeQuiz?.(
-lesson?.id
-);
 
+        <h3>
 
-addXP?.(
-result.xpEarned
-);
+          {result.score}
 
+          /
 
-}
+          {result.totalQuestions}
 
+        </h3>
 
 
+        <p>
 
+          Score:
 
-return(
+          <strong>
+            {" "}
+            {result.percentage}%
+          </strong>
 
-<div className="quizResult">
+        </p>
 
 
-<div className="resultIcon">
+        <p>
 
-{
-result.passed
-?
-"🏆"
-:
-"📚"
-}
+          XP Earned:
 
-</div>
+          <strong>
+            {" "}
+            ⭐ {result.xpEarned}
+          </strong>
 
+        </p>
 
-<h2>
-Quiz Completed
-</h2>
 
+        <p>
 
-<h3>
+          {
 
-{result.score}
+            result.passed
 
-/
+              ? "🎉 Congratulations! You passed this assessment."
 
-{result.totalQuestions}
+              : "📖 Review the lesson and try again to improve your score."
 
-</h3>
+          }
 
+        </p>
 
-<p>
 
-Score: {result.percentage}%
+        <button
 
-</p>
+          className="primaryButton"
 
+          type="button"
 
-<p>
+          onClick={() => {
 
-XP Earned ⭐ {result.xpEarned}
+            if (
+              typeof onComplete ===
+              "function"
+            ) {
 
-</p>
+              onComplete();
 
+            }
 
+          }}
 
-<button
+        >
 
-onClick={()=>onComplete?.()}
+          Continue Learning 🚀
 
->
+        </button>
 
-Return To Lesson
 
-</button>
+      </div>
 
+    );
 
-</div>
+  }
 
-);
 
+  // =============================================
+  // CURRENT QUESTION
+  // =============================================
 
-}
+  const question =
+    preparedQuestions[
+      current
+    ];
 
 
+  // =============================================
+  // SAFETY
+  // =============================================
 
+  if (!question) {
 
+    return (
 
+      <div className="quizResult">
 
+        <h2>
+          Quiz Error
+        </h2>
 
-const question = preparedQuestions[current];
+        <p>
+          This question could not be loaded.
+        </p>
 
+      </div>
 
+    );
 
+  }
 
 
+  const options =
+    Array.isArray(
+      question.options
+    )
+      ? question.options
+      : [];
 
 
-return(
+  // =============================================
+  // RENDER
+  // =============================================
 
+  return (
 
-<div className="quizContainer">
+    <div className="quizContainer">
 
 
+      <div className="quizHeader">
 
-<div className="quizHeader">
+        <span>
 
+          Question{" "}
 
-<span>
+          {current + 1}
 
-Question {current+1}
+          {" "}
 
-/
+          /
 
-{preparedQuestions.length}
+          {" "}
 
-</span>
+          {preparedQuestions.length}
 
+        </span>
 
 
-<h2>
+        <h2>
 
-{lesson?.title}
+          {
+            lesson?.title ||
+            "Engineering Assessment"
+          }
 
-</h2>
+        </h2>
 
+      </div>
 
-</div>
 
+      <div className="questionCard">
 
+        <h3>
 
+          {question.question}
 
+        </h3>
 
 
+        <div className="answerList">
 
-<div className="questionCard">
+          {
 
+            options.map(
+              (
+                option,
+                index
+              ) => {
 
-<h3>
+                const isSelected =
+                  selected ===
+                  index;
 
-{question.question}
 
-</h3>
+                return (
 
+                  <button
 
+                    key={index}
 
+                    type="button"
 
+                    className={
+                      isSelected
+                        ? "selectedAnswer"
+                        : ""
+                    }
 
-<div className="answerList">
+                    onClick={() =>
+                      selectAnswer(
+                        index
+                      )
+                    }
 
+                  >
 
-{
+                    <span>
 
-question.options.map(
+                      {
+                        String.fromCharCode(
+                          65 + index
+                        )
+                      }
 
-(option,index)=>(
+                    </span>
 
+                    {option}
 
-<button
+                  </button>
 
+                );
 
-key={index}
+              }
+            )
 
+          }
 
-className={
+        </div>
 
-selected===index
+      </div>
 
-?
 
-"selectedAnswer"
+      <button
 
-:
+        type="button"
 
-""
+        className="nextQuestion"
 
-}
+        disabled={
+          selected === null
+        }
 
+        onClick={
+          nextQuestion
+        }
 
-onClick={()=>selectAnswer(index)}
+      >
 
+        {
 
->
+          current ===
+          preparedQuestions.length - 1
 
+            ? "Finish Quiz 🚀"
 
-{option}
+            : "Next Question ➜"
 
+        }
 
-</button>
+      </button>
 
 
-)
+    </div>
 
-
-)
-
-
-}
-
-
-
-</div>
-
-
-</div>
-
-
-
-
-
-
-
-<button
-
-className="nextQuestion"
-
-onClick={nextQuestion}
-
->
-
-
-{
-
-current===preparedQuestions.length-1
-
-?
-
-"Finish Quiz 🚀"
-
-:
-
-"Next Question ➜"
-
-}
-
-
-</button>
-
-
-
-
-</div>
-
-
-);
-
-
+  );
 
 }

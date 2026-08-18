@@ -1,667 +1,1092 @@
-import { useState } from "react";
+// ======================================================
+// PBODY FULLSTACK ACADEMY
+// PROFESSIONAL ENGINEERING PROFILE
+// PREMIUM FULL REPLACEMENT
+// ======================================================
 
-import AppLayout from "../components/layout/AppLayout";
+import {
+  useState
+} from "react";
 
-import { useAuth } from "../context/AuthContext";
+import {
+  User,
+  Mail,
+  Phone,
+  MapPin,
+  Briefcase,
+  Code2,
+  Globe,
+  Camera,
+  Save,
+  RotateCcw,
+  CheckCircle2,
+  ArrowUpRight,
+  Sparkles
+} from "lucide-react";
+
+import {
+  useAuth
+} from "../context/AuthContext";
+
+import Logo from "../assets/images/logo.png";
 
 import "../styles/profile.css";
 
 
-export default function Profile(){
+// ======================================================
+// COMPONENT
+// ======================================================
 
+export default function Profile() {
 
-const {user, updateProfile}=useAuth();
+  // ====================================================
+  // AUTH
+  // ====================================================
 
+  const {
+    user,
+    updateProfile
+  } = useAuth();
 
 
-const currentUser = user || {};
+  const profile = user || {};
 
 
+  // ====================================================
+  // FORM
+  // ====================================================
 
-const [form,setForm]=useState({
+  const [form, setForm] = useState({
 
+    name:
+      profile.name || "",
 
-name:currentUser.name || "",
+    email:
+      profile.email || "",
 
-email:currentUser.email || "",
+    phone:
+      profile.phone || "",
 
-phone:currentUser.phone || "",
+    country:
+      profile.country || "",
 
-country:currentUser.country || "",
+    role:
+      profile.role ||
+      "Student Developer",
 
-bio:currentUser.bio || "",
+    bio:
+      profile.bio || "",
 
-github:currentUser.github || "",
+    skills:
+      profile.skills || "",
 
-linkedin:currentUser.linkedin || "",
+    github:
+      profile.github || "",
 
-portfolio:currentUser.portfolio || "",
+    linkedin:
+      profile.linkedin || "",
 
-role:currentUser.role || "Student Developer",
+    portfolio:
+      profile.portfolio || ""
 
-skills:currentUser.skills || ""
+  });
 
 
+  // ====================================================
+  // PHOTO
+  // ====================================================
 
-});
+  const [photo, setPhoto] = useState(
+    profile.photo || ""
+  );
 
 
+  // ====================================================
+  // SAVE STATE
+  // ====================================================
 
-const [photo,setPhoto]=useState(
+  const [saved, setSaved] = useState(false);
 
-currentUser.photo || ""
 
-);
+  // ====================================================
+  // FORM CHANGE
+  // ====================================================
 
+  function handleChange(e) {
 
+    setForm({
 
-const handleChange=(e)=>{
+      ...form,
 
+      [e.target.name]:
+        e.target.value
 
-setForm({
+    });
 
-...form,
+  }
 
-[e.target.name]:e.target.value
 
-});
+  // ====================================================
+  // PHOTO UPLOAD
+  // ====================================================
 
+  function uploadPhoto(e) {
 
-};
+    const file =
+      e.target.files?.[0];
 
+    if (!file) return;
 
 
+    const reader =
+      new FileReader();
 
-const handlePhoto=(e)=>{
 
+    reader.onload = (event) => {
 
-const file=e.target.files[0];
+      setPhoto(
+        event.target.result
+      );
 
+    };
 
-if(!file)return;
 
+    reader.readAsDataURL(file);
 
+  }
 
-const reader=new FileReader();
 
+  // ====================================================
+  // SAVE PROFILE
+  // ====================================================
 
+  function saveProfile() {
 
-reader.onload=(event)=>{
+    if (updateProfile) {
 
+      updateProfile({
 
-setPhoto(event.target.result);
+        ...form,
 
+        photo
 
-};
+      });
 
+    }
 
 
-reader.readAsDataURL(file);
+    setSaved(true);
 
 
+    window.setTimeout(() => {
 
-};
+      setSaved(false);
 
+    }, 3000);
 
+  }
 
 
+  // ====================================================
+  // PROFILE INITIAL
+  // ====================================================
 
-const saveProfile=()=>{
+  const profileInitial =
 
+    form.name
+      ? form.name
+          .charAt(0)
+          .toUpperCase()
+      : "P";
 
-updateProfile({
 
-...form,
+  // ====================================================
+  // PROFILE STATS
+  // ====================================================
 
-photo
+  const level =
+    profile.level || 1;
 
-});
+  const xp =
+    profile.xp ||
+    profile.totalXP ||
+    0;
 
+  const streak =
+    profile.streak || 0;
 
 
-alert(
+  // ====================================================
+  // RENDER
+  // ====================================================
 
-"Your PBody engineering profile has been updated."
+  return (
 
-);
+    <div className="premiumProfilePage">
 
 
-};
+      {/* ==================================================
+          PAGE HEADER
+      ================================================== */}
 
+      <section className="profileHero">
 
 
+        <div className="profileHeroBrand">
 
-return(
 
+          <img
+            src={Logo}
+            alt="PBody FullStack Academy"
+            className="profileHeroLogo"
+          />
 
 
-<AppLayout>
+          <div>
 
+            <strong>
+              PBODY FULLSTACK ACADEMY
+            </strong>
 
+            <span>
+              ENGINEERING STUDENT PROFILE
+            </span>
 
-<div className="profilePage">
+          </div>
 
 
+        </div>
 
-<section className="profileHero">
 
+        <div className="profileHeroContent">
 
-<h1>
 
-👨‍💻 My Engineering Profile
+          <span className="profileBadge">
 
-</h1>
+            <Sparkles size={14} />
 
+            DEVELOPER IDENTITY
 
-<p>
+          </span>
 
-Build your professional identity inside PBody FullStack Academy.
 
-Showcase your skills, projects and engineering journey.
+          <h1>
+            Build Your Engineering Profile
+          </h1>
 
-</p>
 
+          <p>
 
-</section>
+            Create a professional developer identity,
+            showcase your technical skills and track
+            your growth throughout your PBody journey.
 
+          </p>
 
 
+        </div>
 
 
+      </section>
 
 
-<div className="profileContainer">
+      {/* ==================================================
+          PROFILE LAYOUT
+      ================================================== */}
 
+      <div className="profileGrid">
 
 
+        {/* =================================================
+            SIDEBAR
+        ================================================= */}
 
+        <aside className="profileSidebar">
 
-<div className="profileLeft">
 
+          <div className="profileIdentityCard">
 
-<div className="profileCard">
 
+            {/* =================================================
+                AVATAR
+            ================================================= */}
 
+            <div className="avatarBox">
 
-<div className="profileImage">
 
+              {photo ? (
 
-{
+                <img
+                  src={photo}
+                  alt="Profile"
+                />
 
-photo ?
+              ) : (
 
+                <div className="avatarPlaceholder">
 
-<img
+                  {profileInitial}
 
-src={photo}
+                </div>
 
-alt="Profile"
+              )}
 
-/>
 
+              <label
+                className="avatarUploadButton"
+                title="Change profile photo"
+              >
 
-:
+                <Camera size={15} />
 
+                <input
+                  type="file"
+                  accept="image/*"
+                  hidden
+                  onChange={uploadPhoto}
+                />
 
-<div className="avatarLarge">
+              </label>
 
-{
 
-form.name
+            </div>
 
-?
 
-form.name.charAt(0).toUpperCase()
+            {/* =================================================
+                IDENTITY
+            ================================================= */}
 
-:
+            <h2>
 
-"P"
+              {
+                form.name ||
+                "Student Developer"
+              }
 
-}
+            </h2>
 
-</div>
 
+            <p className="profileRole">
 
-}
+              {form.role ||
+                "Student Developer"}
 
+            </p>
 
 
-</div>
+            {
+              form.country && (
 
+                <div className="profileLocation">
 
+                  <MapPin size={14} />
 
+                  {form.country}
 
+                </div>
 
-<label className="uploadBtn">
+              )
+            }
 
 
-📷 Upload Profile Picture
+            <label className="uploadProfile">
 
+              <Camera size={16} />
 
-<input
+              Change Profile Photo
 
-type="file"
+              <input
+                type="file"
+                accept="image/*"
+                hidden
+                onChange={uploadPhoto}
+              />
 
-hidden
+            </label>
 
-accept="image/*"
 
-onChange={handlePhoto}
+          </div>
 
-/>
 
+          {/* =================================================
+              PROGRESS STATS
+          ================================================= */}
 
+          <div className="profileStats">
 
-</label>
 
+            <div>
 
+              <strong>
+                {level}
+              </strong>
 
+              <span>
+                Level
+              </span>
 
+            </div>
 
 
+            <div>
 
-<div className="profileBadges">
+              <strong>
+                {xp}
+              </strong>
 
+              <span>
+                XP
+              </span>
 
-<div>
+            </div>
 
-<h2>
 
-{currentUser.level || 1}
+            <div>
 
-</h2>
+              <strong>
+                {streak}
+              </strong>
 
-<span>
+              <span>
+                Streak
+              </span>
 
-Level
+            </div>
 
-</span>
 
-</div>
+          </div>
 
 
+          {/* =================================================
+              PROFILE STATUS
+          ================================================= */}
 
-<div>
+          <div className="profileStatusCard">
 
-<h2>
 
-{currentUser.xp || 0}
+            <div className="statusHeader">
 
-</h2>
+              <span>
+                PROFILE STATUS
+              </span>
 
-<span>
+              <strong>
+                Active
+              </strong>
 
-XP
+            </div>
 
-</span>
 
-</div>
+            <div className="profileProgress">
 
+              <span
+                style={{
+                  width: "75%"
+                }}
+              />
 
+            </div>
 
-<div>
 
-<h2>
+            <p>
+              Keep your profile updated as
+              your engineering journey grows.
+            </p>
 
-{currentUser.streak || 0}
 
-</h2>
+          </div>
 
-<span>
 
-Streak
+        </aside>
 
-</span>
 
-</div>
+        {/* =================================================
+            MAIN CONTENT
+        ================================================= */}
 
+        <main className="profileContent">
 
 
-</div>
+          {/* =================================================
+              PERSONAL INFORMATION
+          ================================================= */}
 
+          <section className="profileCard">
 
 
+            <div className="profileSectionHeading">
 
+              <div className="profileSectionIcon">
 
+                <User size={20} />
 
-</div>
+              </div>
 
 
-</div>
+              <div>
 
+                <span>
+                  DEVELOPER IDENTITY
+                </span>
 
+                <h2>
+                  Personal Information
+                </h2>
 
+                <p>
+                  Keep your professional identity
+                  and contact information up to date.
+                </p>
 
+              </div>
 
+            </div>
 
 
-<div className="profileRight">
+            <div className="formGrid">
 
 
+              {/* NAME */}
 
-<div className="profileForm">
+              <div className="field">
 
+                <label>
+                  Full Name
+                </label>
 
-<h2>
+                <div className="inputWrapper">
 
-Personal Information
+                  <User size={17} />
 
-</h2>
+                  <input
+                    name="name"
+                    value={form.name}
+                    onChange={handleChange}
+                    placeholder="Your full name"
+                  />
 
+                </div>
 
+              </div>
 
-<input
 
-name="name"
+              {/* EMAIL */}
 
-value={form.name}
+              <div className="field">
 
-placeholder="Full Name"
+                <label>
+                  Email Address
+                </label>
 
-onChange={handleChange}
+                <div className="inputWrapper">
 
-/>
+                  <Mail size={17} />
 
+                  <input
+                    name="email"
+                    type="email"
+                    value={form.email}
+                    onChange={handleChange}
+                    placeholder="developer@email.com"
+                  />
 
+                </div>
 
+              </div>
 
-<input
 
-name="email"
+              {/* PHONE */}
 
-value={form.email}
+              <div className="field">
 
-placeholder="Email Address"
+                <label>
+                  Phone Number
+                </label>
 
-onChange={handleChange}
+                <div className="inputWrapper">
 
-/>
+                  <Phone size={17} />
 
+                  <input
+                    name="phone"
+                    value={form.phone}
+                    onChange={handleChange}
+                    placeholder="+234"
+                  />
 
+                </div>
 
+              </div>
 
 
-<input
+              {/* COUNTRY */}
 
-name="phone"
+              <div className="field">
 
-value={form.phone}
+                <label>
+                  Country
+                </label>
 
-placeholder="Phone Number"
+                <div className="inputWrapper">
 
-onChange={handleChange}
+                  <MapPin size={17} />
 
-/>
+                  <input
+                    name="country"
+                    value={form.country}
+                    onChange={handleChange}
+                    placeholder="Nigeria"
+                  />
 
+                </div>
 
+              </div>
 
 
+              {/* ROLE */}
 
-<input
+              <div className="field fieldFull">
 
-name="country"
+                <label>
+                  Professional Role
+                </label>
 
-value={form.country}
+                <div className="inputWrapper">
 
-placeholder="Country"
+                  <Briefcase size={17} />
 
-onChange={handleChange}
+                  <input
+                    name="role"
+                    value={form.role}
+                    onChange={handleChange}
+                    placeholder="Frontend Engineer"
+                  />
 
-/>
+                </div>
 
+              </div>
 
 
+            </div>
 
 
-<input
+            {/* BIO */}
 
-name="role"
+            <div className="field">
 
-value={form.role}
+              <label>
+                Professional Biography
+              </label>
 
-placeholder="Professional Role"
 
-onChange={handleChange}
+              <textarea
+                name="bio"
+                rows="5"
+                value={form.bio}
+                onChange={handleChange}
+                placeholder="Tell the academy about yourself, your engineering interests, goals and professional journey."
+              />
 
-/>
 
+            </div>
 
 
+          </section>
 
 
-<textarea
+          {/* =================================================
+              ENGINEERING SKILLS
+          ================================================= */}
 
-name="bio"
+          <section className="profileCard">
 
-rows="5"
 
-value={form.bio}
+            <div className="profileSectionHeading">
 
-placeholder="Professional Biography"
+              <div className="profileSectionIcon">
 
-onChange={handleChange}
+                <Code2 size={20} />
 
-/>
+              </div>
 
 
+              <div>
 
+                <span>
+                  TECHNICAL CAPABILITIES
+                </span>
 
+                <h2>
+                  Engineering Skills
+                </h2>
 
+                <p>
+                  Showcase the technologies,
+                  frameworks and tools you work with.
+                </p>
 
+              </div>
 
-<h2>
+            </div>
 
-Engineering Skills
 
-</h2>
+            <div className="field">
 
+              <label>
+                Skills & Technologies
+              </label>
 
 
-<textarea
+              <textarea
+                name="skills"
+                rows="5"
+                value={form.skills}
+                onChange={handleChange}
+                placeholder="React, JavaScript, Node.js, MongoDB, Python, Git, REST APIs..."
+              />
 
-name="skills"
+            </div>
 
-rows="4"
 
-value={form.skills}
+          </section>
 
-placeholder="Example: React, Node.js, MongoDB, Python"
 
-onChange={handleChange}
+          {/* =================================================
+              PROFESSIONAL LINKS
+          ================================================= */}
 
-/>
+          <section className="profileCard">
 
 
+            <div className="profileSectionHeading">
 
+              <div className="profileSectionIcon">
 
+                <Globe size={20} />
 
+              </div>
 
 
+              <div>
 
-<h2>
+                <span>
+                  PROFESSIONAL PRESENCE
+                </span>
 
-Professional Links
+                <h2>
+                  Developer Links
+                </h2>
 
-</h2>
+                <p>
+                  Connect your professional profiles
+                  and portfolio to your academy identity.
+                </p>
 
+              </div>
 
+            </div>
 
 
-<input
+            {/* =================================================
+                GITHUB
+            ================================================= */}
 
-name="github"
+            <div className="field">
 
-value={form.github}
+              <label>
+                GitHub
+              </label>
 
-placeholder="GitHub URL"
+              <div className="inputWrapper">
 
-onChange={handleChange}
+                <Code2 size={17} />
 
-/>
+                <input
+                  name="github"
+                  value={form.github}
+                  onChange={handleChange}
+                  placeholder="https://github.com/username"
+                />
 
+                {
+                  form.github && (
 
+                    <a
+                      href={form.github}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="fieldLink"
+                      aria-label="Open GitHub profile"
+                    >
 
+                      <ArrowUpRight size={15} />
 
+                    </a>
 
-<input
+                  )
+                }
 
-name="linkedin"
+              </div>
 
-value={form.linkedin}
+            </div>
 
-placeholder="LinkedIn URL"
 
-onChange={handleChange}
+            {/* =================================================
+                LINKEDIN
+            ================================================= */}
 
-/>
+            <div className="field">
 
+              <label>
+                LinkedIn
+              </label>
 
+              <div className="inputWrapper">
 
+                <Briefcase size={17} />
 
+                <input
+                  name="linkedin"
+                  value={form.linkedin}
+                  onChange={handleChange}
+                  placeholder="https://linkedin.com/in/profile"
+                />
 
-<input
+                {
+                  form.linkedin && (
 
-name="portfolio"
+                    <a
+                      href={form.linkedin}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="fieldLink"
+                      aria-label="Open LinkedIn profile"
+                    >
 
-value={form.portfolio}
+                      <ArrowUpRight size={15} />
 
-placeholder="Portfolio Website"
+                    </a>
 
-onChange={handleChange}
+                  )
+                }
 
-/>
+              </div>
 
+            </div>
 
 
+            {/* =================================================
+                PORTFOLIO
+            ================================================= */}
 
+            <div className="field">
 
+              <label>
+                Portfolio Website
+              </label>
 
+              <div className="inputWrapper">
 
-<div className="profileTips">
+                <Globe size={17} />
 
+                <input
+                  name="portfolio"
+                  value={form.portfolio}
+                  onChange={handleChange}
+                  placeholder="https://yourportfolio.com"
+                />
 
-<h3>
+                {
+                  form.portfolio && (
 
-🚀 Become Career Ready
+                    <a
+                      href={form.portfolio}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="fieldLink"
+                      aria-label="Open portfolio website"
+                    >
 
-</h3>
+                      <ArrowUpRight size={15} />
 
+                    </a>
 
+                  )
+                }
 
-<ul>
+              </div>
 
+            </div>
 
-<li>
 
-Upload a professional picture.
+          </section>
 
-</li>
 
+          {/* =================================================
+              CAREER GROWTH
+          ================================================= */}
 
-<li>
+          <section className="profileCard growthCard">
 
-Complete your engineering profile.
 
-</li>
+            <div className="profileSectionHeading">
 
+              <div className="profileSectionIcon">
 
-<li>
+                <Sparkles size={20} />
 
-Build projects.
+              </div>
 
-</li>
 
+              <div>
 
-<li>
+                <span>
+                  CAREER DEVELOPMENT
+                </span>
 
-Share your GitHub.
+                <h2>
+                  Engineering Growth Checklist
+                </h2>
 
-</li>
+                <p>
+                  Build the habits that turn learning
+                  into professional engineering experience.
+                </p>
 
+              </div>
 
-<li>
+            </div>
 
-Earn certificates.
 
-</li>
+            <div className="growthItems">
 
 
+              <div>
 
-</ul>
+                <CheckCircle2 size={18} />
 
+                <span>
+                  Complete your developer profile
+                </span>
 
+              </div>
 
-</div>
 
+              <div>
 
+                <CheckCircle2 size={18} />
 
+                <span>
+                  Build real-world projects
+                </span>
 
+              </div>
 
 
+              <div>
 
+                <CheckCircle2 size={18} />
 
-<div className="profileButtons">
+                <span>
+                  Complete academy courses
+                </span>
 
+              </div>
 
 
-<button
+              <div>
 
-className="saveProfile"
+                <CheckCircle2 size={18} />
 
-onClick={saveProfile}
+                <span>
+                  Earn professional certificates
+                </span>
 
->
+              </div>
 
-💾 Save Profile
 
-</button>
+              <div>
 
+                <CheckCircle2 size={18} />
 
+                <span>
+                  Join the engineering community
+                </span>
 
+              </div>
 
 
-<button
+            </div>
 
-className="cancelProfile"
 
-onClick={()=>window.location.reload()}
+          </section>
 
->
 
-↺ Reset
+          {/* =================================================
+              ACTIONS
+          ================================================= */}
 
-</button>
+          <div className="profileActions">
 
 
+            <button
+              type="button"
+              className="saveButton"
+              onClick={saveProfile}
+            >
 
-</div>
+              <Save size={18} />
 
+              Save Profile
 
+            </button>
 
 
+            <button
+              type="button"
+              className="resetButton"
+              onClick={() =>
+                window.location.reload()
+              }
+            >
 
+              <RotateCcw size={17} />
 
-</div>
+              Reset Changes
 
+            </button>
 
 
-</div>
+          </div>
 
 
+          {/* =================================================
+              SUCCESS MESSAGE
+          ================================================= */}
 
+          {
+            saved && (
 
+              <div className="saveMessage">
 
+                <CheckCircle2 size={18} />
 
-</div>
+                Profile updated successfully.
 
+              </div>
 
-</div>
+            )
+          }
 
 
-</AppLayout>
+        </main>
 
 
-);
+      </div>
 
+
+    </div>
+
+  );
 
 }

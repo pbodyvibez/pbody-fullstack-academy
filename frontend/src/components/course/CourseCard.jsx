@@ -1,208 +1,152 @@
-import { useNavigate } from "react-router-dom";
+// =====================================================
+// PBODY FULLSTACK ACADEMY
+// COURSE CARD
+// FULL REPLACEMENT
+// =====================================================
 
-import "./courseCard.css";
+import React from "react";
+import { Link } from "react-router-dom";
 
+import "./course.css";
 
-export default function CourseCard({course}){
+export default function CourseCard({ course }) {
 
+  if (!course) {
+    return null;
+  }
 
-const navigate = useNavigate();
+  const isPremium = course.access === "premium";
 
+  const title = course.title || "Engineering Course";
 
+  const description =
+    course.description ||
+    "Professional engineering training from PBody FullStack Academy.";
 
-const openCourse = ()=>{
+  const image =
+    course.thumbnail ||
+    course.image ||
+    "";
 
+  return (
+    <article className="courseCard">
 
-navigate(`/courses/${course.id}`);
+      <div className="courseCardImage">
 
+        {image ? (
+          <img
+            src={image}
+            alt={title}
+          />
+        ) : (
+          <div className="courseCardImagePlaceholder">
+            <span>
+              {course.icon || "💻"}
+            </span>
+          </div>
+        )}
 
-};
+        <span
+          className={
+            isPremium
+              ? "courseBadge premium"
+              : "courseBadge"
+          }
+        >
+          {isPremium
+            ? "⭐ PREMIUM"
+            : "🚀 FREE"}
+        </span>
 
+      </div>
 
 
-return(
+      <div className="courseCardContent">
 
-<div className="courseCard">
+        <div className="courseCardBrand">
+          PBODY FULLSTACK ACADEMY
+        </div>
 
 
+        <h2 className="courseCardTitle">
+          {course.icon || "💻"} {title}
+        </h2>
 
-<div className="courseImage">
 
+        <p className="courseCardDescription">
+          {description}
+        </p>
 
-<img
 
-src={course.image}
+        <div className="courseCardStats">
 
-alt={course.title}
+          <span>
+            ⭐ {course.rating || "4.9"}
+          </span>
 
-/>
+          <span>
+            👨‍🎓 {course.students || "10K+"}
+          </span>
 
+          <span>
+            📚 {course.lessons || 0} Lessons
+          </span>
 
+        </div>
 
-{
 
-course.access === "free"
+        {Array.isArray(course.technologies) &&
+          course.technologies.length > 0 && (
 
-?
+            <div className="courseCardTechnologies">
 
-<span className="freeBadge">
+              {course.technologies
+                .slice(0, 5)
+                .map((technology, index) => (
+                  <span key={index}>
+                    {technology}
+                  </span>
+                ))}
 
-FREE COURSE
+            </div>
 
-</span>
+          )}
 
-:
 
-<span className="premiumBadge">
+        <div className="courseCardMeta">
 
-PREMIUM
+          {course.level && (
+            <span>
+              🎯 {course.level}
+            </span>
+          )}
 
-</span>
+          {course.duration && (
+            <span>
+              ⏱ {course.duration}
+            </span>
+          )}
 
-}
+          {course.certificate && (
+            <span>
+              🏆 Certificate
+            </span>
+          )}
 
+        </div>
 
 
-</div>
+        <Link
+          to={`/course/${course.id}`}
+          className="courseButton"
+        >
+          {isPremium
+            ? "🔐 View Premium Course →"
+            : "🚀 Start Learning →"}
+        </Link>
 
+      </div>
 
-
-
-
-
-<div className="courseContent">
-
-
-<div className="courseTitleRow">
-
-
-<h2>
-
-{course.title}
-
-</h2>
-
-
-</div>
-
-
-
-
-
-<p>
-
-{course.description}
-
-</p>
-
-
-
-
-
-
-
-<div className="courseStats">
-
-
-<span>
-
-📚 {course.lessons} Lessons
-
-</span>
-
-
-<span>
-
-⏳ {course.duration}
-
-</span>
-
-
-<span>
-
-⭐ {course.level}
-
-</span>
-
-
-</div>
-
-
-
-
-
-
-
-
-<div className="techPreview">
-
-
-{
-
-course.technologies?.slice(0,5).map((tech,index)=>(
-
-
-<span key={index}>
-
-{tech}
-
-</span>
-
-
-))
-
-
-}
-
-
-
-</div>
-
-
-
-
-
-
-
-
-<button
-
-onClick={openCourse}
-
->
-
-
-{
-
-course.access === "free"
-
-?
-
-"🚀 Start Free Course"
-
-:
-
-"🔒 Unlock Premium Course"
-
-}
-
-
-
-</button>
-
-
-
-
-
-</div>
-
-
-
-
-</div>
-
-
-);
-
-
+    </article>
+  );
 }

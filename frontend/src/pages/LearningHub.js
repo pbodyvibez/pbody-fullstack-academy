@@ -1,122 +1,83 @@
-import { useMemo, useState } from "react";
-import { useNavigate } from "react-router-dom";
-
+import { Link } from "react-router-dom";
 
 import Logo from "../assets/images/logo.png";
-import developerHero from "../assets/images/developerhero-image.png";
-
-import courses from "../data/courses";
-
-import { useProgress } from "../context/ProgressContext";
 
 import "../styles/learningHub.css";
 
-console.log("LearningHub Loaded");
+
+
 export default function LearningHub(){
 
 
-const navigate = useNavigate();
+
+const pathways=[
 
 
-const {progress} = useProgress();
+{
+title:"Frontend Engineering",
+description:
+"Master modern web interfaces using HTML, CSS, JavaScript, React and professional UI engineering.",
+route:"/courses",
+skills:[
+"HTML",
+"CSS",
+"JavaScript",
+"React"
+]
 
-
-
-const [search,setSearch] = useState("");
-
-const [level,setLevel] = useState("All");
-
-const [access,setAccess] = useState("All");
-
-
-
-
-
-const filteredCourses = useMemo(()=>{
-
-
-return courses.filter(course=>{
-
-
-const searchText = search.toLowerCase();
+},
 
 
 
-const matchesSearch =
+{
+title:"Backend Engineering",
+description:
+"Build powerful server systems, APIs, databases and scalable backend applications.",
+route:"/courses",
+skills:[
+"Node.js",
+"Express",
+"MongoDB",
+"APIs"
+]
 
-course.title
-.toLowerCase()
-.includes(searchText)
-
-||
-
-course.description
-.toLowerCase()
-.includes(searchText)
-
-||
-
-course.technologies
-?.join(" ")
-.toLowerCase()
-.includes(searchText);
+},
 
 
 
+{
+title:"Fullstack Engineering",
+description:
+"Become a complete software engineer by connecting frontend, backend and deployment.",
+route:"/courses",
+skills:[
+"React",
+"Node.js",
+"Database",
+"Cloud"
+]
 
-
-const matchesLevel =
-
-level==="All"
-
-?
-
-true
-
-:
-
-course.level===level;
-
-
-
+},
 
 
 
-const matchesAccess =
+{
+title:"AI Engineering",
+description:
+"Learn how artificial intelligence can improve modern software development.",
+route:"/ai-mentor",
+skills:[
+"AI Tools",
+"Automation",
+"Prompt Engineering",
+"Agents"
+]
 
-access==="All"
-
-?
-
-true
-
-:
-
-course.access===access.toLowerCase();
-
-
-
-
-
-return (
-
-matchesSearch
-
-&&
-
-matchesLevel
-
-&&
-
-matchesAccess
-
-);
+}
 
 
-});
 
-
-},[search,level,access]);
+];
 
 
 
@@ -125,29 +86,16 @@ matchesAccess
 
 return(
 
-<div className="learningHub">
+
+
+<div className="learningHubPage">
+
+
+
 
 
 
 <section className="learningHero">
-
-
-
-<div className="learningHeroOverlay"></div>
-
-
-
-
-
-<div className="learningHeroContent">
-
-
-
-
-
-<div className="learningHeroLeft">
-
-
 
 
 
@@ -166,12 +114,11 @@ alt="PBody FullStack Academy"
 
 <div>
 
-<h3 className="academyTitle">
+<h3>
 
 PBODY FULLSTACK ACADEMY
 
 </h3>
-
 
 
 <p>
@@ -180,7 +127,6 @@ AI Powered Engineering Academy
 
 </p>
 
-
 </div>
 
 
@@ -191,86 +137,87 @@ AI Powered Engineering Academy
 
 
 
-<div className="heroBadge">
 
-🚀 Next Generation Engineering Learning Platform
-
-</div>
+<div className="learningHeroContent">
 
 
+<span className="learningBadge">
 
+ENGINEERING LEARNING HUB
+
+</span>
 
 
 
 
 <h1>
 
-Become A Professional
-
-<span>
-
-Software Engineer
-
-</span>
-
-Through Real Projects
+Build Your Future As A Professional Software Engineer
 
 </h1>
 
 
 
+<p>
+
+Follow structured engineering paths, learn from practical projects, get AI assistance and develop career-ready skills.
+
+</p>
+
+
+
+
+<Link
+
+to="/courses"
+
+className="learningButton"
+
+>
+
+Explore Courses
+
+</Link>
+
+
+
+</div>
+
+
+
+
+
+</section>
+
+
+
+
+
+
+
+
+
+<section className="pathwaySection">
+
+
+
+<div className="sectionTitle">
+
+
+<h2>
+
+Engineering Pathways
+
+</h2>
 
 
 <p>
 
-
-Master Frontend, Backend, Full Stack, AI,
-Cloud, Mobile, Cybersecurity and modern
-engineering skills through structured courses,
-projects and AI mentorship.
-
+Choose your specialization and begin your professional journey.
 
 </p>
 
 
-
-
-
-
-
-<div className="heroButtons">
-
-
-<button
-
-className="heroPrimary"
-
-onClick={()=>navigate("/courses")}
-
->
-
-Explore Courses 🚀
-
-</button>
-
-
-
-
-
-<button
-
-className="heroSecondary"
-
-onClick={()=>navigate("/ai")}
-
->
-
-AI Mentor 🤖
-
-</button>
-
-
-
 </div>
 
 
@@ -279,578 +226,52 @@ AI Mentor 🤖
 
 
 
+<div className="pathwayGrid">
 
-<div className="heroStats">
 
+{
 
-
-<div>
-
-<h2>
-
-10+
-
-</h2>
-
-<span>
-
-Engineering Tracks
-
-</span>
-
-</div>
-
-
-
-
-
-<div>
-
-<h2>
-
-700+
-
-</h2>
-
-<span>
-
-Video Lessons
-
-</span>
-
-</div>
-
-
-
-
-
-
-<div>
-
-<h2>
-
-120+
-
-</h2>
-
-<span>
-
-Real Projects
-
-</span>
-
-</div>
-
-
-
-
-
-
-<div>
-
-<h2>
-
-AI
-
-</h2>
-
-<span>
-
-Mentorship
-
-</span>
-
-</div>
-
-
-
-</div>
-
-
-
-
-
-</div>
-
-
-
-
-
-
-<div className="learningHeroRight">
-
-
-<div className="developerHeroCard">
-
-
-<img
-
-src={developerHero}
-
-alt="Developer Hero"
-
-/>
-
-
-</div>
-
-
-</div>
-
-
-
-
-
-</div>
-
-
-</section>
-
-
-
-
-
-<section className="hubToolbar">
-
-
-
-<div className="searchBox">
-
-
-<input
-
-type="text"
-
-placeholder="Search engineering courses..."
-
-value={search}
-
-onChange={(e)=>setSearch(e.target.value)}
-
-/>
-
-
-
-</div>
-
-
-
-
-
-
-<div className="toolbarFilters">
-
-
-
-<select
-
-value={level}
-
-onChange={(e)=>setLevel(e.target.value)}
-
->
-
-
-<option value="All">
-
-All Levels
-
-</option>
-
-
-<option value="Beginner">
-
-Beginner
-
-</option>
-
-
-
-<option value="Intermediate">
-
-Intermediate
-
-</option>
-
-
-
-<option value="Advanced">
-
-Advanced
-
-</option>
-
-
-
-</select>
-
-
-
-
-
-
-<select
-
-value={access}
-
-onChange={(e)=>setAccess(e.target.value)}
-
->
-
-
-<option value="All">
-
-All Courses
-
-</option>
-
-
-
-<option value="Free">
-
-Free
-
-</option>
-
-
-
-<option value="Premium">
-
-Premium
-
-</option>
-
-
-
-</select>
-
-
-
-</div>
-
-
-
-</section>
-
-
-
-
-
-<section className="learningCoursesGrid">
-    {
-filteredCourses.map((course)=>{
-
-
-const currentProgress = progress?.[course.id] || {};
-
-const completed = currentProgress.completedLessons || 0;
-
-const total = course.lessons || 1;
-
-
-const progressPercent = Math.round(
-(completed / total) * 100
-);
-
-
-
-const isPremium = course.access === "premium";
-
-
-
-return(
-
-
-<div
-
-className="learningCourseCard"
-
-key={course.id}
-
->
-
-
-
-
-
-<div className="courseImageWrapper">
-
-
-
-<img
-
-src={course.thumbnail || course.image}
-
-alt={course.title}
-
-/>
-
-
+pathways.map((item,index)=>(
 
 
 
 <div
 
-className={
-
-isPremium
-
-?
-
-"premiumRibbon"
-
-:
-
-"freeRibbon"
-
-}
-
->
-
-
-{
-
-isPremium
-
-?
-
-"⭐ PREMIUM"
-
-:
-
-"FREE"
-
-}
-
-
-</div>
-
-
-
-<div className="courseOverlay"></div>
-
-
-
-</div>
-
-
-
-
-
-
-
-
-
-<div className="courseCardBody">
-
-
-
-
-
-<div className="courseTitleRow">
-
-
-
-<h2>
-
-{course.icon}
-
-{course.title}
-
-</h2>
-
-
-
-
-<span
-
-className="courseLevel"
-
-style={{
-
-background:course.color
-
-}}
-
->
-
-{course.level}
-
-</span>
-
-
-
-
-</div>
-
-
-
-
-
-
-
-<p className="courseDescription">
-
-
-{course.description}
-
-
-
-</p>
-
-
-
-
-
-
-
-
-
-<div className="courseInformation">
-
-
-
-
-
-<div>
-
-
-<strong>
-
-⭐ {course.rating}
-
-</strong>
-
-
-<span>
-
-Rating
-
-</span>
-
-
-</div>
-
-
-
-
-
-
-
-<div>
-
-
-<strong>
-
-📚 {course.lessons}
-
-</strong>
-
-
-<span>
-
-Lessons
-
-</span>
-
-
-</div>
-
-
-
-
-
-
-
-<div>
-
-
-<strong>
-
-🚀 {course.projects}
-
-</strong>
-
-
-<span>
-
-Projects
-
-</span>
-
-
-</div>
-
-
-
-
-
-
-<div>
-
-
-<strong>
-
-⏱ {course.duration}
-
-</strong>
-
-
-<span>
-
-Duration
-
-</span>
-
-
-</div>
-
-
-
-
-</div>
-
-
-
-
-
-
-
-
-
-<div className="technologySection">
-
-
-
-<h4>
-
-Technologies
-
-</h4>
-
-
-
-
-
-<div className="technologyList">
-
-
-{
-
-course.technologies
-
-?.slice(0,6)
-
-.map((tech,index)=>(
-
-
-<span
+className="pathwayCard"
 
 key={index}
 
 >
 
-{tech}
+
+<h3>
+
+{item.title}
+
+</h3>
+
+
+
+<p>
+
+{item.description}
+
+</p>
+
+
+
+
+<div className="skillList">
+
+
+{
+
+item.skills.map(skill=>(
+
+
+<span key={skill}>
+
+{skill}
 
 </span>
 
@@ -866,247 +287,36 @@ key={index}
 
 
 
-</div>
 
 
+<Link
 
-
-
-
-
-
-
-<div className="courseProgress">
-
-
-
-
-
-<div className="progressHeader">
-
-
-<span>
-
-Your Progress
-
-</span>
-
-
-
-<strong>
-
-{progressPercent}%
-
-</strong>
-
-
-
-</div>
-
-
-
-
-
-<div className="progressBar">
-
-
-<div
-
-style={{
-
-width:`${progressPercent}%`
-
-}}
-
-/>
-
-
-</div>
-
-
-
-
-</div>
-
-
-
-
-
-
-
-
-
-<div className="courseBottom">
-
-
-
-
-
-<div className="studentCount">
-
-
-<h4>
-
-👨‍🎓 {course.students || "10,000+"}
-
-</h4>
-
-
-
-<p>
-
-Students Enrolled
-
-</p>
-
-
-
-</div>
-
-
-
-
-
-
-
-
-
-<button
-
-
-className="courseStartButton"
-
-
-onClick={()=>navigate(`/course/${course.id}`)}
-
+to={item.route}
 
 >
 
+Start Learning →
 
-{
+</Link>
 
-progressPercent > 0
 
-?
 
-"Continue Learning →"
 
-:
 
-"Start Learning →"
+</div>
+
+
+
+))
+
 
 }
 
 
-</button>
-
-
-
-
-
-
 
 </div>
 
 
-
-
-
-
-
-
-
-</div>
-
-
-
-
-
-</div>
-
-
-
-)
-
-
-})
-
-}
-</section>
-
-
-
-
-
-<section className="aiMentorBanner">
-
-
-
-<div className="mentorGlow"></div>
-
-
-
-
-
-<div className="mentorBrand">
-
-
-<img
-
-src={Logo}
-
-alt="PBody FullStack Academy"
-
-/>
-
-
-</div>
-
-
-
-
-
-
-<div className="mentorText">
-
-
-
-<h2>
-
-🤖 Your AI Engineering Mentor
-
-</h2>
-
-
-
-
-<p>
-
-
-Get help understanding difficult concepts,
-debugging your projects, generating examples
-and planning your engineering career with AI.
-
-
-</p>
-
-
-
-
-<button
-
-onClick={()=>navigate("/ai")}
-
->
-
-
-Open AI Mentor →
-
-</button>
-
-
-
-</div>
 
 
 
@@ -1122,27 +332,16 @@ Open AI Mentor →
 
 
 
-<section className="careerSection">
+<section className="aiLearningCard">
 
 
 
-
-
-<div className="careerHeader">
-
-
-
-<span>
-
-CAREER PATHS
-
-</span>
-
+<div>
 
 
 <h2>
 
-Choose Your Engineering Destination
+Your AI Engineering Mentor
 
 </h2>
 
@@ -1150,12 +349,10 @@ Choose Your Engineering Destination
 
 <p>
 
-
-Follow professional learning tracks designed
-to take you from beginner to industry-ready.
-
+Get explanations, debugging help, project guidance and personalized learning support while you study.
 
 </p>
+
 
 
 </div>
@@ -1164,155 +361,16 @@ to take you from beginner to industry-ready.
 
 
 
+<Link
 
-
-
-<div className="careerGrid">
-
-
-
-
-
-
-<div className="careerCard">
-
-
-<div className="careerIcon">
-
-🎨
-
-</div>
-
-
-<h3>
-
-Frontend Engineer
-
-</h3>
-
-
-<p>
-
-HTML, CSS, JavaScript, React,
-Next.js and modern UI engineering.
-
-</p>
-
-
-
-<button
-
-onClick={()=>navigate("/course/frontend")}
+to="/ai-mentor"
 
 >
 
-Start Track →
+Open AI Mentor
 
-</button>
+</Link>
 
-
-</div>
-
-
-
-
-
-
-
-
-
-<div className="careerCard">
-
-
-<div className="careerIcon">
-
-⚙️
-
-</div>
-
-
-<h3>
-
-Backend Engineer
-
-</h3>
-
-
-<p>
-
-Node.js, APIs, databases,
-security and scalable systems.
-
-</p>
-
-
-
-<button
-
-onClick={()=>navigate("/course/backend")}
-
->
-
-Start Track →
-
-</button>
-
-
-</div>
-
-
-
-
-
-
-
-
-
-<div className="careerCard">
-
-
-<div className="careerIcon">
-
-💻
-
-</div>
-
-
-<h3>
-
-Full Stack Engineer
-
-</h3>
-
-
-<p>
-
-Build complete applications
-from frontend to deployment.
-
-</p>
-
-
-
-<button
-
-onClick={()=>navigate("/course/fullstack")}
-
->
-
-Start Track →
-
-</button>
-
-
-</div>
-
-
-
-
-
-
-</div>
 
 
 
@@ -1327,52 +385,8 @@ Start Track →
 
 
 
-<section className="learningBottomCTA">
-
-
-
-<h2>
-
-Ready To Build Your Engineering Career?
-
-</h2>
-
-
-
-<p>
-
-
-Join thousands of developers learning
-modern software engineering skills.
-
-
-</p>
-
-
-
-
-
-<button
-
-onClick={()=>navigate("/courses")}
-
->
-
-
-View All Courses 🚀
-
-</button>
-
-
-
-</section>
-
-
-
-
-
-
 </div>
+
 
 
 );

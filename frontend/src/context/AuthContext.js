@@ -22,7 +22,6 @@ const SESSION_KEY="pbody_session";
 
 
 
-
 export function AuthProvider({children}){
 
 
@@ -31,7 +30,6 @@ const [user,setUser]=useState(null);
 const [token,setToken]=useState(null);
 
 const [loading,setLoading]=useState(true);
-
 
 
 
@@ -57,15 +55,18 @@ JSON.parse(saved);
 
 
 
-if(session.user && session.token){
+if(session.user){
 
 
 setUser(session.user);
 
-setToken(session.token);
+setToken(session.token || null);
 
 
-}else{
+}
+
+
+else{
 
 
 localStorage.removeItem(
@@ -107,18 +108,17 @@ setLoading(false);
 
 
 
-function setSession(user,token){
+function saveSession(updatedUser,updatedToken){
 
 
 
 const session={
 
-user,
+user:updatedUser,
 
-token
+token:updatedToken
 
 };
-
 
 
 
@@ -132,16 +132,13 @@ JSON.stringify(session)
 
 
 
+setUser(updatedUser);
 
-setUser(user);
-
-setToken(token);
+setToken(updatedToken);
 
 
 
 }
-
-
 
 
 
@@ -158,7 +155,6 @@ async function login(email,password){
 try{
 
 
-
 const response =
 await loginUser({
 
@@ -172,8 +168,7 @@ password
 
 
 
-
-setSession(
+saveSession(
 
 response.user,
 
@@ -185,8 +180,7 @@ response.token
 
 
 
-
-return {
+return{
 
 
 success:true,
@@ -204,7 +198,7 @@ catch(error){
 
 
 
-return {
+return{
 
 
 success:false,
@@ -217,11 +211,50 @@ error?.response?.data?.message ||
 "Login failed"
 
 
+
 };
 
 
 
 }
+
+
+
+}
+
+
+
+
+
+
+
+
+
+function updateProfile(profileData){
+
+
+
+const updatedUser={
+
+
+...user,
+
+
+...profileData
+
+
+
+};
+
+
+
+saveSession(
+
+updatedUser,
+
+token
+
+);
 
 
 
@@ -266,7 +299,9 @@ return(
 
 <AuthContext.Provider
 
+
 value={{
+
 
 user,
 
@@ -274,15 +309,25 @@ token,
 
 loading,
 
+
 login,
+
 
 logout,
 
-setSession,
+
+updateProfile,
+
+
+setSession:saveSession,
+
 
 isAuthenticated:!!user
 
+
+
 }}
+
 
 >
 
@@ -298,7 +343,6 @@ isAuthenticated:!!user
 
 
 }
-
 
 
 

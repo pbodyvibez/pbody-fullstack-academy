@@ -1,118 +1,491 @@
-import { useState, useEffect } from "react";
+// ===============================================
+// PBODY FULLSTACK ACADEMY
+// PREMIUM DEVELOPER PORTFOLIO BUILDER
+// CONNECTED TO PROFILE + PROGRESS
+// FULL REPLACEMENT
+// ===============================================
+
+import React from "react";
+
+import {
+  Globe,
+  Code2,
+  Rocket,
+  Award,
+  User,
+  ExternalLink,
+  Sparkles,
+  ArrowRight
+} from "lucide-react";
+
+import {
+  useNavigate
+} from "react-router-dom";
+
+import {
+  useAuth
+} from "../context/AuthContext";
+
+import {
+  useProgress
+} from "../context/ProgressContext";
+
+import "../styles/portfolioBuilder.css";
+
+
+// ===============================================
+// COMPONENT
+// ===============================================
 
 export default function PortfolioBuilder() {
 
-  const [portfolio, setPortfolio] = useState({
-    title: "",
-    bio: "",
-    github: "",
-    linkedin: "",
-    website: ""
-  });
+  const navigate = useNavigate();
 
-  useEffect(() => {
 
-    const saved = localStorage.getItem("student_portfolio");
+  // =============================================
+  // AUTH
+  // =============================================
 
-    if (saved) {
+  const {
+    user
+  } = useAuth() || {};
 
-      setPortfolio(JSON.parse(saved));
+
+  // =============================================
+  // PROGRESS
+  // =============================================
+
+  const {
+    progress
+  } = useProgress() || {};
+
+
+  // =============================================
+  // PROJECTS
+  // =============================================
+
+  const projects = [
+
+    {
+      id: 1,
+      title: "Engineering Project 01",
+      description:
+        "Your completed academy projects will appear here.",
+      tech:
+        "React • JavaScript • Node.js"
+    },
+
+    {
+      id: 2,
+      title: "Engineering Project 02",
+      description:
+        "Showcase real-world applications you build.",
+      tech:
+        "Full Stack Development"
+    }
+
+  ];
+
+
+  // =============================================
+  // NAVIGATION
+  // =============================================
+
+  const goTo = (path, state = undefined) => {
+
+    if (state) {
+
+      navigate(
+        path,
+        {
+          state
+        }
+      );
+
+    } else {
+
+      navigate(path);
 
     }
 
-  }, []);
 
-  const handleChange = (e) => {
+    window.setTimeout(() => {
 
-    setPortfolio({
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+      });
 
-      ...portfolio,
-
-      [e.target.name]: e.target.value
-
-    });
+    }, 100);
 
   };
 
-  const savePortfolio = () => {
 
-    localStorage.setItem(
+  // =============================================
+  // GENERATE PORTFOLIO
+  // =============================================
 
-      "student_portfolio",
+  const generatePortfolio = () => {
 
-      JSON.stringify(portfolio)
+    const portfolioData = {
 
+      user: user || null,
+
+      progress: progress || {},
+
+      projects
+
+    };
+
+
+    goTo(
+      "/portfolio-builder/preview",
+      portfolioData
     );
 
-    alert("✅ Portfolio Saved Successfully!");
+  };
+
+
+  // =============================================
+  // VIEW PROJECT
+  // =============================================
+
+  const viewProject = (project) => {
+
+    goTo(
+      `/project/${project.id}`,
+      {
+        project
+      }
+    );
 
   };
+
+
+  // =============================================
+  // RENDER
+  // =============================================
 
   return (
 
-    <div
-      style={{
-        minHeight: "100vh",
-        background: "#081420",
-        color: "white",
-        padding: "40px"
-      }}
-    >
+    <div className="portfolioBuilderPage">
 
-      <h1>🌐 Portfolio Builder</h1>
 
-      <br />
+      {/* ==========================================
+          HERO
+      ========================================== */}
 
-      <input
-        name="title"
-        placeholder="Professional Title"
-        value={portfolio.title}
-        onChange={handleChange}
-      />
+      <section className="portfolioHero">
 
-      <br /><br />
 
-      <textarea
-        name="bio"
-        placeholder="Short Professional Bio"
-        value={portfolio.bio}
-        onChange={handleChange}
-      />
+        <div className="portfolioIcon">
 
-      <br /><br />
+          <Globe size={42} />
 
-      <input
-        name="github"
-        placeholder="GitHub URL"
-        value={portfolio.github}
-        onChange={handleChange}
-      />
+        </div>
 
-      <br /><br />
 
-      <input
-        name="linkedin"
-        placeholder="LinkedIn URL"
-        value={portfolio.linkedin}
-        onChange={handleChange}
-      />
+        <h1>
 
-      <br /><br />
+          AI Developer Portfolio Builder
 
-      <input
-        name="website"
-        placeholder="Personal Website"
-        value={portfolio.website}
-        onChange={handleChange}
-      />
+        </h1>
 
-      <br /><br />
 
-      <button onClick={savePortfolio}>
+        <p>
 
-        Save Portfolio
+          Transform your learning journey into a professional
+          developer portfolio employers can explore.
 
-      </button>
+        </p>
+
+
+        <button
+          type="button"
+          onClick={generatePortfolio}
+        >
+
+          <Sparkles size={18} />
+
+          Generate Portfolio
+
+          <ArrowRight size={18} />
+
+        </button>
+
+
+      </section>
+
+
+      {/* ==========================================
+          PROFILE
+      ========================================== */}
+
+      <section className="portfolioProfile">
+
+
+        <div className="portfolioAvatar">
+
+          <User />
+
+        </div>
+
+
+        <div>
+
+          <h2>
+
+            {
+              user?.name ||
+              "Student Developer"
+            }
+
+          </h2>
+
+
+          <p>
+
+            Full Stack Software Engineer
+
+          </p>
+
+
+          <p>
+
+            {progress?.totalXP || 0} XP
+
+            {" • "}
+
+            {
+              progress?.completedLessons?.length ||
+              0
+            }
+
+            {" "}
+            Lessons Completed
+
+          </p>
+
+        </div>
+
+
+      </section>
+
+
+      {/* ==========================================
+          FEATURES
+      ========================================== */}
+
+      <section className="portfolioFeatures">
+
+
+        <div className="portfolioCard">
+
+          <Code2 />
+
+          <h3>
+            Technical Skills
+          </h3>
+
+          <p>
+
+            React, JavaScript, Backend Engineering,
+            Databases and modern development tools.
+
+          </p>
+
+        </div>
+
+
+        <div className="portfolioCard">
+
+          <Rocket />
+
+          <h3>
+            Projects Showcase
+          </h3>
+
+          <p>
+
+            Display production-ready applications and
+            engineering solutions.
+
+          </p>
+
+        </div>
+
+
+        <div className="portfolioCard">
+
+          <Award />
+
+          <h3>
+            Achievements
+          </h3>
+
+          <p>
+
+            Certificates, XP milestones and academy
+            achievements.
+
+          </p>
+
+        </div>
+
+
+      </section>
+
+
+      {/* ==========================================
+          PORTFOLIO PREVIEW
+      ========================================== */}
+
+      <section className="portfolioProjects">
+
+
+        <div className="portfolioProjectsHeader">
+
+          <div>
+
+            <span>
+              PROJECT SHOWCASE
+            </span>
+
+            <h2>
+              Portfolio Preview
+            </h2>
+
+          </div>
+
+
+          <button
+            type="button"
+            onClick={generatePortfolio}
+          >
+
+            <Sparkles size={17} />
+
+            Generate Portfolio
+
+          </button>
+
+        </div>
+
+
+        <div className="projectGrid">
+
+
+          {
+
+            projects.map(
+              (project) => (
+
+                <div
+                  className="projectCard"
+                  key={project.id}
+                >
+
+
+                  <h3>
+
+                    {project.title}
+
+                  </h3>
+
+
+                  <p>
+
+                    {project.description}
+
+                  </p>
+
+
+                  <span>
+
+                    {project.tech}
+
+                  </span>
+
+
+                  <button
+                    type="button"
+                    onClick={() =>
+                      viewProject(project)
+                    }
+                  >
+
+                    <ExternalLink
+                      size={16}
+                    />
+
+                    View Project
+
+                  </button>
+
+
+                </div>
+
+              )
+            )
+
+          }
+
+
+        </div>
+
+
+      </section>
+
+
+      {/* ==========================================
+          GENERATOR CTA
+      ========================================== */}
+
+      <section className="portfolioGeneratorCTA">
+
+
+        <div>
+
+          <Sparkles size={25} />
+
+
+          <div>
+
+            <h2>
+
+              Ready To Build Your
+              Developer Identity?
+
+            </h2>
+
+
+            <p>
+
+              Generate a professional portfolio from
+              your PBODY Academy profile, projects,
+              achievements and engineering progress.
+
+            </p>
+
+          </div>
+
+        </div>
+
+
+        <button
+          type="button"
+          onClick={generatePortfolio}
+        >
+
+          Generate My Portfolio
+
+          <ArrowRight size={18} />
+
+        </button>
+
+
+      </section>
+
 
     </div>
 

@@ -1,212 +1,164 @@
-import "../../components/course/course.css";
 
+import React from "react";
 
 export default function ProgressCard({
+  course,
+  currentLesson,
+  completedLessons = 0,
+  totalLessons = 0,
+  progress
+}) {
+  const completedCount = Number(completedLessons) || 0;
+  const totalCount = Number(totalLessons) || 0;
 
-course,
+  let percentage = 0;
 
-currentLesson,
+  if (typeof progress === "number") {
+    percentage = progress;
+  } else if (totalCount > 0) {
+    percentage = Math.round(
+      (completedCount / totalCount) * 100
+    );
+  }
 
-completed,
+  if (percentage < 0) {
+    percentage = 0;
+  }
 
-total
+  if (percentage > 100) {
+    percentage = 100;
+  }
 
-}){
+  const courseXP =
+    Number(
+      course && (course.xp || course.totalXP)
+    ) || 0;
 
+  return (
+    <section className="progressCard">
 
-const percentage = total
+      <div className="progressCardHeader">
 
-?
+        <div className="progressCardTitle">
 
-Math.round((completed / total) * 100)
+          <div className="progressIcon">
+            ↑
+          </div>
 
-:
+          <div>
+            <h2>Course Progress</h2>
+            <p>Your engineering journey</p>
+          </div>
 
-0;
+        </div>
 
+        <strong className="progressPercentage">
+          {percentage}%
+        </strong>
 
+      </div>
 
-return(
+      <div className="progressBar">
 
+        <div
+          className="progressFill"
+          style={{
+            width: percentage + "%"
+          }}
+        />
 
+      </div>
 
-<div className="progressCard">
+      <div className="progressStats">
 
+        <div className="progressStat">
 
+          <div className="progressStatIcon">
+            📖
+          </div>
 
+          <strong>
+            {completedCount}
+          </strong>
 
+          <span>
+            Completed
+          </span>
 
-<div className="progressHeader">
+        </div>
 
+        <div className="progressStat">
 
-<h2>
+          <div className="progressStatIcon">
+            🎓
+          </div>
 
-🚀 Progress
+          <strong>
+            {totalCount}
+          </strong>
 
-</h2>
+          <span>
+            Lessons
+          </span>
 
+        </div>
 
-<span>
+        <div className="progressStat">
 
-{percentage}%
+          <div className="progressStatIcon">
+            🏆
+          </div>
 
-</span>
+          <strong>
+            {courseXP}
+          </strong>
 
+          <span>
+            XP
+          </span>
 
-</div>
+        </div>
 
+      </div>
 
+      <div className="certificateProgress">
 
+        <div className="certificateIcon">
+          🏆
+        </div>
 
+        <div>
 
+          <h3>
+            Professional Certificate
+          </h3>
 
+          <p>
+            {percentage >= 100
+              ? "Course completed. Your certificate is ready."
+              : "Complete this course to unlock your professional PBody FullStack Academy certificate."
+            }
+          </p>
 
-<div className="progressBar">
+        </div>
 
+      </div>
 
-<div
+      <div className="currentLessonProgress">
 
-style={{
+        <span className="currentLessonLabel">
+          Currently Learning
+        </span>
 
-width:`${percentage}%`
+        <strong>
+          {currentLesson
+            ? currentLesson.title
+            : "Select a lesson"
+          }
+        </strong>
 
-}}
+      </div>
 
-
-/>
-
-
-</div>
-
-
-
-
-
-
-
-<div className="progressStats">
-
-
-
-<div>
-
-<h3>
-
-{completed}
-
-</h3>
-
-<p>
-
-Completed
-
-</p>
-
-</div>
-
-
-
-
-<div>
-
-<h3>
-
-{total}
-
-</h3>
-
-<p>
-
-Lessons
-
-</p>
-
-</div>
-
-
-
-
-
-<div>
-
-<h3>
-
-{course.xp || 0}
-
-</h3>
-
-<p>
-
-XP
-
-</p>
-
-</div>
-
-
-
-</div>
-
-
-
-
-
-
-
-
-<div className="certificateBox">
-
-
-<h3>
-
-🏆 Certificate
-
-</h3>
-
-
-<p>
-
-Complete this course to earn your professional certificate.
-
-</p>
-
-
-</div>
-
-
-
-
-
-
-
-<div className="currentLessonBox">
-
-
-<h3>
-
-Currently Learning
-
-</h3>
-
-
-<p>
-
-{currentLesson?.title || "Select lesson"}
-
-</p>
-
-
-</div>
-
-
-
-
-
-</div>
-
-
-
-);
-
-
+    </section>
+  );
 }

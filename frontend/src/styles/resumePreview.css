@@ -1,0 +1,946 @@
+/* ======================================================
+   PBODY FULLSTACK ACADEMY
+   PREMIUM PROFESSIONAL RESUME PREVIEW
+   FULL REPLACEMENT
+====================================================== */
+
+
+/* ======================================================
+   PAGE
+====================================================== */
+
+.resumePreviewPage {
+  min-height: 100vh;
+
+  padding: 40px 24px 80px;
+
+  background:
+    radial-gradient(
+      circle at 90% 0%,
+      rgba(56, 189, 248, 0.12),
+      transparent 32%
+    ),
+    radial-gradient(
+      circle at 0% 100%,
+      rgba(37, 99, 235, 0.08),
+      transparent 30%
+    ),
+    #061426;
+
+  color: #f8fafc;
+
+  position: relative;
+
+  overflow: hidden;
+}
+
+
+/* ======================================================
+   ACTION BAR
+====================================================== */
+
+.resumePreviewActions {
+  width: min(1100px, 100%);
+
+  margin: 0 auto 24px;
+
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: center;
+
+  gap: 16px;
+}
+
+
+.resumePreviewActions button {
+  display: inline-flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  gap: 9px;
+
+  padding: 11px 17px;
+
+  border: 1px solid rgba(148, 163, 184, 0.2);
+
+  border-radius: 10px;
+
+  background: rgba(8, 24, 43, 0.9);
+
+  color: #e2e8f0;
+
+  font-size: 13px;
+
+  font-weight: 750;
+
+  cursor: pointer;
+
+  transition:
+    transform 0.2s ease,
+    border-color 0.2s ease,
+    background 0.2s ease;
+}
+
+
+.resumePreviewActions button:hover {
+  transform: translateY(-2px);
+
+  border-color: rgba(56, 189, 248, 0.55);
+
+  background: rgba(13, 40, 68, 0.95);
+}
+
+
+.resumePreviewActions button:last-child {
+  background:
+    linear-gradient(
+      135deg,
+      #2563eb,
+      #0891b2
+    );
+
+  border-color: transparent;
+
+  color: #ffffff;
+
+  box-shadow:
+    0 10px 25px rgba(8, 145, 178, 0.16);
+}
+
+
+/* ======================================================
+   RESUME DOCUMENT
+====================================================== */
+
+.resumePreviewDocument {
+  width: min(1050px, 100%);
+
+  margin: 0 auto;
+
+  position: relative;
+
+  overflow: hidden;
+
+  border:
+    1px solid rgba(148, 163, 184, 0.15);
+
+  border-radius: 24px;
+
+  background:
+    linear-gradient(
+      145deg,
+      #0b1d32 0%,
+      #081827 50%,
+      #061321 100%
+    );
+
+  box-shadow:
+    0 35px 100px rgba(0, 0, 0, 0.35);
+}
+
+
+/* ======================================================
+   LARGE ACADEMY WATERMARK
+====================================================== */
+
+.resumePreviewDocument::before {
+  content: "";
+
+  position: absolute;
+
+  width: 520px;
+
+  height: 520px;
+
+  left: 50%;
+
+  top: 52%;
+
+  transform:
+    translate(-50%, -50%);
+
+  background-image:
+    url("../assets/images/logo.png");
+
+  background-repeat: no-repeat;
+
+  background-position: center;
+
+  background-size: contain;
+
+  opacity: 0.025;
+
+  pointer-events: none;
+
+  z-index: 0;
+}
+
+
+/* ======================================================
+   CONTENT LAYER
+====================================================== */
+
+.resumePreviewContent {
+  position: relative;
+
+  z-index: 2;
+
+  padding: 48px 55px 35px;
+}
+
+
+/* ======================================================
+   SMALL PROFESSIONAL BRAND HEADER
+====================================================== */
+
+.resumePreviewBrand {
+  display: flex;
+
+  align-items: center;
+
+  gap: 12px;
+
+  padding-bottom: 24px;
+
+  margin-bottom: 30px;
+
+  border-bottom:
+    1px solid rgba(148, 163, 184, 0.14);
+}
+
+
+.resumePreviewBrand img {
+  width: 48px;
+
+  height: 48px;
+
+  object-fit: contain;
+
+  flex-shrink: 0;
+}
+
+
+.resumePreviewBrand div {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 4px;
+}
+
+
+.resumePreviewBrand strong {
+  color: #f8fafc;
+
+  font-size: 13px;
+
+  font-weight: 850;
+
+  letter-spacing: 0.12em;
+}
+
+
+.resumePreviewBrand span {
+  color: #67c7f5;
+
+  font-size: 10px;
+
+  font-weight: 750;
+
+  letter-spacing: 0.1em;
+}
+
+
+/* ======================================================
+   RESUME HEADER
+====================================================== */
+
+.resumePreviewHeader {
+  padding-bottom: 30px;
+
+  border-bottom:
+    2px solid rgba(56, 189, 248, 0.25);
+}
+
+
+.resumePreviewHeader h1 {
+  margin: 0;
+
+  color: #ffffff;
+
+  font-size:
+    clamp(38px, 5vw, 58px);
+
+  line-height: 1.05;
+
+  font-weight: 900;
+
+  letter-spacing: -0.035em;
+}
+
+
+.resumePreviewHeader h2 {
+  margin: 10px 0 0;
+
+  color: #5fc4f3;
+
+  font-size:
+    clamp(18px, 2.5vw, 25px);
+
+  font-weight: 750;
+}
+
+
+.resumePreviewHeader p {
+  margin: 10px 0 0;
+
+  color: #94a8bd;
+
+  font-size: 14px;
+
+  line-height: 1.7;
+}
+
+
+/* ======================================================
+   EMAIL
+====================================================== */
+
+.resumeEmail {
+  display: inline-flex;
+
+  align-items: center;
+
+  gap: 7px;
+
+  margin-top: 16px;
+
+  padding: 8px 12px;
+
+  border:
+    1px solid rgba(56, 189, 248, 0.15);
+
+  border-radius: 8px;
+
+  background:
+    rgba(56, 189, 248, 0.05);
+
+  color: #bae6fd;
+
+  font-size: 13px;
+
+  text-decoration: none;
+
+  transition:
+    border-color 0.2s ease,
+    background 0.2s ease;
+}
+
+
+.resumeEmail:hover {
+  border-color:
+    rgba(56, 189, 248, 0.4);
+
+  background:
+    rgba(56, 189, 248, 0.09);
+}
+
+
+/* ======================================================
+   RESUME SECTIONS
+====================================================== */
+
+.resumePreviewSection {
+  padding:
+    28px 0;
+
+  border-bottom:
+    1px solid rgba(148, 163, 184, 0.1);
+}
+
+
+.resumePreviewSection:last-of-type {
+  border-bottom: none;
+}
+
+
+.resumePreviewSectionTitle {
+  display: flex;
+
+  align-items: center;
+
+  gap: 10px;
+
+  margin-bottom: 16px;
+}
+
+
+.resumePreviewSectionTitle svg {
+  width: 19px;
+
+  height: 19px;
+
+  color: #38bdf8;
+
+  flex-shrink: 0;
+}
+
+
+.resumePreviewSectionTitle h2 {
+  margin: 0;
+
+  color: #f8fafc;
+
+  font-size: 18px;
+
+  font-weight: 800;
+
+  letter-spacing: -0.01em;
+}
+
+
+.resumePreviewSection > p {
+  margin: 0;
+
+  max-width: 850px;
+
+  color: #b5c5d5;
+
+  font-size: 14px;
+
+  line-height: 1.85;
+}
+
+
+/* ======================================================
+   TRAINING
+====================================================== */
+
+.resumePreviewSection h3 {
+  margin:
+    0 0 7px;
+
+  color: #ffffff;
+
+  font-size: 16px;
+
+  font-weight: 800;
+}
+
+
+.resumePreviewSection h3 + p {
+  margin:
+    0 0 18px;
+
+  color: #9fb2c5;
+
+  font-size: 14px;
+
+  line-height: 1.7;
+}
+
+
+.resumeTrainingStats {
+  display: flex;
+
+  flex-wrap: wrap;
+
+  gap: 12px;
+}
+
+
+.resumeTrainingStats span {
+  min-width: 150px;
+
+  padding: 13px 16px;
+
+  border:
+    1px solid rgba(56, 189, 248, 0.12);
+
+  border-radius: 10px;
+
+  background:
+    rgba(56, 189, 248, 0.045);
+
+  color: #8fa6ba;
+
+  font-size: 11px;
+
+  font-weight: 700;
+
+  text-transform: uppercase;
+
+  letter-spacing: 0.05em;
+}
+
+
+.resumeTrainingStats strong {
+  display: block;
+
+  margin-bottom: 3px;
+
+  color: #facc15;
+
+  font-size: 20px;
+
+  font-weight: 850;
+}
+
+
+/* ======================================================
+   TECHNICAL SKILLS
+====================================================== */
+
+.resumePreviewSkills {
+  display: flex;
+
+  flex-wrap: wrap;
+
+  gap: 9px;
+}
+
+
+.resumePreviewSkills span {
+  padding:
+    8px 12px;
+
+  border:
+    1px solid rgba(56, 189, 248, 0.16);
+
+  border-radius: 999px;
+
+  background:
+    rgba(56, 189, 248, 0.06);
+
+  color: #a5ddfa;
+
+  font-size: 12px;
+
+  font-weight: 700;
+
+  line-height: 1.3;
+}
+
+
+/* ======================================================
+   ACHIEVEMENTS
+====================================================== */
+
+.resumePreviewAchievements {
+  list-style: none;
+
+  padding: 0;
+
+  margin: 0;
+
+  display: grid;
+
+  gap: 11px;
+}
+
+
+.resumePreviewAchievements li {
+  display: flex;
+
+  align-items: center;
+
+  gap: 10px;
+
+  color: #cbd8e5;
+
+  font-size: 14px;
+
+  line-height: 1.6;
+}
+
+
+.resumePreviewAchievements svg {
+  color: #22c55e;
+
+  flex-shrink: 0;
+}
+
+
+/* ======================================================
+   FOOTER
+====================================================== */
+
+.resumePreviewFooter {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  gap: 20px;
+
+  padding-top: 26px;
+
+  margin-top: 5px;
+
+  border-top:
+    1px solid rgba(148, 163, 184, 0.12);
+}
+
+
+.resumeFooterBrand {
+  display: flex;
+
+  align-items: center;
+
+  gap: 9px;
+}
+
+
+.resumeFooterBrand img {
+  width: 28px;
+
+  height: 28px;
+
+  object-fit: contain;
+}
+
+
+.resumeFooterBrand strong {
+  color: #dce8f3;
+
+  font-size: 10px;
+
+  font-weight: 800;
+
+  letter-spacing: 0.1em;
+}
+
+
+.resumePreviewFooter > span {
+  color: #71869b;
+
+  font-size: 10px;
+
+  font-weight: 650;
+
+  letter-spacing: 0.04em;
+}
+
+
+/* ======================================================
+   TABLET
+====================================================== */
+
+@media (max-width: 800px) {
+
+  .resumePreviewPage {
+    padding:
+      25px 14px 60px;
+  }
+
+
+  .resumePreviewContent {
+    padding:
+      35px 30px 28px;
+  }
+
+
+  .resumePreviewActions {
+    flex-direction: column;
+
+    align-items: stretch;
+  }
+
+
+  .resumePreviewActions button {
+    width: 100%;
+  }
+
+
+  .resumePreviewFooter {
+    flex-direction: column;
+
+    align-items: flex-start;
+  }
+
+
+  .resumePreviewDocument::before {
+    width: 400px;
+
+    height: 400px;
+  }
+
+}
+
+
+/* ======================================================
+   MOBILE
+====================================================== */
+
+@media (max-width: 520px) {
+
+  .resumePreviewPage {
+    padding:
+      18px 10px 45px;
+  }
+
+
+  .resumePreviewDocument {
+    border-radius: 18px;
+  }
+
+
+  .resumePreviewContent {
+    padding:
+      28px 20px 24px;
+  }
+
+
+  .resumePreviewBrand {
+    margin-bottom: 24px;
+
+    padding-bottom: 20px;
+  }
+
+
+  .resumePreviewBrand img {
+    width: 40px;
+
+    height: 40px;
+  }
+
+
+  .resumePreviewBrand strong {
+    font-size: 10px;
+  }
+
+
+  .resumePreviewBrand span {
+    font-size: 8px;
+  }
+
+
+  .resumePreviewHeader h1 {
+    font-size: 34px;
+  }
+
+
+  .resumePreviewHeader h2 {
+    font-size: 18px;
+  }
+
+
+  .resumePreviewSection {
+    padding:
+      23px 0;
+  }
+
+
+  .resumePreviewSectionTitle h2 {
+    font-size: 16px;
+  }
+
+
+  .resumePreviewSection > p {
+    font-size: 13px;
+  }
+
+
+  .resumePreviewSkills span {
+    font-size: 11px;
+
+    padding:
+      7px 10px;
+  }
+
+
+  .resumeTrainingStats {
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+  }
+
+
+  .resumeTrainingStats span {
+    min-width: 0;
+  }
+
+
+  .resumePreviewDocument::before {
+    width: 300px;
+
+    height: 300px;
+
+    opacity: 0.02;
+  }
+
+}
+
+
+/* ======================================================
+   PRINT / A4 PROFESSIONAL OUTPUT
+====================================================== */
+
+@media print {
+
+  @page {
+    size: A4;
+
+    margin: 12mm;
+  }
+
+
+  * {
+    -webkit-print-color-adjust: exact;
+
+    print-color-adjust: exact;
+  }
+
+
+  .resumePreviewPage {
+    padding: 0;
+
+    min-height: auto;
+
+    background: #ffffff;
+
+    color: #111111;
+  }
+
+
+  .resumePreviewActions {
+    display: none;
+  }
+
+
+  .resumePreviewDocument {
+    width: 100%;
+
+    max-width: none;
+
+    margin: 0;
+
+    border: none;
+
+    border-radius: 0;
+
+    background: #ffffff;
+
+    box-shadow: none;
+
+    color: #111111;
+  }
+
+
+  .resumePreviewDocument::before {
+    width: 400px;
+
+    height: 400px;
+
+    opacity: 0.035;
+  }
+
+
+  .resumePreviewContent {
+    padding: 0;
+  }
+
+
+  .resumePreviewBrand {
+    border-bottom:
+      1px solid #dddddd;
+  }
+
+
+  .resumePreviewBrand strong,
+  .resumePreviewHeader h1,
+  .resumePreviewSectionTitle h2,
+  .resumePreviewSection h3 {
+    color: #111111;
+  }
+
+
+  .resumePreviewBrand span,
+  .resumePreviewHeader h2,
+  .resumePreviewSectionTitle svg {
+    color: #176b9c;
+  }
+
+
+  .resumePreviewHeader {
+    border-bottom:
+      2px solid #176b9c;
+  }
+
+
+  .resumePreviewHeader p,
+  .resumePreviewSection > p,
+  .resumePreviewSection h3 + p {
+    color: #333333;
+  }
+
+
+  .resumeEmail {
+    color: #222222;
+
+    background: #f7f7f7;
+
+    border-color: #dddddd;
+  }
+
+
+  .resumePreviewSection {
+    border-bottom:
+      1px solid #e1e1e1;
+  }
+
+
+  .resumePreviewSkills span {
+    color: #222222;
+
+    background: #f3f6f8;
+
+    border-color: #cccccc;
+  }
+
+
+  .resumeTrainingStats span {
+    color: #555555;
+
+    background: #f5f5f5;
+
+    border-color: #dddddd;
+  }
+
+
+  .resumeTrainingStats strong {
+    color: #176b9c;
+  }
+
+
+  .resumePreviewAchievements li {
+    color: #222222;
+  }
+
+
+  .resumePreviewAchievements svg {
+    color: #18864b;
+  }
+
+
+  .resumePreviewFooter {
+    border-top:
+      1px solid #dddddd;
+  }
+
+
+  .resumeFooterBrand strong {
+    color: #222222;
+  }
+
+
+  .resumePreviewFooter > span {
+    color: #555555;
+  }
+
+}

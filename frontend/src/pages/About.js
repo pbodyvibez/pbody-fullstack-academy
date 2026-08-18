@@ -12,9 +12,7 @@ return(
 <div className="about-page">
 
 
-
 <section className="founder-hero">
-
 
 
 <div className="founder-image-box">
@@ -24,14 +22,12 @@ return(
 
 src={FounderImage}
 
-alt="Precious Kenneth Sampson - Founder of PBody FullStack Academy"
+alt="Precious Kenneth Sampson Founder of PBody FullStack Academy"
 
 />
 
 
 </div>
-
-
 
 
 
@@ -56,7 +52,7 @@ Precious Kenneth Sampson
 
 <h3>
 
-Founder | CEO | Lead Software Engineer
+Founder • CEO • Lead Software Engineer
 
 </h3>
 
@@ -65,9 +61,9 @@ Founder | CEO | Lead Software Engineer
 <p>
 
 Also known as <strong>PBody</strong>, Precious Kenneth Sampson is a
-multidisciplinary problem solver, mechanical engineer, full stack
-developer, entrepreneur and creative visionary passionate about
-building solutions that improve human lives.
+multidisciplinary engineer, full stack developer, entrepreneur and
+creative problem solver passionate about using technology to build
+solutions that improve lives.
 
 </p>
 
@@ -75,10 +71,10 @@ building solutions that improve human lives.
 
 <p>
 
-From a young age, he developed a passion for solving problems and
-understanding how things work. His journey through engineering,
-technology and creativity has shaped the vision behind PBody FullStack
-Academy.
+His journey through mechanical engineering, software development and
+innovation created the foundation for PBody FullStack Academy — a
+platform designed to help people transform ideas into real-world
+technology solutions.
 
 </p>
 
@@ -86,12 +82,11 @@ Academy.
 
 <p>
 
-Today, by the grace of God, he combines engineering experience,
-software development skills and a passion for teaching to help others
-become creators of solutions for the future.
+Through engineering experience, practical development skills and a
+passion for mentorship, he is building an academy where students do not
+only learn code, but learn how to think like professional engineers.
 
 </p>
-
 
 
 </div>
@@ -121,16 +116,14 @@ become creators of solutions for the future.
 
 <p>
 
-To provide practical, accessible and industry-focused technology
-education that transforms beginners into confident engineers capable
-of building real-world solutions.
+To provide world-class practical technology education that transforms
+beginners into confident engineers through structured learning,
+real-world projects, AI mentorship and career-focused training.
 
 </p>
 
 
 </div>
-
-
 
 
 
@@ -148,15 +141,14 @@ of building real-world solutions.
 
 <p>
 
-To train good stewards of knowledge who use technology, creativity and
-innovation to solve real-world problems and positively impact society.
+To build a global engineering community of innovative problem solvers
+who use technology, creativity and knowledge to create meaningful
+solutions for humanity.
 
 </p>
 
 
 </div>
-
-
 
 
 
@@ -174,16 +166,14 @@ innovation to solve real-world problems and positively impact society.
 
 <p>
 
-Coming from a small community where opportunities were limited,
-Precious understands the power of access, mentorship and education.
-PBody FullStack Academy was created to help people discover their
-potential and build meaningful careers.
+PBody FullStack Academy was created from the belief that talent exists
+everywhere, but access to quality mentorship and practical education
+can change everything.
 
 </p>
 
 
 </div>
-
 
 
 
@@ -195,11 +185,7 @@ potential and build meaningful careers.
 
 
 
-
-
-
 <section className="founder-message">
-
 
 
 <h2>
@@ -212,13 +198,12 @@ A Message From The Founder
 
 <p>
 
-"Failure is not an option when people depend on you. The journey may
-not always be easy, but giving up is never the solution.
+"Technology is not only about writing code. It is about solving
+problems, creating opportunities and improving lives.
 
-My dream has always been to solve problems and create opportunities
-for others. PBody FullStack Academy represents my commitment to
-helping people discover their abilities, develop valuable skills and
-create solutions for the world."
+My mission with PBody FullStack Academy is to help people discover
+their potential, develop valuable engineering skills and become
+builders of the future."
 
 </p>
 

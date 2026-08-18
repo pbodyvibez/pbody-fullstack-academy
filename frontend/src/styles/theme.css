@@ -1,96 +1,45 @@
-/* =====================================================
-PBODY FULLSTACK ACADEMY
-PREMIUM DESIGN SYSTEM
-===================================================== */
-
-
 :root{
 
 
-/* BRAND COLORS */
+--bg-primary:#020617;
+
+--bg-secondary:#0f172a;
+
+--bg-card:#111827;
+
+--text-primary:#f8fafc;
+
+--text-secondary:#94a3b8;
+
+--border-color:rgba(148,163,184,.15);
+
+--brand-blue:#38bdf8;
+
+--brand-gold:#fbbf24;
 
 
---primary:#0b63f6;
-
---primary-dark:#063b99;
-
---secondary:#071426;
-
---gold:#f5b942;
-
---accent:#38bdf8;
-
-
-
-/* BACKGROUNDS */
-
-
---background:#020617;
-
---surface:#0f172a;
-
---surface-light:#162033;
+}
 
 
 
-/* TEXT */
+[data-theme="light"]{
 
 
---text:#ffffff;
+--bg-primary:#e0f2fe;
 
---muted:#94a3b8;
+--bg-secondary:#bae6fd;
 
+--bg-card:#f8fafc;
 
+--text-primary:#0f172a;
 
-/* BORDERS */
+--text-secondary:#475569;
 
+--border-color:rgba(15,23,42,.12);
 
---border:
+--brand-blue:#0284c7;
 
-rgba(255,255,255,.08);
-
-
-
-
-
-/* SHADOWS */
-
-
---shadow-sm:
-
-0 10px 30px rgba(0,0,0,.15);
-
-
-
---shadow-md:
-
-0 20px 50px rgba(0,0,0,.25);
-
-
-
---shadow-lg:
-
-0 40px 100px rgba(0,0,0,.45);
-
-
-
-
-
-/* RADIUS */
-
-
---radius-sm:10px;
-
---radius-md:18px;
-
---radius-lg:30px;
-
-
-
-/* TRANSITION */
-
-
---transition:.3s ease;
+--brand-gold:#d97706;
 
 
 }
@@ -99,16 +48,9 @@ rgba(255,255,255,.08);
 
 
 
-/* =====================================================
-GLOBAL HELPERS
-===================================================== */
+*{
 
-
-.container{
-
-width:min(1200px,90%);
-
-margin:auto;
+box-sizing:border-box;
 
 }
 
@@ -116,72 +58,29 @@ margin:auto;
 
 
 
-.gradient-text{
+body{
 
 
-background:
+margin:0;
 
-linear-gradient(
-90deg,
-#2563eb,
-#f5b942
-);
+background:var(--bg-primary);
 
+color:var(--text-primary);
 
--webkit-background-clip:text;
+font-family:
 
--webkit-text-fill-color:transparent;
+"Inter",
 
+"Segoe UI",
 
-}
-
-
-
-
-
-.premium-card{
-
-
-background:
-
-rgba(255,255,255,.05);
-
-
-border:
-
-1px solid var(--border);
-
-
-border-radius:
-
-var(--radius-lg);
-
-
-box-shadow:
-
-var(--shadow-sm);
+sans-serif;
 
 
 transition:
 
-var(--transition);
+background .3s ease,
 
-
-}
-
-
-
-.premium-card:hover{
-
-
-transform:
-
-translateY(-6px);
-
-
-box-shadow:
-
-var(--shadow-md);
+color .3s ease;
 
 
 }
@@ -189,71 +88,10 @@ var(--shadow-md);
 
 
 
+a{
 
-.glass{
+color:inherit;
 
-
-background:
-
-rgba(255,255,255,.08);
-
-
-backdrop-filter:
-
-blur(20px);
-
-
-border:
-
-1px solid rgba(255,255,255,.12);
-
-
-}
-
-
-
-
-
-.section-title{
-
-
-text-align:center;
-
-margin-bottom:60px;
-
-
-}
-
-
-
-.section-title h2{
-
-
-font-size:
-
-clamp(2rem,4vw,3rem);
-
-
-font-weight:900;
-
-
-}
-
-
-
-
-
-.section-title p{
-
-
-max-width:700px;
-
-margin:15px auto 0;
-
-
-line-height:1.7;
-
-color:var(--muted);
-
+text-decoration:none;
 
 }

@@ -1,890 +1,1670 @@
-import { useLocation, useNavigate } from "react-router-dom";
-import { useState } from "react";
+// ======================================================
+// PBODY FULLSTACK ACADEMY
+// PREMIUM LESSON CLASSROOM
+// FULL REPLACEMENT
+// APP LAYOUT REMOVED
+// ======================================================
 
-import AppLayout from "../components/layout/AppLayout";
+import React, {
+  useEffect,
+  useMemo,
+  useState
+} from "react";
+
+import {
+  useNavigate,
+  useParams
+} from "react-router-dom";
+
+import {
+  Play,
+  BookOpen,
+  Clock3,
+  Award,
+  CheckCircle,
+  FolderOpen,
+  Brain,
+  Code,
+  ChevronLeft,
+  ChevronRight,
+  Save
+} from "lucide-react";
+
 import QuizEngine from "../components/quiz/QuizEngine";
 
-import { useProgress } from "../context/ProgressContext";
+import {
+  useProgress
+} from "../context/ProgressContext";
+
+import lessonsData from "../data";
 
 import "../styles/lessonView.css";
 
 
-export default function LessonView(){
+// ======================================================
+// COMPONENT
+// ======================================================
 
+export default function LessonView() {
 
-const navigate = useNavigate();
+  const navigate = useNavigate();
 
-const location = useLocation();
+  const {
+    courseId,
+    lessonId
+  } = useParams();
 
 
+  // ====================================================
+  // PROGRESS
+  // ====================================================
 
-const {
-course,
-lesson,
-lessons
-}=location.state || {};
+  const progressContext =
+    useProgress() || {};
 
+  const {
+    progress = {},
+    completeLesson
+  } = progressContext;
 
 
-const {
-completeLesson,
-progress: userProgress
-}=useProgress();
+  // ====================================================
+  // COURSE LESSON DATA
+  // ====================================================
 
+  const lessons = useMemo(() => {
 
+    if (!courseId) {
+      return [];
+    }
 
-if(!course || !lesson){
+    const aliases = {
 
-navigate("/courses");
+      "frontend-engineering":
+        "frontend",
 
-return null;
+      "frontend-development":
+        "frontend",
 
-}
+      "backend-engineering":
+        "backend",
 
+      "backend-development":
+        "backend",
 
+      "fullstack-engineering":
+        "fullstack",
 
+      "artificial-intelligence-engineering":
+        "ai",
 
-const lessonIndex = lessons.findIndex(
+      "mobile-app-engineering":
+        "mobile",
 
-item=>item.id===lesson.id
+      "devops-cloud-engineering":
+        "devops",
 
-);
+      "cybersecurity-engineering":
+        "cybersecurity",
 
+      "software-testing-engineering":
+        "testing",
 
+      "ui-ux-engineering":
+        "uiux",
 
-const totalLessons = lessons.length;
+      "data-engineering":
+        "data",
 
+      "data-science":
+        "data",
 
+      "graphics-design":
+        "graphics",
 
-const lessonProgress = Math.round(
+      "video-editing":
+        "videoEditing",
 
-((lessonIndex + 1) / totalLessons) * 100
+      "business-engineering":
+        "business",
 
-);
+      "business":
+        "business"
 
+    };
 
 
-const isCompleted =
+    const key =
+      aliases[courseId] ||
+      courseId;
 
-userProgress?.completedLessons?.includes(
 
-lesson.id
+    const source =
+      lessonsData?.[key];
 
-);
 
+    // --------------------------------------------------
+    // DIRECT ARRAY
+    // --------------------------------------------------
 
+    if (Array.isArray(source)) {
+      return source;
+    }
 
 
-const [notes,setNotes]=useState(
+    // --------------------------------------------------
+    // { lessons: [] }
+    // --------------------------------------------------
 
-localStorage.getItem(
+    if (
+      source &&
+      Array.isArray(source.lessons)
+    ) {
+      return source.lessons;
+    }
 
-`notes-${lesson.id}`
 
-) || ""
+    // --------------------------------------------------
+    // { modules: [{ lessons: [] }] }
+    // --------------------------------------------------
 
-);
+    if (
+      source &&
+      Array.isArray(source.modules)
+    ) {
 
+      return source.modules.flatMap(
+        module => {
 
+          if (
+            module &&
+            Array.isArray(module.lessons)
+          ) {
+            return module.lessons;
+          }
 
-const [aiMessage,setAiMessage]=useState("");
+          return [];
 
+        }
+      );
 
+    }
 
 
+    // --------------------------------------------------
+    // OBJECT CONTAINING ARRAYS / LESSON GROUPS
+    // --------------------------------------------------
 
-const saveNotes=()=>{
+    if (
+      source &&
+      typeof source === "object"
+    ) {
 
+      const flattened =
+        Object.values(source).flatMap(
+          value => {
 
-localStorage.setItem(
+            if (Array.isArray(value)) {
+              return value;
+            }
 
-`notes-${lesson.id}`,
 
-notes
+            if (
+              value &&
+              Array.isArray(value.lessons)
+            ) {
+              return value.lessons;
+            }
 
-);
 
+            if (
+              value &&
+              Array.isArray(value.modules)
+            ) {
 
-alert("Notes saved successfully");
+              return value.modules.flatMap(
+                module =>
+                  Array.isArray(
+                    module?.lessons
+                  )
+                    ? module.lessons
+                    : []
+              );
 
+            }
 
-};
 
+            return [];
 
+          }
+        );
 
 
+      if (flattened.length) {
+        return flattened;
+      }
 
-const finishLesson=()=>{
+    }
 
 
-completeLesson(lesson);
+    return [];
 
+  }, [courseId]);
 
-};
 
+  // ====================================================
+  // COURSE INFORMATION
+  // ====================================================
 
+  const course = useMemo(() => {
 
+    const titles = {
 
+      frontend:
+        "Frontend Engineering",
 
-const nextLesson=()=>{
+      backend:
+        "Backend Engineering",
 
+      fullstack:
+        "Full Stack Engineering",
 
-if(lessonIndex >= lessons.length-1)
+      ai:
+        "Artificial Intelligence Engineering",
 
-return;
+      mobile:
+        "Mobile App Engineering",
 
+      cybersecurity:
+        "Cybersecurity Engineering",
 
+      devops:
+        "DevOps & Cloud Engineering",
 
-const next = lessons[lessonIndex+1];
+      testing:
+        "Software Testing Engineering",
 
+      uiux:
+        "UI/UX Engineering",
 
+      data:
+        "Data Engineering",
 
-navigate(
+      dataScience:
+        "Data Engineering",
 
-`/lesson/${course.id}/${next.id}`,
+      graphics:
+        "Graphics Engineering",
 
-{
+      videoEditing:
+        "Video Editing",
 
-state:{
+      business:
+        "Business Engineering"
 
-course,
+    };
 
-lesson:next,
 
-lessons
+    return {
 
-}
+      id: courseId,
 
-}
+      title:
+        titles[courseId] ||
+        "Engineering Course",
 
-);
+      lessons
 
+    };
 
-};
+  }, [
+    courseId,
+    lessons
+  ]);
 
 
+  // ====================================================
+  // CURRENT LESSON
+  // ====================================================
 
+  const lesson = useMemo(() => {
 
+    if (!lessons.length) {
+      return null;
+    }
 
-const previousLesson=()=>{
 
+    return (
+      lessons.find(
+        item =>
+          String(item?.id) ===
+          String(lessonId)
+      ) || null
+    );
 
-if(lessonIndex<=0)
+  }, [
+    lessons,
+    lessonId
+  ]);
 
-return;
 
+  // ====================================================
+  // LESSON INDEX
+  // ====================================================
 
+  const lessonIndex = useMemo(() => {
 
-const previous = lessons[lessonIndex-1];
+    if (!lesson) {
+      return -1;
+    }
 
 
+    return lessons.findIndex(
+      item =>
+        String(item?.id) ===
+        String(lesson.id)
+    );
 
-navigate(
+  }, [
+    lessons,
+    lesson
+  ]);
 
-`/lesson/${course.id}/${previous.id}`,
 
-{
+  // ====================================================
+  // COMPLETED LESSONS
+  // ====================================================
 
-state:{
+  const completedLessons =
+    useMemo(() => {
 
-course,
+      if (
+        Array.isArray(
+          progress?.completedLessons
+        )
+      ) {
 
-lesson:previous,
+        return progress.completedLessons;
 
-lessons
+      }
 
-}
+      return [];
 
-}
+    }, [
+      progress?.completedLessons
+    ]);
 
-);
 
+  // ====================================================
+  // CURRENT LESSON COMPLETION
+  // ====================================================
 
-};
-return(
+  const isCompleted =
+    useMemo(() => {
 
-<AppLayout>
+      if (!lesson) {
+        return false;
+      }
 
 
-<div className="lessonWorkspace">
+      return completedLessons.some(
+        item => {
 
+          const id =
+            typeof item === "object"
+              ? item?.id
+              : item;
 
 
-<section className="lessonHeader">
+          return (
+            String(id) ===
+            String(lesson.id)
+          );
 
+        }
+      );
 
-<div>
+    }, [
+      completedLessons,
+      lesson
+    ]);
 
 
-<span className="lessonBadge">
+  // ====================================================
+  // COURSE PROGRESS
+  // ====================================================
 
+  const progressPercent =
+    useMemo(() => {
 
-<img
+      if (
+        !lessons.length ||
+        lessonIndex < 0
+      ) {
+        return 0;
+      }
 
-src="/logo.png"
 
-alt="PBody Academy"
+      return Math.round(
+        (
+          (lessonIndex + 1) /
+          lessons.length
+        ) * 100
+      );
 
-/>
+    }, [
+      lessons.length,
+      lessonIndex
+    ]);
 
 
-PBODY FULLSTACK ACADEMY
+  // ====================================================
+  // VIDEO SOURCE
+  // ====================================================
 
+  const videoSource =
+    useMemo(() => {
 
-</span>
+      if (!lesson) {
+        return null;
+      }
 
 
+      // DIRECT VIDEO URL
 
+      if (
+        typeof lesson.video === "string" &&
+        lesson.video.trim()
+      ) {
 
-<h1>
+        return lesson.video.trim();
 
-{lesson.title}
+      }
 
-</h1>
 
+      // YOUTUBE VIDEO ID
 
+      if (
+        typeof lesson.videoId === "string" &&
+        lesson.videoId.trim()
+      ) {
 
+        return (
+          `https://www.youtube.com/embed/${lesson.videoId.trim()}`
+        );
 
-<p>
+      }
 
-{lesson.description}
 
-</p>
+      // OBJECT VIDEO
 
+      if (
+        lesson.video &&
+        typeof lesson.video === "object"
+      ) {
 
-</div>
+        if (
+          typeof lesson.video.url === "string" &&
+          lesson.video.url.trim()
+        ) {
 
+          return lesson.video.url.trim();
 
+        }
 
 
+        if (
+          typeof lesson.video.videoId === "string" &&
+          lesson.video.videoId.trim()
+        ) {
 
-<div className="lessonStats">
+          return (
+            `https://www.youtube.com/embed/${lesson.video.videoId.trim()}`
+          );
 
+        }
 
-<div>
+      }
 
-<strong>
 
-{lessonProgress}%
+      return null;
 
-</strong>
+    }, [
+      lesson
+    ]);
 
 
-<span>
+  // ====================================================
+  // NOTES
+  // ====================================================
 
-Progress
+  const [
+    notes,
+    setNotes
+  ] = useState("");
 
-</span>
 
-</div>
+  useEffect(() => {
 
+    if (!lesson) {
 
+      setNotes("");
 
+      return;
 
-<div>
+    }
 
-<strong>
 
-{lesson.xp}
+    const key =
+      `lesson-notes-${courseId}-${lesson.id}`;
 
-</strong>
 
+    const savedNotes =
+      localStorage.getItem(key);
 
-<span>
 
-XP
+    setNotes(
+      savedNotes || ""
+    );
 
-</span>
+  }, [
+    courseId,
+    lesson?.id
+  ]);
 
-</div>
 
+  // ====================================================
+  // AI MESSAGE
+  // ====================================================
 
+  const [
+    aiMessage,
+    setAiMessage
+  ] = useState("");
 
 
-<div>
+  // ====================================================
+  // SAVE NOTES
+  // ====================================================
 
-<strong>
+  const saveNotes = () => {
 
-{lesson.duration}
+    if (!lesson) {
+      return;
+    }
 
-</strong>
 
+    localStorage.setItem(
+      `lesson-notes-${courseId}-${lesson.id}`,
+      notes
+    );
 
-<span>
 
-Duration
+    alert(
+      "Engineering notes saved successfully."
+    );
 
-</span>
+  };
 
-</div>
 
+  // ====================================================
+  // COMPLETE LESSON
+  // ====================================================
 
-</div>
+  const completeCurrentLesson = () => {
 
+    if (
+      !lesson ||
+      typeof completeLesson !== "function"
+    ) {
+      return;
+    }
 
-</section>
 
+    completeLesson({
 
+      ...lesson,
 
+      courseId
 
+    });
 
+  };
 
 
-<section className="lessonVideo">
+  // ====================================================
+  // PREVIOUS LESSON
+  // ====================================================
 
+  const previousLesson = () => {
 
-<iframe
+    if (
+      lessonIndex <= 0
+    ) {
+      return;
+    }
 
-src={`https://www.youtube.com/embed/${lesson.videoId}`}
 
-title={lesson.title}
+    const previous =
+      lessons[
+        lessonIndex - 1
+      ];
 
-allowFullScreen
 
-/>
+    if (!previous) {
+      return;
+    }
 
 
-</section>
+    navigate(
+      `/lesson/${courseId}/${previous.id}`
+    );
 
+  };
 
 
+  // ====================================================
+  // NEXT LESSON
+  // ====================================================
 
+  const nextLesson = () => {
 
+    if (
+      lessonIndex < 0 ||
+      lessonIndex >=
+        lessons.length - 1
+    ) {
+      return;
+    }
 
 
-<section className="lessonPanel">
+    const next =
+      lessons[
+        lessonIndex + 1
+      ];
 
 
-<h2>
+    if (!next) {
+      return;
+    }
 
-🎯 What You Will Learn
 
-</h2>
+    navigate(
+      `/lesson/${courseId}/${next.id}`
+    );
 
+  };
 
 
+  // ====================================================
+  // OPEN RESOURCE
+  // ====================================================
 
-<div className="objectiveGrid">
+  const openResource = resource => {
 
+    if (
+      resource?.url &&
+      resource.url !== "#"
+    ) {
 
-{
+      window.open(
+        resource.url,
+        "_blank",
+        "noopener,noreferrer"
+      );
 
-lesson.objectives?.map(
+      return;
 
-(item,index)=>(
+    }
 
 
-<div
+    alert(
+      "Resource will be added soon."
+    );
 
-key={index}
+  };
 
-className="objectiveItem"
 
->
+  // ====================================================
+  // DEBUG
+  // ====================================================
 
+  console.log(
+    "PBODY LESSON VIEW",
+    {
+      courseId,
+      lessonId,
+      lessonsCount:
+        lessons.length,
+      lesson,
+      videoSource
+    }
+  );
 
-<span>
 
-⭕
+  // ====================================================
+  // LESSON NOT FOUND
+  // ====================================================
 
+  if (!lesson) {
 
-</span>
+    return (
 
+      <div className="lessonClassroomShell">
 
-<p>
+        <div className="lessonNotFound">
 
-{item}
+          <div className="lessonNotFoundIcon">
 
-</p>
+            <BookOpen
+              size={42}
+            />
 
+          </div>
 
-</div>
 
+          <h1>
+            PBODY FULLSTACK ACADEMY
+          </h1>
 
-)
 
-)
+          <h2>
+            Lesson Not Found
+          </h2>
 
-}
 
+          <p>
+            This engineering lesson could not
+            be found in the selected course.
+          </p>
 
-</div>
 
+          <button
+            type="button"
+            className="primaryButton"
+            onClick={() =>
+              navigate(
+                `/course/${courseId}`
+              )
+            }
+          >
+            Return To Course
+          </button>
 
-</section>
+        </div>
 
+      </div>
 
+    );
 
+  }
 
 
+  // ====================================================
+  // RENDER
+  // ====================================================
 
+  return (
 
-<section className="lessonPanel">
+    <div className="lessonClassroomShell">
 
 
-<h2>
+      {/* ==================================================
+          TOP BAR
+      ================================================== */}
 
-📚 Lesson Resources
+      <header className="lessonClassroomHeader">
 
-</h2>
+        <div className="lessonHeaderBrand">
 
+          <BookOpen
+            size={22}
+          />
 
+          <div>
 
-<div className="resourceGrid">
+            <strong>
+              PBODY FULLSTACK ACADEMY
+            </strong>
 
+            <span>
+              Engineering Classroom
+            </span>
 
-{
+          </div>
 
-lesson.resources?.map(
+        </div>
 
-(resource,index)=>(
 
+        <button
+          type="button"
+          className="lessonBackButton"
+          onClick={() =>
+            navigate(
+              `/course/${courseId}`
+            )
+          }
+        >
+          ← Back To Course
+        </button>
 
-<div
+      </header>
 
-key={index}
 
-className="resourceCard"
+      {/* ==================================================
+          MAIN WORKSPACE
+      ================================================== */}
 
+      <main className="lessonWorkspace">
 
->
 
+        {/* =================================================
+            HERO
+        ================================================= */}
 
-<div className="resourceIcon">
+        <section className="lessonHero">
 
+          <div className="lessonHeroLeft">
 
-{
+            <div className="lessonBadge">
 
-resource.type==="pdf"
+              <BookOpen
+                size={18}
+              />
 
-?
+              <span>
+                PBODY FULLSTACK ACADEMY
+              </span>
 
-"📄"
+            </div>
 
-:
 
-"📦"
+            <h1>
+              {lesson.title}
+            </h1>
 
-}
 
+            <p>
+              {
+                lesson.description ||
+                "Professional software engineering lesson."
+              }
+            </p>
 
-</div>
 
+            <div className="lessonMeta">
 
 
+              <div className="metaCard">
 
-<div>
+                <Clock3
+                  size={20}
+                />
 
+                <div>
 
-<h3>
+                  <strong>
+                    {
+                      lesson.duration ||
+                      "30 mins"
+                    }
+                  </strong>
 
-{resource.title}
+                  <span>
+                    Duration
+                  </span>
 
-</h3>
+                </div>
 
+              </div>
 
 
-<span>
+              <div className="metaCard">
 
-{resource.type.toUpperCase()}
+                <Award
+                  size={20}
+                />
 
-</span>
+                <div>
 
+                  <strong>
+                    {
+                      lesson.xp ||
+                      50
+                    } XP
+                  </strong>
 
-</div>
+                  <span>
+                    Reward
+                  </span>
 
+                </div>
 
+              </div>
 
 
-<button>
+              <div className="metaCard">
 
-Open
+                <CheckCircle
+                  size={20}
+                />
 
-</button>
+                <div>
 
+                  <strong>
+                    {progressPercent}%
+                  </strong>
 
+                  <span>
+                    Course Progress
+                  </span>
 
-</div>
+                </div>
 
+              </div>
 
-)
 
-)
+            </div>
 
-}
 
+            <div className="progressWrapper">
 
-</div>
+              <div
+                className="progressBar"
+                style={{
+                  width:
+                    `${progressPercent}%`
+                }}
+              />
 
+            </div>
 
-</section>
+          </div>
 
 
+          <div className="lessonHeroRight">
 
+            <div className="videoPreview">
 
+              <Play
+                size={58}
+              />
 
+              <h3>
+                Engineering Classroom
+              </h3>
 
+              <p>
+                Premium Developer Training
+              </p>
 
+            </div>
 
-{
+          </div>
 
-lesson.assignment &&
+        </section>
 
 
-<section className="lessonPanel assignmentPanel">
+        {/* =================================================
+            VIDEO
+        ================================================= */}
 
+        <section className="lessonPanel">
 
-<h2>
+          <h2>
+            🎥 Lesson Video
+          </h2>
 
-🏗 Engineering Assignment
 
-</h2>
+          <div className="videoFrame">
 
+            {
+              videoSource
+                ? (
 
+                  <iframe
+                    key={videoSource}
+                    src={videoSource}
+                    title={
+                      lesson.title ||
+                      "PBODY Engineering Lesson"
+                    }
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allowFullScreen
+                    loading="lazy"
+                    referrerPolicy="strict-origin-when-cross-origin"
+                  />
 
+                )
+                : (
 
-<div className="assignmentCard">
+                  <div className="emptyCard">
 
+                    <Play
+                      size={35}
+                    />
 
-<h3>
+                    <h3>
+                      Video Coming Soon
+                    </h3>
 
-{lesson.assignment.title}
+                    <p>
+                      This lesson video is being
+                      prepared by PBODY Academy.
+                    </p>
 
-</h3>
+                  </div>
 
+                )
+            }
 
+          </div>
 
-<p>
+        </section>
 
-{lesson.assignment.description}
 
-</p>
+        {/* =================================================
+            OBJECTIVES
+        ================================================= */}
 
+        <section className="lessonPanel">
 
+          <h2>
+            🎯 What You Will Learn
+          </h2>
 
-<div className="assignmentInfo">
 
+          <div className="objectiveGrid">
 
-<span>
+            {
+              Array.isArray(
+                lesson.objectives
+              ) &&
+              lesson.objectives.length > 0
 
-⭐ Reward: {lesson.xp} XP
+                ? (
 
-</span>
+                  lesson.objectives.map(
+                    (
+                      objective,
+                      index
+                    ) => (
 
+                      <div
+                        className="objectiveCard"
+                        key={index}
+                      >
 
+                        <CheckCircle
+                          size={18}
+                        />
 
-<span>
+                        <p>
+                          {objective}
+                        </p>
 
-🔥 Difficulty: {lesson.difficulty}
+                      </div>
 
-</span>
+                    )
+                  )
 
+                )
+                : (
 
-</div>
+                  <div className="emptyCard">
+                    No objectives available.
+                  </div>
 
+                )
+            }
 
+          </div>
 
-<button>
+        </section>
 
-Start Assignment
 
-</button>
+        {/* =================================================
+            RESOURCES
+        ================================================= */}
 
+        <section className="lessonPanel">
 
-</div>
+          <h2>
+            📚 Engineering Resources
+          </h2>
 
 
+          <div className="resourceGrid">
 
-</section>
+            {
+              Array.isArray(
+                lesson.resources
+              ) &&
+              lesson.resources.length > 0
 
+                ? (
 
-}
+                  lesson.resources.map(
+                    (
+                      resource,
+                      index
+                    ) => (
 
+                      <div
+                        className="resourceCard"
+                        key={index}
+                      >
 
+                        <div className="resourceLeft">
 
+                          <div className="resourceIcon">
 
+                            {
+                              resource?.type === "pdf"
+                                ? "📄"
+                                : resource?.type === "zip"
+                                  ? "📦"
+                                  : resource?.type === "video"
+                                    ? "🎥"
+                                    : "📁"
+                            }
 
+                          </div>
 
-<section className="lessonPanel aiPanel">
 
+                          <div>
 
-<h2>
+                            <h3>
+                              {
+                                resource?.title ||
+                                "Engineering Resource"
+                              }
+                            </h3>
 
-🤖 PBody AI Engineering Mentor
 
-</h2>
+                            <span>
+                              {
+                                resource?.type ||
+                                "RESOURCE"
+                              }
+                            </span>
 
+                          </div>
 
+                        </div>
 
-<p>
 
-Ask questions about this lesson and get engineering guidance.
+                        <button
+                          type="button"
+                          className="primaryButton"
+                          onClick={() =>
+                            openResource(
+                              resource
+                            )
+                          }
+                        >
 
-</p>
+                          <FolderOpen
+                            size={16}
+                          />
 
+                          Open
 
+                        </button>
 
-<div className="aiBox">
+                      </div>
 
+                    )
+                  )
 
-<textarea
+                )
+                : (
 
-value={aiMessage}
+                  <div className="emptyCard">
+                    Resources will be added soon.
+                  </div>
 
-onChange={(e)=>setAiMessage(e.target.value)}
+                )
+            }
 
-placeholder="Ask AI about this lesson..."
+          </div>
 
-/>
+        </section>
 
 
+        {/* =================================================
+            ASSIGNMENT
+        ================================================= */}
 
-<button>
+        {
+          lesson.assignment && (
 
-Send To AI
+            <section className="lessonPanel">
 
-</button>
+              <h2>
+                🚀 Engineering Assignment
+              </h2>
 
 
+              <div className="assignmentCard">
 
-</div>
+                <h3>
+                  {
+                    lesson.assignment.title
+                  }
+                </h3>
 
 
+                <p>
+                  {
+                    lesson.assignment.description
+                  }
+                </p>
 
-</section>
 
-<section className="lessonPanel">
+                <div className="assignmentMeta">
 
+                  <span>
+                    ⭐ {lesson.xp || 50} XP
+                  </span>
 
-<h2>
 
-📝 My Engineering Notes
+                  <span>
+                    🔥 {
+                      lesson.difficulty ||
+                      "Beginner"
+                    }
+                  </span>
 
-</h2>
+                </div>
 
 
+                <button
+                  type="button"
+                  className="primaryButton"
+                  onClick={() =>
+                    navigate(
+                      "/assignment",
+                      {
+                        state: {
+                          course,
+                          lesson
+                        }
+                      }
+                    )
+                  }
+                >
+                  Start Assignment
+                </button>
 
+              </div>
 
-<textarea
+            </section>
 
-className="notesArea"
+          )
+        }
 
-value={notes}
 
-onChange={(e)=>setNotes(e.target.value)}
+        {/* =================================================
+            AI MENTOR
+        ================================================= */}
 
-placeholder="Write your lesson notes here..."
+        <section className="lessonPanel">
 
-/>
+          <h2>
+            🤖 PBODY AI Engineering Mentor
+          </h2>
 
 
+          <p>
+            Need help understanding this lesson?
+            Ask your AI engineering assistant.
+          </p>
 
 
+          <div className="aiBox">
 
-<button
+            <textarea
+              value={aiMessage}
+              onChange={event =>
+                setAiMessage(
+                  event.target.value
+                )
+              }
+              placeholder="Ask AI about this lesson, code, concepts or errors..."
+            />
 
-className="saveButton"
 
-onClick={saveNotes}
+            <button
+              type="button"
+              className="primaryButton"
+              onClick={() => {
 
->
+                const prompt =
+                  aiMessage.trim();
 
-Save Notes
 
-</button>
+                if (!prompt) {
+                  return;
+                }
 
 
+                navigate(
+                  "/ai-mentor",
+                  {
+                    state: {
+                      course,
+                      lesson,
+                      prompt
+                    }
+                  }
+                );
 
-</section>
+              }}
+            >
 
+              <Brain
+                size={18}
+              />
 
+              Ask AI Mentor
 
+            </button>
 
+          </div>
 
+        </section>
 
 
-{
+        {/* =================================================
+            NOTES
+        ================================================= */}
 
-lesson.quiz &&
+        <section className="lessonPanel">
 
+          <h2>
+            📝 Engineering Notes
+          </h2>
 
-<section className="lessonPanel">
 
+          <textarea
+            className="notesArea"
+            value={notes}
+            onChange={event =>
+              setNotes(
+                event.target.value
+              )
+            }
+            placeholder="Write your engineering notes here..."
+          />
 
-<h2>
 
-🧠 Lesson Assessment
+          <button
+            type="button"
+            className="primaryButton"
+            onClick={saveNotes}
+          >
 
-</h2>
+            <Save
+              size={18}
+            />
 
+            Save Notes
 
+          </button>
 
-<p>
+        </section>
 
-Test your understanding and earn XP by completing this quiz.
 
-</p>
+        {/* =================================================
+            QUIZ
+        ================================================= */}
 
+        {
+          Array.isArray(
+            lesson.quiz
+          ) &&
+          lesson.quiz.length > 0 && (
 
+            <section className="lessonPanel">
 
-<QuizEngine
+              <h2>
+                🧠 Lesson Assessment
+              </h2>
 
-lesson={lesson}
 
-/>
+              <p>
+                Complete this assessment
+                and earn XP.
+              </p>
 
 
+              <QuizEngine
+                questions={
+                  lesson.quiz
+                }
+                lesson={lesson}
+                onComplete={
+                  completeCurrentLesson
+                }
+              />
 
-</section>
+            </section>
 
+          )
+        }
 
-}
 
+        {/* =================================================
+            CODE CHALLENGE
+        ================================================= */}
 
+        {
+          lesson.codeChallenge && (
 
+            <section className="lessonPanel">
 
+              <h2>
+                💻 Code Playground
+              </h2>
 
 
+              <p>
+                Practice your engineering
+                skills by solving the coding
+                challenge.
+              </p>
 
 
-{
+              <button
+                type="button"
+                className="primaryButton"
+                onClick={() =>
+                  navigate(
+                    "/playground",
+                    {
+                      state: {
+                        course,
+                        lesson
+                      }
+                    }
+                  )
+                }
+              >
 
-lesson.codeChallenge &&
+                <Code
+                  size={18}
+                />
 
+                Open Developer Playground
 
-<section className="lessonPanel challengePanel">
+              </button>
 
+            </section>
 
-<h2>
+          )
+        }
 
-💻 Code Challenge
 
-</h2>
+        {/* =================================================
+            LESSON NAVIGATION
+        ================================================= */}
 
+        <section className="lessonNavigation">
 
 
-<p>
+          <button
+            type="button"
+            className="secondaryButton"
+            disabled={
+              lessonIndex <= 0
+            }
+            onClick={
+              previousLesson
+            }
+          >
 
-Practice your skills by solving real engineering problems.
+            <ChevronLeft
+              size={18}
+            />
 
-</p>
+            Previous Lesson
 
+          </button>
 
 
-<button
+          <button
+            type="button"
+            className="completeButton"
+            disabled={
+              isCompleted
+            }
+            onClick={
+              completeCurrentLesson
+            }
+          >
 
-onClick={()=>navigate("/playground")}
+            {
+              isCompleted
+                ? "✅ Lesson Completed"
+                : "🚀 Complete Lesson"
+            }
 
->
+          </button>
 
-Open Code Playground
 
-</button>
+          <button
+            type="button"
+            className="primaryButton"
+            disabled={
+              lessonIndex >=
+              lessons.length - 1
+            }
+            onClick={
+              nextLesson
+            }
+          >
 
+            Next Lesson
 
+            <ChevronRight
+              size={18}
+            />
 
-</section>
+          </button>
 
+        </section>
 
-}
 
+        {/* =================================================
+            COURSE SUMMARY
+        ================================================= */}
 
+        <section className="lessonSummary">
 
+          <div className="lessonSummaryHeader">
 
+            <BookOpen
+              size={22}
+            />
 
+            <h2>
+              Course Overview
+            </h2>
 
+          </div>
 
 
-<section className="lessonNavigation">
+          <div className="progressStats">
 
 
+            <div>
 
+              <strong>
+                {lessons.length}
+              </strong>
 
+              <span>
+                Total Lessons
+              </span>
 
-<button
+            </div>
 
-className="secondaryButton"
 
-onClick={previousLesson}
+            <div>
 
-disabled={lessonIndex===0}
+              <strong>
+                {
+                  completedLessons.length
+                }
+              </strong>
 
->
+              <span>
+                Completed
+              </span>
 
-⬅ Previous Lesson
+            </div>
 
-</button>
 
+            <div>
 
+              <strong>
+                {progressPercent}%
+              </strong>
 
+              <span>
+                Progress
+              </span>
 
+            </div>
 
 
+          </div>
 
-<button
 
-className="completeButton"
+          <div className="careerTags">
 
-onClick={finishLesson}
+            <span>
+              🎓 Career Ready
+            </span>
 
-disabled={isCompleted}
+            <span>
+              ▶ Hands-on
+            </span>
 
->
+            <span>
+              🏆 Certificate
+            </span>
 
-{
+          </div>
 
-isCompleted
+        </section>
 
-?
 
-"🎉 Completed"
+      </main>
 
-:
+    </div>
 
-"✅ Complete Lesson"
-
-}
-
-
-</button>
-
-
-
-
-
-
-
-<button
-
-className="primaryButton"
-
-onClick={nextLesson}
-
-disabled={lessonIndex===lessons.length-1}
-
->
-
-Next Lesson ➜
-
-</button>
-
-
-
-
-
-</section>
-
-
-
-
-
-</div>
-
-
-</AppLayout>
-
-
-);
-
+  );
 
 }

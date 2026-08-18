@@ -1,0 +1,992 @@
+/* ======================================================
+   PBODY FULLSTACK ACADEMY
+   PREMIUM ENGINEERING COMMUNITY
+   FULL REPLACEMENT
+   ====================================================== */
+
+.communityPage {
+  min-height: 100vh;
+  background:
+    radial-gradient(
+      circle at 10% 5%,
+      rgba(14, 165, 233, 0.12),
+      transparent 30%
+    ),
+    radial-gradient(
+      circle at 90% 15%,
+      rgba(37, 99, 235, 0.14),
+      transparent 32%
+    ),
+    linear-gradient(
+      135deg,
+      #020617 0%,
+      #061426 45%,
+      #082f49 100%
+    );
+
+  color: #f8fafc;
+  overflow: hidden;
+}
+
+
+/* ======================================================
+   HERO
+   ====================================================== */
+
+.communityHero {
+  position: relative;
+  min-height: 650px;
+
+  display: flex;
+  align-items: center;
+
+  padding: 90px 7% 100px;
+
+  border-bottom:
+    1px solid rgba(56, 189, 248, 0.14);
+
+  overflow: hidden;
+}
+
+
+.communityHero::before {
+  content: "";
+
+  position: absolute;
+
+  width: 650px;
+  height: 650px;
+
+  right: -250px;
+  top: -280px;
+
+  border-radius: 50%;
+
+  background:
+    radial-gradient(
+      circle,
+      rgba(14, 165, 233, 0.2),
+      transparent 68%
+    );
+
+  pointer-events: none;
+}
+
+
+.communityHero::after {
+  content: "";
+
+  position: absolute;
+
+  width: 500px;
+  height: 500px;
+
+  left: -300px;
+  bottom: -300px;
+
+  border-radius: 50%;
+
+  background:
+    radial-gradient(
+      circle,
+      rgba(37, 99, 235, 0.18),
+      transparent 70%
+    );
+
+  pointer-events: none;
+}
+
+
+.communityHeroContent {
+  position: relative;
+  z-index: 2;
+
+  width: 100%;
+  max-width: 1100px;
+
+  margin: auto;
+}
+
+
+.communityHeroGlow {
+  position: absolute;
+
+  border-radius: 50%;
+
+  filter: blur(2px);
+
+  pointer-events: none;
+}
+
+
+.glowOne {
+  width: 10px;
+  height: 10px;
+
+  top: 25%;
+  left: 17%;
+
+  background: #38bdf8;
+
+  box-shadow:
+    0 0 25px #38bdf8,
+    0 0 60px rgba(56, 189, 248, 0.6);
+}
+
+
+.glowTwo {
+  width: 8px;
+  height: 8px;
+
+  right: 22%;
+  bottom: 25%;
+
+  background: #60a5fa;
+
+  box-shadow:
+    0 0 25px #60a5fa,
+    0 0 60px rgba(96, 165, 250, 0.6);
+}
+
+
+/* ======================================================
+   EYEBROW
+   ====================================================== */
+
+.communityEyebrow,
+.ctaBadge {
+  display: inline-flex;
+
+  align-items: center;
+  gap: 8px;
+
+  padding: 9px 16px;
+
+  border:
+    1px solid rgba(56, 189, 248, 0.28);
+
+  border-radius: 999px;
+
+  background:
+    rgba(14, 165, 233, 0.08);
+
+  color: #7dd3fc;
+
+  font-size: 12px;
+  font-weight: 900;
+
+  letter-spacing: 1.7px;
+}
+
+
+.communityHero h1 {
+  margin: 28px 0 22px;
+
+  max-width: 900px;
+
+  font-size: clamp(
+    48px,
+    7vw,
+    86px
+  );
+
+  line-height: 0.98;
+
+  font-weight: 950;
+
+  letter-spacing: -3px;
+}
+
+
+.communityHero h1 span,
+.communityCTA h2 span {
+  color: #38bdf8;
+
+  text-shadow:
+    0 0 35px rgba(56, 189, 248, 0.25);
+}
+
+
+.communityHeroContent > p {
+  max-width: 760px;
+
+  color: #cbd5e1;
+
+  font-size: 19px;
+
+  line-height: 1.85;
+
+  margin-bottom: 34px;
+}
+
+
+/* ======================================================
+   HERO BUTTONS
+   ====================================================== */
+
+.communityHeroActions {
+  display: flex;
+
+  flex-wrap: wrap;
+
+  gap: 14px;
+
+  margin-bottom: 35px;
+}
+
+
+.communityPrimaryButton,
+.communitySecondaryButton,
+.communityTrust button,
+.communityCTAButtons button {
+  display: inline-flex;
+
+  align-items: center;
+  justify-content: center;
+
+  gap: 10px;
+
+  min-height: 52px;
+
+  padding: 0 23px;
+
+  border-radius: 15px;
+
+  font-size: 14px;
+  font-weight: 900;
+
+  cursor: pointer;
+
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease,
+    border-color 0.25s ease,
+    background 0.25s ease;
+}
+
+
+.communityPrimaryButton {
+  border: none;
+
+  background:
+    linear-gradient(
+      135deg,
+      #2563eb,
+      #0891b2
+    );
+
+  color: white;
+
+  box-shadow:
+    0 15px 40px rgba(37, 99, 235, 0.25);
+}
+
+
+.communityPrimaryButton:hover {
+  transform: translateY(-4px);
+
+  box-shadow:
+    0 20px 50px rgba(37, 99, 235, 0.38);
+}
+
+
+.communitySecondaryButton {
+  border:
+    1px solid rgba(125, 211, 252, 0.22);
+
+  background:
+    rgba(15, 23, 42, 0.65);
+
+  color: #dbeafe;
+
+  backdrop-filter: blur(14px);
+}
+
+
+.communitySecondaryButton:hover {
+  transform: translateY(-4px);
+
+  border-color:
+    rgba(56, 189, 248, 0.55);
+
+  background:
+    rgba(14, 165, 233, 0.1);
+}
+
+
+/* ======================================================
+   AUDIENCE
+   ====================================================== */
+
+.communityAudience {
+  display: flex;
+
+  flex-wrap: wrap;
+
+  gap: 10px;
+}
+
+
+.communityAudience div {
+  display: inline-flex;
+
+  align-items: center;
+
+  gap: 8px;
+
+  padding: 10px 14px;
+
+  border:
+    1px solid rgba(148, 163, 184, 0.13);
+
+  border-radius: 999px;
+
+  background:
+    rgba(15, 23, 42, 0.5);
+
+  color: #94a3b8;
+
+  font-size: 13px;
+  font-weight: 700;
+
+  backdrop-filter: blur(10px);
+}
+
+
+.communityAudience svg {
+  color: #38bdf8;
+}
+
+
+/* ======================================================
+   SECTION
+   ====================================================== */
+
+.communityNetwork,
+.communityFeatures {
+  max-width: 1400px;
+
+  margin: auto;
+
+  padding: 100px 6%;
+}
+
+
+.communitySectionHeader {
+  max-width: 760px;
+
+  margin-bottom: 55px;
+}
+
+
+.communitySectionHeader > span {
+  display: block;
+
+  margin-bottom: 12px;
+
+  color: #38bdf8;
+
+  font-size: 12px;
+  font-weight: 900;
+
+  letter-spacing: 2px;
+}
+
+
+.communitySectionHeader h2 {
+  margin: 0 0 18px;
+
+  font-size: clamp(
+    32px,
+    4vw,
+    52px
+  );
+
+  line-height: 1.08;
+
+  letter-spacing: -1.5px;
+}
+
+
+.communitySectionHeader p {
+  margin: 0;
+
+  color: #94a3b8;
+
+  font-size: 17px;
+
+  line-height: 1.8;
+}
+
+
+/* ======================================================
+   ROLE GRID
+   ====================================================== */
+
+.communityRoleGrid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(4, 1fr);
+
+  gap: 18px;
+}
+
+
+.communityRoleCard {
+  position: relative;
+
+  padding: 30px;
+
+  min-height: 300px;
+
+  border:
+    1px solid rgba(148, 163, 184, 0.12);
+
+  border-radius: 24px;
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(15, 23, 42, 0.88),
+      rgba(8, 47, 73, 0.42)
+    );
+
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.025);
+
+  transition:
+    transform 0.3s ease,
+    border-color 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+
+.communityRoleCard:hover {
+  transform: translateY(-8px);
+
+  border-color:
+    rgba(56, 189, 248, 0.3);
+
+  box-shadow:
+    0 25px 60px rgba(2, 132, 199, 0.12);
+}
+
+
+.roleIcon,
+.featureIcon {
+  width: 52px;
+  height: 52px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 16px;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(37, 99, 235, 0.22),
+      rgba(6, 182, 212, 0.12)
+    );
+
+  border:
+    1px solid rgba(56, 189, 248, 0.2);
+
+  color: #38bdf8;
+
+  margin-bottom: 23px;
+}
+
+
+.communityRoleCard h3,
+.communityFeatureCard h3 {
+  margin: 0 0 12px;
+
+  font-size: 21px;
+
+  font-weight: 900;
+}
+
+
+.communityRoleCard p,
+.communityFeatureCard p {
+  color: #94a3b8;
+
+  line-height: 1.7;
+
+  font-size: 14px;
+}
+
+
+.communityRoleCard button {
+  display: inline-flex;
+
+  align-items: center;
+
+  gap: 7px;
+
+  margin-top: 15px;
+
+  padding: 0;
+
+  border: none;
+
+  background: none;
+
+  color: #38bdf8;
+
+  font-size: 13px;
+
+  font-weight: 900;
+
+  cursor: pointer;
+}
+
+
+.communityRoleCard button:hover {
+  color: #7dd3fc;
+}
+
+
+/* ======================================================
+   FEATURES
+   ====================================================== */
+
+.communityFeatures {
+  border-top:
+    1px solid rgba(56, 189, 248, 0.08);
+
+  border-bottom:
+    1px solid rgba(56, 189, 248, 0.08);
+}
+
+
+.communityFeatureGrid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(2, 1fr);
+
+  gap: 20px;
+}
+
+
+.communityFeatureCard {
+  display: flex;
+
+  align-items: flex-start;
+
+  gap: 22px;
+
+  width: 100%;
+
+  padding: 30px;
+
+  text-align: left;
+
+  border:
+    1px solid rgba(148, 163, 184, 0.12);
+
+  border-radius: 24px;
+
+  background:
+    rgba(15, 23, 42, 0.68);
+
+  color: white;
+
+  cursor: pointer;
+
+  transition:
+    transform 0.3s ease,
+    border-color 0.3s ease,
+    background 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+
+.communityFeatureCard:hover {
+  transform: translateY(-6px);
+
+  border-color:
+    rgba(56, 189, 248, 0.34);
+
+  background:
+    rgba(8, 47, 73, 0.65);
+
+  box-shadow:
+    0 25px 55px rgba(2, 132, 199, 0.1);
+}
+
+
+.communityFeatureCard .featureIcon {
+  flex-shrink: 0;
+
+  margin: 0;
+}
+
+
+.communityFeatureCard span {
+  display: inline-flex;
+
+  align-items: center;
+
+  gap: 7px;
+
+  color: #38bdf8;
+
+  font-size: 13px;
+
+  font-weight: 900;
+}
+
+
+/* ======================================================
+   TRUST
+   ====================================================== */
+
+.communityTrust {
+  max-width: 1400px;
+
+  margin: 80px auto;
+
+  padding: 45px 6%;
+
+  display: grid;
+
+  grid-template-columns:
+    auto 1fr auto;
+
+  align-items: center;
+
+  gap: 30px;
+
+  border:
+    1px solid rgba(56, 189, 248, 0.17);
+
+  border-radius: 28px;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(8, 47, 73, 0.72),
+      rgba(15, 23, 42, 0.86)
+    );
+
+  box-shadow:
+    0 30px 80px rgba(2, 132, 199, 0.08);
+}
+
+
+.trustIcon {
+  width: 64px;
+  height: 64px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 20px;
+
+  color: #38bdf8;
+
+  background:
+    rgba(14, 165, 233, 0.1);
+
+  border:
+    1px solid rgba(56, 189, 248, 0.2);
+}
+
+
+.communityTrust span {
+  color: #38bdf8;
+
+  font-size: 11px;
+
+  font-weight: 900;
+
+  letter-spacing: 1.5px;
+}
+
+
+.communityTrust h2 {
+  margin: 8px 0;
+
+  font-size: 27px;
+}
+
+
+.communityTrust p {
+  margin: 0;
+
+  color: #94a3b8;
+
+  line-height: 1.7;
+}
+
+
+.communityTrust button {
+  border: none;
+
+  background:
+    linear-gradient(
+      135deg,
+      #2563eb,
+      #0891b2
+    );
+
+  color: white;
+}
+
+
+/* ======================================================
+   FINAL CTA
+   ====================================================== */
+
+.communityCTA {
+  max-width: 1400px;
+
+  margin: 100px auto;
+
+  padding: 65px 6%;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  gap: 45px;
+
+  border-radius: 32px;
+
+  background:
+    radial-gradient(
+      circle at 85% 20%,
+      rgba(56, 189, 248, 0.16),
+      transparent 35%
+    ),
+    linear-gradient(
+      135deg,
+      #071a33,
+      #082f49
+    );
+
+  border:
+    1px solid rgba(56, 189, 248, 0.2);
+
+  box-shadow:
+    0 35px 100px rgba(2, 132, 199, 0.12);
+}
+
+
+.communityCTA h2 {
+  max-width: 700px;
+
+  margin: 20px 0 14px;
+
+  font-size: clamp(
+    32px,
+    4vw,
+    50px
+  );
+
+  line-height: 1.08;
+
+  letter-spacing: -1.5px;
+}
+
+
+.communityCTA p {
+  margin: 0;
+
+  color: #94a3b8;
+
+  font-size: 16px;
+}
+
+
+.communityCTAButtons {
+  display: flex;
+
+  flex-wrap: wrap;
+
+  gap: 12px;
+
+  flex-shrink: 0;
+}
+
+
+.communityCTAButtons button:first-child {
+  border: none;
+
+  background:
+    linear-gradient(
+      135deg,
+      #2563eb,
+      #0891b2
+    );
+
+  color: white;
+}
+
+
+.communityCTAButtons button:last-child {
+  border:
+    1px solid rgba(125, 211, 252, 0.2);
+
+  background:
+    rgba(15, 23, 42, 0.65);
+
+  color: #dbeafe;
+}
+
+
+.communityCTAButtons button:hover,
+.communityTrust button:hover {
+  transform: translateY(-4px);
+
+  box-shadow:
+    0 15px 35px rgba(37, 99, 235, 0.25);
+}
+
+
+/* ======================================================
+   MOBILE
+   ====================================================== */
+
+@media (max-width: 1100px) {
+
+  .communityRoleGrid {
+    grid-template-columns:
+      repeat(2, 1fr);
+  }
+
+  .communityTrust {
+    grid-template-columns:
+      auto 1fr;
+  }
+
+  .communityTrust button {
+    grid-column: 1 / -1;
+    justify-self: start;
+  }
+
+  .communityCTA {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+}
+
+
+@media (max-width: 700px) {
+
+  .communityHero {
+    min-height: auto;
+
+    padding:
+      70px 6% 80px;
+  }
+
+
+  .communityHero h1 {
+    font-size: 48px;
+
+    letter-spacing: -2px;
+  }
+
+
+  .communityHeroContent > p {
+    font-size: 16px;
+  }
+
+
+  .communityHeroActions {
+    flex-direction: column;
+  }
+
+
+  .communityPrimaryButton,
+  .communitySecondaryButton {
+    width: 100%;
+  }
+
+
+  .communityAudience {
+    gap: 8px;
+  }
+
+
+  .communityAudience div {
+    font-size: 12px;
+  }
+
+
+  .communityNetwork,
+  .communityFeatures {
+    padding:
+      75px 6%;
+  }
+
+
+  .communityRoleGrid,
+  .communityFeatureGrid {
+    grid-template-columns: 1fr;
+  }
+
+
+  .communityRoleCard {
+    min-height: auto;
+  }
+
+
+  .communityFeatureCard {
+    padding: 24px;
+  }
+
+
+  .communityTrust {
+    margin:
+      60px 6%;
+
+    padding: 30px;
+
+    grid-template-columns: 1fr;
+  }
+
+
+  .trustIcon {
+    width: 56px;
+    height: 56px;
+  }
+
+
+  .communityTrust button {
+    width: 100%;
+  }
+
+
+  .communityCTA {
+    margin:
+      70px 6%;
+
+    padding: 40px 28px;
+  }
+
+
+  .communityCTAButtons {
+    width: 100%;
+
+    flex-direction: column;
+  }
+
+
+  .communityCTAButtons button {
+    width: 100%;
+  }
+
+}

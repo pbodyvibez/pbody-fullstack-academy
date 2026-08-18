@@ -1,141 +1,199 @@
-import { useState } from "react";
+// ===============================================
+// PBODY FULLSTACK ACADEMY
+// PREMIUM ENGINEERING CLASSROOM
+// LESSON QUIZ CONNECTOR
+// FULL REPLACEMENT
+// ===============================================
 
-import "../../components/course/course.css";
+import QuizEngine from "../quiz/QuizEngine";
 
+import "./course.css";
 
-export default function LessonQuiz({lesson}){
+export default function LessonQuiz({ lesson }) {
+  // =================================================
+  // NO LESSON
+  // =================================================
 
+  if (!lesson) {
+    return null;
+  }
 
-const [selected,setSelected] = useState("");
+  // =================================================
+  // LOAD LESSON QUESTIONS
+  // =================================================
 
-const [result,setResult] = useState("");
+  const questions = Array.isArray(lesson.quiz)
+    ? lesson.quiz
+    : [];
 
+  // =================================================
+  // NO QUIZ AVAILABLE
+  // =================================================
 
+  if (questions.length === 0) {
+    return (
+      <section className="lessonQuiz emptyQuiz">
 
-if(!lesson?.quiz || lesson.quiz.length===0){
+        <div className="quizHeader">
 
-return null;
+          <div className="quizHeaderIcon">
+            🧠
+          </div>
 
-}
+          <div>
+            <span className="quizEyebrow">
+              PBODY FULLSTACK ACADEMY
+            </span>
 
+            <h2>
+              Engineering Knowledge Check
+            </h2>
 
+            <p>
+              This lesson does not have an assessment
+              available yet.
+            </p>
+          </div>
 
-const checkAnswer = (correct)=>{
+        </div>
 
 
-if(
+        <div className="quizEmptyState">
 
-selected.toLowerCase() === correct.toLowerCase()
+          <div className="quizEmptyIcon">
+            📋
+          </div>
 
-){
+          <h3>
+            Assessment Coming Soon
+          </h3>
 
-setResult("✅ Correct! Great job.");
+          <p>
+            The engineering assessment for this lesson
+            is currently being prepared.
+          </p>
 
-}
+        </div>
 
-else{
+      </section>
+    );
+  }
 
-setResult(
+  // =================================================
+  // QUIZ AVAILABLE
+  // =================================================
 
-"❌ Not correct. Review the lesson notes and try again."
+  return (
+    <section className="lessonQuiz">
 
-);
+      {/* =========================================
+          QUIZ HEADER
+      ========================================= */}
 
-}
+      <div className="quizHeader">
 
+        <div className="quizHeaderIcon">
+          🧠
+        </div>
 
-};
+        <div>
 
+          <span className="quizEyebrow">
+            PBODY FULLSTACK ACADEMY
+          </span>
 
+          <h2>
+            Engineering Knowledge Check
+          </h2>
 
+          <p>
+            Complete this assessment to test your
+            understanding and earn XP.
+          </p>
 
-return(
+        </div>
 
+      </div>
 
-<div className="lessonQuiz">
 
+      {/* =========================================
+          QUIZ INFORMATION
+      ========================================= */}
 
-<h2>
+      <div className="quizMeta">
 
-🧠 Knowledge Check
+        <div className="quizMetaItem">
 
-</h2>
+          <span className="quizMetaIcon">
+            📝
+          </span>
 
+          <div>
+            <strong>
+              {questions.length}
+            </strong>
 
+            <small>
+              Questions
+            </small>
+          </div>
 
-{
+        </div>
 
-lesson.quiz.map((item,index)=>(
 
+        <div className="quizMetaItem">
 
-<div
+          <span className="quizMetaIcon">
+            ⚡
+          </span>
 
-className="quizQuestion"
+          <div>
+            <strong>
+              {lesson.xp || 0}
+            </strong>
 
-key={index}
+            <small>
+              Lesson XP
+            </small>
+          </div>
 
->
+        </div>
 
 
-<h3>
+        <div className="quizMetaItem">
 
-{index+1}. {item.question}
+          <span className="quizMetaIcon">
+            🎯
+          </span>
 
-</h3>
+          <div>
+            <strong>
+              Assessment
+            </strong>
 
+            <small>
+              Knowledge Check
+            </small>
+          </div>
 
+        </div>
 
-<input
+      </div>
 
-value={selected}
 
-onChange={(e)=>setSelected(e.target.value)}
+      {/* =========================================
+          QUIZ ENGINE
+      ========================================= */}
 
-placeholder="Type your answer..."
+      <div className="quizEngineWrapper">
 
-/>
+        <QuizEngine
+          questions={questions}
+          lesson={lesson}
+        />
 
+      </div>
 
-
-<button
-
-onClick={()=>checkAnswer(item.answer)}
-
->
-
-Check Answer
-
-</button>
-
-
-</div>
-
-
-))
-
-}
-
-
-
-
-{
-
-result &&
-
-<div className="quizResult">
-
-{result}
-
-</div>
-
-}
-
-
-
-</div>
-
-
-);
-
-
+    </section>
+  );
 }

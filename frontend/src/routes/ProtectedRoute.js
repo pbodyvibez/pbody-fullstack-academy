@@ -1,47 +1,57 @@
-import { Navigate } from "react-router-dom";
+import {
+  Navigate,
+  useLocation
+} from "react-router-dom";
 
-import { useAuth } from "../context/AuthContext";
+
+import {
+  useAuth
+} from "../context/AuthContext";
 
 
 
-export default function ProtectedRoute({children}){
+export default function ProtectedRoute({
+  children
+}){
 
 
 const {
-
-isAuthenticated,
-
-loading
-
+  user,
+  loading
 }=useAuth();
 
 
 
+const location = useLocation();
+
+
+
+
+
+// ======================================
+// AUTH CHECK LOADING
+// ======================================
 
 
 if(loading){
 
-return null;
 
-}
-
+return(
 
 
+<div className="routeLoading">
 
 
+<div className="loader"></div>
 
-if(!isAuthenticated){
+
+<p>
+Loading PBody Academy...
+</p>
 
 
-return (
+</div>
 
-<Navigate
-
-to="/login"
-
-replace
-
-/>
 
 );
 
@@ -51,7 +61,52 @@ replace
 
 
 
+
+
+// ======================================
+// REDIRECT GUEST USERS
+// ======================================
+
+
+if(!user){
+
+
+return(
+
+
+<Navigate
+
+to="/login"
+
+replace
+
+state={{
+
+from:location.pathname
+
+}}
+
+/>
+
+
+);
+
+
+}
+
+
+
+
+
+
+
+// ======================================
+// AUTHORIZED
+// ======================================
+
+
 return children;
+
 
 
 }

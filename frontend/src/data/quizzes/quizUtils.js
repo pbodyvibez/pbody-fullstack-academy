@@ -5,17 +5,21 @@
 
 
 
-// Shuffle array helper
+// Shuffle array safely
 
 export function shuffleArray(array){
 
 
 return [...array].sort(
-()=>Math.random() - 0.5
+()=>Math.random()-0.5
 );
 
 
 }
+
+
+
+
 
 
 
@@ -24,32 +28,55 @@ return [...array].sort(
 export function shuffleQuestions(questions){
 
 
-return shuffleArray(questions);
+return shuffleArray(
+questions
+);
 
 
 }
 
 
 
+
+
+
+
 // Shuffle answer options
-// Keeps correct answer index updated
+// Keeps correct answer index correct
+
 
 export function shuffleOptions(question){
 
 
-const options = question.options.map(
-(option,index)=>({
 
-text: option,
+const formattedOptions = question.options.map(
 
-correct:index === question.answer
+(option,index)=>(
 
-})
+
+{
+
+text:option,
+
+correct:index===question.answer
+
+
+}
+
+
+)
+
 );
 
 
 
-const shuffled = shuffleArray(options);
+
+
+const shuffled = shuffleArray(
+formattedOptions
+);
+
+
 
 
 
@@ -59,34 +86,58 @@ return {
 ...question,
 
 
-options: shuffled.map(
+options:shuffled.map(
 (item)=>item.text
 ),
 
 
-answer: shuffled.findIndex(
+
+answer:shuffled.findIndex(
+
 (item)=>item.correct
-)
+
+),
+
+
+
+// default XP per question
+
+xp:question.xp || 20
+
 
 
 };
+
 
 
 }
 
 
 
+
+
+
+
+
+
 // Prepare quiz before starting
+
 
 export function prepareQuiz(questions){
 
 
 return shuffleQuestions(
 
+
 questions.map(
-(question)=>shuffleOptions(question)
+
+question=>
+
+shuffleOptions(question)
+
 
 )
+
 
 );
 
@@ -95,43 +146,65 @@ questions.map(
 
 
 
+
+
+
+
+
+
 // Calculate total possible XP
+
 
 export function calculateTotalXP(questions){
 
 
 return questions.reduce(
 
+
 (total,question)=>
 
-total + (question.xp || 0),
+
+total + (question.xp || 20),
+
 
 0
 
+
 );
+
 
 
 }
 
 
 
-// Assign quiz difficulty
+
+
+
+
+
+
+// Difficulty calculator
+
 
 export function getDifficulty(questionCount){
 
 
-if(questionCount <= 5){
+
+if(questionCount <=5){
 
 return "Beginner";
 
 }
 
 
-if(questionCount <= 10){
+
+if(questionCount <=10){
 
 return "Intermediate";
 
 }
+
 
 
 return "Advanced";
@@ -141,13 +214,25 @@ return "Advanced";
 
 
 
-// Create quiz information card
+
+
+
+
+
+
+// Quiz information card
+
 
 export function getQuizInfo(
+
 category,
+
 lesson,
+
 questions
+
 ){
+
 
 
 return {
@@ -173,6 +258,7 @@ questions.length
 totalXP:calculateTotalXP(
 questions
 )
+
 
 
 };

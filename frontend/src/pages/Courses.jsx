@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import courses from "../data/courses";
 
@@ -7,24 +7,30 @@ import Logo from "../assets/images/logo.png";
 import "../styles/courses.css";
 
 
+
 export default function Courses(){
-
-
-const navigate = useNavigate();
 
 
 
 return(
 
 
+
 <div className="coursesPage">
+
+
+
 
 
 
 <section className="coursesHero">
 
 
+
+
+
 <div className="coursesBrand">
+
 
 
 <img
@@ -39,17 +45,18 @@ alt="PBody FullStack Academy"
 
 <div>
 
-<h2>
+
+<h3>
 
 PBODY FULLSTACK ACADEMY
 
-</h2>
+</h3>
 
 
 
 <p>
 
-AI Powered Engineering Academy
+Professional Software Engineering Education
 
 </p>
 
@@ -57,7 +64,23 @@ AI Powered Engineering Academy
 </div>
 
 
+
 </div>
+
+
+
+
+
+
+
+<div className="coursesHeroContent">
+
+
+<span className="coursesBadge">
+
+ENGINEERING COURSE LIBRARY
+
+</span>
 
 
 
@@ -65,7 +88,7 @@ AI Powered Engineering Academy
 
 <h1>
 
-Master Professional Engineering Skills
+Master Software Engineering With Industry-Level Courses
 
 </h1>
 
@@ -74,11 +97,16 @@ Master Professional Engineering Skills
 
 <p>
 
-Learn Frontend, Backend, Full Stack,
-AI, Cloud, Mobile and modern technologies
-through structured lessons and real projects.
+Learn frontend, backend, fullstack development and modern engineering skills through structured practical courses.
 
 </p>
+
+
+
+
+</div>
+
+
 
 
 
@@ -92,13 +120,49 @@ through structured lessons and real projects.
 
 
 
-<section className="coursesGrid">
+<section className="courseLibrary">
+
+
+
+
+
+<div className="sectionHeading">
+
+
+<h2>
+
+Available Engineering Courses
+
+</h2>
+
+
+<p>
+
+Choose a learning path and start building real-world applications.
+
+</p>
+
+
+</div>
+
+
+
+
+
+
+
+
+<div className="courseGrid">
+
+
 
 
 
 {
 
-courses.map(course=>(
+courses.map((course)=>(
+
+
 
 
 
@@ -109,6 +173,8 @@ className="courseCard"
 key={course.id}
 
 >
+
+
 
 
 
@@ -130,19 +196,19 @@ alt={course.title}
 
 
 
-<div
+<span
 
 className={
 
-course.access === "free"
+course.access==="premium"
 
 ?
 
-"freeBadge"
+"premiumTag"
 
 :
 
-"premiumBadge"
+"freeTag"
 
 }
 
@@ -151,66 +217,18 @@ course.access === "free"
 
 {
 
-course.access === "free"
+course.access==="premium"
 
 ?
 
-"🚀 FREE COURSE"
+"PREMIUM"
 
 :
 
-"⭐ PREMIUM COURSE"
+"FREE"
 
 }
 
-
-</div>
-
-
-
-</div>
-
-
-
-
-
-
-
-
-
-<div className="courseContent">
-
-
-
-
-
-<div className="courseTitleRow">
-
-
-
-<h2>
-
-{course.icon}
-
-{course.title}
-
-</h2>
-
-
-
-<span
-
-style={{
-
-background:course.color
-
-}}
-
-className="levelBadge"
-
->
-
-{course.level}
 
 </span>
 
@@ -226,9 +244,25 @@ className="levelBadge"
 
 
 
+<div className="courseBody">
+
+
+
+
+
+<h2>
+
+{course.icon} {course.title}
+
+</h2>
+
+
+
+
+
 <p>
 
-{course.tagline}
+{course.description}
 
 </p>
 
@@ -238,97 +272,52 @@ className="levelBadge"
 
 
 
+<div className="courseMeta">
 
 
-<div className="courseStats">
-
-
-
-<div>
-
-<strong>
-
-⭐ {course.rating}
-
-</strong>
 
 <span>
 
-Rating
+⭐ {course.rating || "4.9"}
 
 </span>
 
-</div>
 
-
-
-
-
-<div>
-
-<strong>
-
-📚 {course.lessons}
-
-</strong>
 
 <span>
 
-Lessons
+📚 {course.lessons || 0} Lessons
 
 </span>
 
-</div>
 
-
-
-
-
-<div>
-
-<strong>
-
-🚀 {course.projects}
-
-</strong>
 
 <span>
 
-Projects
+🏆 Certificate
 
 </span>
 
+
+
 </div>
 
 
 
-</div>
 
 
 
 
 
-
-
-
-
-<div className="techPreview">
+<div className="technologyList">
 
 
 {
 
-course.technologies
-
-?.slice(0,5)
-
-.map((tech,index)=>(
+course.technologies?.slice(0,5).map((tech,index)=>(
 
 
-<span
-
-key={index}
-
->
+<span key={index}>
 
 {tech}
 
@@ -341,7 +330,6 @@ key={index}
 }
 
 
-
 </div>
 
 
@@ -351,34 +339,18 @@ key={index}
 
 
 
+<Link
 
-<button
+to={`/course/${course.id}`}
 
-
-onClick={()=>navigate(`/course/${course.id}`)}
+className="courseButton"
 
 >
 
 
+Start Course →
 
-{
-
-course.access === "free"
-
-?
-
-"🚀 Start Free Learning"
-
-:
-
-"▶ Start Course"
-
-}
-
-
-
-</button>
-
+</Link>
 
 
 
@@ -392,7 +364,10 @@ course.access === "free"
 
 
 
+
 </div>
+
+
 
 
 
@@ -400,6 +375,19 @@ course.access === "free"
 
 
 }
+
+
+
+
+
+
+
+
+</div>
+
+
+
+
 
 
 
@@ -411,7 +399,10 @@ course.access === "free"
 
 
 
+
+
 </div>
+
 
 
 );

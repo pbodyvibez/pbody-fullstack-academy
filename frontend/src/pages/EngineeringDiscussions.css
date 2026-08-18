@@ -1,0 +1,1653 @@
+/* ======================================================
+   PBODY FULLSTACK ACADEMY
+   ENGINEERING DISCUSSIONS
+   PREMIUM COMMUNITY UI
+   ====================================================== */
+
+.engineeringDiscussionsPage {
+  min-height: 100vh;
+
+  color: #f8fafc;
+
+  background:
+    radial-gradient(
+      circle at 15% 5%,
+      rgba(14, 165, 233, 0.1),
+      transparent 30%
+    ),
+    radial-gradient(
+      circle at 85% 15%,
+      rgba(37, 99, 235, 0.12),
+      transparent 30%
+    ),
+    #020617;
+}
+
+
+/* ======================================================
+   HEADER
+   ====================================================== */
+
+.discussionHeader {
+  position: sticky;
+
+  top: 0;
+
+  z-index: 50;
+
+  border-bottom:
+    1px solid rgba(148, 163, 184, 0.1);
+
+  background:
+    rgba(2, 6, 23, 0.88);
+
+  backdrop-filter:
+    blur(18px);
+}
+
+
+.discussionHeaderInner {
+  max-width: 1450px;
+
+  min-height: 76px;
+
+  margin: auto;
+
+  padding:
+    0 5%;
+
+  display: grid;
+
+  grid-template-columns:
+    1fr auto 1fr;
+
+  align-items: center;
+
+  gap: 20px;
+}
+
+
+.discussionBackButton,
+.discussionNotification {
+  border: none;
+
+  background: none;
+
+  color: #94a3b8;
+
+  cursor: pointer;
+
+  transition: .25s ease;
+}
+
+
+.discussionBackButton {
+  justify-self: start;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 8px;
+
+  font-weight: 800;
+}
+
+
+.discussionBackButton:hover {
+  color: #38bdf8;
+
+  transform: translateX(-3px);
+}
+
+
+.discussionHeaderTitle {
+  display: flex;
+
+  align-items: center;
+
+  gap: 13px;
+}
+
+
+.discussionHeaderIcon {
+  width: 42px;
+  height: 42px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 13px;
+
+  color: #38bdf8;
+
+  background:
+    rgba(14, 165, 233, 0.1);
+
+  border:
+    1px solid rgba(56, 189, 248, 0.18);
+}
+
+
+.discussionHeaderTitle strong {
+  display: block;
+
+  font-size: 15px;
+}
+
+
+.discussionHeaderTitle span {
+  display: block;
+
+  margin-top: 3px;
+
+  color: #64748b;
+
+  font-size: 11px;
+}
+
+
+.discussionNotification {
+  position: relative;
+
+  justify-self: end;
+
+  width: 42px;
+  height: 42px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 12px;
+
+  background:
+    rgba(15, 23, 42, 0.7);
+}
+
+
+.discussionNotification:hover {
+  color: #38bdf8;
+}
+
+
+.discussionNotification span {
+  position: absolute;
+
+  top: 9px;
+  right: 9px;
+
+  width: 6px;
+  height: 6px;
+
+  border-radius: 50%;
+
+  background: #38bdf8;
+
+  box-shadow:
+    0 0 10px #38bdf8;
+}
+
+
+/* ======================================================
+   HERO
+   ====================================================== */
+
+.discussionHero {
+  border-bottom:
+    1px solid rgba(56, 189, 248, 0.08);
+
+  background:
+    linear-gradient(
+      135deg,
+      #061426,
+      #082f49
+    );
+}
+
+
+.discussionHeroInner {
+  max-width: 1450px;
+
+  margin: auto;
+
+  padding:
+    75px 5% 65px;
+
+  display: flex;
+
+  align-items: flex-end;
+
+  justify-content: space-between;
+
+  gap: 50px;
+}
+
+
+.discussionEyebrow {
+  display: inline-flex;
+
+  align-items: center;
+
+  gap: 8px;
+
+  color: #38bdf8;
+
+  font-size: 11px;
+
+  font-weight: 900;
+
+  letter-spacing: 1.7px;
+}
+
+
+.discussionHero h1 {
+  margin:
+    18px 0 16px;
+
+  font-size:
+    clamp(42px, 6vw, 72px);
+
+  line-height: .98;
+
+  letter-spacing: -3px;
+}
+
+
+.discussionHero h1 span {
+  color: #38bdf8;
+
+  text-shadow:
+    0 0 35px rgba(56, 189, 248, .25);
+}
+
+
+.discussionHero p {
+  max-width: 680px;
+
+  margin: 0;
+
+  color: #94a3b8;
+
+  font-size: 17px;
+
+  line-height: 1.75;
+}
+
+
+.discussionStats {
+  display: flex;
+
+  flex-shrink: 0;
+
+  gap: 12px;
+}
+
+
+.discussionStats div {
+  min-width: 105px;
+
+  padding:
+    18px 20px;
+
+  border:
+    1px solid rgba(148, 163, 184, .1);
+
+  border-radius: 18px;
+
+  background:
+    rgba(2, 6, 23, .35);
+
+  text-align: center;
+}
+
+
+.discussionStats strong {
+  display: block;
+
+  color: #e0f2fe;
+
+  font-size: 25px;
+}
+
+
+.discussionStats span {
+  display: block;
+
+  margin-top: 4px;
+
+  color: #64748b;
+
+  font-size: 11px;
+}
+
+
+/* ======================================================
+   MAIN
+   ====================================================== */
+
+.discussionMain {
+  max-width: 1450px;
+
+  margin: auto;
+
+  padding:
+    38px 5% 100px;
+}
+
+
+/* ======================================================
+   TOOLBAR
+   ====================================================== */
+
+.discussionToolbar {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  gap: 18px;
+
+  margin-bottom: 20px;
+}
+
+
+.discussionSearch {
+  flex: 1;
+
+  max-width: 650px;
+
+  min-height: 52px;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 12px;
+
+  padding:
+    0 16px;
+
+  border:
+    1px solid rgba(148, 163, 184, .12);
+
+  border-radius: 15px;
+
+  background:
+    rgba(15, 23, 42, .72);
+}
+
+
+.discussionSearch > svg {
+  color: #64748b;
+
+  flex-shrink: 0;
+}
+
+
+.discussionSearch input {
+  width: 100%;
+
+  border: none;
+
+  outline: none;
+
+  background: none;
+
+  color: white;
+
+  font-size: 14px;
+}
+
+
+.discussionSearch input::placeholder {
+  color: #475569;
+}
+
+
+.discussionSearch button {
+  border: none;
+
+  background: none;
+
+  color: #64748b;
+
+  cursor: pointer;
+}
+
+
+.askQuestionButton {
+  min-height: 52px;
+
+  padding:
+    0 20px;
+
+  display: inline-flex;
+
+  align-items: center;
+
+  gap: 9px;
+
+  border: none;
+
+  border-radius: 15px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #2563eb,
+      #0891b2
+    );
+
+  color: white;
+
+  font-weight: 900;
+
+  cursor: pointer;
+
+  box-shadow:
+    0 12px 30px rgba(37, 99, 235, .2);
+
+  transition: .25s ease;
+}
+
+
+.askQuestionButton:hover {
+  transform: translateY(-3px);
+
+  box-shadow:
+    0 18px 40px rgba(37, 99, 235, .3);
+}
+
+
+/* ======================================================
+   CATEGORIES
+   ====================================================== */
+
+.discussionCategories {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  gap: 15px;
+
+  margin-bottom: 28px;
+}
+
+
+.categoryScroller {
+  display: flex;
+
+  gap: 7px;
+
+  overflow-x: auto;
+
+  scrollbar-width: none;
+}
+
+
+.categoryScroller::-webkit-scrollbar {
+  display: none;
+}
+
+
+.categoryScroller button,
+.savedFilter {
+  flex-shrink: 0;
+
+  padding:
+    9px 14px;
+
+  border:
+    1px solid rgba(148, 163, 184, .1);
+
+  border-radius: 999px;
+
+  background:
+    rgba(15, 23, 42, .7);
+
+  color: #64748b;
+
+  font-size: 12px;
+
+  font-weight: 800;
+
+  cursor: pointer;
+
+  transition: .2s ease;
+}
+
+
+.categoryScroller button:hover,
+.categoryScroller button.active,
+.savedFilter:hover,
+.savedFilter.active {
+  border-color:
+    rgba(56, 189, 248, .3);
+
+  background:
+    rgba(14, 165, 233, .1);
+
+  color: #38bdf8;
+}
+
+
+.savedFilter {
+  display: inline-flex;
+
+  align-items: center;
+
+  gap: 7px;
+}
+
+
+/* ======================================================
+   COMPOSER
+   ====================================================== */
+
+.discussionComposer {
+  margin-bottom: 25px;
+
+  padding: 25px;
+
+  border:
+    1px solid rgba(56, 189, 248, .17);
+
+  border-radius: 22px;
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(15, 23, 42, .95),
+      rgba(8, 47, 73, .55)
+    );
+
+  box-shadow:
+    0 25px 70px rgba(2, 132, 199, .08);
+}
+
+
+.composerHeader {
+  display: flex;
+
+  align-items: center;
+
+  gap: 12px;
+
+  margin-bottom: 20px;
+}
+
+
+.composerHeader > button {
+  margin-left: auto;
+
+  width: 35px;
+  height: 35px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  border: none;
+
+  border-radius: 10px;
+
+  background:
+    rgba(148, 163, 184, .08);
+
+  color: #94a3b8;
+
+  cursor: pointer;
+}
+
+
+.profileAvatar {
+  width: 45px;
+  height: 45px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+
+  border-radius: 50%;
+
+  background:
+    linear-gradient(
+      135deg,
+      #2563eb,
+      #0891b2
+    );
+
+  color: white;
+
+  font-size: 13px;
+
+  font-weight: 950;
+}
+
+
+.profileAvatar.small {
+  width: 36px;
+  height: 36px;
+
+  font-size: 11px;
+}
+
+
+.composerHeader strong {
+  display: block;
+
+  font-size: 14px;
+}
+
+
+.composerHeader span {
+  display: block;
+
+  margin-top: 3px;
+
+  color: #64748b;
+
+  font-size: 11px;
+}
+
+
+.composerTitle,
+.discussionComposer textarea {
+  width: 100%;
+
+  box-sizing: border-box;
+
+  border:
+    1px solid rgba(148, 163, 184, .1);
+
+  outline: none;
+
+  border-radius: 13px;
+
+  background:
+    rgba(2, 6, 23, .5);
+
+  color: white;
+}
+
+
+.composerTitle {
+  height: 50px;
+
+  padding:
+    0 15px;
+
+  margin-bottom: 12px;
+
+  font-size: 15px;
+
+  font-weight: 800;
+}
+
+
+.discussionComposer textarea {
+  padding: 15px;
+
+  resize: vertical;
+
+  font-size: 14px;
+
+  line-height: 1.7;
+}
+
+
+.composerTitle:focus,
+.discussionComposer textarea:focus {
+  border-color:
+    rgba(56, 189, 248, .35);
+}
+
+
+.composerFooter {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  gap: 15px;
+
+  margin-top: 15px;
+}
+
+
+.composerCategory {
+  display: flex;
+
+  align-items: center;
+
+  gap: 6px;
+
+  color: #38bdf8;
+}
+
+
+.composerCategory select {
+  border: none;
+
+  outline: none;
+
+  background: none;
+
+  color: #94a3b8;
+
+  font-weight: 700;
+
+  cursor: pointer;
+}
+
+
+.composerCategory option {
+  background: #0f172a;
+
+  color: white;
+}
+
+
+.publishButton {
+  min-height: 43px;
+
+  padding:
+    0 17px;
+
+  display: inline-flex;
+
+  align-items: center;
+
+  gap: 8px;
+
+  border: none;
+
+  border-radius: 12px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #2563eb,
+      #0891b2
+    );
+
+  color: white;
+
+  font-size: 12px;
+
+  font-weight: 900;
+
+  cursor: pointer;
+}
+
+
+.publishButton:disabled {
+  opacity: .4;
+
+  cursor: not-allowed;
+}
+
+
+/* ======================================================
+   CONTENT GRID
+   ====================================================== */
+
+.discussionContent {
+  display: grid;
+
+  grid-template-columns:
+    280px minmax(0, 760px);
+
+  justify-content: center;
+
+  align-items: start;
+
+  gap: 25px;
+}
+
+
+/* ======================================================
+   SIDEBAR
+   ====================================================== */
+
+.discussionSidebar {
+  position: sticky;
+
+  top: 100px;
+
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 15px;
+}
+
+
+.sidebarCard {
+  padding: 22px;
+
+  border:
+    1px solid rgba(148, 163, 184, .1);
+
+  border-radius: 20px;
+
+  background:
+    rgba(15, 23, 42, .65);
+}
+
+
+.sidebarCardIcon {
+  width: 42px;
+  height: 42px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 12px;
+
+  color: #38bdf8;
+
+  background:
+    rgba(14, 165, 233, .08);
+
+  margin-bottom: 16px;
+}
+
+
+.sidebarCard h3 {
+  margin: 0 0 9px;
+
+  font-size: 15px;
+}
+
+
+.sidebarCard p {
+  margin: 0;
+
+  color: #64748b;
+
+  font-size: 12px;
+
+  line-height: 1.7;
+}
+
+
+.sidebarCard ul {
+  list-style: none;
+
+  padding: 0;
+
+  margin:
+    17px 0 0;
+
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 11px;
+}
+
+
+.sidebarCard li {
+  display: flex;
+
+  align-items: center;
+
+  gap: 8px;
+
+  color: #94a3b8;
+
+  font-size: 11px;
+}
+
+
+.sidebarCard li svg {
+  color: #38bdf8;
+}
+
+
+/* ======================================================
+   FEED
+   ====================================================== */
+
+.discussionFeed {
+  min-width: 0;
+
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 17px;
+}
+
+
+.discussionCard {
+  padding: 25px;
+
+  border:
+    1px solid rgba(148, 163, 184, .1);
+
+  border-radius: 22px;
+
+  background:
+    rgba(15, 23, 42, .72);
+
+  box-shadow:
+    0 15px 45px rgba(0, 0, 0, .12);
+
+  transition:
+    border-color .25s ease,
+    transform .25s ease;
+}
+
+
+.discussionCard:hover {
+  border-color:
+    rgba(56, 189, 248, .17);
+}
+
+
+.pinnedLabel {
+  display: inline-flex;
+
+  align-items: center;
+
+  gap: 6px;
+
+  margin-bottom: 17px;
+
+  padding:
+    6px 10px;
+
+  border-radius: 999px;
+
+  background:
+    rgba(245, 158, 11, .08);
+
+  color: #fbbf24;
+
+  font-size: 10px;
+
+  font-weight: 900;
+}
+
+
+/* ======================================================
+   AUTHOR
+   ====================================================== */
+
+.discussionAuthor {
+  display: flex;
+
+  align-items: center;
+
+  gap: 11px;
+}
+
+
+.discussionAvatar {
+  width: 44px;
+  height: 44px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+
+  border-radius: 50%;
+
+  background:
+    linear-gradient(
+      135deg,
+      #1d4ed8,
+      #0891b2
+    );
+
+  color: white;
+
+  font-size: 12px;
+
+  font-weight: 950;
+}
+
+
+.authorInfo {
+  min-width: 0;
+}
+
+
+.authorInfo > div {
+  display: flex;
+
+  align-items: center;
+
+  gap: 5px;
+}
+
+
+.authorInfo strong {
+  font-size: 13px;
+}
+
+
+.authorInfo span {
+  display: flex;
+
+  align-items: center;
+
+  gap: 5px;
+
+  margin-top: 4px;
+
+  color: #64748b;
+
+  font-size: 10px;
+}
+
+
+.verifiedIcon {
+  color: #38bdf8;
+}
+
+
+.dot {
+  margin: 0 2px;
+}
+
+
+.moreButton {
+  margin-left: auto;
+
+  width: 35px;
+  height: 35px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  border: none;
+
+  border-radius: 10px;
+
+  background: transparent;
+
+  color: #64748b;
+
+  cursor: pointer;
+}
+
+
+.moreButton:hover {
+  background:
+    rgba(148, 163, 184, .08);
+
+  color: #94a3b8;
+}
+
+
+/* ======================================================
+   CATEGORY
+   ====================================================== */
+
+.discussionCategory {
+  display: inline-flex;
+
+  align-items: center;
+
+  gap: 5px;
+
+  margin:
+    18px 0 10px;
+
+  padding:
+    6px 10px;
+
+  border-radius: 999px;
+
+  background:
+    rgba(14, 165, 233, .07);
+
+  color: #38bdf8;
+
+  font-size: 10px;
+
+  font-weight: 900;
+}
+
+
+/* ======================================================
+   TEXT
+   ====================================================== */
+
+.discussionCard h2 {
+  margin:
+    3px 0 10px;
+
+  font-size: 19px;
+
+  line-height: 1.35;
+}
+
+
+.discussionText {
+  margin: 0;
+
+  color: #94a3b8;
+
+  font-size: 14px;
+
+  line-height: 1.75;
+}
+
+
+/* ======================================================
+   ACTIONS
+   ====================================================== */
+
+.discussionActions {
+  display: flex;
+
+  align-items: center;
+
+  gap: 5px;
+
+  margin-top: 20px;
+
+  padding-top: 15px;
+
+  border-top:
+    1px solid rgba(148, 163, 184, .08);
+}
+
+
+.discussionActions button {
+  display: inline-flex;
+
+  align-items: center;
+
+  gap: 7px;
+
+  min-height: 35px;
+
+  padding:
+    0 10px;
+
+  border: none;
+
+  border-radius: 9px;
+
+  background: transparent;
+
+  color: #64748b;
+
+  font-size: 11px;
+
+  font-weight: 800;
+
+  cursor: pointer;
+
+  transition: .2s ease;
+}
+
+
+.discussionActions button:hover,
+.discussionActions button.liked,
+.discussionActions button.bookmarked {
+  color: #38bdf8;
+
+  background:
+    rgba(14, 165, 233, .07);
+}
+
+
+.discussionActions button:last-child {
+  margin-left: auto;
+}
+
+
+/* ======================================================
+   COMMENTS
+   ====================================================== */
+
+.discussionComments {
+  margin-top: 15px;
+
+  padding-top: 15px;
+
+  border-top:
+    1px solid rgba(148, 163, 184, .07);
+
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 13px;
+}
+
+
+.comment {
+  display: flex;
+
+  gap: 10px;
+
+  padding:
+    12px;
+
+  border-radius: 13px;
+
+  background:
+    rgba(2, 6, 23, .32);
+}
+
+
+.commentAvatar {
+  width: 32px;
+  height: 32px;
+
+  flex-shrink: 0;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background:
+    linear-gradient(
+      135deg,
+      #334155,
+      #0369a1
+    );
+
+  color: white;
+
+  font-size: 9px;
+
+  font-weight: 900;
+}
+
+
+.commentBody {
+  min-width: 0;
+}
+
+
+.commentMeta {
+  display: flex;
+
+  align-items: center;
+
+  gap: 8px;
+}
+
+
+.commentMeta strong {
+  font-size: 11px;
+}
+
+
+.commentMeta span {
+  color: #475569;
+
+  font-size: 9px;
+}
+
+
+.commentBody p {
+  margin:
+    5px 0 0;
+
+  color: #94a3b8;
+
+  font-size: 12px;
+
+  line-height: 1.6;
+}
+
+
+/* ======================================================
+   REPLY
+   ====================================================== */
+
+.replyBox {
+  display: flex;
+
+  align-items: center;
+
+  gap: 9px;
+
+  margin-top: 15px;
+
+  padding-top: 15px;
+
+  border-top:
+    1px solid rgba(148, 163, 184, .07);
+}
+
+
+.replyBox input {
+  min-width: 0;
+
+  flex: 1;
+
+  height: 40px;
+
+  padding:
+    0 13px;
+
+  border:
+    1px solid rgba(148, 163, 184, .1);
+
+  outline: none;
+
+  border-radius: 11px;
+
+  background:
+    rgba(2, 6, 23, .5);
+
+  color: white;
+
+  font-size: 12px;
+}
+
+
+.replyBox input:focus {
+  border-color:
+    rgba(56, 189, 248, .3);
+}
+
+
+.replyBox > button {
+  width: 40px;
+  height: 40px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  border: none;
+
+  border-radius: 11px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #2563eb,
+      #0891b2
+    );
+
+  color: white;
+
+  cursor: pointer;
+}
+
+
+.replyBox > button:disabled {
+  opacity: .4;
+
+  cursor: not-allowed;
+}
+
+
+/* ======================================================
+   EMPTY
+   ====================================================== */
+
+.emptyDiscussions {
+  padding: 80px 30px;
+
+  border:
+    1px dashed rgba(56, 189, 248, .18);
+
+  border-radius: 22px;
+
+  text-align: center;
+
+  background:
+    rgba(15, 23, 42, .45);
+
+  color: #64748b;
+}
+
+
+.emptyDiscussions svg {
+  color: #38bdf8;
+
+  margin-bottom: 12px;
+}
+
+
+.emptyDiscussions h2 {
+  margin: 0 0 7px;
+
+  color: #e2e8f0;
+
+  font-size: 20px;
+}
+
+
+.emptyDiscussions p {
+  margin: 0 0 20px;
+
+  font-size: 13px;
+}
+
+
+.emptyDiscussions button {
+  min-height: 43px;
+
+  padding:
+    0 18px;
+
+  border: none;
+
+  border-radius: 12px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #2563eb,
+      #0891b2
+    );
+
+  color: white;
+
+  font-weight: 900;
+
+  cursor: pointer;
+}
+
+
+/* ======================================================
+   RESPONSIVE
+   ====================================================== */
+
+@media (max-width: 1050px) {
+
+  .discussionContent {
+    grid-template-columns:
+      1fr;
+  }
+
+
+  .discussionSidebar {
+    position: static;
+
+    display: grid;
+
+    grid-template-columns:
+      repeat(2, 1fr);
+  }
+
+}
+
+
+@media (max-width: 750px) {
+
+  .discussionHeaderInner {
+    grid-template-columns:
+      auto 1fr auto;
+  }
+
+
+  .discussionHeaderTitle {
+    justify-content: center;
+  }
+
+
+  .discussionHeaderTitle span {
+    display: none;
+  }
+
+
+  .discussionHeaderTitle strong {
+    font-size: 12px;
+  }
+
+
+  .discussionHeroInner {
+    flex-direction: column;
+
+    align-items: flex-start;
+
+    padding:
+      55px 6%;
+  }
+
+
+  .discussionHero h1 {
+    font-size: 47px;
+
+    letter-spacing: -2px;
+  }
+
+
+  .discussionStats {
+    width: 100%;
+  }
+
+
+  .discussionStats div {
+    flex: 1;
+
+    min-width: 0;
+  }
+
+
+  .discussionMain {
+    padding:
+      25px 5% 70px;
+  }
+
+
+  .discussionToolbar {
+    flex-direction: column;
+
+    align-items: stretch;
+  }
+
+
+  .discussionSearch {
+    max-width: none;
+  }
+
+
+  .askQuestionButton {
+    width: 100%;
+  }
+
+
+  .discussionCategories {
+    align-items: flex-start;
+
+    flex-direction: column;
+  }
+
+
+  .categoryScroller {
+    width: 100%;
+  }
+
+
+  .discussionSidebar {
+    grid-template-columns:
+      1fr;
+  }
+
+
+  .discussionCard {
+    padding: 19px;
+  }
+
+
+  .composerFooter {
+    flex-direction: column;
+
+    align-items: stretch;
+  }
+
+
+  .publishButton {
+    width: 100%;
+  }
+
+}
+
+
+@media (max-width: 500px) {
+
+  .discussionBackButton {
+    font-size: 0;
+  }
+
+
+  .discussionBackButton svg {
+    width: 20px;
+    height: 20px;
+  }
+
+
+  .discussionHero h1 {
+    font-size: 40px;
+  }
+
+
+  .discussionStats strong {
+    font-size: 20px;
+  }
+
+
+  .discussionStats span {
+    font-size: 9px;
+  }
+
+
+  .discussionActions {
+    flex-wrap: wrap;
+  }
+
+
+  .discussionActions button:last-child {
+    margin-left: 0;
+  }
+
+}

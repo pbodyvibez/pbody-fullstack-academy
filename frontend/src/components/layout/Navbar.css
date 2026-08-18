@@ -1,310 +1,1006 @@
-.navbar{
+/* =====================================================
+   PBODY FULLSTACK ACADEMY
+   PREMIUM PUBLIC NAVBAR
+   FULL RESPONSIVE
+   FULL REPLACEMENT
+===================================================== */
 
-width:100%;
+.navbar {
 
-display:flex;
+  width: 100%;
 
-align-items:center;
+  min-height: 74px;
 
-justify-content:space-between;
+  display: flex;
 
-padding:18px 40px;
+  align-items: center;
 
-background:
+  justify-content: space-between;
 
-rgba(2,6,23,.92);
+  gap: 24px;
 
-backdrop-filter:blur(15px);
+  padding: 12px 35px;
 
-border-bottom:
+  background:
+    rgba(2, 6, 23, 0.94);
 
-1px solid rgba(255,255,255,.08);
+  backdrop-filter:
+    blur(18px);
 
-position:sticky;
+  -webkit-backdrop-filter:
+    blur(18px);
 
-top:0;
+  border-bottom:
+    1px solid rgba(255, 255, 255, 0.08);
 
-z-index:1000;
+  position: sticky;
 
-}
+  top: 0;
 
+  z-index: 1000;
 
-
-
-
-.navBrand a{
-
-display:flex;
-
-align-items:center;
-
-gap:12px;
-
-text-decoration:none;
-
-color:white;
-
-font-size:20px;
-
-font-weight:800;
-
-letter-spacing:.5px;
+  box-sizing: border-box;
 
 }
 
 
+/* =====================================================
+   BRAND
+===================================================== */
 
+.navBrand {
 
+  min-width: 0;
 
-.navBrand img{
-
-width:45px;
-
-height:45px;
-
-object-fit:contain;
-
-border-radius:12px;
+  flex-shrink: 0;
 
 }
 
 
+.navBrand a {
 
+  display: flex;
 
+  align-items: center;
 
-.navLinks{
+  gap: 11px;
 
-display:flex;
+  text-decoration: none;
 
-align-items:center;
-
-gap:30px;
-
-}
-
-
-
-
-
-.navLinks a{
-
-color:#cbd5e1;
-
-text-decoration:none;
-
-font-weight:600;
-
-font-size:15px;
-
-transition:.3s ease;
+  color: #ffffff;
 
 }
 
 
+.navBrand img {
 
+  width: 42px;
 
+  height: 42px;
 
-.navLinks a:hover{
+  object-fit: contain;
 
-color:#60a5fa;
-
-}
-
-
-
-
-
-.navActions{
-
-display:flex;
-
-align-items:center;
+  flex-shrink: 0;
 
 }
 
 
+.brandWords {
 
+  display: flex;
 
+  flex-direction: column;
 
-.loginButton{
+  line-height: 1.1;
 
-background:
-
-linear-gradient(
-
-135deg,
-
-#2563eb,
-
-#7c3aed
-
-);
-
-padding:12px 25px;
-
-border-radius:15px;
-
-color:white;
-
-font-weight:700;
-
-text-decoration:none;
-
-transition:.3s ease;
+  white-space: nowrap;
 
 }
 
 
+.brandWords strong {
 
+  font-size: 19px;
 
+  font-weight: 900;
 
-.loginButton:hover{
-
-transform:translateY(-2px);
-
-box-shadow:
-
-0 10px 25px rgba(37,99,235,.4);
+  color: #38bdf8;
 
 }
 
 
+.brandWords span {
 
+  margin-top: 3px;
 
+  font-size: 10px;
 
-@media(max-width:1000px){
+  letter-spacing: 0.9px;
 
-
-.navbar{
-
-padding:18px 20px;
-
-}
-
-
-
-.navLinks{
-
-gap:15px;
+  color: #94a3b8;
 
 }
 
 
+/* =====================================================
+   DESKTOP LINKS
+===================================================== */
 
-.navLinks a{
+.navLinks {
 
-font-size:14px;
+  display: flex;
 
-}
+  align-items: center;
 
+  justify-content: center;
 
-}
+  gap: 25px;
 
-
-
-
-
-@media(max-width:768px){
-
-
-.navbar{
-
-flex-direction:column;
-
-gap:20px;
+  min-width: 0;
 
 }
 
 
+.navLinks a {
 
-.navLinks{
+  text-decoration: none;
 
-flex-wrap:wrap;
+  color: #cbd5e1;
 
-justify-content:center;
+  font-size: 14px;
 
-}
+  font-weight: 600;
 
+  white-space: nowrap;
 
-
-.navBrand a{
-
-font-size:18px;
-
-}
-
+  transition:
+    color 0.25s ease;
 
 }
 
 
+.navLinks a:hover {
 
-
-
-@media(max-width:480px){
-
-
-.navLinks{
-
-display:grid;
-
-grid-template-columns:
-
-repeat(2,1fr);
-
-width:100%;
-
-text-align:center;
+  color: #38bdf8;
 
 }
 
 
+/* =====================================================
+   ACTION AREA
+===================================================== */
 
-.loginButton{
+.navActions {
 
-width:100%;
+  display: flex;
 
-text-align:center;
+  align-items: center;
 
-}
+  gap: 12px;
 
-
-}
-.logoutNav{
-
-margin-left:12px;
-
-padding:12px 22px;
-
-border-radius:15px;
-
-border:none;
-
-cursor:pointer;
-
-font-weight:700;
-
-background:#ef4444;
-
-color:white;
+  flex-shrink: 0;
 
 }
 
 
+/* =====================================================
+   AUTH BUTTONS
+===================================================== */
 
-.registerButton{
+.loginButton,
+.registerButton {
 
-margin-left:12px;
+  display: inline-flex;
 
-padding:12px 22px;
+  align-items: center;
 
-border-radius:15px;
+  justify-content: center;
 
-font-weight:700;
+  min-height: 42px;
 
-background:#facc15;
+  padding: 10px 18px;
 
-color:#020617;
+  border-radius: 12px;
 
-text-decoration:none;
+  text-decoration: none;
+
+  font-size: 14px;
+
+  font-weight: 700;
+
+  box-sizing: border-box;
+
+  transition:
+    transform 0.2s ease,
+    opacity 0.2s ease;
+
+}
+
+
+.loginButton {
+
+  background:
+    linear-gradient(
+      135deg,
+      #2563eb,
+      #7c3aed
+    );
+
+  color: #ffffff;
+
+}
+
+
+.registerButton {
+
+  background: #facc15;
+
+  color: #020617;
+
+}
+
+
+.loginButton:hover,
+.registerButton:hover {
+
+  transform: translateY(-1px);
+
+  opacity: 0.92;
+
+}
+
+
+/* =====================================================
+   XP AREA
+===================================================== */
+
+.studentStats {
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 8px;
+
+}
+
+
+.studentStats div {
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 5px;
+
+  padding: 7px 10px;
+
+  background:
+    rgba(56, 189, 248, 0.10);
+
+  border:
+    1px solid rgba(56, 189, 248, 0.14);
+
+  border-radius: 18px;
+
+  color: #38bdf8;
+
+  font-size: 12px;
+
+  font-weight: 700;
+
+}
+
+
+/* =====================================================
+   PROFILE
+===================================================== */
+
+.profileWrapper {
+
+  position: relative;
+
+}
+
+
+.profileButton {
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 9px;
+
+  min-height: 48px;
+
+  padding: 5px 10px 5px 6px;
+
+  background:
+    rgba(255, 255, 255, 0.05);
+
+  border:
+    1px solid rgba(255, 255, 255, 0.10);
+
+  border-radius: 16px;
+
+  cursor: pointer;
+
+  color: #ffffff;
+
+  font-family: inherit;
+
+}
+
+
+.profileButton img,
+.avatarLetter {
+
+  width: 38px;
+
+  height: 38px;
+
+  border-radius: 50%;
+
+  object-fit: cover;
+
+  flex-shrink: 0;
+
+}
+
+
+.avatarLetter {
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  background:
+    linear-gradient(
+      135deg,
+      #2563eb,
+      #38bdf8
+    );
+
+  font-size: 16px;
+
+  font-weight: 900;
+
+}
+
+
+.profileInfo {
+
+  display: flex;
+
+  flex-direction: column;
+
+  text-align: left;
+
+  min-width: 0;
+
+}
+
+
+.profileInfo strong {
+
+  max-width: 130px;
+
+  overflow: hidden;
+
+  text-overflow: ellipsis;
+
+  white-space: nowrap;
+
+  font-size: 13px;
+
+}
+
+
+.profileInfo span {
+
+  margin-top: 2px;
+
+  color: #94a3b8;
+
+  font-size: 11px;
+
+}
+
+
+.profileChevron {
+
+  transition:
+    transform 0.2s ease;
+
+}
+
+
+.profileChevron.open {
+
+  transform:
+    rotate(180deg);
+
+}
+
+
+/* =====================================================
+   PROFILE DROPDOWN
+===================================================== */
+
+.profileDropdown {
+
+  position: absolute;
+
+  right: 0;
+
+  top: calc(100% + 10px);
+
+  width: 290px;
+
+  max-width: calc(100vw - 30px);
+
+  background:
+    linear-gradient(
+      135deg,
+      #111827,
+      #020617
+    );
+
+  border:
+    1px solid rgba(56, 189, 248, 0.15);
+
+  border-radius: 20px;
+
+  padding: 16px;
+
+  box-shadow:
+    0 25px 60px rgba(0, 0, 0, 0.5);
+
+  animation:
+    drop 0.2s ease;
+
+  box-sizing: border-box;
+
+}
+
+
+@keyframes drop {
+
+  from {
+
+    opacity: 0;
+
+    transform:
+      translateY(-8px);
+
+  }
+
+  to {
+
+    opacity: 1;
+
+    transform:
+      translateY(0);
+
+  }
+
+}
+
+
+/* =====================================================
+   DROPDOWN HEADER
+===================================================== */
+
+.dropdownHeader {
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 12px;
+
+  padding-bottom: 15px;
+
+  margin-bottom: 10px;
+
+  border-bottom:
+    1px solid rgba(255, 255, 255, 0.08);
+
+}
+
+
+.dropdownHeader img,
+.dropdownAvatar {
+
+  width: 50px;
+
+  height: 50px;
+
+  border-radius: 50%;
+
+  object-fit: cover;
+
+  flex-shrink: 0;
+
+}
+
+
+.dropdownAvatar {
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  background: #2563eb;
+
+  font-size: 20px;
+
+  font-weight: 800;
+
+}
+
+
+.dropdownHeader h3 {
+
+  margin: 0;
+
+  color: #ffffff;
+
+  font-size: 15px;
+
+  overflow-wrap: anywhere;
+
+}
+
+
+.dropdownHeader p {
+
+  margin: 4px 0 0;
+
+  color: #fbbf24;
+
+  font-size: 12px;
+
+}
+
+
+/* =====================================================
+   DROPDOWN LINKS
+===================================================== */
+
+.profileDropdown a,
+.dropdownLogout {
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 11px;
+
+  width: 100%;
+
+  min-height: 44px;
+
+  padding: 10px 12px;
+
+  margin-bottom: 5px;
+
+  border-radius: 12px;
+
+  text-decoration: none;
+
+  color: #cbd5e1;
+
+  background: transparent;
+
+  border: none;
+
+  cursor: pointer;
+
+  font-family: inherit;
+
+  font-size: 13px;
+
+  font-weight: 600;
+
+  box-sizing: border-box;
+
+  text-align: left;
+
+}
+
+
+.profileDropdown a:hover,
+.dropdownLogout:hover {
+
+  background:
+    rgba(56, 189, 248, 0.12);
+
+  color: #ffffff;
+
+}
+
+
+.dropdownLogout {
+
+  color: #f87171;
+
+}
+
+
+/* =====================================================
+   MOBILE MENU BUTTON
+===================================================== */
+
+.mobileNavButton {
+
+  display: none;
+
+  align-items: center;
+
+  justify-content: center;
+
+  width: 42px;
+
+  height: 42px;
+
+  flex-shrink: 0;
+
+  border:
+    1px solid rgba(56, 189, 248, 0.16);
+
+  border-radius: 11px;
+
+  background:
+    rgba(56, 189, 248, 0.08);
+
+  color: #ffffff;
+
+  cursor: pointer;
+
+}
+
+
+/* =====================================================
+   MOBILE OVERLAY
+===================================================== */
+
+.mobileNavOverlay {
+
+  position: fixed;
+
+  inset: 0;
+
+  width: 100%;
+
+  height: 100%;
+
+  padding: 0;
+
+  border: none;
+
+  background:
+    rgba(0, 0, 0, 0.62);
+
+  backdrop-filter:
+    blur(3px);
+
+  -webkit-backdrop-filter:
+    blur(3px);
+
+  z-index: 998;
+
+}
+
+
+/* =====================================================
+   MOBILE MENU
+===================================================== */
+
+.mobileNavMenu {
+
+  position: fixed;
+
+  top: 74px;
+
+  left: 0;
+
+  right: 0;
+
+  max-height:
+    calc(100vh - 74px);
+
+  overflow-y: auto;
+
+  padding: 16px;
+
+  background:
+    linear-gradient(
+      180deg,
+      #071d35,
+      #020617
+    );
+
+  border-bottom:
+    1px solid rgba(56, 189, 248, 0.14);
+
+  box-shadow:
+    0 20px 50px rgba(0, 0, 0, 0.35);
+
+  z-index: 999;
+
+  box-sizing: border-box;
+
+}
+
+
+.mobileNavLinks {
+
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 5px;
+
+}
+
+
+.mobileNavLinks > a {
+
+  display: flex;
+
+  align-items: center;
+
+  min-height: 46px;
+
+  padding: 11px 13px;
+
+  border-radius: 12px;
+
+  text-decoration: none;
+
+  color: #cbd5e1;
+
+  font-size: 14px;
+
+  font-weight: 650;
+
+  box-sizing: border-box;
+
+}
+
+
+.mobileNavLinks > a:hover {
+
+  background:
+    rgba(56, 189, 248, 0.10);
+
+  color: #ffffff;
+
+}
+
+
+/* =====================================================
+   MOBILE AUTH
+===================================================== */
+
+.mobileAuthActions {
+
+  display: grid;
+
+  grid-template-columns:
+    1fr 1fr;
+
+  gap: 9px;
+
+  padding-top: 10px;
+
+}
+
+
+.mobileAuthActions .loginButton,
+.mobileAuthActions .registerButton {
+
+  width: 100%;
+
+}
+
+
+/* =====================================================
+   MOBILE LOGOUT
+===================================================== */
+
+.mobileLogout {
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 10px;
+
+  width: 100%;
+
+  min-height: 46px;
+
+  padding: 11px 13px;
+
+  margin-top: 4px;
+
+  border: none;
+
+  border-radius: 12px;
+
+  background:
+    rgba(239, 68, 68, 0.08);
+
+  color: #f87171;
+
+  font-family: inherit;
+
+  font-size: 14px;
+
+  font-weight: 700;
+
+  cursor: pointer;
+
+  text-align: left;
+
+}
+
+
+/* =====================================================
+   TABLET
+===================================================== */
+
+@media (max-width: 1100px) {
+
+  .navbar {
+
+    padding:
+      12px 20px;
+
+  }
+
+
+  .navLinks,
+  .navActions {
+
+    display: none;
+
+  }
+
+
+  .mobileNavButton {
+
+    display: flex;
+
+  }
+
+}
+
+
+/* =====================================================
+   MOBILE
+===================================================== */
+
+@media (max-width: 600px) {
+
+  .navbar {
+
+    min-height: 70px;
+
+    padding:
+      10px 15px;
+
+  }
+
+
+  .navBrand img {
+
+    width: 38px;
+
+    height: 38px;
+
+  }
+
+
+  .brandWords strong {
+
+    font-size: 17px;
+
+  }
+
+
+  .brandWords span {
+
+    font-size: 9px;
+
+  }
+
+
+  .mobileNavMenu {
+
+    top: 70px;
+
+    max-height:
+      calc(100vh - 70px);
+
+  }
+
+
+  .mobileNavButton {
+
+    width: 40px;
+
+    height: 40px;
+
+  }
+
+}
+
+
+/* =====================================================
+   SMALL MOBILE
+===================================================== */
+
+@media (max-width: 400px) {
+
+  .navbar {
+
+    padding:
+      9px 12px;
+
+  }
+
+
+  .navBrand img {
+
+    width: 36px;
+
+    height: 36px;
+
+  }
+
+
+  .brandWords strong {
+
+    font-size: 16px;
+
+  }
+
+
+  .brandWords span {
+
+    display: none;
+
+  }
+
+
+  .mobileNavButton {
+
+    width: 38px;
+
+    height: 38px;
+
+  }
+
+
+  .mobileNavMenu {
+
+    padding: 12px;
+
+  }
+
+
+  .mobileAuthActions {
+
+    grid-template-columns:
+      1fr;
+
+  }
 
 }

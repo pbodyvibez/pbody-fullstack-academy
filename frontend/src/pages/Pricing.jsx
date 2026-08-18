@@ -1,7 +1,5 @@
 import { useNavigate } from "react-router-dom";
 
-import AppLayout from "../components/layout/AppLayout";
-
 import { initializePayment } from "../services/paymentService";
 
 import { useAuth } from "../context/AuthContext";
@@ -21,7 +19,7 @@ const { user } = useAuth();
 
 
 // ==============================
-// START PAYMENT
+// PAYMENT
 // ==============================
 
 const handleUpgrade = async(currency)=>{
@@ -42,16 +40,6 @@ return;
 try{
 
 
-console.log("Starting payment:",{
-
-email:user.email,
-
-currency
-
-});
-
-
-
 const result = await initializePayment({
 
 email:user.email,
@@ -59,11 +47,6 @@ email:user.email,
 currency
 
 });
-
-
-
-console.log("PAYSTACK RESPONSE:", result);
-
 
 
 
@@ -79,9 +62,7 @@ result?.data?.data?.authorization_url;
 
 if(authorizationUrl){
 
-
 window.location.href = authorizationUrl;
-
 
 return;
 
@@ -89,28 +70,15 @@ return;
 
 
 
-alert(
-
-"Payment could not start."
-
-);
-
+alert("Payment could not start.");
 
 
 }
 
-
 catch(error){
 
 
-console.error(
-
-"PAYMENT INITIALIZATION ERROR:",
-
-error
-
-);
-
+console.error(error);
 
 
 alert(
@@ -134,10 +102,15 @@ error?.response?.data?.message ||
 return(
 
 
-<AppLayout>
-
-
 <div className="pricingPage">
+
+
+
+
+
+{/* =====================================
+PREMIUM HEADER
+===================================== */}
 
 
 
@@ -151,14 +124,13 @@ return(
 
 src={Logo}
 
-alt="PBody FullStack Academy"
+alt="PBody FullStack Academy Logo"
 
 />
 
 
 
 <div>
-
 
 <h2>
 
@@ -169,7 +141,7 @@ PBODY FULLSTACK ACADEMY
 
 <p>
 
-Professional Engineering Education Platform
+AI Powered Engineering Education
 
 </p>
 
@@ -185,7 +157,7 @@ Professional Engineering Education Platform
 
 <h1>
 
-Become A Professional Software Engineer
+Build Your Future With Technology
 
 </h1>
 
@@ -193,8 +165,9 @@ Become A Professional Software Engineer
 
 <p>
 
-Unlock premium courses, AI mentor,
-projects and certificates.
+Start your journey from beginner to professional software engineer
+through practical projects, expert learning paths and AI-powered
+mentorship.
 
 </p>
 
@@ -202,24 +175,27 @@ projects and certificates.
 
 
 
-<div className="trialBox">
+<div className="pricingMotivation">
 
 
-<h2>
+<h3>
 
-🔥 3 Days FREE Premium Access
+🚀 Your Future As An Engineer Starts Here
 
-</h2>
+</h3>
 
 
 <p>
 
-Experience the complete engineering ecosystem.
+Invest in yourself today. Learn the skills,
+build real solutions and join the next generation
+of technology creators.
 
 </p>
 
 
 </div>
+
 
 
 </section>
@@ -230,7 +206,16 @@ Experience the complete engineering ecosystem.
 
 
 
+
+{/* =====================================
+PLANS
+===================================== */}
+
+
+
 <section className="pricingPlans">
+
+
 
 
 
@@ -239,9 +224,10 @@ Experience the complete engineering ecosystem.
 
 <div className="planBadge">
 
-POPULAR
+MOST POPULAR
 
 </div>
+
 
 
 
@@ -253,11 +239,17 @@ PBody Pro Annual
 
 
 
+
 <div className="price">
 
-<span>₦</span>
+<span>
+
+₦
+
+</span>
 
 120,000
+
 
 <small>
 
@@ -273,27 +265,31 @@ PBody Pro Annual
 
 <p>
 
-For Nigerian students and developers.
+Designed for Nigerian developers and aspiring engineers.
 
 </p>
 
 
 
+
 <ul>
 
-<li>✅ Unlimited Premium Courses</li>
 
-<li>✅ AI Engineering Mentor</li>
+<li>🚀 Unlimited Premium Courses</li>
 
-<li>✅ Portfolio Projects</li>
+<li>🤖 AI Engineering Mentor</li>
 
-<li>✅ Certificates</li>
+<li>💻 Real Production Projects</li>
 
-<li>✅ Career Roadmaps</li>
+<li>🏆 Professional Certificates</li>
 
-<li>✅ Future Updates</li>
+<li>🛣 Career Roadmaps</li>
+
+<li>🔄 Future Platform Updates</li>
+
 
 </ul>
+
 
 
 
@@ -304,13 +300,14 @@ onClick={()=>handleUpgrade("NGN")}
 
 >
 
-Pay ₦120,000
+Start Engineering Journey
 
 </button>
 
 
 
 </div>
+
 
 
 
@@ -342,9 +339,14 @@ PBody Pro Global
 
 <div className="price">
 
-<span>$</span>
+<span>
+
+$
+
+</span>
 
 99
+
 
 <small>
 
@@ -361,28 +363,32 @@ PBody Pro Global
 
 <p>
 
-For international students.
+For students and developers worldwide.
 
 </p>
 
 
 
 
+
 <ul>
 
-<li>✅ Premium Courses</li>
 
-<li>✅ AI Learning Assistant</li>
+<li>🌍 Global Learning Access</li>
 
-<li>✅ Engineering Projects</li>
+<li>🤖 AI Learning Assistant</li>
 
-<li>✅ Certificates</li>
+<li>💻 Engineering Projects</li>
 
-<li>✅ Interview Preparation</li>
+<li>🏆 Certificates</li>
 
-<li>✅ Community Access</li>
+<li>🎯 Interview Preparation</li>
+
+<li>👥 Developer Community</li>
+
 
 </ul>
+
 
 
 
@@ -393,13 +399,17 @@ onClick={()=>handleUpgrade("USD")}
 
 >
 
-Pay $99
+Join Global Academy
 
 </button>
 
 
 
+
 </div>
+
+
+
 
 
 
@@ -412,23 +422,32 @@ Pay $99
 
 
 
+{/* =====================================
+VALUE SECTION
+===================================== */}
+
+
+
 <section className="pricingGuarantee">
 
 
 <h2>
 
-Why Upgrade?
+More Than A Course — A Complete Engineering Ecosystem
 
 </h2>
 
 
 
+
 <p>
 
-One subscription unlocks the complete
-PBody engineering ecosystem.
+Everything you need to learn, build and grow into a professional
+software engineer.
 
 </p>
+
+
 
 
 
@@ -438,23 +457,29 @@ PBody engineering ecosystem.
 
 
 
+
+
 <div>
 
 🚀
 
 <h3>
 
-Career Ready
+Career Growth
 
 </h3>
 
+
 <p>
 
-Build real production skills.
+Develop skills companies value.
 
 </p>
 
+
 </div>
+
+
 
 
 
@@ -466,17 +491,21 @@ Build real production skills.
 
 <h3>
 
-AI Mentor
+AI Mentorship
 
 </h3>
 
+
 <p>
 
-Learn with AI assistance.
+Get guidance while building.
 
 </p>
 
+
 </div>
+
+
 
 
 
@@ -488,17 +517,21 @@ Learn with AI assistance.
 
 <h3>
 
-Certificates
+Recognition
 
 </h3>
 
+
 <p>
 
-Earn professional certificates.
+Showcase your achievements.
 
 </p>
 
+
 </div>
+
+
 
 
 
@@ -510,21 +543,26 @@ Earn professional certificates.
 
 <h3>
 
-Worldwide
+Global Community
 
 </h3>
 
+
 <p>
 
-Learn anywhere.
+Learn alongside builders worldwide.
 
 </p>
 
+
+</div>
+
+
+
+
 </div>
 
 
-
-</div>
 
 
 </section>
@@ -532,10 +570,8 @@ Learn anywhere.
 
 
 
+
 </div>
-
-
-</AppLayout>
 
 
 );

@@ -2,29 +2,23 @@ import {
 useState
 } from "react";
 
-
 import {
 useAuth
 } from "../context/AuthContext";
 
-
-import API from "../utils/api";
-
+import {
+sendAIMessage
+} from "../services/aiService";
 
 import "../styles/aiMentor.css";
 
 
-
 export default function AIMentor(){
 
-
 const {
-
 token,
 user
-
 }=useAuth();
-
 
 
 const [message,setMessage]=useState("");
@@ -32,55 +26,41 @@ const [message,setMessage]=useState("");
 const [loading,setLoading]=useState(false);
 
 
-
 const [chat,setChat]=useState([
 
 {
-
 role:"ai",
-
 text:
-"Hello Engineer 👋 I am your PBody AI Engineering Mentor. Ask me about coding, debugging, projects, architecture or career growth."
-
+"Welcome Engineer. I am your PBody AI Engineering Mentor. Ask me about coding, debugging, architecture, projects, or career growth."
 }
 
 ]);
 
 
 
-
-
 const suggestions=[
-
 
 "Explain React hooks",
 
-"Debug my JavaScript code",
+"Review my JavaScript code",
 
-"Create a frontend project idea",
+"Suggest a fullstack project",
 
-"Explain backend APIs",
+"Explain backend architecture",
 
 "Prepare me for developer interviews"
 
-
 ];
-
-
-
 
 
 
 async function sendMessage(){
 
 
-
 if(!message.trim()) return;
 
 
-
 const userMessage=message;
-
 
 
 setChat(prev=>[
@@ -88,15 +68,11 @@ setChat(prev=>[
 ...prev,
 
 {
-
 role:"user",
-
 text:userMessage
-
 }
 
 ]);
-
 
 
 setMessage("");
@@ -105,57 +81,26 @@ setLoading(true);
 
 
 
-
-
 try{
 
 
-const response = await API.post(
-
-"/ai/chat",
-
-{
-
+const data=await sendAIMessage({
 
 message:userMessage,
 
-
 student:{
-
 
 level:1,
 
-
 xp:0,
-
 
 name:user?.name
 
-}
-
-
-
 },
 
-{
+token
 
-
-headers:{
-
-
-Authorization:
-
-`Bearer ${token}`
-
-
-}
-
-}
-
-
-);
-
-
+});
 
 
 
@@ -167,15 +112,11 @@ setChat(prev=>[
 
 role:"ai",
 
-text:
-
-response.data.reply
+text:data.reply || "No response received."
 
 }
 
 ]);
-
-
 
 
 }
@@ -183,15 +124,7 @@ response.data.reply
 catch(error){
 
 
-
-console.error(
-
-"AI ERROR",
-
-error
-
-);
-
+console.error(error);
 
 
 setChat(prev=>[
@@ -202,35 +135,23 @@ setChat(prev=>[
 
 role:"ai",
 
-text:
-
-"⚠️ AI Mentor connection failed. Please try again."
+text:"AI Mentor is temporarily unavailable. Please try again."
 
 }
 
 ]);
 
 
-
 }
-
-
 
 finally{
 
-
 setLoading(false);
 
-
 }
 
 
-
 }
-
-
-
-
 
 
 
@@ -238,7 +159,6 @@ return(
 
 
 <div className="aiMentorPage">
-
 
 
 <section className="aiHero">
@@ -249,7 +169,7 @@ return(
 
 <div className="aiBadge">
 
-🤖 PBODY AI ENGINEERING MENTOR
+PBODY AI ENGINEERING MENTOR
 
 </div>
 
@@ -257,7 +177,7 @@ return(
 
 <h1>
 
-Your Personal AI Software Engineering Coach
+Your Personal Engineering Intelligence Partner
 
 </h1>
 
@@ -265,7 +185,7 @@ Your Personal AI Software Engineering Coach
 
 <p>
 
-Learn faster, debug smarter, build professional projects and prepare for engineering careers with AI assistance.
+Learn faster, solve problems smarter, and build professional software with AI guidance designed for future engineers.
 
 </p>
 
@@ -274,19 +194,14 @@ Learn faster, debug smarter, build professional projects and prepare for enginee
 
 
 
-<div className="aiRobot">
+<div className="aiBrandMark">
 
-🤖
+AI
 
 </div>
 
 
-
 </section>
-
-
-
-
 
 
 
@@ -295,19 +210,26 @@ Learn faster, debug smarter, build professional projects and prepare for enginee
 
 
 
-
-
 <div className="aiChatCard">
 
 
 <div className="chatHeader">
 
+<div>
 
 <h2>
 
-AI Mentor Chat
+Engineering Mentor
 
 </h2>
+
+<p>
+
+Powered by PBody Intelligence
+
+</p>
+
+</div>
 
 
 <span>
@@ -318,9 +240,6 @@ Online
 
 
 </div>
-
-
-
 
 
 
@@ -338,25 +257,16 @@ chat.map((item,index)=>(
 key={index}
 
 className={
-
 item.role==="user"
-
 ?
-
 "userMessage"
-
 :
-
 "aiMessage"
-
 }
-
 
 >
 
-
 {item.text}
-
 
 </div>
 
@@ -367,28 +277,20 @@ item.role==="user"
 
 
 
-
 {
 
 loading &&
 
 <div className="aiMessage">
 
-Thinking like an engineer... 🤖
+Analyzing like an engineer...
 
 </div>
-
 
 }
 
 
-
 </div>
-
-
-
-
-
 
 
 
@@ -396,33 +298,23 @@ Thinking like an engineer... 🤖
 <div className="chatInput">
 
 
-
 <input
-
 
 value={message}
 
-
 onChange={(e)=>setMessage(e.target.value)}
 
-
-placeholder="Ask your AI mentor anything..."
-
-
+placeholder="Ask your engineering question..."
 
 onKeyDown={(e)=>{
-
 
 if(e.key==="Enter")
 
 sendMessage();
 
-
 }}
 
-
 />
-
 
 
 
@@ -440,11 +332,11 @@ loading
 
 ?
 
-"Thinking..."
+"Thinking"
 
 :
 
-"Send 🚀"
+"Send"
 
 }
 
@@ -457,11 +349,7 @@ loading
 
 
 
-
 </div>
-
-
-
 
 
 
@@ -471,22 +359,18 @@ loading
 <div className="aiToolsCard">
 
 
-
 <h2>
 
-Engineering Tools
+Engineering Assistant
 
 </h2>
 
 
-
 <p>
 
-Quick actions to improve your development skills.
+Quick tools to accelerate your learning.
 
 </p>
-
-
 
 
 
@@ -510,11 +394,7 @@ onClick={()=>setMessage(item)}
 
 ))
 
-
 }
-
-
-
 
 
 
@@ -523,35 +403,38 @@ onClick={()=>setMessage(item)}
 
 <div>
 
-✅ Code Review
+Code Analysis
 
 </div>
 
 
 <div>
 
-✅ Bug Fixing
+Debug Assistance
 
 </div>
 
 
 <div>
 
-✅ Architecture Advice
+System Design Help
 
 </div>
 
 
 <div>
 
-✅ Career Guidance
+Career Preparation
 
 </div>
 
 
 <div>
 
-✅ Project Planning
+Project Guidance
+
+</div>
+
 
 </div>
 
@@ -560,18 +443,7 @@ onClick={()=>setMessage(item)}
 </div>
 
 
-
-
 </div>
-
-
-
-
-
-</div>
-
-
-
 
 
 
@@ -581,23 +453,19 @@ onClick={()=>setMessage(item)}
 
 <h2>
 
-Built For Future Engineers 🚀
+Building Tomorrow's Software Engineers
 
 </h2>
 
 
-
 <p>
 
-PBody AI Mentor helps students move from beginner level to professional software engineering.
+PBody AI Mentor combines learning, problem solving, and engineering guidance in one intelligent workspace.
 
 </p>
 
 
 </section>
-
-
-
 
 
 

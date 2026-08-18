@@ -1,377 +1,469 @@
+// ======================================================
+// PBODY FULLSTACK ACADEMY
+// MAIN APPLICATION ROUTER
+// FULL REPLACEMENT
+// ======================================================
+
+import React from "react";
+
 import {
   Routes,
-  Route,
-  Navigate
+  Route
 } from "react-router-dom";
 
+// ======================================================
+// PROVIDERS
+// ======================================================
+
+import { AuthProvider } from "./context/AuthContext";
+import { ProgressProvider } from "./context/ProgressContext";
+import { SubscriptionProvider } from "./context/SubscriptionContext";
+import { UserEngineProvider } from "./context/UserEngineContext";
+
+import AIProvider from "./ai/AIProvider";
+
+// ======================================================
+// SCROLL
+// ======================================================
 
 import ScrollRestoration from "./components/layout/ScrollRestoration";
 
-import ProtectedRoute from "./components/auth/ProtectedRoute";
-import PremiumRoute from "./components/auth/PremiumRoute";
+// ======================================================
+// ROUTE GUARD
+// ======================================================
 
-import ProtectedLayout from "./components/layout/ProtectedLayout";
+import ProtectedRoute from "./routes/ProtectedRoute";
 
+// ======================================================
+// LAYOUTS
+// ======================================================
 
+import PublicLayout from "./components/layout/PublicLayout";
+import StudentLayout from "./components/layout/StudentLayout";
 
-// ================================
-// PUBLIC PAGES
-// ================================
+// ======================================================
+// PUBLIC
+// ======================================================
 
-import About from "./pages/About";
 import Home from "./pages/Home";
-import Login from "./pages/Login";
-import Register from "./pages/Register";
-import Pricing from "./pages/Pricing";
-import PaymentSuccess from "./pages/PaymentSuccess";
+import About from "./pages/About";
 import Contact from "./pages/Contact";
+import Pricing from "./pages/Pricing";
 import Privacy from "./pages/Privacy";
 import Terms from "./pages/Terms";
 
+import Login from "./pages/Login";
+import Register from "./pages/Register";
+import ForgotPassword from "./pages/ForgotPassword";
 
+import PaymentSuccess from "./pages/PaymentSuccess";
 
-// ================================
-// PROTECTED PAGES
-// ================================
+// ======================================================
+// ACADEMY
+// ======================================================
 
 import Dashboard from "./pages/Dashboard";
 import LearningHub from "./pages/LearningHub";
+
 import Courses from "./pages/Courses";
 import CoursePage from "./pages/CoursePage";
-import Lessons from "./pages/Lessons";
+import LessonView from "./pages/LessonView";
+
 import Quiz from "./pages/Quiz";
+import Assignment from "./pages/Assignment";
 
 import Projects from "./pages/Projects";
-import AIMentor from "./pages/AIMentor";
+import ProjectPage from "./pages/ProjectPage";
+
+// ======================================================
+// STUDENT
+// ======================================================
 
 import Certificates from "./pages/Certificates";
-import Community from "./pages/Community";
-import Leaderboard from "./pages/Leaderboard";
+
 import Profile from "./pages/Profile";
 import Settings from "./pages/Settings";
 
+import Leaderboard from "./pages/Leaderboard";
 
-import "./styles/global.css";
+import Community from "./pages/Community";
+import EngineeringDiscussions from "./pages/EngineeringDiscussions";
 
+import Notifications from "./pages/Notifications";
 
+// ======================================================
+// CAREER
+// ======================================================
 
+import Career from "./pages/Career";
+import JobBoard from "./pages/JobBoard";
+import Internship from "./pages/Internship";
 
+import PortfolioBuilder from "./pages/PortfolioBuilder";
+import PortfolioPreview from "./pages/PortfolioPreview";
 
-export default function App(){
+import ResumeBuilder from "./pages/ResumeBuilder";
+import ResumePreview from "./pages/ResumePreview";
 
+import Roadmaps from "./pages/Roadmaps";
 
-return (
+// ======================================================
+// AI
+// ======================================================
 
-<>
+import AIMentor from "./pages/AIMentor";
+import AITutor from "./pages/AITutor";
 
-<ScrollRestoration />
+// ======================================================
+// ADMIN
+// ======================================================
 
+import AdminDashboard from "./pages/AdminDashboard";
 
-<Routes>
+// ======================================================
+// ERROR
+// ======================================================
 
+import NotFound from "./pages/NotFound";
 
 
+// ======================================================
+// APP
+// ======================================================
 
+export default function App() {
 
-{/* ================================
-PUBLIC ROUTES
-================================ */}
+  return (
 
+    <AuthProvider>
 
+      <ProgressProvider>
 
-<Route
-path="/"
-element={<Home />}
-/>
+        <SubscriptionProvider>
 
+          <UserEngineProvider>
 
-<Route
-path="/about"
-element={<About />}
-/>
+            <AIProvider>
 
+              <ScrollRestoration />
 
-<Route
-path="/login"
-element={<Login />}
-/>
+              <Routes>
 
 
-<Route
-path="/register"
-element={<Register />}
-/>
+                {/* ==================================================
+                    PUBLIC WEBSITE
+                ================================================== */}
 
+                <Route
+                  element={<PublicLayout />}
+                >
 
-<Route
-path="/pricing"
-element={<Pricing />}
-/>
+                  <Route
+                    path="/"
+                    element={<Home />}
+                  />
 
+                  <Route
+                    path="/about"
+                    element={<About />}
+                  />
 
-<Route
-path="/payment-success"
-element={<PaymentSuccess />}
-/>
+                  <Route
+                    path="/contact"
+                    element={<Contact />}
+                  />
 
+                  <Route
+                    path="/pricing"
+                    element={<Pricing />}
+                  />
 
-<Route
-path="/contact"
-element={<Contact />}
-/>
+                  <Route
+                    path="/privacy"
+                    element={<Privacy />}
+                  />
 
+                  <Route
+                    path="/terms"
+                    element={<Terms />}
+                  />
+
+                  <Route
+                    path="/login"
+                    element={<Login />}
+                  />
+
+                  <Route
+                    path="/register"
+                    element={<Register />}
+                  />
+
+                  <Route
+                    path="/forgot-password"
+                    element={<ForgotPassword />}
+                  />
+
+                  <Route
+                    path="/payment-success"
+                    element={<PaymentSuccess />}
+                  />
+
+                </Route>
+
+
+                {/* ==================================================
+                    PROTECTED CLASSROOM
+
+                    These pages intentionally do NOT use
+                    StudentLayout.
 
-<Route
-path="/privacy"
-element={<Privacy />}
-/>
+                    This prevents duplicate navigation,
+                    duplicate sidebars and layout conflicts.
+                ================================================== */}
 
+                <Route
+                  path="/course/:id"
+                  element={
+                    <ProtectedRoute>
+                      <CoursePage />
+                    </ProtectedRoute>
+                  }
+                />
+
+                <Route
+                  path="/lesson/:courseId/:lessonId"
+                  element={
+                    <ProtectedRoute>
+                      <LessonView />
+                    </ProtectedRoute>
+                  }
+                />
+
+
+                {/* ==================================================
+                    PROTECTED STUDENT APPLICATION
+
+                    Everything inside this route automatically
+                    receives StudentLayout.
+                ================================================== */}
+
+                <Route
+                  element={
+                    <ProtectedRoute>
+                      <StudentLayout />
+                    </ProtectedRoute>
+                  }
+                >
+
+
+                  {/* ==================================================
+                      DASHBOARD
+                  ================================================== */}
+
+                  <Route
+                    path="/dashboard"
+                    element={<Dashboard />}
+                  />
+
+
+                  {/* ==================================================
+                      LEARNING
+                  ================================================== */}
+
+                  <Route
+                    path="/learning-hub"
+                    element={<LearningHub />}
+                  />
+
+                  <Route
+                    path="/courses"
+                    element={<Courses />}
+                  />
+
 
-<Route
-path="/terms"
-element={<Terms />}
-/>
+                  {/* ==================================================
+                      ASSESSMENTS
+                  ================================================== */}
+
+                  <Route
+                    path="/quiz"
+                    element={<Quiz />}
+                  />
+
+                  <Route
+                    path="/assignment"
+                    element={<Assignment />}
+                  />
+
 
+                  {/* ==================================================
+                      PROJECTS
+                  ================================================== */}
+
+                  <Route
+                    path="/projects"
+                    element={<Projects />}
+                  />
+
+                  <Route
+                    path="/project/:id"
+                    element={<ProjectPage />}
+                  />
+
 
+                  {/* ==================================================
+                      COMMUNITY
+                  ================================================== */}
+
+                  <Route
+                    path="/community"
+                    element={<Community />}
+                  />
 
+                  <Route
+                    path="/community/discussions"
+                    element={<EngineeringDiscussions />}
+                  />
 
 
+                  {/* ==================================================
+                      STUDENT
+                  ================================================== */}
+
+                  <Route
+                    path="/certificates"
+                    element={<Certificates />}
+                  />
 
+                  <Route
+                    path="/profile"
+                    element={<Profile />}
+                  />
 
+                  <Route
+                    path="/settings"
+                    element={<Settings />}
+                  />
 
-{/* ================================
-AUTHENTICATED ACADEMY AREA
-================================ */}
+                  <Route
+                    path="/leaderboard"
+                    element={<Leaderboard />}
+                  />
 
+                  <Route
+                    path="/notifications"
+                    element={<Notifications />}
+                  />
 
 
+                  {/* ==================================================
+                      CAREER CENTER
+                  ================================================== */}
 
-<Route
+                  <Route
+                    path="/career"
+                    element={<Career />}
+                  />
 
-element={
+                  <Route
+                    path="/jobs"
+                    element={<JobBoard />}
+                  />
 
-<ProtectedRoute>
+                  <Route
+                    path="/internships"
+                    element={<Internship />}
+                  />
 
-<ProtectedLayout />
 
-</ProtectedRoute>
+                  {/* ==================================================
+                      PORTFOLIO
+                  ================================================== */}
 
-}
+                  <Route
+                    path="/portfolio-builder"
+                    element={<PortfolioBuilder />}
+                  />
 
->
+                  <Route
+                    path="/portfolio-builder/preview"
+                    element={<PortfolioPreview />}
+                  />
 
 
+                  {/* ==================================================
+                      RESUME
+                  ================================================== */}
 
+                  <Route
+                    path="/resume-builder"
+                    element={<ResumeBuilder />}
+                  />
 
-<Route
-path="/dashboard"
-element={<Dashboard />}
-/>
+                  <Route
+                    path="/resume-builder/preview"
+                    element={<ResumePreview />}
+                  />
 
 
+                  {/* ==================================================
+                      ROADMAPS
+                  ================================================== */}
 
+                  <Route
+                    path="/roadmaps"
+                    element={<Roadmaps />}
+                  />
 
-<Route
-path="/learning"
-element={<LearningHub />}
-/>
 
+                  {/* ==================================================
+                      AI
+                  ================================================== */}
 
+                  <Route
+                    path="/ai-mentor"
+                    element={<AIMentor />}
+                  />
 
+                  <Route
+                    path="/ai-tutor"
+                    element={<AITutor />}
+                  />
 
-<Route
-path="/courses"
-element={<Courses />}
-/>
 
+                  {/* ==================================================
+                      ADMIN
+                  ================================================== */}
 
+                  <Route
+                    path="/admin"
+                    element={<AdminDashboard />}
+                  />
 
 
-<Route
-path="/projects"
-element={<Projects />}
-/>
+                  {/* ==================================================
+                      404
+                  ================================================== */}
 
+                  <Route
+                    path="*"
+                    element={<NotFound />}
+                  />
 
+                </Route>
 
+              </Routes>
 
-<Route
-path="/ai"
-element={<AIMentor />}
-/>
+            </AIProvider>
 
+          </UserEngineProvider>
 
+        </SubscriptionProvider>
 
+      </ProgressProvider>
 
-<Route
-path="/aitutor"
-element={<AIMentor />}
-/>
+    </AuthProvider>
 
-
-
-
-<Route
-path="/certificates"
-element={<Certificates />}
-/>
-
-
-
-
-<Route
-path="/community"
-element={<Community />}
-/>
-
-
-
-
-<Route
-path="/leaderboard"
-element={<Leaderboard />}
-/>
-
-
-
-
-<Route
-path="/profile"
-element={<Profile />}
-/>
-
-
-
-
-<Route
-path="/settings"
-element={<Settings />}
-/>
-
-
-
-
-
-
-
-{/* ================================
-PREMIUM COURSE ACCESS
-================================ */}
-
-
-
-
-
-<Route
-
-path="/course/:id"
-
-element={
-
-<PremiumRoute>
-
-<CoursePage />
-
-</PremiumRoute>
-
-}
-
-/>
-
-
-
-
-
-
-<Route
-
-path="/lesson/:courseId/:lessonId"
-
-element={
-
-<PremiumRoute>
-
-<Lessons />
-
-</PremiumRoute>
-
-}
-
-/>
-
-
-
-
-
-
-{/* ================================
-QUIZ SYSTEM
-================================ */}
-
-
-
-
-<Route
-
-path="/quiz"
-
-element={
-
-<PremiumRoute>
-
-<Quiz />
-
-</PremiumRoute>
-
-}
-
-/>
-
-
-
-
-
-</Route>
-
-
-
-
-
-
-
-{/* ================================
-UNKNOWN ROUTES
-================================ */}
-
-
-
-<Route
-
-path="*"
-
-element={
-
-<Navigate
-
-to="/"
-
-replace
-
-/>
-
-}
-
-/>
-
-
-
-
-</Routes>
-
-
-</>
-
-);
-
+  );
 
 }

@@ -1,569 +1,741 @@
 /* =====================================================
-PBODY FULLSTACK ACADEMY
-OFFICIAL SIDEBAR SYSTEM
-SINGLE COLLAPSE MODE
+   PBODY FULLSTACK ACADEMY
+   PREMIUM STUDENT SIDEBAR
+   FULL REPLACEMENT
 ===================================================== */
 
+.sidebar {
+  position: fixed;
 
-.sidebar{
+  left: 0;
+  top: 0;
 
-position:fixed;
+  height: 100vh;
 
-top:0;
+  width: 280px;
 
-left:0;
+  background:
+    radial-gradient(
+      circle at top left,
+      rgba(37, 99, 235, 0.16),
+      transparent 28%
+    ),
+    linear-gradient(
+      180deg,
+      #071d35 0%,
+      #06172a 52%,
+      #04101f 100%
+    );
 
-width:280px;
+  border-right:
+    1px solid rgba(56, 189, 248, 0.12);
 
-height:100vh;
+  display: flex;
 
-display:flex;
+  flex-direction: column;
 
-flex-direction:column;
+  padding: 20px 14px;
 
-background:
-linear-gradient(
-180deg,
-#020617,
-#071827,
-#0f172a
-);
+  transition:
+    width 0.35s ease,
+    transform 0.35s ease;
 
-padding:24px 18px;
+  z-index: 200;
 
-border-right:1px solid rgba(255,255,255,.08);
+  overflow: hidden;
 
-overflow-y:auto;
-
-overflow-x:hidden;
-
-z-index:2000;
+  box-shadow:
+    12px 0 40px rgba(0, 0, 0, 0.18);
+}
 
 
-transition:
+/* =====================================================
+   COLLAPSED
+===================================================== */
 
-width .35s ease,
-padding .35s ease;
+.sidebar.collapsed {
+  width: 82px;
+}
 
+
+/* =====================================================
+   TOP BRAND
+===================================================== */
+
+.sidebarTop {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  gap: 10px;
+
+  margin-bottom: 24px;
+
+  flex-shrink: 0;
+}
+
+
+.brandArea {
+  display: flex;
+
+  align-items: center;
+
+  gap: 12px;
+
+  min-width: 0;
+
+  overflow: hidden;
+}
+
+
+.brandArea img {
+  width: 46px;
+
+  height: 46px;
+
+  object-fit: contain;
+
+  flex-shrink: 0;
+
+  filter:
+    drop-shadow(
+      0 5px 15px rgba(56, 189, 248, 0.18)
+    );
+}
+
+
+.brandText {
+  display: flex;
+
+  flex-direction: column;
+
+  white-space: nowrap;
+
+  overflow: hidden;
+}
+
+
+.brandText h2 {
+  margin: 0;
+
+  color: #ffffff;
+
+  font-size: 17px;
+
+  font-weight: 900;
+
+  letter-spacing: 0.7px;
+}
+
+
+.brandText span {
+  display: block;
+
+  margin-top: 3px;
+
+  color: #69c7ff;
+
+  font-size: 9px;
+
+  font-weight: 800;
+
+  letter-spacing: 1.35px;
+}
+
+
+/* =====================================================
+   COLLAPSE BUTTON
+===================================================== */
+
+.collapseButton {
+  width: 36px;
+
+  height: 36px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  flex-shrink: 0;
+
+  border:
+    1px solid rgba(56, 189, 248, 0.14);
+
+  background:
+    rgba(56, 189, 248, 0.08);
+
+  border-radius: 10px;
+
+  color: #9ec5e3;
+
+  cursor: pointer;
+
+  transition:
+    background 0.25s ease,
+    color 0.25s ease,
+    border-color 0.25s ease,
+    transform 0.25s ease;
+}
+
+
+.collapseButton:hover {
+  background:
+    rgba(37, 99, 235, 0.35);
+
+  border-color:
+    rgba(56, 189, 248, 0.35);
+
+  color: #ffffff;
+
+  transform: scale(1.04);
+}
+
+
+.rotateIcon {
+  transform: rotate(180deg);
+}
+
+
+/* =====================================================
+   MENU AREA
+===================================================== */
+
+.sidebarMenu {
+  flex: 1;
+
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 6px;
+
+  overflow-y: auto;
+
+  overflow-x: hidden;
+
+  padding: 4px 4px 8px 0;
+}
+
+
+.sidebarMenu::-webkit-scrollbar {
+  width: 4px;
+}
+
+
+.sidebarMenu::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+
+.sidebarMenu::-webkit-scrollbar-thumb {
+  background:
+    rgba(56, 189, 248, 0.25);
+
+  border-radius: 20px;
+}
+
+
+.sidebarMenu::-webkit-scrollbar-thumb:hover {
+  background:
+    rgba(56, 189, 248, 0.55);
+}
+
+
+/* =====================================================
+   SIDEBAR LINKS
+===================================================== */
+
+.sidebarLink {
+  position: relative;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 14px;
+
+  width: 100%;
+
+  min-height: 48px;
+
+  padding: 12px 14px;
+
+  border:
+    1px solid transparent;
+
+  border-radius: 14px;
+
+  text-decoration: none;
+
+  color: #91aac1;
+
+  background: transparent;
+
+  font-size: 14px;
+
+  font-weight: 650;
+
+  transition:
+    background 0.25s ease,
+    color 0.25s ease,
+    border-color 0.25s ease,
+    transform 0.25s ease;
+
+  flex-shrink: 0;
+
+  box-sizing: border-box;
+}
+
+
+.sidebarLink:hover {
+  background:
+    rgba(56, 189, 248, 0.09);
+
+  border-color:
+    rgba(56, 189, 248, 0.08);
+
+  color: #ffffff;
+
+  transform: translateX(4px);
+}
+
+
+.sidebarLink.active {
+  background:
+    linear-gradient(
+      135deg,
+      rgba(37, 99, 235, 0.42),
+      rgba(14, 165, 233, 0.18)
+    );
+
+  border-color:
+    rgba(56, 189, 248, 0.14);
+
+  color: #ffffff;
+
+  box-shadow:
+    0 8px 24px rgba(15, 85, 160, 0.16);
+}
+
+
+.sidebarLink.active::before {
+  content: "";
+
+  position: absolute;
+
+  left: -1px;
+
+  top: 10px;
+
+  bottom: 10px;
+
+  width: 3px;
+
+  border-radius: 0 5px 5px 0;
+
+  background:
+    linear-gradient(
+      180deg,
+      #38bdf8,
+      #2563eb
+    );
+}
+
+
+/* =====================================================
+   ICON
+===================================================== */
+
+.sidebarIcon {
+  width: 24px;
+
+  height: 24px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  flex-shrink: 0;
+
+  color: inherit;
+}
+
+
+.sidebarIcon svg {
+  width: 20px;
+
+  height: 20px;
+
+  stroke-width: 1.9;
+}
+
+
+.linkText {
+  white-space: nowrap;
+
+  overflow: hidden;
+
+  text-overflow: ellipsis;
+}
+
+
+/* =====================================================
+   CAREER CENTER LINKS
+===================================================== */
+
+.careerLink {
+  margin-left: 10px;
+
+  width: calc(100% - 10px);
+
+  padding-left: 17px;
+
+  font-size: 13px;
+
+  color: #7fa4bf;
+
+  background:
+    rgba(255, 255, 255, 0.015);
+}
+
+
+.careerLink::before {
+  content: "";
+
+  position: absolute;
+
+  left: 5px;
+
+  top: 7px;
+
+  bottom: 7px;
+
+  width: 2px;
+
+  background:
+    rgba(56, 189, 248, 0.22);
+
+  border-radius: 10px;
+
+  transition:
+    background 0.25s ease;
+}
+
+
+.careerLink:hover::before {
+  background:
+    #38bdf8;
+}
+
+
+.careerLink.active {
+  background:
+    rgba(37, 99, 235, 0.20);
+
+  color: #ffffff;
+}
+
+
+/* =====================================================
+   BOTTOM SECTION
+===================================================== */
+
+.sidebarBottom {
+  margin-top: 12px;
+
+  padding-top: 14px;
+
+  border-top:
+    1px solid rgba(255, 255, 255, 0.07);
+
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 6px;
+
+  flex-shrink: 0;
+}
+
+
+.sidebarBottom .sidebarLink {
+  min-height: 46px;
+
+  padding:
+    11px 14px;
+}
+
+
+/* =====================================================
+   LOGOUT BUTTON
+===================================================== */
+
+.logoutButton {
+  position: relative;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 14px;
+
+  width: 100%;
+
+  min-height: 48px;
+
+  padding: 12px 14px;
+
+  border:
+    1px solid transparent;
+
+  border-radius: 14px;
+
+  background:
+    transparent;
+
+  color: #f58b8b;
+
+  font-family: inherit;
+
+  font-size: 14px;
+
+  font-weight: 700;
+
+  text-align: left;
+
+  cursor: pointer;
+
+  transition:
+    background 0.25s ease,
+    border-color 0.25s ease,
+    color 0.25s ease,
+    transform 0.25s ease;
+
+  box-sizing: border-box;
+}
+
+
+.logoutButton:hover {
+  background:
+    rgba(239, 68, 68, 0.10);
+
+  border-color:
+    rgba(248, 113, 113, 0.12);
+
+  color: #ff9b9b;
+
+  transform: translateX(4px);
+}
+
+
+.logoutButton:active {
+  transform: translateX(2px) scale(0.98);
+}
+
+
+.logoutButton .sidebarIcon {
+  color: inherit;
+}
+
+
+.logoutButton .sidebarIcon svg {
+  stroke-width: 2;
+}
+
+
+/* =====================================================
+   COLLAPSED SIDEBAR
+===================================================== */
+
+.sidebar.collapsed .sidebarTop {
+  justify-content: center;
+}
+
+
+.sidebar.collapsed .brandArea {
+  justify-content: center;
+}
+
+
+.sidebar.collapsed .sidebarLink {
+  justify-content: center;
+
+  gap: 0;
+
+  padding-left: 10px;
+
+  padding-right: 10px;
+}
+
+
+.sidebar.collapsed .logoutButton {
+  justify-content: center;
+
+  gap: 0;
+
+  padding-left: 10px;
+
+  padding-right: 10px;
+}
+
+
+.sidebar.collapsed .careerLink {
+  width: 100%;
+
+  margin-left: 0;
+
+  padding-left: 10px;
+}
+
+
+.sidebar.collapsed .careerLink::before {
+  display: none;
+}
+
+
+.sidebar.collapsed .sidebarIcon {
+  margin: auto;
+}
+
+
+.sidebar.collapsed .sidebarLink.active::before {
+  left: 0;
+}
+
+
+/* =====================================================
+   TABLET
+===================================================== */
+
+@media (max-width: 1100px) {
+
+  .sidebar {
+    width: 250px;
+  }
+
+
+  .sidebar.collapsed {
+    width: 78px;
+  }
 
 }
 
 
+/* =====================================================
+   MOBILE SIDEBAR
+===================================================== */
 
-/* ==============================
-COLLAPSED
-============================== */
+@media (max-width: 768px) {
 
+  .sidebar,
+  .sidebar.collapsed {
 
-.sidebar.collapsed{
+    width: 280px;
 
-width:90px;
+    transform: translateX(-105%);
 
-padding:24px 12px;
+    transition:
+      transform 0.35s ease;
 
-}
+    z-index: 200;
 
-
-
-/* ==============================
-TOGGLE BUTTON
-============================== */
-
-
-.sidebarToggle{
-
-position:absolute;
-
-top:20px;
-
-right:-18px;
-
-width:38px;
-
-height:38px;
-
-border-radius:50%;
-
-border:none;
-
-cursor:pointer;
-
-background:#2563eb;
-
-color:white;
-
-font-size:18px;
-
-display:flex;
-
-align-items:center;
-
-justify-content:center;
-
-box-shadow:
-
-0 10px 30px rgba(37,99,235,.35);
-
-z-index:3000;
-
-}
+  }
 
 
+  .sidebar.mobileOpen {
+
+    transform: translateX(0);
+
+  }
 
 
+  /* On mobile collapsed mode should still
+     behave like a normal full mobile drawer */
 
-/* ==============================
-LOGO
-============================== */
+  .sidebar.mobileOpen.collapsed {
 
+    width: 280px;
 
-.sidebarLogo{
-
-display:flex;
-
-align-items:center;
-
-gap:15px;
-
-padding-bottom:20px;
-
-margin-bottom:25px;
-
-border-bottom:
-
-1px solid rgba(255,255,255,.08);
-
-}
+  }
 
 
+  .sidebar.mobileOpen .brandText {
 
-.sidebarLogo img{
+    display: flex;
 
-width:58px;
+  }
 
-height:58px;
 
-object-fit:contain;
+  .sidebar.mobileOpen .sidebarLink {
 
-flex-shrink:0;
+    justify-content: flex-start;
+
+    gap: 14px;
+
+    padding-left: 14px;
+
+    padding-right: 14px;
+
+  }
+
+
+  .sidebar.mobileOpen .logoutButton {
+
+    justify-content: flex-start;
+
+    gap: 14px;
+
+    padding-left: 14px;
+
+    padding-right: 14px;
+
+  }
+
+
+  .sidebar.mobileOpen .careerLink {
+
+    width: calc(100% - 10px);
+
+    margin-left: 10px;
+
+    padding-left: 17px;
+
+  }
+
+
+  .sidebar.mobileOpen .careerLink::before {
+
+    display: block;
+
+  }
+
+
+  .sidebar.mobileOpen .sidebarIcon {
+
+    margin: 0;
+
+  }
 
 }
 
 
+/* =====================================================
+   SMALL MOBILE
+===================================================== */
 
-.sidebar.collapsed .sidebarLogo{
+@media (max-width: 480px) {
 
-justify-content:center;
+  .sidebar,
+  .sidebar.collapsed {
 
-}
+    width: 265px;
 
-
-
-.brandText h2{
-
-margin:0;
-
-color:white;
-
-font-size:23px;
-
-font-weight:900;
-
-}
-
-
-
-.brandText span{
-
-color:#38bdf8;
-
-font-size:13px;
-
-}
-
-
-
-.sidebar.collapsed .brandText{
-
-display:none;
-
-}
-
-
-
-
-/* ==============================
-PROFILE
-============================== */
-
-
-.sidebarProfile{
-
-display:flex;
-
-align-items:center;
-
-gap:15px;
-
-padding:15px;
-
-margin-bottom:25px;
-
-border-radius:18px;
-
-background:
-
-rgba(255,255,255,.05);
-
-}
-
-
-
-.sidebar.collapsed .sidebarProfile{
-
-justify-content:center;
-
-}
-
-
-
-.profileIcon{
-
-width:48px;
-
-height:48px;
-
-border-radius:50%;
-
-display:flex;
-
-align-items:center;
-
-justify-content:center;
-
-background:
-
-linear-gradient(
-135deg,
-#2563eb,
-#06b6d4
-);
-
-font-size:22px;
-
-}
-
-
-
-.profileDetails h4{
-
-margin:0;
-
-color:white;
-
-}
-
-
-
-.profileDetails p{
-
-margin-top:5px;
-
-font-size:12px;
-
-color:#94a3b8;
-
-}
-
-
-
-.sidebar.collapsed .profileDetails{
-
-display:none;
-
-}
-
-
-
-
-/* ==============================
-MENU
-============================== */
-
-
-.sidebarNavigation{
-
-display:flex;
-
-flex-direction:column;
-
-gap:8px;
-
-flex:1;
-
-}
-
-
-
-.sidebarLink{
-
-display:flex;
-
-align-items:center;
-
-gap:15px;
-
-padding:14px;
-
-border-radius:15px;
-
-color:#cbd5e1;
-
-text-decoration:none;
-
-transition:.25s;
-
-}
-
-
-
-.sidebar.collapsed .sidebarLink{
-
-justify-content:center;
-
-}
-
-
-
-.sidebarLink:hover{
-
-background:
-
-rgba(59,130,246,.15);
-
-color:white;
-
-}
-
-
-
-.sidebarLink.active{
-
-background:
-
-linear-gradient(
-90deg,
-#2563eb,
-#0ea5e9
-);
-
-color:white;
-
-box-shadow:
-
-0 12px 30px rgba(37,99,235,.3);
-
-}
-
-
-
-.menuIcon{
-
-width:28px;
-
-font-size:22px;
-
-display:flex;
-
-justify-content:center;
-
-flex-shrink:0;
-
-}
-
-
-
-.menuContent{
-
-display:flex;
-
-flex-direction:column;
-
-}
-
-
-
-.sidebar.collapsed .menuContent{
-
-display:none;
-
-}
-
-
-
-.menuContent strong{
-
-font-size:15px;
-
-}
-
-
-
-.menuContent small{
-
-font-size:11px;
-
-color:#94a3b8;
-
-}
-
-
-
-
-
-/* ==============================
-UPGRADE
-============================== */
-
-
-.upgradeBox{
-
-margin-top:20px;
-
-padding:18px;
-
-border-radius:18px;
-
-background:
-
-linear-gradient(
-135deg,
-#1d4ed8,
-#0f172a
-);
-
-}
-
-
-
-.sidebar.collapsed .upgradeBox{
-
-display:none;
-
-}
-
-
-
-
-.upgradeButton{
-
-width:100%;
-
-padding:13px;
-
-margin-top:15px;
-
-border:none;
-
-border-radius:14px;
-
-font-weight:800;
-
-cursor:pointer;
-
-}
-
-
-
-
-/* ==============================
-LOGOUT
-============================== */
-
-
-.logoutButton{
-
-margin-top:15px;
-
-padding:14px;
-
-border:none;
-
-border-radius:14px;
-
-background:#ef4444;
-
-color:white;
-
-font-weight:700;
-
-cursor:pointer;
-
-}
-
-
-
-.sidebar.collapsed .logoutButton{
-
-font-size:0;
-
-}
-
-
-
-.sidebar.collapsed .logoutButton::after{
-
-content:"🚪";
-
-font-size:20px;
-
-}
-
-
-
-
-/* ==============================
-SCROLLBAR
-============================== */
-
-
-.sidebar::-webkit-scrollbar{
-
-width:6px;
-
-}
-
-
-.sidebar::-webkit-scrollbar-thumb{
-
-background:#2563eb;
-
-border-radius:999px;
-
-}
-
-
-
-/* ==============================
-MOBILE
-============================== */
-
-
-@media(max-width:768px){
-
-
-.sidebar{
-
-transform:translateX(-100%);
-
-}
-
-
-.sidebar.open{
-
-transform:translateX(0);
-
-}
-
+  }
 
 }

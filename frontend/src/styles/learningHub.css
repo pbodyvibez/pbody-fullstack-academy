@@ -1,841 +1,710 @@
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-}
+/* =====================================================
+PBODY FULLSTACK ACADEMY
+PREMIUM LEARNING HUB
+===================================================== */
 
 
-.learningHub{
 
-min-height:100vh;
+.learningHubPage{
 
-padding:40px 6%;
+
+min-height:100%;
+
+
+padding:35px;
+
 
 background:
 
 linear-gradient(
+
 135deg,
-#020617,
-#071827,
-#0b2746
+
+var(--bg-primary),
+
+var(--bg-secondary)
+
 );
 
-color:white;
 
-overflow:hidden;
+color:var(--text-primary);
+
 
 }
 
 
 
+
+
+
 /* =========================
-HERO SECTION
+BRANDING HERO
 ========================= */
 
 
 .learningHero{
 
-position:relative;
 
-display:grid;
+padding:45px;
 
-grid-template-columns:1.1fr .9fr;
-
-align-items:center;
-
-gap:50px;
-
-padding:70px;
 
 border-radius:35px;
+
 
 background:
 
 linear-gradient(
+
 135deg,
-rgba(15,23,42,.95),
-rgba(8,47,73,.95)
+
+rgba(37,99,235,.25),
+
+rgba(56,189,248,.10)
+
 );
 
-border:1px solid rgba(56,189,248,.18);
 
-overflow:hidden;
+
+border:
+
+1px solid var(--border-color);
+
+
+
+box-shadow:
+
+0 25px 60px rgba(0,0,0,.25);
+
+
 
 margin-bottom:45px;
 
-}
-
-
-
-.learningHeroOverlay{
-
-position:absolute;
-
-width:700px;
-
-height:700px;
-
-right:-250px;
-
-top:-250px;
-
-background:
-
-radial-gradient(
-circle,
-rgba(56,189,248,.25),
-transparent 70%
-);
 
 }
 
 
-
-.learningHeroLeft{
-
-position:relative;
-
-z-index:2;
-
-}
 
 
 
 .learningBrand{
 
+
 display:flex;
+
 
 align-items:center;
 
-gap:18px;
 
-margin-bottom:25px;
+gap:15px;
+
+
+margin-bottom:35px;
+
 
 }
+
 
 
 
 .learningBrand img{
 
-width:70px;
 
-height:70px;
+width:60px;
+
+
+height:60px;
+
 
 object-fit:contain;
 
+
+}
+
+
+
+
+
+.learningBrand h3{
+
+
+margin:0;
+
+
+font-size:18px;
+
+
+letter-spacing:1px;
+
+
+color:#38bdf8;
+
+
 }
 
 
-
-.academyTitle{
-
-color:#facc15;
-
-font-size:22px;
-
-}
 
 
 
 .learningBrand p{
 
-color:#94a3b8;
+
+margin:5px 0 0;
+
+
+color:var(--text-secondary);
+
+
+font-size:14px;
+
 
 }
 
 
 
-.heroBadge{
+
+
+
+
+.learningHeroContent{
+
+
+max-width:800px;
+
+
+}
+
+
+
+
+
+.learningBadge{
+
 
 display:inline-flex;
 
-padding:12px 22px;
 
-border-radius:50px;
+padding:8px 18px;
+
+
+border-radius:30px;
+
+
+background:
+
+rgba(56,189,248,.15);
+
+
+color:#38bdf8;
+
+
+font-size:13px;
+
+
+font-weight:800;
+
+
+letter-spacing:1px;
+
+
+margin-bottom:20px;
+
+
+}
+
+
+
+
+
+
+
+.learningHeroContent h1{
+
+
+font-size:45px;
+
+
+line-height:1.2;
+
+
+margin-bottom:20px;
+
+
+}
+
+
+
+
+
+.learningHeroContent p{
+
+
+font-size:18px;
+
+
+line-height:1.8;
+
+
+color:var(--text-secondary);
+
+
+max-width:700px;
+
+
+}
+
+
+
+
+
+
+
+.learningButton{
+
+
+display:inline-flex;
+
+
+margin-top:25px;
+
+
+padding:15px 30px;
+
+
+border-radius:15px;
+
+
+background:
+
+linear-gradient(
+
+135deg,
+
+#2563eb,
+
+#38bdf8
+
+);
+
+
+
+color:white;
+
+
+font-weight:800;
+
+
+transition:.3s;
+
+
+}
+
+
+
+
+
+.learningButton:hover{
+
+
+transform:translateY(-4px);
+
+
+}
+
+
+
+
+
+
+
+/* =========================
+PATHWAYS
+========================= */
+
+
+.pathwaySection{
+
+
+margin-top:20px;
+
+
+}
+
+
+
+
+
+
+.sectionTitle{
+
+
+margin-bottom:30px;
+
+
+}
+
+
+
+.sectionTitle h2{
+
+
+font-size:32px;
+
+
+margin-bottom:10px;
+
+
+}
+
+
+
+
+.sectionTitle p{
+
+
+color:var(--text-secondary);
+
+
+}
+
+
+
+
+
+
+
+
+
+.pathwayGrid{
+
+
+display:grid;
+
+
+grid-template-columns:
+
+repeat(
+
+auto-fit,
+
+minmax(280px,1fr)
+
+);
+
+
+
+gap:25px;
+
+
+}
+
+
+
+
+
+
+
+
+
+.pathwayCard{
+
+
+padding:30px;
+
+
+border-radius:25px;
+
+
+background:
+
+var(--card-bg);
+
+
+
+border:
+
+1px solid var(--border-color);
+
+
+
+box-shadow:
+
+0 20px 45px rgba(0,0,0,.18);
+
+
+
+transition:.3s;
+
+
+}
+
+
+
+
+
+.pathwayCard:hover{
+
+
+transform:translateY(-7px);
+
+
+border-color:#38bdf8;
+
+
+}
+
+
+
+
+
+
+
+.pathwayCard h3{
+
+
+font-size:24px;
+
+
+margin-bottom:15px;
+
+
+color:var(--text-primary);
+
+
+}
+
+
+
+
+
+
+
+.pathwayCard p{
+
+
+line-height:1.8;
+
+
+color:var(--text-secondary);
+
+
+}
+
+
+
+
+
+
+
+.skillList{
+
+
+display:flex;
+
+
+flex-wrap:wrap;
+
+
+gap:10px;
+
+
+margin:25px 0;
+
+
+}
+
+
+
+
+
+.skillList span{
+
+
+padding:8px 15px;
+
+
+border-radius:30px;
+
 
 background:
 
 rgba(56,189,248,.12);
 
-border:1px solid rgba(56,189,248,.25);
 
-color:#7dd3fc;
-
-font-weight:700;
-
-margin-bottom:25px;
-
-}
-
-
-
-.learningHero h1{
-
-font-size:65px;
-
-font-weight:900;
-
-line-height:1.1;
-
-}
-
-
-
-.learningHero h1 span{
-
-background:
-
-linear-gradient(
-90deg,
-#38bdf8,
-#facc15
-);
-
--webkit-background-clip:text;
-
--webkit-text-fill-color:transparent;
-
-}
-
-
-
-.learningHero p{
-
-font-size:19px;
-
-line-height:1.8;
-
-color:#cbd5e1;
-
-max-width:700px;
-
-margin:25px 0;
-
-}
-
-
-
-/* HERO BUTTONS */
-
-
-.heroButtons{
-
-display:flex;
-
-gap:20px;
-
-margin-top:30px;
-
-}
-
-
-
-.heroPrimary,
-.heroSecondary{
-
-padding:16px 35px;
-
-border-radius:15px;
-
-font-weight:700;
-
-cursor:pointer;
-
-}
-
-
-
-.heroPrimary{
-
-background:
-
-linear-gradient(
-90deg,
-#2563eb,
-#06b6d4
-);
-
-border:none;
-
-color:white;
-
-}
-
-
-
-.heroSecondary{
-
-background:transparent;
-
-border:2px solid #38bdf8;
 
 color:#38bdf8;
 
-}
-
-
-
-/* HERO IMAGE */
-
-
-.learningHeroRight{
-
-display:flex;
-
-justify-content:center;
-
-}
-
-
-
-.developerHeroCard{
-
-width:450px;
-
-height:520px;
-
-border-radius:35px;
-
-overflow:hidden;
-
-background:
-
-linear-gradient(
-145deg,
-#0f172a,
-#082f49
-);
-
-border:1px solid rgba(56,189,248,.25);
-
-box-shadow:
-
-0 40px 100px rgba(0,0,0,.6);
-
-}
-
-
-
-.developerHeroCard img{
-
-width:100%;
-
-height:100%;
-
-object-fit:cover;
-
-}
-
-
-
-
-
-/* =========================
-STATS
-========================= */
-
-
-.heroStats{
-
-display:grid;
-
-grid-template-columns:repeat(4,1fr);
-
-gap:18px;
-
-margin-top:35px;
-
-}
-
-
-
-.heroStats div{
-
-padding:20px;
-
-background:
-
-rgba(255,255,255,.05);
-
-border-radius:18px;
-
-border:1px solid rgba(255,255,255,.1);
-
-text-align:center;
-
-}
-
-
-
-.heroStats h2{
-
-color:#38bdf8;
-
-font-size:32px;
-
-}
-
-
-
-.heroStats span{
-
-color:#cbd5e1;
-
-}
-
-
-
-
-
-/* =========================
-SEARCH
-========================= */
-
-
-.hubToolbar{
-
-display:flex;
-
-gap:20px;
-
-margin:40px 0;
-
-}
-
-
-
-.searchBox{
-
-flex:1;
-
-}
-
-
-
-.searchBox input,
-.toolbarFilters select{
-
-
-width:100%;
-
-padding:18px;
-
-background:#020617;
-
-border:1px solid rgba(255,255,255,.12);
-
-border-radius:15px;
-
-color:white;
-
-font-size:16px;
-
-}
-
-
-
-.toolbarFilters{
-
-display:flex;
-
-gap:15px;
-
-}
-
-
-
-
-
-
-
-/* =========================
-COURSE CARDS
-========================= */
-
-
-.learningCoursesGrid{
-
-display:grid;
-
-grid-template-columns:
-
-repeat(3,1fr);
-
-gap:30px;
-
-}
-
-
-
-.learningCourseCard{
-
-
-background:
-
-linear-gradient(
-180deg,
-#0f172a,
-#020617
-);
-
-
-border-radius:28px;
-
-overflow:hidden;
-
-border:1px solid rgba(255,255,255,.08);
-
-transition:.35s;
-
-}
-
-
-
-.learningCourseCard:hover{
-
-transform:translateY(-12px);
-
-border-color:#38bdf8;
-
-box-shadow:
-
-0 30px 80px rgba(37,99,235,.3);
-
-}
-
-
-
-
-.courseImageWrapper{
-
-height:240px;
-
-position:relative;
-
-}
-
-
-
-.courseImageWrapper img{
-
-width:100%;
-
-height:100%;
-
-object-fit:cover;
-
-}
-
-
-
-.courseOverlay{
-
-position:absolute;
-
-inset:0;
-
-background:
-
-linear-gradient(
-transparent,
-rgba(0,0,0,.7)
-);
-
-}
-
-
-
-.premiumRibbon,
-.freeRibbon{
-
-position:absolute;
-
-top:18px;
-
-left:18px;
-
-padding:8px 15px;
-
-border-radius:30px;
-
-font-weight:800;
-
-z-index:2;
-
-}
-
-
-
-.premiumRibbon{
-
-background:#facc15;
-
-color:#020617;
-
-}
-
-
-
-.freeRibbon{
-
-background:#22c55e;
-
-color:#020617;
-
-}
-
-
-
-
-.courseCardBody{
-
-padding:28px;
-
-}
-
-
-
-.courseTitleRow{
-
-display:flex;
-
-justify-content:space-between;
-
-gap:10px;
-
-}
-
-
-
-.courseTitleRow h2{
-
-font-size:22px;
-
-}
-
-
-
-.courseLevel{
-
-padding:7px 12px;
-
-border-radius:20px;
-
-font-size:12px;
-
-}
-
-
-
-.courseDescription{
-
-color:#cbd5e1;
-
-line-height:1.7;
-
-margin:20px 0;
-
-}
-
-
-
-
-.courseInformation{
-
-display:grid;
-
-grid-template-columns:repeat(2,1fr);
-
-gap:15px;
-
-}
-
-
-
-.courseInformation div{
-
-background:#111827;
-
-padding:15px;
-
-border-radius:15px;
-
-}
-
-
-
-.courseInformation span{
-
-display:block;
-
-color:#94a3b8;
 
 font-size:13px;
 
-}
-
-
-
-
-
-
-.technologyList{
-
-display:flex;
-
-flex-wrap:wrap;
-
-gap:10px;
-
-}
-
-
-
-.technologyList span{
-
-background:#172554;
-
-padding:7px 12px;
-
-border-radius:20px;
-
-font-size:12px;
-
-color:#bfdbfe;
-
-}
-
-
-
-
-.progressBar{
-
-height:10px;
-
-background:#1e293b;
-
-border-radius:20px;
-
-overflow:hidden;
-
-}
-
-
-
-.progressBar div{
-
-height:100%;
-
-background:
-
-linear-gradient(
-90deg,
-#2563eb,
-#facc15
-);
-
-}
-
-
-
-
-.courseBottom{
-
-display:flex;
-
-justify-content:space-between;
-
-align-items:center;
-
-margin-top:25px;
-
-}
-
-
-
-.courseStartButton{
-
-padding:14px 20px;
-
-border:none;
-
-border-radius:15px;
-
-background:
-
-linear-gradient(
-90deg,
-#2563eb,
-#06b6d4
-);
-
-color:white;
 
 font-weight:700;
 
-cursor:pointer;
 
 }
+
+
+
+
+
+
+
+.pathwayCard a{
+
+
+display:inline-flex;
+
+
+padding:12px 22px;
+
+
+border-radius:12px;
+
+
+background:
+
+rgba(37,99,235,.20);
+
+
+
+color:#60a5fa;
+
+
+font-weight:700;
+
+
+}
+
+
+
+
+
 
 
 
 
 /* =========================
-AI BANNER
+AI CARD
 ========================= */
 
 
-.aiMentorBanner{
+.aiLearningCard{
 
-margin-top:60px;
 
-padding:45px;
+margin-top:45px;
+
+
+padding:35px;
+
 
 border-radius:30px;
 
+
 display:flex;
+
+
+justify-content:space-between;
+
 
 align-items:center;
 
-gap:30px;
+
+gap:25px;
+
 
 background:
 
 linear-gradient(
+
 135deg,
-#082f49,
-#1e293b
+
+rgba(124,58,237,.20),
+
+rgba(37,99,235,.20)
+
 );
 
-border:1px solid rgba(56,189,248,.2);
+
+
+border:
+
+1px solid var(--border-color);
+
 
 }
 
 
 
-.mentorBrand img{
 
-width:80px;
+
+.aiLearningCard h2{
+
+
+font-size:30px;
+
+
+margin-bottom:10px;
+
 
 }
 
 
 
-.mentorText h2{
 
-font-size:35px;
-
-}
+.aiLearningCard p{
 
 
+color:var(--text-secondary);
 
-.mentorText p{
-
-color:#cbd5e1;
 
 line-height:1.7;
 
+
+max-width:700px;
+
+
 }
+
+
+
+
+
+.aiLearningCard a{
+
+
+padding:14px 25px;
+
+
+border-radius:14px;
+
+
+background:
+
+linear-gradient(
+
+135deg,
+
+#7c3aed,
+
+#2563eb
+
+);
+
+
+
+color:white;
+
+
+font-weight:800;
+
+
+white-space:nowrap;
+
+
+}
+
+
+
+
 
 
 
@@ -846,74 +715,84 @@ RESPONSIVE
 ========================= */
 
 
-@media(max-width:1200px){
+@media(max-width:900px){
+
+
 
 .learningHero{
 
-grid-template-columns:1fr;
 
-}
+padding:30px;
 
-
-.learningCoursesGrid{
-
-grid-template-columns:repeat(2,1fr);
-
-}
 
 }
 
 
 
-@media(max-width:750px){
+.learningHeroContent h1{
 
 
-.learningHub{
+font-size:34px;
 
-padding:20px;
 
 }
 
 
-.learningHero h1{
-
-font-size:42px;
-
-}
 
 
-.learningCoursesGrid{
+.aiLearningCard{
 
-grid-template-columns:1fr;
-
-}
-
-
-.heroStats{
-
-grid-template-columns:1fr;
-
-}
-
-
-.hubToolbar{
 
 flex-direction:column;
 
+
+align-items:flex-start;
+
+
 }
 
 
-.toolbarFilters{
-
-flex-direction:column;
 
 }
 
 
-.developerHeroCard{
 
-height:350px;
+
+
+
+@media(max-width:600px){
+
+
+
+.learningHubPage{
+
+
+padding:15px;
+
 
 }
+
+
+
+.learningHeroContent h1{
+
+
+font-size:28px;
+
+
+}
+
+
+
+
+.learningHeroContent p{
+
+
+font-size:15px;
+
+
+}
+
+
 
 }

@@ -1,169 +1,281 @@
-import React from "react";
+// ===============================================
+// PBODY FULLSTACK ACADEMY
+// PREMIUM ENGINEERING CLASSROOM
+// LESSON SIDEBAR
+// FULL REPLACEMENT
+// ===============================================
 
 import "./course.css";
 
-
 export default function LessonSidebar({
+  course,
+  lessons,
+  currentLesson,
+  setCurrentLesson,
+  navigate
+}) {
+  // =================================================
+  // NORMALIZE LESSON DATA
+  // SUPPORT:
+  // ARRAY
+  // OBJECT WITH LESSONS
+  // OBJECT WITH MODULES
+  // OBJECT OF LESSON ARRAYS
+  // =================================================
+
+  let lessonList = [];
+
+  if (Array.isArray(lessons)) {
+    lessonList = lessons;
+  } else if (lessons && Array.isArray(lessons.lessons)) {
+    lessonList = lessons.lessons;
+  } else if (lessons && Array.isArray(lessons.modules)) {
+    lessonList = lessons.modules.flatMap((module) =>
+      Array.isArray(module.lessons) ? module.lessons : []
+    );
+  } else if (lessons && typeof lessons === "object") {
+    lessonList = Object.values(lessons).flatMap((value) => {
+      if (Array.isArray(value)) {
+        return value;
+      }
+
+      if (value && Array.isArray(value.lessons)) {
+        return value.lessons;
+      }
+
+      return [];
+    });
+  }
+
+  // =================================================
+  // REMOVE INVALID LESSON ENTRIES
+  // =================================================
+
+  lessonList = lessonList.filter(
+    (lesson) => lesson && typeof lesson === "object"
+  );
+
+  // =================================================
+  // EMPTY STATE
+  // =================================================
+
+  if (lessonList.length === 0) {
+    return (
+      <aside className="lessonSidebar">
+        <div className="lessonSidebarTop">
+          <div>
+            <span className="sidebarEyebrow">
+              PBODY FULLSTACK ACADEMY
+            </span>
+
+            <h2>Course Content</h2>
+
+            <p>No lessons available yet.</p>
+          </div>
+        </div>
+
+        <div className="lessonSidebarEmpty">
+          <div className="lessonEmptyIcon">📚</div>
+
+          <h3>Coming Soon</h3>
+
+          <p>
+            Lessons will appear here once this engineering pathway is
+            published.
+          </p>
+        </div>
+      </aside>
+    );
+  }
+
+  // =================================================
+  // CURRENT LESSON
+  // =================================================
+
+  const currentIndex = lessonList.findIndex(
+    (lesson) =>
+      String(lesson.id) === String(currentLesson?.id)
+  );
+
+  // =================================================
+  // OPEN LESSON
+  // =================================================
 
-lessons,
+  const openLesson = (lesson) => {
+    if (!lesson) {
+      return;
+    }
+
+    setCurrentLesson(lesson);
+
+    if (navigate && course?.id) {
+      navigate(`/lesson/${course.id}/${lesson.id}`);
+    }
+  };
 
-currentLesson,
+  // =================================================
+  // LESSON COMPLETION HELPER
+  // =================================================
 
-setCurrentLesson
+  const isLessonActive = (lesson) => {
+    return (
+      String(currentLesson?.id) === String(lesson?.id)
+    );
+  };
 
-}){
+  // =================================================
+  // RENDER
+  // =================================================
 
+  return (
+    <aside className="lessonSidebar">
 
+      {/* =========================================
+          SIDEBAR HEADER
+      ========================================= */}
 
-if(!lessons || lessons.length === 0){
+      <div className="lessonSidebarTop">
 
+        <div>
+          <span className="sidebarEyebrow">
+            PBODY FULLSTACK ACADEMY
+          </span>
 
-return(
+          <h2>Course Lessons</h2>
 
-<div className="lessonSidebarEmpty">
+          <p>
+            {lessonList.length} Professional Lessons
+          </p>
+        </div>
 
-<h3>
+        <div className="lessonProgressMini">
 
-No lessons available
+          <strong>
+            {currentIndex >= 0 ? currentIndex + 1 : 1}
+          </strong>
 
-</h3>
+          <span>
+            / {lessonList.length}
+          </span>
 
+        </div>
 
-<p>
+      </div>
 
-Lessons will be added soon.
 
-</p>
+      {/* =========================================
+          COURSE IDENTITY
+      ========================================= */}
 
-</div>
+      {course && (
+        <div className="sidebarCourseIdentity">
 
-);
+          <div className="sidebarCourseIcon">
+            {course.icon || "🎓"}
+          </div>
 
+          <div>
 
-}
+            <strong>
+              {course.shortTitle || course.title}
+            </strong>
 
+            <span>
+              {course.level || "Professional"} Pathway
+            </span>
 
+          </div>
 
+        </div>
+      )}
 
 
-return(
+      {/* =========================================
+          LESSON LIST
+      ========================================= */}
 
+      <div className="sidebarLessons">
 
-<div className="lessonSidebar">
+        {lessonList.map((lesson, index) => {
 
+          const active = isLessonActive(lesson);
 
-<div className="sidebarHeader">
+          return (
+            <button
+              type="button"
+              key={`${lesson.id || "lesson"}-${index}`}
+              className={
+                active
+                  ? "lessonItem active"
+                  : "lessonItem"
+              }
+              onClick={() => openLesson(lesson)}
+              aria-current={active ? "true" : undefined}
+            >
 
+              {/* LESSON NUMBER */}
 
-<h2>
+              <div className="lessonNumber">
 
-📚 Course Lessons
+                {String(index + 1).padStart(2, "0")}
 
-</h2>
+              </div>
 
 
-<p>
+              {/* LESSON INFORMATION */}
 
-Choose a lesson to continue learning
+              <div className="lessonText">
 
-</p>
+                <h3>
+                  {lesson.title || `Lesson ${index + 1}`}
+                </h3>
 
+                <p>
+                  {lesson.duration || "Learning Session"}
+                </p>
 
-</div>
+              </div>
 
 
+              {/* ACTIVE MARKER */}
 
+              {active && (
+                <div className="lessonCurrent">
+                  Current
+                </div>
+              )}
 
+            </button>
+          );
+        })}
 
+      </div>
 
 
-<div className="sidebarLessons">
+      {/* =========================================
+          SIDEBAR FOOTER
+      ========================================= */}
 
+      <div className="lessonSidebarFooter">
 
-{
+        <div className="sidebarFooterIcon">
+          🚀
+        </div>
 
-lessons.map((lesson,index)=>(
+        <div>
 
+          <strong>
+            Engineering Progress
+          </strong>
 
-<button
+          <span>
+            Keep learning. Keep building.
+          </span>
 
+        </div>
 
-key={lesson.id}
+      </div>
 
-
-className={
-
-currentLesson?.id === lesson.id
-
-?
-
-"lessonItem active"
-
-:
-
-"lessonItem"
-
-}
-
-
-onClick={()=>setCurrentLesson(lesson)}
-
-
-
->
-
-
-<div className="lessonNumber">
-
-
-{index + 1}
-
-
-</div>
-
-
-
-
-
-<div className="lessonText">
-
-
-<h3>
-
-{lesson.title}
-
-</h3>
-
-
-
-<span>
-
-⏱ {lesson.duration || "Video Lesson"}
-
-</span>
-
-
-</div>
-
-
-
-
-</button>
-
-
-))
-
-
-}
-
-
-</div>
-
-
-</div>
-
-
-);
-
-
+    </aside>
+  );
 }

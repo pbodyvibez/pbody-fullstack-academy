@@ -5,7 +5,7 @@ import { setupMobile } from "./capacitor";
 
 setupMobile();
 
-
+import { ThemeProvider } from "./context/ThemeContext";
 import {
   BrowserRouter
 } from "react-router-dom";
@@ -51,31 +51,23 @@ root.render(
 <BrowserRouter>
 
 
-<SubscriptionProvider>
+<ThemeProvider>
 
+<SubscriptionProvider>
 
 <AuthProvider>
 
-
 <ProgressProvider>
-
-
-<AIProvider>
-
 
 <App />
 
-
-</AIProvider>
-
-
 </ProgressProvider>
-
 
 </AuthProvider>
 
-
 </SubscriptionProvider>
+
+</ThemeProvider>
 
 
 </BrowserRouter>

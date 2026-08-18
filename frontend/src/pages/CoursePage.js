@@ -1,10 +1,34 @@
-import { useState } from "react";
-import { useParams } from "react-router-dom";
+// =====================================================
+// PBODY FULLSTACK ACADEMY
+// PREMIUM ENGINEERING CLASSROOM
+// COURSE PAGE
+// FULL REPLACEMENT
+// =====================================================
 
+import React, {
+  useEffect,
+  useMemo,
+  useState
+} from "react";
+
+import {
+  useNavigate,
+  useParams
+} from "react-router-dom";
+
+import {
+  Award,
+  BookOpen,
+  Brain,
+  ChevronRight,
+  GraduationCap,
+  Lock,
+  PlayCircle,
+  Rocket
+} from "lucide-react";
 
 import courses from "../data/courses";
-import lessonsData from "../data/lessons";
-
+import lessonsData from "../data";
 
 import CourseHeader from "../components/course/CourseHeader";
 import LessonSidebar from "../components/course/LessonSidebar";
@@ -16,357 +40,872 @@ import AIMentor from "../components/course/AIMentor";
 import LessonNotes from "../components/course/LessonNotes";
 import LessonQuiz from "../components/course/LessonQuiz";
 import CompleteLesson from "../components/course/CompleteLesson";
-
-import AICourseTracker from "../components/ai/AICourseTracker";
-import AILessonTracker from "../components/ai/AILessonTracker";
 import { useProgress } from "../context/ProgressContext";
-
+import { useSubscription } from "../context/SubscriptionContext";
 
 import "../components/course/course.css";
 
 
+// =====================================================
+// COURSE PAGE
+// =====================================================
 
-export default function CoursePage(){
+export default function CoursePage() {
 
+  const { id } = useParams();
 
-const { id } = useParams();
+  const navigate = useNavigate();
 
 
+  // ===================================================
+  // CONTEXT
+  // ===================================================
 
-const course = courses.find(
+  const progressContext = useProgress();
+  const subscriptionContext = useSubscription();
 
-item => item.id === id
+  const progress =
+    progressContext?.progress || {};
 
-);
+  const isPremium =
+    subscriptionContext?.isPremium || false;
 
 
+  // ===================================================
+  // FIND COURSE
+  // ===================================================
 
-const lessons = lessonsData[id] || [];
+  const course = useMemo(() => {
 
+    if (!Array.isArray(courses)) {
+      return null;
+    }
 
+    return (
+      courses.find(
+        item =>
+          String(item?.id) === String(id)
+      ) || null
+    );
 
-const {
+  }, [id]);
 
-progress
 
-}=useProgress();
+  // ===================================================
+  // COURSE → LESSON DATA CONNECTION
+  // ===================================================
 
+  const lessons = useMemo(() => {
 
+    if (!id || !lessonsData) {
+      return [];
+    }
 
 
-const [currentLesson,setCurrentLesson]=useState(
+    const aliases = {
 
-lessons.length
+      "frontend-engineering":
+        "frontend",
 
-?
+      "frontend-development":
+        "frontend",
 
-lessons[0]
+      "backend-engineering":
+        "backend",
 
-:
+      "backend-development":
+        "backend",
 
-null
+      "fullstack-engineering":
+        "fullstack",
 
-);
+      "artificial-intelligence-engineering":
+        "ai",
 
+      "mobile-app-engineering":
+        "mobile",
 
+      "devops-cloud-engineering":
+        "devops",
 
+      "cybersecurity-engineering":
+        "cybersecurity",
 
+      "software-testing-engineering":
+        "testing",
 
-const completedLessons =
+      "ui-ux-engineering":
+        "uiux",
 
-progress?.completedLessons?.length || 0;
+      "data-engineering":
+        "data",
 
+      "graphics-design":
+        "graphics",
 
+      "video-editing":
+        "videoEditing",
 
+      "business":
+        "business"
 
+    };
 
 
+    const key =
+      aliases[id] || id;
 
-if(!course){
 
+    const data =
+      lessonsData[key];
 
-return(
 
+    // -----------------------------------------------
+    // ARRAY
+    // -----------------------------------------------
 
-<div className="courseNotFound">
+    if (Array.isArray(data)) {
+      return data;
+    }
 
 
-<h1>
+    // -----------------------------------------------
+    // { lessons: [] }
+    // -----------------------------------------------
 
-Course Not Found
+    if (
+      data &&
+      Array.isArray(data.lessons)
+    ) {
+      return data.lessons;
+    }
 
-</h1>
 
+    // -----------------------------------------------
+    // { modules: [] }
+    // -----------------------------------------------
 
-<p>
+    if (
+      data &&
+      Array.isArray(data.modules)
+    ) {
 
-This engineering path does not exist.
+      return data.modules.flatMap(
+        module =>
+          Array.isArray(module?.lessons)
+            ? module.lessons
+            : []
+      );
 
-</p>
+    }
 
 
-</div>
+    // -----------------------------------------------
+    // OBJECT OF LESSON ARRAYS
+    // -----------------------------------------------
 
-);
+    if (
+      data &&
+      typeof data === "object"
+    ) {
 
-}
+      const values =
+        Object.values(data);
 
+      const flattened =
+        values.flatMap(value => {
 
+          if (Array.isArray(value)) {
+            return value;
+          }
 
+          if (
+            value &&
+            Array.isArray(value.lessons)
+          ) {
+            return value.lessons;
+          }
 
+          return [];
 
+        });
 
+      if (flattened.length > 0) {
+        return flattened;
+      }
 
+    }
 
-return(
 
+    return [];
 
-<div className="courseWorkspace">
+  }, [id]);
 
 
+  // ===================================================
+  // CURRENT LESSON
+  // ===================================================
 
-<AICourseTracker course={course} />
+  const [
+    currentLesson,
+    setCurrentLesson
+  ] = useState(null);
 
-<AILessonTracker lesson={currentLesson} />
 
-<CourseHeader
+  // ===================================================
+  // RESET LESSON WHEN COURSE CHANGES
+  // ===================================================
 
-course={course}
+  useEffect(() => {
 
-/>
+    if (
+      Array.isArray(lessons) &&
+      lessons.length > 0
+    ) {
 
+      setCurrentLesson(
+        lessons[0]
+      );
 
+    } else {
 
+      setCurrentLesson(null);
 
+    }
 
+  }, [id, lessons]);
 
 
+  // ===================================================
+  // COMPLETED LESSONS
+  // ===================================================
 
-<div className="workspaceGrid">
+  const completedLessons =
+    useMemo(() => {
 
+      const completed =
+        Array.isArray(progress?.completedLessons)
+          ? progress.completedLessons
+          : [];
 
 
+      return lessons.filter(
+        lesson => {
 
+          return completed.some(
+            item => {
 
-<aside className="courseSidebar">
+              const completedId =
+                typeof item === "object"
+                  ? item?.id
+                  : item;
 
+              return (
+                String(completedId) ===
+                String(lesson?.id)
+              );
 
-<LessonSidebar
+            }
+          );
 
+        }
+      );
 
-lessons={lessons}
+    }, [
+      progress,
+      lessons
+    ]);
 
 
-currentLesson={currentLesson}
+  // ===================================================
+  // PROGRESS
+  // ===================================================
 
+  const progressPercentage =
+    useMemo(() => {
 
-setCurrentLesson={setCurrentLesson}
+      if (
+        !lessons ||
+        lessons.length === 0
+      ) {
+        return 0;
+      }
 
+      return Math.min(
+        100,
+        Math.max(
+          0,
+          Math.round(
+            (
+              completedLessons.length /
+              lessons.length
+            ) * 100
+          )
+        )
+      );
 
-/>
+    }, [
+      completedLessons,
+      lessons
+    ]);
 
 
-</aside>
+  // ===================================================
+  // NEXT LESSON
+  // ===================================================
 
+  const nextLesson = () => {
 
+    if (!currentLesson) {
+      return;
+    }
 
 
+    const index =
+      lessons.findIndex(
+        lesson =>
+          String(lesson?.id) ===
+          String(currentLesson?.id)
+      );
 
 
+    if (
+      index >= 0 &&
+      index < lessons.length - 1
+    ) {
 
+      setCurrentLesson(
+        lessons[index + 1]
+      );
 
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+      });
 
-<main className="workspaceContent">
+    }
 
+  };
 
 
+  // ===================================================
+  // PREVIOUS LESSON
+  // ===================================================
 
+  const previousLesson = () => {
 
-{
+    if (!currentLesson) {
+      return;
+    }
 
-currentLesson
 
-?
+    const index =
+      lessons.findIndex(
+        lesson =>
+          String(lesson?.id) ===
+          String(currentLesson?.id)
+      );
 
-<VideoPlayer
 
-lesson={currentLesson}
+    if (index > 0) {
 
-/>
+      setCurrentLesson(
+        lessons[index - 1]
+      );
 
-:
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+      });
 
-<div className="videoEmpty">
+    }
 
+  };
 
-<h2>
 
-Course Content Coming Soon
+  // ===================================================
+  // COURSE NOT FOUND
+  // ===================================================
 
-</h2>
+  if (!course) {
 
+    return (
 
-<p>
+      <div className="courseNotFound">
 
-This learning path is being prepared by PBody FullStack Academy.
+        <div className="premiumLockIcon">
+          <BookOpen size={44} />
+        </div>
 
-</p>
+        <h1>
+          PBODY FULLSTACK ACADEMY
+        </h1>
 
+        <h2>
+          Course Not Found
+        </h2>
 
-</div>
+        <p>
+          This engineering pathway does not exist
+          or is no longer available.
+        </p>
 
-}
+        <button
+          type="button"
+          className="primaryButton"
+          onClick={() =>
+            navigate("/courses")
+          }
+        >
+          Return To Courses
+        </button>
 
+      </div>
 
+    );
 
+  }
 
-{
 
-lessons.length > 0 &&
+  // ===================================================
+  // PREMIUM PROTECTION
+  // ===================================================
 
-<LessonNavigation
+  if (
+    course.access === "premium" &&
+    !isPremium
+  ) {
 
+    return (
 
-lessons={lessons}
+      <div className="premiumCourseLock">
 
+        <div className="premiumLockHeader">
 
-currentLesson={currentLesson}
+          <div className="premiumLockIcon">
+            <Lock size={50} />
+          </div>
 
+          <h1>
+            {course.title}
+          </h1>
 
-setCurrentLesson={setCurrentLesson}
+          <p>
+            Premium Professional Engineering Pathway
+          </p>
 
+        </div>
 
-/>
 
-}
+        <div className="premiumUnlockContent">
 
+          <h2>
+            Unlock Your Engineering Potential
+          </h2>
 
+          <p>
+            This professional engineering pathway
+            is available to PBody Pro members.
+            Unlock the complete classroom experience,
+            projects, assessments, AI mentorship and
+            certificate pathway.
+          </p>
 
 
+          <div className="premiumBenefits">
 
+            <div className="premiumBenefitCard">
 
+              <Rocket size={28} />
 
-<div className="learningToolsGrid">
+              <h3>
+                Real Projects
+              </h3>
 
+              <p>
+                Build portfolio-ready applications
+                through practical engineering projects.
+              </p>
 
+            </div>
 
-<LessonResources
 
-lesson={currentLesson}
+            <div className="premiumBenefitCard">
 
-/>
+              <Brain size={28} />
 
+              <h3>
+                AI Mentor
+              </h3>
 
+              <p>
+                Receive intelligent assistance while
+                learning each engineering concept.
+              </p>
 
+            </div>
 
-<LessonNotes
 
-lesson={currentLesson}
+            <div className="premiumBenefitCard">
 
-/>
+              <Award size={28} />
 
+              <h3>
+                Certificate
+              </h3>
 
+              <p>
+                Complete your pathway and earn your
+                professional PBody certificate.
+              </p>
 
-</div>
+            </div>
 
+          </div>
 
 
+          <button
+            type="button"
+            className="primaryButton"
+            onClick={() =>
+              navigate("/pricing")
+            }
+          >
+            Upgrade To Premium
+          </button>
 
+        </div>
 
+      </div>
 
+    );
 
-<AIMentor
+  }
 
 
-course={course}
+  // ===================================================
+  // LESSON DATA PROTECTION
+  // ===================================================
 
+  if (
+    !Array.isArray(lessons) ||
+    lessons.length === 0
+  ) {
 
-lesson={currentLesson}
+    return (
 
+      <div className="courseNotFound">
 
-/>
+        <div className="premiumLockIcon">
+          <BookOpen size={44} />
+        </div>
 
+        <h1>
+          {course.title}
+        </h1>
 
+        <h2>
+          Lessons Coming Soon
+        </h2>
 
+        <p>
+          Lessons for this engineering pathway
+          are currently being prepared.
+        </p>
 
+        <button
+          type="button"
+          className="primaryButton"
+          onClick={() =>
+            navigate("/courses")
+          }
+        >
+          Back To Courses
+        </button>
 
+      </div>
 
+    );
 
-<LessonQuiz
+  }
 
-lesson={currentLesson}
 
-/>
+  // ===================================================
+  // CLASSROOM
+  // ===================================================
 
+  return (
 
+    <div className="courseWorkspace">
 
+      {/* =============================================
+          COURSE HEADER
+      ============================================= */}
 
+      <CourseHeader
+        course={course}
+        progress={progressPercentage}
+      />
 
 
+      {/* =============================================
+          CLASSROOM LAYOUT
+      ============================================= */}
 
-<CompleteLesson
+      <div className="classroomLayout">
 
-lesson={currentLesson}
 
-/>
+        {/* ===========================================
+            LEFT SIDEBAR
+        =========================================== */}
 
+        <aside className="classroomSidebar">
 
+          <LessonSidebar
+            course={course}
+            lessons={lessons}
+            currentLesson={currentLesson}
+            setCurrentLesson={setCurrentLesson}
+            navigate={navigate}
+          />
 
 
+          <ProgressCard
+            course={course}
+            currentLesson={currentLesson}
+            completed={completedLessons.length}
+            total={lessons.length}
+            completedLessons={
+              completedLessons.length
+            }
+            totalLessons={
+              lessons.length
+            }
+            progress={
+              progressPercentage
+            }
+          />
 
 
+          <AIMentor
+            course={course}
+            lesson={currentLesson}
+          />
 
-</main>
+        </aside>
 
 
+        {/* ===========================================
+            MAIN CLASSROOM
+        =========================================== */}
 
+        <main className="classroomContent">
 
 
+          {/* =========================================
+              VIDEO
+          ========================================= */}
 
+          <VideoPlayer
+            lesson={currentLesson}
+          />
 
 
+          {/* =========================================
+              LEARNING TOOLS
+          ========================================= */}
 
-<aside className="courseProgress">
+          <div className="learningToolsGrid">
 
+            <LessonNotes
+              lesson={currentLesson}
+            />
 
-<ProgressCard
+            <LessonResources
+              lesson={currentLesson}
+            />
 
+          </div>
 
-course={course}
 
+          {/* =========================================
+              QUIZ
+          ========================================= */}
 
-currentLesson={currentLesson}
+          <LessonQuiz
+            lesson={currentLesson}
+          />
 
 
-completed={completedLessons}
+          {/* =========================================
+              COMPLETE LESSON
+          ========================================= */}
 
+          <CompleteLesson
+            lesson={currentLesson}
+            course={course}
+          />
 
-total={lessons.length}
 
+          {/* =========================================
+              NAVIGATION
+          ========================================= */}
 
-/>
+          <LessonNavigation
+            lessons={lessons}
+            currentLesson={currentLesson}
+            setCurrentLesson={setCurrentLesson}
+            lesson={currentLesson}
+            onPrevious={previousLesson}
+            onNext={nextLesson}
+          />
 
 
-</aside>
+          {/* =========================================
+              COURSE SUMMARY
+          ========================================= */}
 
+          <section className="lessonSummary">
 
+            <div className="lessonSummaryHeader">
 
+              <BookOpen size={22} />
 
+              <h2>
+                Course Overview
+              </h2>
 
+            </div>
 
 
-</div>
+            <div className="progressStats">
 
+              <div>
 
+                <strong>
+                  {lessons.length}
+                </strong>
 
+                <span>
+                  Total Lessons
+                </span>
 
+              </div>
 
 
+              <div>
 
-</div>
+                <strong>
+                  {completedLessons.length}
+                </strong>
 
+                <span>
+                  Completed
+                </span>
 
-);
+              </div>
 
+
+              <div>
+
+                <strong>
+                  {progressPercentage}%
+                </strong>
+
+                <span>
+                  Progress
+                </span>
+
+              </div>
+
+            </div>
+
+
+            <div className="careerTags">
+
+              <span>
+                <GraduationCap size={14} />
+                Career Ready
+              </span>
+
+              <span>
+                <PlayCircle size={14} />
+                Hands-on
+              </span>
+
+              <span>
+                <Award size={14} />
+                Certificate
+              </span>
+
+            </div>
+
+          </section>
+
+
+          {/* =========================================
+              CONTINUE LEARNING
+          ========================================= */}
+
+          <section className="completeLessonCard">
+
+            <h2>
+              Ready For The Next Step?
+            </h2>
+
+            <p>
+              Complete this lesson, continue through
+              the remaining modules, and earn your
+              PBODY Fullstack Academy certificate by
+              finishing the entire engineering pathway.
+            </p>
+
+
+            <button
+              type="button"
+              className="courseBackButton"
+              onClick={() => {
+
+                if (
+                  progressPercentage >= 100
+                ) {
+
+                  navigate(
+                    "/certificates"
+                  );
+
+                } else {
+
+                  nextLesson();
+
+                }
+
+              }}
+            >
+
+              {progressPercentage >= 100
+                ? "View Certificate"
+                : (
+                  <>
+                    Continue Learning
+                    <ChevronRight
+                      size={18}
+                    />
+                  </>
+                )
+              }
+
+            </button>
+
+          </section>
+
+
+        </main>
+
+      </div>
+
+    </div>
+
+  );
 
 }

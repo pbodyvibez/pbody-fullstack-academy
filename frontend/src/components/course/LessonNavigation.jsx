@@ -1,107 +1,196 @@
-import "../../components/course/course.css";
+// ===============================================
+// PBODY FULLSTACK ACADEMY
+// PREMIUM ENGINEERING CLASSROOM
+// LESSON NAVIGATION SYSTEM
+// FULL REPLACEMENT
+// ===============================================
 
+import "./course.css";
 
 export default function LessonNavigation({
+  lessons,
+  currentLesson,
+  setCurrentLesson
+}) {
+  // =================================================
+  // SAFETY CHECK
+  // =================================================
+
+  if (
+    !Array.isArray(lessons) ||
+    lessons.length === 0 ||
+    !currentLesson
+  ) {
+    return null;
+  }
+
+  // =================================================
+  // CURRENT LESSON INDEX
+  // =================================================
 
-lessons,
+  const currentIndex = lessons.findIndex(
+    (lesson) =>
+      String(lesson.id) ===
+      String(currentLesson.id)
+  );
 
-currentLesson,
+  // =================================================
+  // PREVIOUS / NEXT LESSON
+  // =================================================
+
+  const previousLesson =
+    currentIndex > 0
+      ? lessons[currentIndex - 1]
+      : null;
+
+  const nextLesson =
+    currentIndex >= 0 &&
+    currentIndex < lessons.length - 1
+      ? lessons[currentIndex + 1]
+      : null;
 
-setCurrentLesson
+  // =================================================
+  // CHANGE LESSON
+  // =================================================
 
-}){
+  const changeLesson = (lesson) => {
+    if (!lesson) {
+      return;
+    }
+
+    setCurrentLesson(lesson);
 
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth"
+    });
+  };
 
-if(!lessons || !currentLesson){
+  // =================================================
+  // RENDER
+  // =================================================
+
+  return (
+    <section className="lessonNavigation">
 
-return null;
+      {/* =========================================
+          HEADER
+      ========================================= */}
 
-}
+      <div className="lessonNavigationHeader">
 
+        <div className="lessonNavigationIcon">
+          📚
+        </div>
 
+        <div>
 
-const currentIndex = lessons.findIndex(
+          <span className="navigationEyebrow">
+            PBODY FULLSTACK ACADEMY
+          </span>
 
-lesson => lesson.id === currentLesson.id
+          <h2>
+            Lesson Navigation
+          </h2>
 
-);
+          <p>
+            Continue your engineering journey
+            step by step.
+          </p>
 
+        </div>
 
+      </div>
 
-const previousLesson =
 
-lessons[currentIndex - 1];
+      {/* =========================================
+          PROGRESS POSITION
+      ========================================= */}
 
+      <div className="lessonNavigationProgress">
 
+        <span>
+          Lesson
+        </span>
 
-const nextLesson =
+        <strong>
+          {currentIndex >= 0
+            ? currentIndex + 1
+            : 1}
+        </strong>
 
-lessons[currentIndex + 1];
+        <span>
+          of {lessons.length}
+        </span>
 
+      </div>
 
 
+      {/* =========================================
+          NAVIGATION BUTTONS
+      ========================================= */}
 
-return(
+      <div className="navigationControls">
 
+        <button
+          type="button"
+          className="navigationButton previous"
+          disabled={!previousLesson}
+          onClick={() =>
+            changeLesson(previousLesson)
+          }
+        >
 
-<div className="lessonNavigation">
+          <span className="navigationArrow">
+            ←
+          </span>
 
+          <span className="navigationButtonText">
 
+            <small>
+              Previous
+            </small>
 
-<button
+            <strong>
+              {previousLesson?.title ||
+                "Previous Lesson"}
+            </strong>
 
-className="previousLesson"
+          </span>
 
-disabled={!previousLesson}
+        </button>
 
-onClick={()=>setCurrentLesson(previousLesson)}
 
->
+        <button
+          type="button"
+          className="navigationButton next"
+          disabled={!nextLesson}
+          onClick={() =>
+            changeLesson(nextLesson)
+          }
+        >
 
-⬅ Previous Lesson
+          <span className="navigationButtonText">
 
-</button>
+            <small>
+              Next
+            </small>
 
+            <strong>
+              {nextLesson?.title ||
+                "Course Complete"}
+            </strong>
 
+          </span>
 
+          <span className="navigationArrow">
+            →
+          </span>
 
+        </button>
 
-<div className="lessonCounter">
+      </div>
 
-
-Lesson {currentIndex + 1}
-
-/
-
-{lessons.length}
-
-
-</div>
-
-
-
-
-
-<button
-
-className="nextLesson"
-
-disabled={!nextLesson}
-
-onClick={()=>setCurrentLesson(nextLesson)}
-
->
-
-Next Lesson ➡
-
-</button>
-
-
-
-</div>
-
-
-);
-
-
+    </section>
+  );
 }

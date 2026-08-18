@@ -2,279 +2,206 @@ import Logo from "../../assets/images/logo.png";
 
 import { useNavigate } from "react-router-dom";
 
-import "../../components/course/course.css";
+import "./course.css";
 
+export default function CourseHeader({ course, progress = 0 }) {
+  const navigate = useNavigate();
 
-export default function CourseHeader({
+  if (!course) {
+    return null;
+  }
 
-course
+  return (
+    <header className="courseHeader">
 
-}){
+      {/* =========================================
+          TOP BAR
+      ========================================= */}
 
+      <div className="courseHeaderTop">
 
-const navigate = useNavigate();
+        <button
+          type="button"
+          className="courseBackButton"
+          onClick={() => navigate("/courses")}
+        >
+          ← Back to Courses
+        </button>
 
 
+        <div className="academyIdentity">
 
-return(
+          <img
+            src={Logo}
+            alt="PBody Fullstack Academy"
+          />
 
+          <div className="academyText">
 
-<section className="courseHeader">
+            <h3>
+              PBODY FULLSTACK ACADEMY
+            </h3>
 
+            <p>
+              Building the world's next generation
+              of elite software engineers.
+            </p>
 
+          </div>
 
-<button
+        </div>
 
-className="courseBackButton"
+      </div>
 
-onClick={()=>navigate("/courses")}
 
->
+      {/* =========================================
+          COURSE HERO
+      ========================================= */}
 
-← Back To Courses
+      <div className="courseHeroContent">
 
-</button>
+        {/* COURSE IMAGE */}
 
+        <div className="courseThumbnail">
 
+          <img
+            src={
+              course.thumbnail ||
+              course.image
+            }
+            alt={course.title}
+          />
 
+          <span
+            className={
+              course.access === "premium"
+                ? "headerPremium"
+                : "headerFree"
+            }
+          >
+            {course.access === "premium"
+              ? "⭐ PREMIUM"
+              : "🚀 FREE"}
+          </span>
 
+        </div>
 
-<div className="courseHeaderBrand">
 
+        {/* COURSE INFORMATION */}
 
+        <div className="courseInformation">
 
-<img
+          <div className="courseTitleRow">
 
-src={Logo}
+            <span className="courseIcon">
+              {course.icon || "🎓"}
+            </span>
 
-alt="PBody FullStack Academy"
+            <span className="courseCategory">
+              {course.category ||
+                "Engineering Pathway"}
+            </span>
 
-/>
+          </div>
 
 
+          <h1>
+            {course.title}
+          </h1>
 
-<div>
 
-<h3>
+          <p>
+            {course.description}
+          </p>
 
-PBODY FULLSTACK ACADEMY
 
-</h3>
+          {/* COURSE METADATA */}
 
+          <div className="courseMeta">
 
-<span>
+            <span>
+              ⭐ {course.rating || "4.9"}
+            </span>
 
-AI Powered Engineering Academy
+            <span>
+              👨‍🎓{" "}
+              {course.students
+                ? course.students.toLocaleString()
+                : "10,000+"}{" "}
+              Students
+            </span>
 
-</span>
+            <span>
+              📚 {course.lessons || 0} Lessons
+            </span>
 
+            <span>
+              ⏱ {course.duration || "Self Paced"}
+            </span>
 
-</div>
+            <span>
+              🏆 Professional Certificate
+            </span>
 
+          </div>
 
-</div>
 
+          {/* TECHNOLOGIES */}
 
+          {Array.isArray(course.technologies) &&
+            course.technologies.length > 0 && (
 
+              <div className="careerTags">
 
+                {course.technologies
+                  .slice(0, 6)
+                  .map((technology, index) => (
+                    <span key={index}>
+                      {technology}
+                    </span>
+                  ))}
 
+              </div>
 
+            )}
 
-<div className="courseHeroContent">
 
+          {/* COURSE PROGRESS */}
 
+          <div className="courseHeaderProgress">
 
+            <div className="courseHeaderProgressTop">
 
+              <span>
+                Engineering Progress
+              </span>
 
-<div className="courseThumbnail">
+              <strong>
+                {progress}%
+              </strong>
 
+            </div>
 
-<img
+            <div className="courseHeaderProgressBar">
 
-src={course.thumbnail || course.image}
+              <div
+                className="courseHeaderProgressFill"
+                style={{
+                  width: `${Math.min(
+                    Math.max(progress, 0),
+                    100
+                  )}%`
+                }}
+              />
 
-alt={course.title}
+            </div>
 
-/>
+          </div>
 
+        </div>
 
+      </div>
 
-
-<div
-
-className={
-
-course.access === "premium"
-
-?
-
-"headerPremium"
-
-:
-
-"headerFree"
-
-}
-
->
-
-
-{
-
-course.access === "premium"
-
-?
-
-"⭐ PREMIUM COURSE"
-
-:
-
-"🚀 FREE COURSE"
-
-}
-
-
-</div>
-
-
-
-</div>
-
-
-
-
-
-
-
-
-
-
-<div className="courseInformation">
-
-
-
-
-
-<h1>
-
-{course.icon} {course.title}
-
-</h1>
-
-
-
-
-
-<p>
-
-{course.description}
-
-</p>
-
-
-
-
-
-
-
-<div className="courseMeta">
-
-
-<span>
-
-⭐ {course.rating || "4.9"}
-
-</span>
-
-
-
-<span>
-
-👨‍🎓 {course.students || "10,000+"}
-
-</span>
-
-
-
-<span>
-
-📚 {course.lessons || 0} Lessons
-
-</span>
-
-
-
-<span>
-
-⏱ {course.duration || "Self Paced"}
-
-</span>
-
-
-
-<span>
-
-🏆 Certificate
-
-</span>
-
-
-
-</div>
-
-
-
-
-
-
-
-
-<div className="careerTags">
-
-
-{
-
-course.technologies?.slice(0,6).map((tech,index)=>(
-
-
-<span key={index}>
-
-{tech}
-
-</span>
-
-
-))
-
-
-}
-
-
-</div>
-
-
-
-
-
-
-</div>
-
-
-
-
-
-
-</div>
-
-
-
-
-
-
-</section>
-
-
-);
-
-
+    </header>
+  );
 }

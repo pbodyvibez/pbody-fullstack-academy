@@ -1,18 +1,33 @@
+import { useState } from "react";
+
 import { useProgress } from "../../context/ProgressContext";
 
-import "../../components/course/course.css";
+import "./course.css";
 
 
-export default function CompleteLesson({lesson}){
+
+export default function CompleteLesson({
+
+lesson
+
+}){
+
 
 
 const {
 
-completeLesson,
+completeLesson
 
-progress
+} = useProgress() || {};
 
-}=useProgress();
+
+
+
+const [completed,setCompleted] = useState(false);
+
+
+
+
 
 
 
@@ -24,9 +39,31 @@ return null;
 
 
 
-const alreadyCompleted =
 
-progress?.completedLessons?.includes(lesson.id);
+
+
+
+const handleComplete = ()=>{
+
+
+
+if(completeLesson){
+
+completeLesson(lesson.id);
+
+}
+
+
+
+setCompleted(true);
+
+
+
+};
+
+
+
+
 
 
 
@@ -34,14 +71,89 @@ progress?.completedLessons?.includes(lesson.id);
 return(
 
 
-<div className="completeLessonBox">
+
+<div className="completeLessonCard">
+
+
+
+
+
+
+<div className="completeLessonContent">
+
+
+
+
+
+<h2>
+
+{completed
+
+?
+
+"Lesson Completed 🎉"
+
+:
+
+"Finish This Lesson"
+
+}
+
+</h2>
+
+
+
+
+
+
+<p>
+
+{
+
+completed
+
+?
+
+"Great work. Keep building your engineering skills."
+
+:
+
+"Mark this lesson complete and continue your learning journey."
+
+}
+
+</p>
+
+
+
+
+
+
+
+</div>
+
+
+
+
+
+
 
 
 <button
 
+
+
+onClick={handleComplete}
+
+
+
+disabled={completed}
+
+
+
 className={
 
-alreadyCompleted
+completed
 
 ?
 
@@ -53,33 +165,39 @@ alreadyCompleted
 
 }
 
-disabled={alreadyCompleted}
 
-onClick={()=>completeLesson(lesson.id)}
 
 >
 
 
+
+
 {
 
-alreadyCompleted
+completed
 
 ?
 
-"✅ Lesson Completed"
+"Completed ✓"
 
 :
 
-"Mark Lesson Complete 🚀"
+"Complete Lesson"
 
 }
+
 
 
 </button>
 
 
 
+
+
+
+
 </div>
+
 
 
 );

@@ -1,74 +1,54 @@
+import { Link } from "react-router-dom";
 
-import { useNavigate } from "react-router-dom";
-import { useSubscription } from "../context/SubscriptionContext";
-import { useProgress } from "../context/ProgressContext";
 import { useAuth } from "../context/AuthContext";
-
-import courses from "../data/courses";
+import { useProgress } from "../context/ProgressContext";
 
 import Logo from "../assets/images/logo.png";
 
 import "../styles/dashboard.css";
 
-console.log("Dashboard Loaded");
+
 
 export default function Dashboard(){
 
-const navigate = useNavigate();
-const {
 
-user
-
-}=useAuth();
+const { user } = useAuth();
 
 
 
 const {
 
-isTrialActive,
+xp = 0,
 
-isPremium,
+level = 1,
 
-subscription
+streak = 0,
 
-}=useSubscription();
+completedLessons = 0,
 
+completedCourses = 0,
 
+completedProjects = 0,
 
-const {
+completedQuizzes = 0,
 
-progress
+certificates = 0
 
-}=useProgress();
-
-
-
-
-const completedLessons =
-
-progress?.completedLessons?.length || 0;
+} = useProgress() || {};
 
 
 
-const totalXP =
-
-completedLessons * 50;
 
 
+const progress = Math.min(
 
-const learningProgress =
+100,
 
-Math.min(
-
-Math.round(
-
-(completedLessons / 100) * 100
-
-),
-
-100
+Math.floor((xp / 5000) * 100)
 
 );
+
+
 
 
 
@@ -77,15 +57,16 @@ Math.round(
 return(
 
 
+
 <div className="dashboardPage">
 
 
 
+
+
+
+
 <section className="dashboardHero">
-
-
-
-<div className="dashboardHeroContent">
 
 
 
@@ -97,7 +78,7 @@ return(
 
 src={Logo}
 
-alt="PBody FullStack Academy Logo"
+alt="PBody FullStack Academy"
 
 />
 
@@ -105,17 +86,120 @@ alt="PBody FullStack Academy Logo"
 
 <div>
 
-
-<h3>
+<span>
 
 PBODY FULLSTACK ACADEMY
 
-</h3>
+</span>
+
+
+<p>
+
+AI Powered Engineering Platform
+
+</p>
+
+
+</div>
+
+
+
+</div>
+
+
+
+
+
+
+
+
+<div className="heroContent">
+
+
+
+<div className="heroBadge">
+
+ENGINEER DASHBOARD
+
+</div>
+
+
+
+
+
+
+<h1>
+
+
+Welcome back,
+
+<br/>
+
+
+<strong>
+
+{user?.name || "Engineer"}
+
+</strong>
+
+
+</h1>
+
+
+
+
+
+
+<p>
+
+Continue building your software engineering career with courses, projects, AI mentorship and professional certifications.
+
+</p>
+
+
+
+
+
+<Link
+
+to="/learning-hub"
+
+className="primaryDashboardButton"
+
+>
+
+Continue Learning
+
+</Link>
+
+
+
+</div>
+
+
+
+
+
+
+
+
+<div className="heroLevel">
+
+
+<div className="levelCircle">
+
+
+<strong>
+
+{level}
+
+</strong>
+
 
 
 <span>
 
-AI Powered Engineering Academy
+LEVEL
 
 </span>
 
@@ -130,183 +214,13 @@ AI Powered Engineering Academy
 
 
 
-<h1>
-
-Welcome Back,
-
-{user?.name || "Engineer"} 👋
-
-</h1>
-
-
-
-<p>
-
-Continue building your software engineering career.
-
-Master frontend, backend, AI and professional development skills.
-
-</p>
-
-
-
-
-
-<div className="dashboardActions">
-
-
-<button
-
-className="primaryButton"
-
-onClick={()=>navigate("/learning")}
-
->
-
-Continue Learning →
-
-</button>
-
-
-
-<button
-
-className="secondaryButton"
-
-onClick={()=>navigate("/ai")}
-
->
-
-🤖 Ask AI Mentor
-
-</button>
-
-
-</div>
-
-
-
-</div>
-
-
-
-
-
-
-<div className="dashboardStatusCard">
-
-
-
-<div className="statusLogo">
-
-
-<img
-
-src={Logo}
-
-alt="logo"
-
-/>
-
-
-</div>
-
-
-
-<h2>
-
-{
-
-isPremium
-
-?
-
-"Premium Engineer"
-
-:
-
-isTrialActive
-
-?
-
-"Free Trial Active"
-
-:
-
-"Student Account"
-
-}
-
-</h2>
-
-
-
-
-<p>
-
-{
-
-isPremium
-
-?
-
-"You have full access to all premium engineering programs."
-
-:
-
-"Start your engineering journey with PBody Academy."
-
-}
-
-</p>
-
-
-
-
-
-{
-subscription?.status==="trial" &&
-
-(
-
-<div className="trialBadge">
-
-🔥 Trial Access
-
-</div>
-
-)
-
-}
-
-
-
-
-
-{
-isPremium &&
-
-(
-
-<div className="premiumBadge">
-
-⭐ PRO MEMBER
-
-</div>
-
-)
-
-}
-
-
-
-
-</div>
-
-
 
 
 </section>
+
+
+
+
 
 
 
@@ -315,193 +229,116 @@ isPremium &&
 <section className="dashboardStats">
 
 
-<div className="dashboardStatCard">
 
+<div className="statCard">
 
-<div>
+<h2>{xp}</h2>
 
-⚡
-
-</div>
-
-
-<h2>
-
-{totalXP}
-
-</h2>
-
-
-<p>
-
-Total XP
-
-</p>
-
+<p>Total XP</p>
 
 </div>
 
 
 
 
+<div className="statCard">
 
-<div className="dashboardStatCard">
+<h2>{streak}</h2>
 
-
-<div>
-
-📚
-
-</div>
-
-
-<h2>
-
-{completedLessons}
-
-</h2>
-
-
-<p>
-
-Lessons Completed
-
-</p>
-
+<p>Learning Streak</p>
 
 </div>
 
 
 
 
+<div className="statCard">
 
-<div className="dashboardStatCard">
+<h2>{completedLessons}</h2>
 
-
-<div>
-
-🔥
-
-</div>
-
-
-<h2>
-
-7
-
-</h2>
-
-
-<p>
-
-Day Streak
-
-</p>
-
+<p>Lessons Completed</p>
 
 </div>
 
 
 
 
-<div className="dashboardStatCard">
+<div className="statCard">
+
+<h2>{completedCourses}</h2>
+
+<p>Courses</p>
+
+</div>
 
 
-<div>
 
-🏆
+
+<div className="statCard">
+
+<h2>{completedProjects}</h2>
+
+<p>Projects</p>
 
 </div>
 
 
-<h2>
-
-0
-
-</h2>
 
 
-<p>
+<div className="statCard">
 
-Certificates
+<h2>{completedQuizzes}</h2>
 
-</p>
-
+<p>Quizzes</p>
 
 </div>
+
+
+
+
+<div className="statCard">
+
+<h2>{certificates}</h2>
+
+<p>Certificates</p>
+
+</div>
+
 
 
 
 </section>
-<section className="dashboardMainGrid">
 
 
 
-<div className="dashboardLargeCard continueLearningCard">
 
+
+
+
+
+
+<section className="dashboardGrid">
+
+
+
+
+
+
+<div className="dashboardCard">
 
 
 <div className="cardHeader">
 
 
-<div>
-
-<span>
-
-🚀
-
-</span>
-
-
 <h2>
 
-Continue Learning
+Learning Progress
 
 </h2>
 
 
 </div>
 
-
-
-</div>
-
-
-
-
-
-<p>
-
-Pick up where you stopped and continue mastering professional engineering skills.
-
-</p>
-
-
-
-
-
-<div className="progressContainer">
-
-
-
-<div className="progressTop">
-
-
-<span>
-
-Learning Progress
-
-</span>
-
-
-<strong>
-
-{learningProgress}%
-
-</strong>
-
-
-</div>
 
 
 
@@ -511,555 +348,14 @@ Learning Progress
 
 <div
 
+className="progressFill"
+
 style={{
 
-width:`${learningProgress}%`
+width:`${progress}%`
 
 }}
 
-/>
-
-
-</div>
-
-
-
-</div>
-
-
-
-
-
-<button
-
-className="primaryButton"
-
-onClick={()=>navigate("/courses")}
-
->
-
-Resume Course →
-
-</button>
-
-
-
-
-</div>
-
-
-
-
-
-
-
-
-
-<div className="dashboardLargeCard aiMentorCard">
-
-
-
-<div className="cardHeader">
-
-
-<div>
-
-<span>
-
-🤖
-
-</span>
-
-
-<h2>
-
-AI Engineering Mentor
-
-</h2>
-
-
-</div>
-
-
-
-</div>
-
-
-
-
-
-<p>
-
-Your personal AI mentor helps you understand concepts, debug code, design projects and prepare for engineering careers.
-
-</p>
-
-
-
-
-
-<div className="aiFeatures">
-
-
-<div>
-
-✓ Code Explanation
-
-</div>
-
-
-<div>
-
-✓ Debug Assistance
-
-</div>
-
-
-<div>
-
-✓ Project Guidance
-
-</div>
-
-
-<div>
-
-✓ Career Advice
-
-</div>
-
-
-
-</div>
-
-
-
-
-
-<button
-
-className="secondaryButton"
-
-onClick={()=>navigate("/ai")}
-
->
-
-Open AI Mentor →
-
-</button>
-
-
-
-</div>
-
-
-
-
-
-
-
-</section>
-
-
-
-
-
-
-
-
-
-<section className="dashboardPrograms">
-
-
-
-<div className="sectionTitle">
-
-
-<h2>
-
-Your Engineering Programs
-
-</h2>
-
-
-
-<p>
-
-Master the skills required to become a professional developer.
-
-</p>
-
-
-
-</div>
-
-
-
-
-
-
-
-<div className="programGrid">
-
-
-{
-
-courses.slice(0,4).map(course=>(
-
-
-
-<div
-
-className="programCard"
-
-key={course.id}
-
->
-
-
-
-<div className="programIcon">
-
-{
-
-course.icon || "💻"
-
-}
-
-</div>
-
-
-
-
-<h3>
-
-{course.title}
-
-</h3>
-
-
-
-
-<p>
-
-{course.description}
-
-</p>
-
-
-
-
-
-<div className="courseStatus">
-
-
-<span>
-
-{
-
-course.level || "Beginner"
-
-}
-
-</span>
-
-
-
-{
-
-course.premium &&
-
-(
-
-<b>
-
-⭐ Premium
-
-</b>
-
-)
-
-}
-
-
-
-</div>
-
-
-
-</div>
-
-
-
-))
-
-}
-
-
-
-</div>
-
-
-
-</section>
-
-
-
-
-
-
-
-
-
-<section className="dashboardBottomGrid">
-
-
-
-
-
-<div className="dashboardLargeCard roadmapCard">
-
-
-
-<div className="cardHeader">
-
-
-<h2>
-
-🛣️ Career Roadmap
-
-</h2>
-
-
-</div>
-
-
-
-
-
-<div className="roadmapItem active">
-
-
-<span>
-
-1
-
-</span>
-
-
-<div>
-
-<h3>
-
-Frontend Engineer
-
-</h3>
-
-<p>
-
-HTML, CSS, JavaScript, React
-
-</p>
-
-</div>
-
-
-</div>
-
-
-
-
-
-
-
-<div className="roadmapItem">
-
-
-<span>
-
-2
-
-</span>
-
-
-<div>
-
-<h3>
-
-Full Stack Engineer
-
-</h3>
-
-
-<p>
-
-Node.js, APIs, Databases
-
-</p>
-
-
-</div>
-
-
-</div>
-
-
-
-
-
-
-
-<div className="roadmapItem">
-
-
-<span>
-
-3
-
-</span>
-
-
-<div>
-
-<h3>
-
-Senior Developer
-
-</h3>
-
-
-<p>
-
-Architecture, Cloud, AI Systems
-
-</p>
-
-
-</div>
-
-
-</div>
-
-
-
-
-</div>
-
-
-
-
-
-
-
-<div className="dashboardLargeCard activityCard">
-
-
-
-<div className="cardHeader">
-
-
-<h2>
-
-📈 Recent Activity
-
-</h2>
-
-
-</div>
-
-
-
-
-
-<div className="activityItem">
-
-
-<span>
-
-✅
-
-</span>
-
-
-<p>
-
-Started your engineering journey
-
-</p>
-
-
-</div>
-
-
-
-
-<div className="activityItem">
-
-
-<span>
-
-📚
-
-</span>
-
-
-<p>
-
-Continue your next lesson
-
-</p>
-
-
-</div>
-
-
-
-
-<div className="activityItem">
-
-
-<span>
-
-🤖
-
-</span>
-
-
-<p>
-
-AI Mentor available 24/7
-
-</p>
-
-
-</div>
-
-
-
-
-
-</div>
-
-
-
-
-
-</section>
-<section className="premiumUpgradeSection">
-
-
-<div className="upgradeContent">
-
-
-
-<div className="upgradeLogo">
-
-
-<img
-
-src={Logo}
-
-alt="PBody FullStack Academy"
 
 />
 
@@ -1069,74 +365,80 @@ alt="PBody FullStack Academy"
 
 
 
+<h3>
 
-<div>
+{progress}% Complete
 
+</h3>
 
-<h2>
-
-Upgrade To PBody Pro ⭐
-
-</h2>
 
 
 <p>
 
-Unlock unlimited AI Mentor access, premium projects, professional certificates, career tools and advanced engineering programs.
+Your engineering journey is progressing. Keep building your skills.
 
 </p>
+
 
 
 </div>
 
 
 
-<button
 
-className="upgradeButton"
 
-onClick={()=>navigate("/pricing")}
+
+
+
+
+<div className="dashboardCard">
+
+
+<h2>
+
+Learning Hub
+
+</h2>
+
+
+
+<p>
+
+Access structured frontend, backend and fullstack engineering paths.
+
+</p>
+
+
+
+<Link
+
+to="/learning-hub"
+
+className="dashboardButton"
 
 >
 
-Upgrade Now →
+Open Learning Hub
 
-</button>
-
-
+</Link>
 
 
 </div>
 
 
 
-</section>
 
 
 
 
 
 
-
-<section className="dashboardQuote">
-
-
-<div>
-
-
-<img
-
-src={Logo}
-
-alt="PBody Logo"
-
-/>
-
+<div className="dashboardCard">
 
 
 <h2>
 
-Build. Learn. Engineer. Transform.
+Project Laboratory
 
 </h2>
 
@@ -1144,15 +446,143 @@ Build. Learn. Engineer. Transform.
 
 <p>
 
-PBody FullStack Academy is designed to take you from beginner to professional engineer through practical learning and real-world projects.
+Build real-world applications and strengthen your developer portfolio.
 
 </p>
+
+
+
+<Link
+
+to="/projects"
+
+className="dashboardButton"
+
+>
+
+Build Projects
+
+</Link>
+
 
 
 </div>
 
 
+
+
+
+
+
+
+
+<div className="dashboardCard">
+
+
+<h2>
+
+Professional Profile
+
+</h2>
+
+
+
+<p>
+
+Manage your developer identity, certificates and career progress.
+
+</p>
+
+
+
+<Link
+
+to="/profile"
+
+className="dashboardButton"
+
+>
+
+View Profile
+
+</Link>
+
+
+
+</div>
+
+
+
+
+
+
+
 </section>
+
+
+
+
+
+
+
+
+
+<section className="activityCard">
+
+
+<h2>
+
+Recent Academy Activity
+
+</h2>
+
+
+
+
+
+<div className="activityItem">
+
+Completed academy login session
+
+</div>
+
+
+
+
+<div className="activityItem">
+
+Continue your engineering pathway
+
+</div>
+
+
+
+
+<div className="activityItem">
+
+Create your next software project
+
+</div>
+
+
+
+
+<div className="activityItem">
+
+Earn your next professional certificate
+
+</div>
+
+
+
+
+</section>
+
+
+
+
+
+
 
 
 </div>

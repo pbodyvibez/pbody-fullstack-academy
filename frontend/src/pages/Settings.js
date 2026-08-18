@@ -1,6 +1,5 @@
 import { useState } from "react";
 
-import AppLayout from "../components/layout/AppLayout";
 
 import "../styles/settings.css";
 
@@ -39,9 +38,6 @@ setSettings({
 
 
 return(
-
-
-<AppLayout>
 
 
 <div className="settingsPage">
@@ -449,9 +445,6 @@ settings.publicProfile
 
 
 </div>
-
-
-</AppLayout>
 
 
 );

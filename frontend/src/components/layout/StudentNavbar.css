@@ -1,0 +1,615 @@
+/* =====================================================
+   PBODY FULLSTACK ACADEMY
+   PREMIUM STUDENT NAVBAR
+   RESPONSIVE
+   FULL REPLACEMENT
+===================================================== */
+
+.studentNavbar {
+
+  height: 80px;
+
+  min-height: 80px;
+
+  width: 100%;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  gap: 18px;
+
+  padding: 0 30px;
+
+  background: #071d35;
+
+  border-bottom:
+    1px solid rgba(56, 189, 248, 0.10);
+
+  position: sticky;
+
+  top: 0;
+
+  z-index: 50;
+
+  box-sizing: border-box;
+
+}
+
+
+/* =====================================================
+   MOBILE MENU
+===================================================== */
+
+.mobileMenuButton {
+
+  display: none;
+
+  width: 42px;
+
+  height: 42px;
+
+  align-items: center;
+
+  justify-content: center;
+
+  flex-shrink: 0;
+
+  padding: 0;
+
+  border:
+    1px solid rgba(56, 189, 248, 0.14);
+
+  border-radius: 12px;
+
+  background:
+    rgba(56, 189, 248, 0.08);
+
+  color: #ffffff;
+
+  cursor: pointer;
+
+  transition:
+    background 0.25s ease,
+    border-color 0.25s ease,
+    transform 0.2s ease;
+
+}
+
+
+.mobileMenuButton:hover {
+
+  background:
+    rgba(37, 99, 235, 0.25);
+
+  border-color:
+    rgba(56, 189, 248, 0.30);
+
+}
+
+
+.mobileMenuButton:active {
+
+  transform: scale(0.96);
+
+}
+
+
+/* =====================================================
+   BRAND
+===================================================== */
+
+.navbarBrand {
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 11px;
+
+  min-width: 0;
+
+  flex: 1;
+
+}
+
+
+.navbarBrand img {
+
+  width: 38px;
+
+  height: 38px;
+
+  object-fit: contain;
+
+  flex-shrink: 0;
+
+}
+
+
+.navbarBrandText {
+
+  min-width: 0;
+
+  overflow: hidden;
+
+}
+
+
+.navbarBrand h3 {
+
+  margin: 0;
+
+  font-size: 14px;
+
+  font-weight: 800;
+
+  color: #ffffff;
+
+  white-space: nowrap;
+
+  overflow: hidden;
+
+  text-overflow: ellipsis;
+
+}
+
+
+.navbarBrand span {
+
+  display: block;
+
+  margin-top: 3px;
+
+  font-size: 11px;
+
+  color: #69c7ff;
+
+  white-space: nowrap;
+
+  overflow: hidden;
+
+  text-overflow: ellipsis;
+
+}
+
+
+/* =====================================================
+   ACTIONS
+===================================================== */
+
+.navbarActions {
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 10px;
+
+  flex-shrink: 0;
+
+}
+
+
+.themeButton,
+.notificationButton {
+
+  width: 40px;
+
+  height: 40px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  padding: 0;
+
+  border-radius: 12px;
+
+  background:
+    rgba(56, 189, 248, 0.08);
+
+  border:
+    1px solid rgba(56, 189, 248, 0.12);
+
+  color: #b9d8ed;
+
+  cursor: pointer;
+
+  transition:
+    background 0.25s ease,
+    border-color 0.25s ease,
+    color 0.25s ease,
+    transform 0.2s ease;
+
+}
+
+
+.themeButton:hover,
+.notificationButton:hover {
+
+  background:
+    rgba(37, 99, 235, 0.25);
+
+  border-color:
+    rgba(56, 189, 248, 0.25);
+
+  color: #ffffff;
+
+}
+
+
+.themeButton:active,
+.notificationButton:active {
+
+  transform: scale(0.95);
+
+}
+
+
+/* =====================================================
+   USER PROFILE
+===================================================== */
+
+.userMini {
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 9px;
+
+  min-width: 0;
+
+  padding:
+    7px 0 7px 14px;
+
+  border:
+    none;
+
+  border-left:
+    1px solid rgba(56, 189, 248, 0.12);
+
+  background:
+    transparent;
+
+  color: #ffffff;
+
+  cursor: pointer;
+
+  font-family: inherit;
+
+  text-align: left;
+
+}
+
+
+.userMiniIcon {
+
+  width: 34px;
+
+  height: 34px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  flex-shrink: 0;
+
+  border-radius: 50%;
+
+  background:
+    rgba(56, 189, 248, 0.10);
+
+  color: #b9d8ed;
+
+}
+
+
+.userMiniText {
+
+  min-width: 0;
+
+}
+
+
+.userMini strong {
+
+  display: block;
+
+  font-size: 13px;
+
+  font-weight: 700;
+
+  white-space: nowrap;
+
+}
+
+
+.userMiniText > span {
+
+  display: block;
+
+  margin-top: 2px;
+
+  font-size: 11px;
+
+  color: #7fa4bf;
+
+  white-space: nowrap;
+
+}
+
+
+/* =====================================================
+   FOCUS ACCESSIBILITY
+===================================================== */
+
+.mobileMenuButton:focus-visible,
+.themeButton:focus-visible,
+.notificationButton:focus-visible,
+.userMini:focus-visible {
+
+  outline:
+    2px solid #38bdf8;
+
+  outline-offset: 2px;
+
+}
+
+
+/* =====================================================
+   TABLET
+===================================================== */
+
+@media (max-width: 900px) {
+
+  .studentNavbar {
+
+    padding: 0 20px;
+
+  }
+
+
+  .navbarBrand span {
+
+    display: none;
+
+  }
+
+}
+
+
+/* =====================================================
+   MOBILE
+===================================================== */
+
+@media (max-width: 768px) {
+
+  .studentNavbar {
+
+    height: 70px;
+
+    min-height: 70px;
+
+    padding: 0 15px;
+
+    gap: 10px;
+
+  }
+
+
+  .mobileMenuButton {
+
+    display: flex;
+
+  }
+
+
+  .navbarBrand {
+
+    flex: 1;
+
+    min-width: 0;
+
+  }
+
+
+  .navbarBrand img {
+
+    width: 34px;
+
+    height: 34px;
+
+  }
+
+
+  .navbarBrand h3 {
+
+    font-size: 12px;
+
+  }
+
+
+  .navbarBrand span {
+
+    display: none;
+
+  }
+
+
+  .navbarActions {
+
+    gap: 7px;
+
+  }
+
+
+  .themeButton,
+  .notificationButton {
+
+    width: 38px;
+
+    height: 38px;
+
+  }
+
+
+  .userMini {
+
+    padding-left: 7px;
+
+  }
+
+
+  .userMiniText {
+
+    display: none;
+
+  }
+
+
+  .userMiniIcon {
+
+    width: 34px;
+
+    height: 34px;
+
+  }
+
+}
+
+
+/* =====================================================
+   SMALL MOBILE
+===================================================== */
+
+@media (max-width: 480px) {
+
+  .studentNavbar {
+
+    padding: 0 10px;
+
+    gap: 7px;
+
+  }
+
+
+  .mobileMenuButton {
+
+    width: 38px;
+
+    height: 38px;
+
+  }
+
+
+  .navbarBrand {
+
+    gap: 7px;
+
+  }
+
+
+  .navbarBrand img {
+
+    width: 32px;
+
+    height: 32px;
+
+  }
+
+
+  .navbarBrand h3 {
+
+    font-size: 11px;
+
+    max-width: 118px;
+
+  }
+
+
+  .themeButton,
+  .notificationButton {
+
+    width: 35px;
+
+    height: 35px;
+
+  }
+
+
+  .userMini {
+
+    padding-left: 4px;
+
+  }
+
+
+  .userMiniIcon {
+
+    width: 32px;
+
+    height: 32px;
+
+  }
+
+}
+
+
+/* =====================================================
+   VERY SMALL DEVICES
+===================================================== */
+
+@media (max-width: 360px) {
+
+  .studentNavbar {
+
+    padding: 0 8px;
+
+    gap: 5px;
+
+  }
+
+
+  .navbarBrand h3 {
+
+    max-width: 92px;
+
+  }
+
+
+  .themeButton,
+  .notificationButton {
+
+    width: 33px;
+
+    height: 33px;
+
+  }
+
+
+  .mobileMenuButton {
+
+    width: 36px;
+
+    height: 36px;
+
+  }
+
+
+  .userMiniIcon {
+
+    width: 30px;
+
+    height: 30px;
+
+  }
+
+}

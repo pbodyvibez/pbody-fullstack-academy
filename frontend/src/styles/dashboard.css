@@ -1,647 +1,38 @@
-/* =========================================================
-   PBODY FULLSTACK ACADEMY
-   PREMIUM DASHBOARD DESIGN
-========================================================= */
+/* =====================================================
+PBODY FULLSTACK ACADEMY
+PREMIUM ENGINEERING DASHBOARD
+===================================================== */
 
 
 .dashboardPage{
 
-min-height:100vh;
+min-height:100%;
 
 background:
 
 linear-gradient(
-
 135deg,
-
-#050B18,
-
-#071A33,
-
-#0B2850
-
+var(--bg-primary),
+var(--bg-secondary)
 );
 
-padding:40px;
+color:var(--text-primary);
 
-color:white;
-
-font-family:
-
-"Inter",
-
-"Segoe UI",
-
-sans-serif;
-
-position:relative;
-
-overflow:hidden;
-
-}
-
-
-.dashboardPage::before{
-
-content:"";
-
-position:absolute;
-
-width:650px;
-
-height:650px;
-
-background:
-
-radial-gradient(
-
-circle,
-
-rgba(37,99,235,.25),
-
-transparent 70%
-
-);
-
-top:-250px;
-
-left:-200px;
-
-filter:blur(60px);
-
-}
-
-
-.dashboardPage::after{
-
-content:"";
-
-position:absolute;
-
-width:600px;
-
-height:600px;
-
-background:
-
-radial-gradient(
-
-circle,
-
-rgba(250,204,21,.15),
-
-transparent 70%
-
-);
-
-bottom:-250px;
-
-right:-200px;
-
-filter:blur(70px);
+padding:30px;
 
 }
 
 
 
-.dashboardPage>*{
-
-position:relative;
-
-z-index:2;
-
-}
 
 
-/* =========================================================
-   HERO SECTION
-========================================================= */
+/* ==============================
+HERO SECTION
+============================== */
 
 
 .dashboardHero{
 
-display:grid;
-
-grid-template-columns:
-
-1.5fr
-
-.8fr;
-
-gap:40px;
-
-align-items:center;
-
-margin-bottom:50px;
-
-}
-
-
-
-.dashboardHeroContent{
-
-padding:40px;
-
-border-radius:32px;
-
-background:
-
-rgba(255,255,255,.05);
-
-border:
-
-1px solid rgba(255,255,255,.08);
-
-backdrop-filter:
-
-blur(25px);
-
-}
-
-
-.dashboardBrand{
-
-display:flex;
-
-align-items:center;
-
-gap:20px;
-
-margin-bottom:35px;
-
-}
-
-
-
-.dashboardBrand img{
-
-width:85px;
-
-height:85px;
-
-object-fit:contain;
-
-filter:
-
-drop-shadow(
-
-0 0 25px rgba(250,204,21,.35)
-
-);
-
-}
-
-
-
-.dashboardBrand h3{
-
-font-size:22px;
-
-font-weight:900;
-
-letter-spacing:1px;
-
-}
-
-
-
-.dashboardBrand span{
-
-color:#94A3B8;
-
-font-size:14px;
-
-}
-
-
-
-.dashboardHero h1{
-
-font-size:55px;
-
-line-height:1.1;
-
-font-weight:900;
-
-margin-bottom:20px;
-
-}
-
-
-
-.dashboardHero h1::first-letter{
-
-color:#FFD54A;
-
-}
-
-
-
-.dashboardHero p{
-
-font-size:19px;
-
-line-height:1.8;
-
-color:#CBD5E1;
-
-max-width:750px;
-
-margin-bottom:35px;
-
-}
-/* =========================================================
-   DASHBOARD ACTIONS
-========================================================= */
-
-
-.dashboardActions{
-
-display:flex;
-
-gap:18px;
-
-flex-wrap:wrap;
-
-}
-
-
-
-.primaryButton,
-.secondaryButton{
-
-height:56px;
-
-padding:0 30px;
-
-border-radius:16px;
-
-font-size:16px;
-
-font-weight:800;
-
-cursor:pointer;
-
-transition:.35s;
-
-border:none;
-
-}
-
-
-
-.primaryButton{
-
-background:
-
-linear-gradient(
-
-135deg,
-
-#FFD54A,
-
-#F59E0B
-
-);
-
-color:#08111F;
-
-box-shadow:
-
-0 15px 35px rgba(245,158,11,.25);
-
-}
-
-
-
-.primaryButton:hover{
-
-transform:
-
-translateY(-5px);
-
-box-shadow:
-
-0 25px 50px rgba(245,158,11,.35);
-
-}
-
-
-
-.secondaryButton{
-
-background:
-
-rgba(255,255,255,.08);
-
-border:
-
-1px solid rgba(255,255,255,.12);
-
-color:white;
-
-}
-
-
-
-.secondaryButton:hover{
-
-background:#2563EB;
-
-border-color:#2563EB;
-
-transform:
-
-translateY(-5px);
-
-}
-
-
-/* =========================================================
-   STATUS CARD
-========================================================= */
-
-
-.dashboardStatusCard{
-
-background:
-
-rgba(255,255,255,.06);
-
-border:
-
-1px solid rgba(255,255,255,.1);
-
-border-radius:32px;
-
-padding:35px;
-
-text-align:center;
-
-backdrop-filter:
-
-blur(25px);
-
-}
-
-
-
-.statusLogo{
-
-width:100px;
-
-height:100px;
-
-margin:0 auto 25px;
-
-border-radius:50%;
-
-display:flex;
-
-align-items:center;
-
-justify-content:center;
-
-background:
-
-rgba(255,255,255,.08);
-
-}
-
-
-
-.statusLogo img{
-
-width:70px;
-
-height:70px;
-
-object-fit:contain;
-
-}
-
-
-
-.dashboardStatusCard h2{
-
-font-size:26px;
-
-font-weight:900;
-
-margin-bottom:15px;
-
-}
-
-
-
-.dashboardStatusCard p{
-
-color:#CBD5E1;
-
-line-height:1.7;
-
-font-size:15px;
-
-}
-
-
-
-.trialBadge,
-.premiumBadge{
-
-display:inline-flex;
-
-margin-top:25px;
-
-padding:12px 22px;
-
-border-radius:999px;
-
-font-weight:800;
-
-}
-
-
-
-.trialBadge{
-
-background:
-
-rgba(245,158,11,.15);
-
-border:
-
-1px solid rgba(245,158,11,.4);
-
-color:#FFD54A;
-
-}
-
-
-
-.premiumBadge{
-
-background:
-
-rgba(34,197,94,.15);
-
-border:
-
-1px solid rgba(34,197,94,.4);
-
-color:#86EFAC;
-
-}
-
-
-/* =========================================================
-   STATS SECTION
-========================================================= */
-
-
-.dashboardStats{
-
-display:grid;
-
-grid-template-columns:
-
-repeat(4,1fr);
-
-gap:25px;
-
-margin-bottom:50px;
-
-}
-
-
-
-.dashboardStatCard{
-
-padding:30px;
-
-border-radius:26px;
-
-background:
-
-rgba(255,255,255,.06);
-
-border:
-
-1px solid rgba(255,255,255,.08);
-
-backdrop-filter:
-
-blur(20px);
-
-transition:.35s;
-
-}
-
-
-
-.dashboardStatCard:hover{
-
-transform:
-
-translateY(-8px);
-
-border-color:#2563EB;
-
-}
-
-
-
-.dashboardStatCard div{
-
-font-size:35px;
-
-margin-bottom:15px;
-
-}
-
-
-
-.dashboardStatCard h2{
-
-font-size:38px;
-
-font-weight:900;
-
-color:#FFD54A;
-
-}
-
-
-
-.dashboardStatCard p{
-
-color:#CBD5E1;
-
-font-weight:600;
-
-margin-top:8px;
-
-}
-/* =========================================================
-   MAIN DASHBOARD GRID
-========================================================= */
-
-
-.dashboardMainGrid{
-
-display:grid;
-
-grid-template-columns:
-
-repeat(2,1fr);
-
-gap:30px;
-
-margin-bottom:55px;
-
-}
-
-
-
-.dashboardLargeCard{
-
-background:
-
-rgba(255,255,255,.06);
-
-border:
-
-1px solid rgba(255,255,255,.08);
-
-border-radius:30px;
-
-padding:35px;
-
-backdrop-filter:
-
-blur(25px);
-
-transition:.35s;
-
-}
-
-
-
-.dashboardLargeCard:hover{
-
-border-color:
-
-rgba(59,130,246,.6);
-
-transform:
-
-translateY(-5px);
-
-}
-
-
-
-.cardHeader{
 
 display:flex;
 
@@ -649,13 +40,45 @@ justify-content:space-between;
 
 align-items:center;
 
-margin-bottom:25px;
+gap:40px;
+
+
+padding:40px;
+
+
+border-radius:32px;
+
+
+background:
+
+linear-gradient(
+135deg,
+rgba(37,99,235,.18),
+rgba(56,189,248,.08)
+);
+
+
+border:
+
+1px solid var(--border-color);
+
+
+box-shadow:
+
+0 25px 60px rgba(0,0,0,.25);
+
+
+margin-bottom:35px;
+
 
 }
 
 
 
-.cardHeader div{
+
+
+.dashboardBrand{
+
 
 display:flex;
 
@@ -663,1378 +86,752 @@ align-items:center;
 
 gap:15px;
 
-}
+margin-bottom:25px;
 
-
-
-.cardHeader span{
-
-font-size:32px;
 
 }
 
 
 
-.cardHeader h2{
+.dashboardBrand img{
 
-font-size:26px;
 
-font-weight:900;
+width:55px;
+
+height:55px;
+
+object-fit:contain;
+
 
 }
 
 
 
-.dashboardLargeCard>p{
 
-color:#CBD5E1;
+
+.dashboardBrand span{
+
+
+display:block;
+
+font-weight:800;
+
+letter-spacing:1px;
+
+font-size:14px;
+
+color:var(--brand-blue);
+
+
+}
+
+
+
+
+
+.dashboardBrand p{
+
+
+margin:4px 0;
+
+font-size:13px;
+
+color:var(--text-secondary);
+
+
+}
+
+
+
+
+
+
+.heroContent{
+
+
+max-width:650px;
+
+
+}
+
+
+
+.heroBadge{
+
+
+display:inline-flex;
+
+
+padding:8px 18px;
+
+
+border-radius:30px;
+
+
+background:
+
+rgba(56,189,248,.15);
+
+
+color:#38bdf8;
+
+
+font-weight:700;
+
+
+font-size:13px;
+
+
+letter-spacing:1px;
+
+
+margin-bottom:20px;
+
+
+}
+
+
+
+
+
+
+
+.heroContent h1{
+
+
+font-size:42px;
+
+line-height:1.2;
+
+margin-bottom:20px;
+
+
+}
+
+
+
+.heroContent h1 strong{
+
+
+color:#38bdf8;
+
+
+}
+
+
+
+
+
+.heroContent p{
+
+
+font-size:17px;
 
 line-height:1.8;
 
-margin-bottom:30px;
+color:var(--text-secondary);
 
-}
-
-
-/* =========================================================
-   PROGRESS
-========================================================= */
-
-
-.progressContainer{
-
-margin-bottom:30px;
 
 }
 
 
 
-.progressTop{
+
+
+
+
+.primaryDashboardButton{
+
+
+display:inline-flex;
+
+
+margin-top:25px;
+
+
+padding:14px 28px;
+
+
+border-radius:14px;
+
+
+background:
+
+linear-gradient(
+135deg,
+#2563eb,
+#38bdf8
+);
+
+
+color:white;
+
+
+font-weight:700;
+
+
+transition:.3s;
+
+
+}
+
+
+
+
+
+.primaryDashboardButton:hover{
+
+
+transform:translateY(-3px);
+
+
+}
+
+
+
+
+
+
+
+
+/* ==============================
+LEVEL CARD
+============================== */
+
+
+.heroLevel{
+
 
 display:flex;
 
-justify-content:space-between;
+align-items:center;
+
+justify-content:center;
+
+
+}
+
+
+
+.levelCircle{
+
+
+width:150px;
+
+height:150px;
+
+
+border-radius:50%;
+
+
+display:flex;
+
+flex-direction:column;
 
 align-items:center;
 
-margin-bottom:14px;
+justify-content:center;
 
-color:#CBD5E1;
+
+
+background:
+
+linear-gradient(
+135deg,
+#2563eb,
+#7c3aed
+);
+
+
+
+box-shadow:
+
+0 0 50px rgba(37,99,235,.45);
+
+
+color:white;
+
 
 }
 
 
 
-.progressTop strong{
+.levelCircle strong{
 
-color:#FFD54A;
 
-font-size:18px;
+font-size:55px;
+
 
 }
+
+
+
+.levelCircle span{
+
+
+font-size:13px;
+
+letter-spacing:2px;
+
+
+}
+
+
+
+
+
+
+
+
+/* ==============================
+STAT CARDS
+============================== */
+
+
+.dashboardStats{
+
+
+display:grid;
+
+
+grid-template-columns:
+
+repeat(auto-fit,minmax(170px,1fr));
+
+
+gap:20px;
+
+
+margin-bottom:35px;
+
+
+}
+
+
+
+
+.statCard{
+
+
+padding:25px;
+
+
+border-radius:22px;
+
+
+background:
+
+var(--card-bg);
+
+
+border:
+
+1px solid var(--border-color);
+
+
+box-shadow:
+
+0 15px 35px rgba(0,0,0,.18);
+
+
+transition:.3s;
+
+
+}
+
+
+
+
+
+.statCard:hover{
+
+
+transform:translateY(-5px);
+
+
+border-color:#38bdf8;
+
+
+}
+
+
+
+
+.statCard h2{
+
+
+font-size:32px;
+
+margin:0;
+
+
+color:#38bdf8;
+
+
+}
+
+
+
+.statCard p{
+
+
+color:var(--text-secondary);
+
+
+}
+
+
+
+
+
+
+
+
+/* ==============================
+DASHBOARD GRID
+============================== */
+
+
+.dashboardGrid{
+
+
+display:grid;
+
+
+grid-template-columns:
+
+repeat(auto-fit,minmax(280px,1fr));
+
+
+gap:25px;
+
+
+margin-bottom:35px;
+
+
+}
+
+
+
+
+
+.dashboardCard{
+
+
+padding:30px;
+
+
+border-radius:25px;
+
+
+background:
+
+var(--card-bg);
+
+
+border:
+
+1px solid var(--border-color);
+
+
+box-shadow:
+
+0 20px 45px rgba(0,0,0,.18);
+
+
+}
+
+
+
+.dashboardCard h2{
+
+
+color:var(--text-primary);
+
+
+margin-bottom:15px;
+
+
+}
+
+
+
+
+.dashboardCard p{
+
+
+color:var(--text-secondary);
+
+
+line-height:1.7;
+
+
+}
+
+
+
+
+
 
 
 
 .progressBar{
 
+
 height:12px;
 
-border-radius:999px;
 
 background:
 
-rgba(255,255,255,.1);
+rgba(148,163,184,.18);
+
+
+border-radius:20px;
+
 
 overflow:hidden;
+
+
+margin:20px 0;
+
 
 }
 
 
 
-.progressBar div{
+
+.progressFill{
+
 
 height:100%;
 
-border-radius:999px;
 
 background:
 
 linear-gradient(
-
 90deg,
-
-#2563EB,
-
-#FFD54A
-
+#2563eb,
+#38bdf8
 );
 
-transition:
-
-width .8s ease;
-
-}
-
-
-/* =========================================================
-   AI MENTOR CARD
-========================================================= */
-
-
-.aiMentorCard{
-
-position:relative;
-
-overflow:hidden;
-
-}
-
-
-
-.aiMentorCard::before{
-
-content:"";
-
-position:absolute;
-
-width:250px;
-
-height:250px;
-
-background:
-
-radial-gradient(
-
-circle,
-
-rgba(37,99,235,.35),
-
-transparent
-
-);
-
-right:-100px;
-
-top:-100px;
-
-}
-
-
-
-.aiFeatures{
-
-display:grid;
-
-grid-template-columns:
-
-repeat(2,1fr);
-
-gap:15px;
-
-margin-bottom:30px;
-
-}
-
-
-
-.aiFeatures div{
-
-padding:15px;
-
-border-radius:15px;
-
-background:
-
-rgba(255,255,255,.06);
-
-border:
-
-1px solid rgba(255,255,255,.08);
-
-color:#E2E8F0;
-
-font-weight:700;
-
-}
-/* =========================================================
-   PROGRAMS SECTION
-========================================================= */
-
-
-.dashboardPrograms{
-
-margin-bottom:55px;
-
-}
-
-
-
-.sectionTitle{
-
-margin-bottom:35px;
-
-}
-
-
-
-.sectionTitle h2{
-
-font-size:36px;
-
-font-weight:900;
-
-margin-bottom:12px;
-
-}
-
-
-
-.sectionTitle p{
-
-color:#CBD5E1;
-
-font-size:17px;
-
-}
-
-
-
-/* =========================================================
-   PROGRAM GRID
-========================================================= */
-
-
-.programGrid{
-
-display:grid;
-
-grid-template-columns:
-
-repeat(4,1fr);
-
-gap:25px;
-
-}
-
-
-
-.programCard{
-
-padding:30px;
-
-border-radius:28px;
-
-background:
-
-rgba(255,255,255,.06);
-
-border:
-
-1px solid rgba(255,255,255,.08);
-
-transition:.35s;
-
-}
-
-
-
-.programCard:hover{
-
-transform:
-
-translateY(-8px);
-
-background:
-
-rgba(255,255,255,.1);
-
-border-color:#2563EB;
-
-}
-
-
-
-.programIcon{
-
-width:65px;
-
-height:65px;
 
 border-radius:20px;
 
-display:flex;
 
-align-items:center;
+}
 
-justify-content:center;
 
-font-size:32px;
+
+
+
+
+.dashboardButton{
+
+
+display:inline-flex;
+
+
+margin-top:20px;
+
+
+padding:12px 22px;
+
+
+border-radius:12px;
+
 
 background:
 
-linear-gradient(
-
-135deg,
-
-#2563EB,
-
-#1D4ED8
-
-);
-
-margin-bottom:22px;
-
-}
+rgba(56,189,248,.15);
 
 
+color:#38bdf8;
 
-.programCard h3{
-
-font-size:22px;
-
-font-weight:900;
-
-margin-bottom:15px;
-
-}
-
-
-
-.programCard p{
-
-color:#CBD5E1;
-
-line-height:1.7;
-
-font-size:15px;
-
-margin-bottom:20px;
-
-}
-
-
-
-.courseStatus{
-
-display:flex;
-
-justify-content:space-between;
-
-align-items:center;
-
-gap:10px;
-
-}
-
-
-
-.courseStatus span{
-
-padding:8px 14px;
-
-border-radius:999px;
-
-background:
-
-rgba(255,255,255,.08);
-
-color:#CBD5E1;
-
-font-size:13px;
 
 font-weight:700;
 
-}
-
-
-
-.courseStatus b{
-
-color:#FFD54A;
-
-font-size:13px;
-
-}
-
-
-/* =========================================================
-   BOTTOM GRID
-========================================================= */
-
-
-.dashboardBottomGrid{
-
-display:grid;
-
-grid-template-columns:
-
-repeat(2,1fr);
-
-gap:30px;
-
-margin-bottom:55px;
-
-}
-/* =========================================================
-   ROADMAP CARD
-========================================================= */
-
-
-.roadmapCard{
-
-display:flex;
-
-flex-direction:column;
-
-gap:18px;
 
 }
 
 
 
-.roadmapItem{
 
-display:flex;
 
-align-items:center;
+.dashboardButton:hover{
 
-gap:20px;
-
-padding:20px;
-
-border-radius:20px;
 
 background:
 
-rgba(255,255,255,.05);
+rgba(56,189,248,.25);
 
-border:
-
-1px solid rgba(255,255,255,.08);
-
-transition:.3s;
 
 }
 
 
 
-.roadmapItem:hover{
-
-transform:
-
-translateX(8px);
-
-border-color:#2563EB;
-
-}
 
 
 
-.roadmapItem>span{
 
-width:48px;
-
-height:48px;
-
-display:flex;
-
-align-items:center;
-
-justify-content:center;
-
-border-radius:50%;
-
-background:
-
-rgba(255,255,255,.1);
-
-font-weight:900;
-
-font-size:20px;
-
-color:#FFD54A;
-
-}
-
-
-
-.roadmapItem.active>span{
-
-background:
-
-linear-gradient(
-
-135deg,
-
-#FFD54A,
-
-#F59E0B
-
-);
-
-color:#08111F;
-
-}
-
-
-
-.roadmapItem h3{
-
-font-size:19px;
-
-font-weight:800;
-
-margin-bottom:5px;
-
-}
-
-
-
-.roadmapItem p{
-
-margin:0;
-
-font-size:14px;
-
-color:#94A3B8;
-
-}
-
-
-
-/* =========================================================
-   ACTIVITY CARD
-========================================================= */
+/* ==============================
+ACTIVITY
+============================== */
 
 
 .activityCard{
 
-display:flex;
 
-flex-direction:column;
+padding:30px;
 
-gap:18px;
+
+border-radius:25px;
+
+
+background:
+
+var(--card-bg);
+
+
+border:
+
+1px solid var(--border-color);
+
 
 }
+
+
+
+
+
+.activityCard h2{
+
+
+margin-bottom:20px;
+
+
+}
+
+
 
 
 
 .activityItem{
 
-display:flex;
 
-align-items:center;
+padding:15px;
 
-gap:18px;
 
-padding:18px;
+margin-bottom:12px;
 
-border-radius:18px;
+
+border-radius:14px;
+
 
 background:
 
-rgba(255,255,255,.05);
+rgba(56,189,248,.08);
 
-border:
 
-1px solid rgba(255,255,255,.08);
+color:var(--text-secondary);
+
 
 }
 
 
 
-.activityItem span{
 
-font-size:24px;
 
-}
 
 
 
-.activityItem p{
+/* ==============================
+RESPONSIVE
+============================== */
 
-margin:0;
-
-font-weight:600;
-
-color:#E2E8F0;
-
-}
-
-
-
-/* =========================================================
-   PREMIUM UPGRADE SECTION
-========================================================= */
-
-
-.premiumUpgradeSection{
-
-margin-bottom:50px;
-
-padding:35px;
-
-border-radius:32px;
-
-background:
-
-linear-gradient(
-
-135deg,
-
-rgba(37,99,235,.35),
-
-rgba(245,158,11,.15)
-
-);
-
-border:
-
-1px solid rgba(255,255,255,.12);
-
-}
-
-
-
-.upgradeContent{
-
-display:flex;
-
-align-items:center;
-
-gap:30px;
-
-justify-content:space-between;
-
-}
-
-
-
-.upgradeLogo img{
-
-width:90px;
-
-height:90px;
-
-object-fit:contain;
-
-}
-
-
-
-.upgradeContent h2{
-
-font-size:32px;
-
-font-weight:900;
-
-margin-bottom:10px;
-
-}
-
-
-
-.upgradeContent p{
-
-max-width:750px;
-
-color:#E2E8F0;
-
-line-height:1.8;
-
-}
-/* =========================================================
-   UPGRADE BUTTON
-========================================================= */
-
-
-.upgradeButton{
-
-height:58px;
-
-padding:0 35px;
-
-border:none;
-
-border-radius:18px;
-
-cursor:pointer;
-
-font-size:17px;
-
-font-weight:900;
-
-background:
-
-linear-gradient(
-
-135deg,
-
-#FFD54A,
-
-#F59E0B
-
-);
-
-color:#08111F;
-
-transition:.35s;
-
-white-space:nowrap;
-
-}
-
-
-
-.upgradeButton:hover{
-
-transform:
-
-translateY(-5px);
-
-box-shadow:
-
-0 20px 45px rgba(245,158,11,.35);
-
-}
-
-
-/* =========================================================
-   QUOTE SECTION
-========================================================= */
-
-
-.dashboardQuote{
-
-padding:45px;
-
-border-radius:35px;
-
-background:
-
-rgba(255,255,255,.05);
-
-border:
-
-1px solid rgba(255,255,255,.08);
-
-text-align:center;
-
-backdrop-filter:
-
-blur(25px);
-
-}
-
-
-
-.dashboardQuote img{
-
-width:100px;
-
-height:100px;
-
-object-fit:contain;
-
-margin-bottom:20px;
-
-filter:
-
-drop-shadow(
-
-0 0 25px rgba(255,213,74,.3)
-
-);
-
-}
-
-
-
-.dashboardQuote h2{
-
-font-size:38px;
-
-font-weight:900;
-
-margin-bottom:15px;
-
-background:
-
-linear-gradient(
-
-90deg,
-
-#FFFFFF,
-
-#FFD54A
-
-);
-
--webkit-background-clip:text;
-
--webkit-text-fill-color:transparent;
-
-}
-
-
-
-.dashboardQuote p{
-
-max-width:850px;
-
-margin:auto;
-
-color:#CBD5E1;
-
-font-size:18px;
-
-line-height:1.9;
-
-}
-
-
-/* =========================================================
-   GLOBAL CARD ANIMATION
-========================================================= */
-
-
-.dashboardHeroContent,
-.dashboardStatusCard,
-.dashboardStatCard,
-.dashboardLargeCard,
-.programCard,
-.premiumUpgradeSection,
-.dashboardQuote{
-
-animation:
-
-dashboardFade .7s ease forwards;
-
-}
-
-
-
-@keyframes dashboardFade{
-
-from{
-
-opacity:0;
-
-transform:
-
-translateY(30px);
-
-}
-
-
-to{
-
-opacity:1;
-
-transform:
-
-translateY(0);
-
-}
-
-}
-/* =========================================================
-   RESPONSIVE DESIGN
-========================================================= */
-
-
-/* LARGE TABLETS */
-
-@media(max-width:1200px){
-
-
-.dashboardHero{
-
-grid-template-columns:1fr;
-
-}
-
-
-.dashboardStats{
-
-grid-template-columns:
-
-repeat(2,1fr);
-
-}
-
-
-.programGrid{
-
-grid-template-columns:
-
-repeat(2,1fr);
-
-}
-
-
-.dashboardMainGrid,
-.dashboardBottomGrid{
-
-grid-template-columns:1fr;
-
-}
-
-
-.upgradeContent{
-
-flex-direction:column;
-
-align-items:flex-start;
-
-}
-
-
-
-}
-
-
-/* TABLETS */
 
 @media(max-width:900px){
 
 
-.dashboardPage{
 
-padding:25px;
-
-}
+.dashboardHero{
 
 
-.dashboardHeroContent{
-
-padding:30px;
-
-}
+flex-direction:column;
 
 
-.dashboardHero h1{
-
-font-size:42px;
-
-}
-
-
-.dashboardHero p{
-
-font-size:17px;
-
-}
-
-
-.dashboardStats{
-
-gap:18px;
-
-}
-
-
-.dashboardStatCard{
-
-padding:25px;
-
-}
-
-
-.sectionTitle h2{
-
-font-size:30px;
-
-}
-
-
-.programGrid{
-
-grid-template-columns:
-
-1fr;
-
-}
-
-
-.aiFeatures{
-
-grid-template-columns:
-
-1fr;
-
-}
-
+align-items:flex-start;
 
 
 }
 
 
-/* MOBILE */
+
+.heroContent h1{
+
+
+font-size:32px;
+
+
+}
+
+
+
+.heroLevel{
+
+
+width:100%;
+
+
+}
+
+
+}
+
+
 
 @media(max-width:600px){
 
 
+
 .dashboardPage{
+
 
 padding:15px;
 
-}
-
-
-.dashboardHeroContent{
-
-padding:22px;
-
-border-radius:22px;
 
 }
 
 
-.dashboardBrand{
 
-flex-direction:column;
+.dashboardHero{
 
-text-align:center;
-
-}
-
-
-.dashboardBrand img{
-
-width:70px;
-
-height:70px;
-
-}
-
-
-.dashboardHero h1{
-
-font-size:32px;
-
-text-align:center;
-
-}
-
-
-.dashboardHero p{
-
-text-align:center;
-
-font-size:15px;
-
-}
-
-
-.dashboardActions{
-
-flex-direction:column;
-
-}
-
-
-.primaryButton,
-.secondaryButton{
-
-width:100%;
-
-}
-
-
-.dashboardStats{
-
-grid-template-columns:
-
-1fr;
-
-}
-
-
-.dashboardStatusCard{
 
 padding:25px;
 
-}
-
-
-.dashboardLargeCard{
-
-padding:25px;
-
-border-radius:22px;
 
 }
 
 
-.cardHeader h2{
 
-font-size:22px;
+.heroContent h1{
 
-}
 
-
-.dashboardPrograms{
-
-margin-bottom:35px;
-
-}
-
-
-.programCard{
-
-padding:22px;
-
-}
-
-
-.upgradeContent h2{
-
-font-size:26px;
-
-}
-
-
-.upgradeButton{
-
-width:100%;
-
-}
-
-
-.dashboardQuote{
-
-padding:30px 20px;
-
-}
-
-
-.dashboardQuote h2{
-
-font-size:28px;
-
-}
-
-
-.dashboardQuote p{
-
-font-size:15px;
-
-}
-
-}
-/* =========================================================
-   EXTRA SMALL DEVICES
-========================================================= */
-
-
-@media(max-width:420px){
-
-
-.dashboardPage{
-
-padding:12px;
-
-}
-
-
-.dashboardHero h1{
-
-font-size:28px;
-
-}
-
-
-.dashboardBrand h3{
-
-font-size:17px;
-
-}
-
-
-.dashboardBrand span{
-
-font-size:12px;
-
-}
-
-
-.dashboardStatCard h2{
-
-font-size:32px;
-
-}
-
-
-.dashboardStatCard div{
-
-font-size:28px;
-
-}
-
-
-.sectionTitle h2{
-
-font-size:26px;
-
-}
-
-
-.dashboardLargeCard{
-
-padding:20px;
-
-}
-
-
-.roadmapItem{
-
-padding:15px;
-
-gap:14px;
-
-}
-
-
-.roadmapItem>span{
-
-width:40px;
-
-height:40px;
-
-font-size:16px;
-
-}
-
-
-.roadmapItem h3{
-
-font-size:16px;
-
-}
-
-
-.activityItem{
-
-padding:15px;
-
-}
-
-
-.dashboardQuote img{
-
-width:75px;
-
-height:75px;
-
-}
-
-}
-
-
-
-/* =========================================================
-   SMOOTH SCROLLING
-========================================================= */
-
-
-.dashboardPage{
-
-scroll-behavior:smooth;
-
-}
-
-
-
-/* =========================================================
-   BUTTON ACCESSIBILITY
-========================================================= */
-
-
-button:focus-visible{
-
-outline:
-
-3px solid #FFD54A;
-
-outline-offset:3px;
-
-}
-
-
-
-/* =========================================================
-   PREMIUM GLOW EFFECTS
-========================================================= */
-
-
-.premiumBadge,
-.trialBadge{
-
-animation:
-
-badgePulse 3s infinite;
-
-}
-
-
-@keyframes badgePulse{
-
-
-0%{
-
-box-shadow:
-
-0 0 0 0 rgba(255,213,74,.25);
-
-}
-
-
-70%{
-
-box-shadow:
-
-0 0 0 15px rgba(255,213,74,0);
-
-}
-
-
-100%{
-
-box-shadow:
-
-0 0 0 0 rgba(255,213,74,0);
-
-}
+font-size:27px;
 
 
 }
 
 
 
-/* =========================================================
-   FINAL POLISH
-========================================================= */
+.levelCircle{
 
 
-.dashboardPage h1,
-.dashboardPage h2,
-.dashboardPage h3{
+width:120px;
 
-letter-spacing:-0.5px;
+height:120px;
+
 
 }
 
-
-.dashboardPage p{
-
-letter-spacing:.1px;
-
-}
-
-
-.dashboardPage img{
-
-user-select:none;
 
 }

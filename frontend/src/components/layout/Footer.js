@@ -1,255 +1,415 @@
-import { Link, useNavigate } from "react-router-dom";
+// ======================================================
+// PBODY FULLSTACK ACADEMY
+// PREMIUM FOOTER
+// FULL REPLACEMENT
+// ======================================================
 
-import "./Footer.css";
+import React from "react";
+
+import {
+  Link,
+  useNavigate
+} from "react-router-dom";
 
 import Logo from "../../assets/images/logo.png";
 
+import "./Footer.css";
 
-export default function Footer(){
 
+// ======================================================
+// COMPONENT
+// ======================================================
 
-const navigate = useNavigate();
+export default function Footer() {
 
+  const navigate = useNavigate();
 
 
-return(
+  // ====================================================
+  // SCROLL TO TOP
+  // ====================================================
 
+  const scrollToTop = () => {
 
-<footer className="footer">
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth"
+    });
 
+  };
 
-<div className="footer-container">
 
+  // ====================================================
+  // INTERNAL NAVIGATION
+  // ====================================================
 
+  const navigateAndTop = (path) => {
 
-<div className="footer-brand">
+    navigate(path);
 
+    window.setTimeout(() => {
 
-<div className="footerLogo">
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+      });
 
+    }, 100);
 
-<img
-src={Logo}
-alt="PBody FullStack Academy"
-/>
+  };
 
 
+  // ====================================================
+  // QUICK LINK NAVIGATION
+  // ====================================================
 
-<div>
+  const quickNavigate = (event, path) => {
 
-<h2>
-PBody
-</h2>
+    event.preventDefault();
 
+    navigateAndTop(path);
 
-<span>
-FullStack Academy
-</span>
+  };
 
 
-</div>
+  // ====================================================
+  // RENDER
+  // ====================================================
 
+  return (
 
-</div>
+    <footer className="footer">
 
+      <div className="footer-container">
 
 
+        {/* ==================================================
+            BRAND
+        ================================================== */}
 
-<p>
+        <div className="footer-brand-column">
 
-An AI-powered engineering academy transforming beginners
-into professional software engineers through structured courses,
-real-world projects, AI mentorship and career-focused training.
+          <div className="footerLogo">
 
-</p>
+            <img
+              src={Logo}
+              alt="PBody FullStack Academy"
+            />
 
+            <div className="footer-brand">
 
+              <h2>
+                PBODY
+              </h2>
 
+              <span>
+                FullStack Academy
+              </span>
 
-<div className="footerSocial">
+            </div>
 
+          </div>
 
-<a href="#">
-LinkedIn
-</a>
 
+          <p className="footer-description">
 
-<a href="#">
-GitHub
-</a>
+            PBody FullStack Academy is an AI-powered
+            engineering academy helping aspiring developers
+            become world-class software engineers through
+            structured learning, real-world projects,
+            AI mentorship, quizzes, certifications and
+            career preparation.
+
+          </p>
+
+
+          {/* ==================================================
+              SOCIAL
+          ================================================== */}
+
+          <div className="footerSocial">
+
+            <a
+              href="https://facebook.com/jeff.bryner.7"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Facebook
+            </a>
+
+
+            <a
+              href="https://x.com/pbodyvibez"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              X
+            </a>
+
+
+            <a
+              href="https://github.com/pbodyvibez/pbody-vibez"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              GitHub
+            </a>
+
+
+            <a
+              href="https://www.instagram.com/kennethsampsonprecious"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Instagram
+            </a>
+
+          </div>
+
+        </div>
+
+
+        {/* ==================================================
+            QUICK LINKS
+        ================================================== */}
+
+        <div className="footerLinksColumn">
+
+          <h3>
+            Quick Links
+          </h3>
+
+
+          <ul className="footerQuickLinks">
+
+            <li>
+              <Link
+                to="/"
+                onClick={(event) =>
+                  quickNavigate(event, "/")
+                }
+              >
+                Home
+              </Link>
+            </li>
+
+
+            <li>
+              <Link
+                to="/about"
+                onClick={(event) =>
+                  quickNavigate(event, "/about")
+                }
+              >
+                About
+              </Link>
+            </li>
+
+
+            <li>
+              <Link
+                to="/contact"
+                onClick={(event) =>
+                  quickNavigate(event, "/contact")
+                }
+              >
+                Contact
+              </Link>
+            </li>
+
+
+            <li>
+              <Link
+                to="/pricing"
+                onClick={(event) =>
+                  quickNavigate(event, "/pricing")
+                }
+              >
+                Pricing
+              </Link>
+            </li>
+
+
+            <li>
+              <Link
+                to="/privacy"
+                onClick={(event) =>
+                  quickNavigate(event, "/privacy")
+                }
+              >
+                Privacy Policy
+              </Link>
+            </li>
+
+
+            <li>
+              <Link
+                to="/terms"
+                onClick={(event) =>
+                  quickNavigate(event, "/terms")
+                }
+              >
+                Terms & Conditions
+              </Link>
+            </li>
+
+          </ul>
+
+        </div>
+
 
+        {/* ==================================================
+            LEARNING
+        ================================================== */}
+
+        <div className="footer-links">
+
+          <h3>
+            Learning
+          </h3>
+
+
+          <button
+            type="button"
+            className="footerLinkButton"
+            onClick={() =>
+              navigateAndTop("/learning-hub")
+            }
+          >
+            Learning Hub
+          </button>
+
+
+          <button
+            type="button"
+            className="footerLinkButton"
+            onClick={() =>
+              navigateAndTop("/courses")
+            }
+          >
+            Engineering Courses
+          </button>
 
-<a href="#">
-YouTube
-</a>
 
+          <button
+            type="button"
+            className="footerLinkButton"
+            onClick={() =>
+              navigateAndTop("/ai-mentor")
+            }
+          >
+            Engineering Mentor
+          </button>
 
-</div>
 
+          <button
+            type="button"
+            className="footerLinkButton"
+            onClick={() =>
+              navigateAndTop("/dashboard")
+            }
+          >
+            Student Dashboard
+          </button>
 
-</div>
 
+          <button
+            type="button"
+            className="footerLinkButton"
+            onClick={() =>
+              navigateAndTop("/community")
+            }
+          >
+            Community
+          </button>
 
+        </div>
 
 
+        {/* ==================================================
+            CONTACT
+        ================================================== */}
 
+        <div className="footer-contact">
 
-<div className="footer-links">
+          <h3>
+            Contact Us
+          </h3>
 
 
-<h3>
-Academy
-</h3>
+          <p>
+            📧 pbodyacademy@gmail.com
+          </p>
 
 
+          <p>
+            📞 +234 904 396 3968
+          </p>
 
-<Link to="/courses">
-Courses
-</Link>
 
+          <p>
+            💬 +234 813 255 3031
+          </p>
 
-<Link to="/learning">
-Learning Hub
-</Link>
 
+          <p>
+            🌍 Lagos, Nigeria
+          </p>
 
-<Link to="/ai">
-AI Engineering Mentor
-</Link>
 
+          <button
+            type="button"
+            onClick={() =>
+              navigateAndTop("/contact")
+            }
+          >
+            Contact Academy
+          </button>
 
-</div>
 
+          <button
+            type="button"
+            className="backTopButton"
+            onClick={scrollToTop}
+          >
+            ↑ Return To Top
+          </button>
 
+        </div>
 
+      </div>
 
 
+      {/* ==================================================
+          FOOTER BOTTOM
+      ================================================== */}
 
+      <div className="footer-bottom">
 
-<div className="footer-links">
+        <div>
 
+          © {new Date().getFullYear()}{" "}
 
-<h3>
-Company
-</h3>
+          <strong>
+            PBODY FullStack Academy
+          </strong>
 
+          {" "} . All Rights Reserved.
 
+        </div>
 
-<Link to="/about">
-About PBody
-</Link>
 
+        <div>
 
+          AI Powered • Project Based • Career Focused
+          • Premium Engineering Academy
 
-<Link to="/community">
-Community
-</Link>
+        </div>
 
+      </div>
 
+    </footer>
 
-<Link to="/contact">
-Contact Us
-</Link>
-
-
-
-<Link to="/privacy">
-Privacy Policy
-</Link>
-
-
-
-<Link to="/terms">
-Terms Of Service
-</Link>
-
-
-
-</div>
-
-
-
-
-
-
-
-<div className="footer-contact">
-
-
-<h3>
-Contact
-</h3>
-
-
-<p>
-📧 support@pbodyacademy.com
-</p>
-
-
-<p>
-🌍 Global Online Academy
-</p>
-
-
-<p>
-🚀 Learn Anywhere. Build Anywhere.
-</p>
-
-
-
-
-<button
-onClick={()=>navigate("/contact")}
->
-
-Contact Academy
-
-</button>
-
-
-
-</div>
-
-
-
-</div>
-
-
-
-
-
-
-
-<div className="footer-bottom">
-
-
-<div>
-
-© {new Date().getFullYear()}
-
-<strong>
- PBody FullStack Academy
-</strong>
-
-</div>
-
-
-
-<span>
-
-Built for the next generation of software engineers 🚀
-
-</span>
-
-
-</div>
-
-
-
-</footer>
-
-
-);
-
+  );
 
 }

@@ -1,5 +1,5 @@
 const express = require("express");
-const QuizResult = require("../models/QuizResult");
+const QuizResult = require("../models/Quizresult");
 const auth = require("../middleware/auth");
 
 const router = express.Router();

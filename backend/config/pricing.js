@@ -1,24 +1,31 @@
+// ============================================================
+// PBODY FULLSTACK ACADEMY
+// PRICING CONFIGURATION
+// ============================================================
+
 const pricing = {
 
-NGN:{
+  NGN: {
 
-currency:"NGN",
+    currency: "NGN",
 
-provider:"paystack",
+    provider: "paystack",
 
-annual:9900000
+    // ₦120,000 expressed in kobo
+    annual: 12000000
 
-},
+  },
 
-USD:{
+  USD: {
 
-currency:"USD",
+    currency: "USD",
 
-provider:"stripe",
+    provider: "paystack",
 
-annual:9900
+    // $99 expressed in cents
+    annual: 9900
 
-}
+  }
 
 };
 

@@ -1,7 +1,7 @@
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { initializePayment } from "../services/paymentService";
-
 import { useAuth } from "../context/AuthContext";
 
 import Logo from "../assets/images/logo.png";
@@ -9,572 +9,652 @@ import Logo from "../assets/images/logo.png";
 import "../styles/pricing.css";
 
 
-export default function Pricing(){
+export default function Pricing() {
 
+  const navigate = useNavigate();
 
-const navigate = useNavigate();
+  const { user } = useAuth();
 
-const { user } = useAuth();
+  const [loadingCurrency, setLoadingCurrency] = useState(null);
 
 
+  // ============================================================
+  // PAYMENT
+  // ============================================================
 
-// ==============================
-// PAYMENT
-// ==============================
+  const handleUpgrade = async (currency) => {
 
-const handleUpgrade = async(currency)=>{
+    if (!user) {
 
+      alert("Please login before subscribing.");
 
-if(!user){
+      navigate("/login");
 
-alert("Please login before subscribing.");
+      return;
 
-navigate("/login");
+    }
 
-return;
 
-}
+    if (loadingCurrency) {
+      return;
+    }
 
 
+    try {
 
-try{
+      setLoadingCurrency(currency);
 
 
-const result = await initializePayment({
+      const result = await initializePayment({
 
-email:user.email,
+        email: user.email,
 
-currency
+        currency
 
-});
+      });
 
 
+      const authorizationUrl =
+        result?.data?.authorization_url ||
+        result?.authorization_url ||
+        result?.data?.data?.authorization_url;
 
-const authorizationUrl =
 
-result?.data?.authorization_url ||
+      if (authorizationUrl) {
 
-result?.authorization_url ||
+        window.location.href = authorizationUrl;
 
-result?.data?.data?.authorization_url;
+        return;
 
+      }
 
 
-if(authorizationUrl){
+      throw new Error(
+        result?.message || "Payment could not be started."
+      );
 
-window.location.href = authorizationUrl;
 
-return;
+    } catch (error) {
 
-}
+      console.error(
+        "PAYMENT INITIALIZATION ERROR:",
+        error
+      );
 
 
+      alert(
+        error?.response?.data?.message ||
+        error?.message ||
+        "Payment initialization failed. Please try again."
+      );
 
-alert("Payment could not start.");
 
+    } finally {
 
-}
+      setLoadingCurrency(null);
 
-catch(error){
+    }
 
+  };
 
-console.error(error);
 
+  const isLoading = (currency) =>
+    loadingCurrency === currency;
 
-alert(
 
-error?.response?.data?.message ||
+  return (
 
-"Payment initialization failed"
+    <main className="pricingPage">
 
-);
 
+      {/* ========================================================
+          PREMIUM HERO
+      ======================================================== */}
 
-}
+      <section className="pricingHero">
 
+        <div className="pricingHeroGlow pricingHeroGlowOne" />
 
-};
+        <div className="pricingHeroGlow pricingHeroGlowTwo" />
 
 
+        <div className="pricingBrand">
 
+          <div className="pricingLogoWrap">
 
+            <img
+              src={Logo}
+              alt="PBody FullStack Academy"
+            />
 
-return(
+          </div>
 
 
-<div className="pricingPage">
+          <div className="pricingBrandText">
 
+            <h2>
+              PBODY FULLSTACK ACADEMY
+            </h2>
 
+            <p>
+              AI-Powered Engineering Education
+            </p>
 
+          </div>
 
+        </div>
 
-{/* =====================================
-PREMIUM HEADER
-===================================== */}
 
+        <div className="pricingEyebrow">
+          <span />
+          PREMIUM ENGINEERING MEMBERSHIP
+          <span />
+        </div>
 
 
-<section className="pricingHero">
+        <h1>
+          Build Skills.
+          <br />
+          Build Products.
+          <br />
+          <strong>Build Your Future.</strong>
+        </h1>
 
 
-<div className="pricingBrand">
+        <p className="pricingHeroDescription">
 
+          Go beyond watching tutorials. Learn modern software
+          engineering through structured courses, practical
+          projects, AI mentorship and career-focused learning.
 
-<img
+        </p>
 
-src={Logo}
 
-alt="PBody FullStack Academy Logo"
+        <div className="pricingHeroStats">
 
-/>
+          <div>
+            <strong>01</strong>
+            <span>Engineering Academy</span>
+          </div>
 
+          <div>
+            <strong>∞</strong>
+            <span>Learning Opportunities</span>
+          </div>
 
+          <div>
+            <strong>AI</strong>
+            <span>Powered Mentorship</span>
+          </div>
 
-<div>
+        </div>
 
-<h2>
 
-PBODY FULLSTACK ACADEMY
+      </section>
 
-</h2>
 
 
-<p>
+      {/* ========================================================
+          PRICING PLANS
+      ======================================================== */}
 
-AI Powered Engineering Education
+      <section className="pricingSection">
 
-</p>
+        <div className="pricingSectionHeading">
 
+          <span className="sectionLabel">
+            CHOOSE YOUR MEMBERSHIP
+          </span>
 
-</div>
+          <h2>
+            One Membership.
+            <span> Serious Engineering Growth.</span>
+          </h2>
 
+          <p>
+            Select the plan that fits your journey and unlock
+            the PBody FullStack Academy learning ecosystem.
+          </p>
 
-</div>
+        </div>
 
 
 
+        <div className="pricingPlans">
 
 
-<h1>
+          {/* ====================================================
+              NIGERIAN PLAN
+          ==================================================== */}
 
-Build Your Future With Technology
+          <article className="pricingCard featuredCard">
 
-</h1>
+            <div className="cardTopLine" />
 
 
+            <div className="planBadge">
+              MOST POPULAR
+            </div>
 
-<p>
 
-Start your journey from beginner to professional software engineer
-through practical projects, expert learning paths and AI-powered
-mentorship.
+            <div className="planIcon">
+              🚀
+            </div>
 
-</p>
 
+            <div className="planHeader">
 
+              <span>
+                NIGERIA
+              </span>
 
+              <h3>
+                PBody Pro Annual
+              </h3>
 
+              <p>
+                Everything you need to become a stronger
+                professional software engineer.
+              </p>
 
-<div className="pricingMotivation">
+            </div>
 
 
-<h3>
+            <div className="price">
 
-🚀 Your Future As An Engineer Starts Here
+              <div>
 
-</h3>
+                <small>₦</small>
 
+                120,000
 
-<p>
+              </div>
 
-Invest in yourself today. Learn the skills,
-build real solutions and join the next generation
-of technology creators.
+              <span>
+                / year
+              </span>
 
-</p>
+            </div>
 
 
-</div>
+            <div className="planDivider" />
 
 
+            <h4>
+              What's included
+            </h4>
 
-</section>
 
+            <ul className="pricingFeatures">
 
+              <li>
+                <span>✓</span>
+                Unlimited Premium Courses
+              </li>
 
+              <li>
+                <span>✓</span>
+                AI Engineering Mentor
+              </li>
 
+              <li>
+                <span>✓</span>
+                Real Production Projects
+              </li>
 
+              <li>
+                <span>✓</span>
+                Professional Certificates
+              </li>
 
+              <li>
+                <span>✓</span>
+                Career & Engineering Roadmaps
+              </li>
 
+              <li>
+                <span>✓</span>
+                Future Platform Updates
+              </li>
 
-{/* =====================================
-PLANS
-===================================== */}
+              <li>
+                <span>✓</span>
+                Progress & Achievement Tracking
+              </li>
 
+            </ul>
 
 
-<section className="pricingPlans">
+            <button
+              type="button"
+              className="pricingButton primaryButton"
+              onClick={() => handleUpgrade("NGN")}
+              disabled={Boolean(loadingCurrency)}
+            >
 
+              {isLoading("NGN") ? (
+                <>
+                  <span className="buttonSpinner" />
+                  Connecting to Paystack...
+                </>
+              ) : (
+                <>
+                  Start Engineering Journey
+                  <span>→</span>
+                </>
+              )}
 
+            </button>
 
 
+            <div className="securePayment">
 
-<div className="pricingCard">
+              <span>🔒</span>
 
+              Secure payment powered by Paystack
 
-<div className="planBadge">
+            </div>
 
-MOST POPULAR
+          </article>
 
-</div>
 
 
+          {/* ====================================================
+              GLOBAL PLAN
+          ==================================================== */}
 
+          <article className="pricingCard globalCard">
 
-<h2>
+            <div className="cardTopLine" />
 
-PBody Pro Annual
 
-</h2>
+            <div className="planBadge globalBadge">
+              GLOBAL
+            </div>
 
 
+            <div className="planIcon">
+              🌍
+            </div>
 
 
-<div className="price">
+            <div className="planHeader">
 
-<span>
+              <span>
+                INTERNATIONAL
+              </span>
 
-₦
+              <h3>
+                PBody Pro Global
+              </h3>
 
-</span>
+              <p>
+                Premium engineering education for developers
+                and aspiring builders worldwide.
+              </p>
 
-120,000
+            </div>
 
 
-<small>
+            <div className="price">
 
-/year
+              <div>
 
-</small>
+                <small>$</small>
 
+                99
 
-</div>
+              </div>
 
+              <span>
+                / year
+              </span>
 
+            </div>
 
 
-<p>
+            <div className="planDivider" />
 
-Designed for Nigerian developers and aspiring engineers.
 
-</p>
+            <h4>
+              What's included
+            </h4>
 
 
+            <ul className="pricingFeatures">
 
+              <li>
+                <span>✓</span>
+                Global Learning Access
+              </li>
 
-<ul>
+              <li>
+                <span>✓</span>
+                AI Learning Assistant
+              </li>
 
+              <li>
+                <span>✓</span>
+                Engineering Projects
+              </li>
 
-<li>🚀 Unlimited Premium Courses</li>
+              <li>
+                <span>✓</span>
+                Professional Certificates
+              </li>
 
-<li>🤖 AI Engineering Mentor</li>
+              <li>
+                <span>✓</span>
+                Interview Preparation
+              </li>
 
-<li>💻 Real Production Projects</li>
+              <li>
+                <span>✓</span>
+                Developer Community
+              </li>
 
-<li>🏆 Professional Certificates</li>
+              <li>
+                <span>✓</span>
+                Future Platform Updates
+              </li>
 
-<li>🛣 Career Roadmaps</li>
+            </ul>
 
-<li>🔄 Future Platform Updates</li>
 
+            <button
+              type="button"
+              className="pricingButton secondaryButton"
+              onClick={() => handleUpgrade("USD")}
+              disabled={Boolean(loadingCurrency)}
+            >
 
-</ul>
+              {isLoading("USD") ? (
+                <>
+                  <span className="buttonSpinner" />
+                  Connecting to Paystack...
+                </>
+              ) : (
+                <>
+                  Join Global Academy
+                  <span>→</span>
+                </>
+              )}
 
+            </button>
 
 
+            <div className="securePayment">
 
+              <span>🔒</span>
 
-<button
+              Secure payment powered by Paystack
 
-onClick={()=>handleUpgrade("NGN")}
+            </div>
 
->
+          </article>
 
-Start Engineering Journey
 
-</button>
+        </div>
 
+      </section>
 
 
-</div>
 
+      {/* ========================================================
+          VALUE / ECOSYSTEM
+      ======================================================== */}
 
+      <section className="pricingEcosystem">
 
+        <div className="pricingSectionHeading">
 
+          <span className="sectionLabel">
+            THE PBODY DIFFERENCE
+          </span>
 
+          <h2>
+            More Than A Course.
+            <span> A Complete Engineering Ecosystem.</span>
+          </h2>
 
+          <p>
+            Your membership is designed around the things that
+            actually move an engineer forward.
+          </p>
 
+        </div>
 
 
-<div className="pricingCard international">
+        <div className="guaranteeGrid">
 
 
-<div className="planBadge">
+          <div className="guaranteeItem">
 
-GLOBAL
+            <div className="guaranteeIcon">
+              🚀
+            </div>
 
-</div>
+            <h3>
+              Career Growth
+            </h3>
 
+            <p>
+              Build practical skills and a portfolio that
+              demonstrates what you can actually create.
+            </p>
 
+          </div>
 
 
-<h2>
 
-PBody Pro Global
+          <div className="guaranteeItem">
 
-</h2>
+            <div className="guaranteeIcon">
+              🤖
+            </div>
 
+            <h3>
+              AI Mentorship
+            </h3>
 
+            <p>
+              Get intelligent guidance while learning,
+              solving problems and building projects.
+            </p>
 
+          </div>
 
-<div className="price">
 
-<span>
 
-$
+          <div className="guaranteeItem">
 
-</span>
+            <div className="guaranteeIcon">
+              🏆
+            </div>
 
-99
+            <h3>
+              Recognition
+            </h3>
 
+            <p>
+              Track your achievements and earn professional
+              certificates as you progress.
+            </p>
 
-<small>
+          </div>
 
-/year
 
-</small>
 
+          <div className="guaranteeItem">
 
-</div>
+            <div className="guaranteeIcon">
+              🌍
+            </div>
 
+            <h3>
+              Global Community
+            </h3>
 
+            <p>
+              Learn, build and grow alongside developers
+              working toward the same future.
+            </p>
 
+          </div>
 
 
-<p>
+        </div>
 
-For students and developers worldwide.
+      </section>
 
-</p>
 
 
+      {/* ========================================================
+          FINAL CTA
+      ======================================================== */}
 
+      <section className="pricingFinalCta">
 
+        <div>
 
-<ul>
+          <span>
+            YOUR NEXT LEVEL STARTS HERE
+          </span>
 
+          <h2>
+            Stop Preparing.
+            <br />
+            Start Building.
+          </h2>
 
-<li>🌍 Global Learning Access</li>
+          <p>
+            Join PBody FullStack Academy and turn your
+            learning into real engineering ability.
+          </p>
 
-<li>🤖 AI Learning Assistant</li>
+        </div>
 
-<li>💻 Engineering Projects</li>
 
-<li>🏆 Certificates</li>
+        <button
+          type="button"
+          onClick={() =>
+            document
+              .querySelector(".pricingPlans")
+              ?.scrollIntoView({
+                behavior: "smooth",
+                block: "center"
+              })
+          }
+        >
+          Choose Your Plan
+          <span>↓</span>
+        </button>
 
-<li>🎯 Interview Preparation</li>
+      </section>
 
-<li>👥 Developer Community</li>
 
+    </main>
 
-</ul>
-
-
-
-
-
-<button
-
-onClick={()=>handleUpgrade("USD")}
-
->
-
-Join Global Academy
-
-</button>
-
-
-
-
-</div>
-
-
-
-
-
-
-</section>
-
-
-
-
-
-
-
-
-{/* =====================================
-VALUE SECTION
-===================================== */}
-
-
-
-<section className="pricingGuarantee">
-
-
-<h2>
-
-More Than A Course — A Complete Engineering Ecosystem
-
-</h2>
-
-
-
-
-<p>
-
-Everything you need to learn, build and grow into a professional
-software engineer.
-
-</p>
-
-
-
-
-
-
-
-<div className="guaranteeGrid">
-
-
-
-
-
-<div>
-
-🚀
-
-<h3>
-
-Career Growth
-
-</h3>
-
-
-<p>
-
-Develop skills companies value.
-
-</p>
-
-
-</div>
-
-
-
-
-
-
-
-<div>
-
-🤖
-
-<h3>
-
-AI Mentorship
-
-</h3>
-
-
-<p>
-
-Get guidance while building.
-
-</p>
-
-
-</div>
-
-
-
-
-
-
-
-<div>
-
-🏆
-
-<h3>
-
-Recognition
-
-</h3>
-
-
-<p>
-
-Showcase your achievements.
-
-</p>
-
-
-</div>
-
-
-
-
-
-
-
-<div>
-
-🌍
-
-<h3>
-
-Global Community
-
-</h3>
-
-
-<p>
-
-Learn alongside builders worldwide.
-
-</p>
-
-
-</div>
-
-
-
-
-</div>
-
-
-
-
-</section>
-
-
-
-
-
-</div>
-
-
-);
-
+  );
 
 }

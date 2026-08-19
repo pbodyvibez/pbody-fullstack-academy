@@ -5,7 +5,6 @@
 // ======================================================
 
 require("dotenv").config();
-
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
@@ -64,8 +63,7 @@ app.use(
 
     origin: function(origin, callback) {
 
-      // Allow requests without an origin
-      // such as Postman/server-to-server
+      // Allow Postman/server-to-server requests
       if (!origin) {
 
         return callback(null, true);
@@ -73,7 +71,7 @@ app.use(
       }
 
 
-      // Allow exact origins
+      // Exact origins
       if (allowedOrigins.includes(origin)) {
 
         return callback(null, true);
@@ -81,7 +79,7 @@ app.use(
       }
 
 
-      // Allow PBody Netlify preview deployments
+      // PBody Netlify previews
       if (
 
         origin.endsWith(".netlify.app") &&
@@ -118,9 +116,7 @@ app.use(
 // BODY PARSER
 // ======================================================
 
-app.use(
-  express.json()
-);
+app.use(express.json());
 
 app.use(
   express.urlencoded({

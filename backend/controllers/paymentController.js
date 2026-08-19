@@ -1,310 +1,345 @@
 const pricing = require("../config/pricing");
 
 const {
-initializeTransaction,
-verifyTransaction
+  initializeTransaction,
+  verifyTransaction
 } = require("../services/paystackService");
 
 const Subscription = require("../models/Subscription");
-
 const User = require("../models/User");
 
 
-
-// ==============================
+// ============================================================
 // INITIALIZE PAYMENT
-// ==============================
+// ============================================================
 
-exports.initializePayment = async (req,res)=>{
+exports.initializePayment = async (req, res) => {
 
-try{
+  try {
 
-console.log("PAYMENT BODY RECEIVED:");
-console.log(req.body);
+    const {
+      email,
+      currency = "NGN"
+    } = req.body;
 
 
-const {
-email,
-currency="NGN"
-}=req.body;
+    // ----------------------------------------------------------
+    // VALIDATE EMAIL
+    // ----------------------------------------------------------
 
+    if (!email) {
 
-if(!email){
+      return res.status(400).json({
 
-return res.status(400).json({
+        success: false,
 
-success:false,
-message:"Email is required"
+        message: "Email is required"
 
-});
+      });
 
-}
+    }
 
 
-const user = await User.findOne({
-email: email.toLowerCase()
-});
+    const normalizedEmail = email.toLowerCase().trim();
 
 
-console.log("USER FOUND:");
-console.log(user);
+    // ----------------------------------------------------------
+    // FIND USER
+    // ----------------------------------------------------------
 
+    const user = await User.findOne({
 
+      email: normalizedEmail
 
-if(!user){
+    });
 
-return res.status(404).json({
 
-success:false,
+    if (!user) {
 
-message:`User account not found for ${email}`
+      return res.status(404).json({
 
-});
+        success: false,
 
-}
+        message: `User account not found for ${normalizedEmail}`
 
+      });
 
+    }
 
-const plan = pricing[currency];
 
+    // ----------------------------------------------------------
+    // GET PLAN
+    // ----------------------------------------------------------
 
+    const plan = pricing[currency];
 
-if(!plan){
 
-return res.status(400).json({
+    if (!plan) {
 
-success:false,
+      return res.status(400).json({
 
-message:"Currency not supported"
+        success: false,
 
-});
+        message: "Currency not supported"
 
-}
+      });
 
+    }
 
 
+    // ----------------------------------------------------------
+    // INITIALIZE PAYSTACK TRANSACTION
+    // ----------------------------------------------------------
 
-const payment = await initializeTransaction({
+    const payment = await initializeTransaction({
 
-email,
+      email: normalizedEmail,
 
-amount:plan.annual,
+      amount: plan.annual,
 
-currency:plan.currency
+      currency: plan.currency
 
-});
+    });
 
 
+    // ----------------------------------------------------------
+    // RESPONSE
+    // ----------------------------------------------------------
 
+    return res.status(200).json({
 
+      success: true,
 
-res.json({
+      message: "Payment initialized",
 
-success:true,
+      data: payment
 
-message:"Payment initialized",
+    });
 
-data:payment
+  }
 
-});
+  catch (error) {
 
+    console.error(
 
+      "INITIALIZE PAYMENT ERROR:",
 
+      error.response?.data || error.message
 
-}
+    );
 
-catch(error){
 
+    return res.status(500).json({
 
-console.error(
+      success: false,
 
-"INITIALIZE PAYMENT ERROR",
+      message: "Payment initialization failed"
 
-error.response?.data || error.message
+    });
 
-);
-
-
-
-res.status(500).json({
-
-success:false,
-
-message:"Payment initialization failed"
-
-});
-
-
-}
-
+  }
 
 };
 
 
-
-
-
-
-
-
-
-// ==============================
+// ============================================================
 // VERIFY PAYMENT
-// ==============================
+// ============================================================
 
-exports.verifyPayment = async(req,res)=>{
+exports.verifyPayment = async (req, res) => {
 
+  try {
 
-try{
+    const {
+      reference
+    } = req.params;
 
 
-const {
+    // ----------------------------------------------------------
+    // VALIDATE REFERENCE
+    // ----------------------------------------------------------
 
-reference
+    if (!reference) {
 
-}=req.params;
+      return res.status(400).json({
 
+        success: false,
 
+        message: "Payment reference is required"
 
-const payment = await verifyTransaction(reference);
+      });
 
+    }
 
 
+    // ----------------------------------------------------------
+    // VERIFY WITH PAYSTACK
+    // ----------------------------------------------------------
 
+    const payment = await verifyTransaction(reference);
 
-if(payment.status !== "success"){
 
+    if (!payment || payment.status !== "success") {
 
-return res.status(400).json({
+      return res.status(400).json({
 
-success:false,
+        success: false,
 
-message:"Payment unsuccessful"
+        message: "Payment unsuccessful"
 
-});
+      });
 
+    }
 
-}
 
+    // ----------------------------------------------------------
+    // GET CUSTOMER EMAIL
+    // ----------------------------------------------------------
 
+    const email = payment.customer?.email?.toLowerCase().trim();
 
 
-const email = payment.customer.email;
+    if (!email) {
 
+      return res.status(400).json({
 
+        success: false,
 
-const user = await User.findOne({
+        message: "Payment customer email unavailable"
 
-email
+      });
 
-});
+    }
 
 
+    // ----------------------------------------------------------
+    // FIND USER
+    // ----------------------------------------------------------
 
-if(!user){
+    const user = await User.findOne({
 
+      email
 
-return res.status(404).json({
+    });
 
-success:false,
 
-message:"User not found"
+    if (!user) {
 
-});
+      return res.status(404).json({
 
+        success: false,
 
-}
+        message: "User not found"
 
+      });
 
+    }
 
 
+    // ----------------------------------------------------------
+    // DETERMINE PLAN
+    // ----------------------------------------------------------
 
-const subscription = await Subscription.findOneAndUpdate(
+    const currency = payment.currency?.toUpperCase();
 
-{
+    const plan = pricing[currency];
 
-user:user._id
 
-},
+    if (!plan) {
 
-{
+      return res.status(400).json({
 
+        success: false,
 
-status:"premium",
+        message: "Payment currency is not supported"
 
-plan:"annual",
+      });
 
-currency:payment.currency,
+    }
 
-amount:payment.amount,
 
-paymentReference:reference,
+    // ----------------------------------------------------------
+    // SAVE PREMIUM SUBSCRIPTION
+    // ----------------------------------------------------------
 
-provider:"paystack",
+    const subscription = await Subscription.findOneAndUpdate(
 
-activatedAt:new Date(),
+      {
+        user: user._id
+      },
 
-expiresAt:new Date(
+      {
 
-Date.now()+
+        status: "premium",
 
-365*24*60*60*1000
+        plan: "annual",
 
-)
+        currency,
 
-},
+        amount: payment.amount,
 
-{
+        paymentReference: reference,
 
-new:true,
+        provider: plan.provider,
 
-upsert:true
+        activatedAt: new Date(),
 
-}
+        expiresAt: new Date(
 
-);
+          Date.now() +
 
+          365 * 24 * 60 * 60 * 1000
 
+        )
 
+      },
 
+      {
 
-res.json({
+        new: true,
 
-success:true,
+        upsert: true
 
-message:"Premium activated",
+      }
 
-subscription
+    );
 
-});
 
+    // ----------------------------------------------------------
+    // SUCCESS
+    // ----------------------------------------------------------
 
+    return res.status(200).json({
 
-}
+      success: true,
 
-catch(error){
+      message: "Premium activated",
 
+      subscription
 
-console.error(
+    });
 
-"VERIFY PAYMENT ERROR",
+  }
 
-error.response?.data || error.message
+  catch (error) {
 
-);
+    console.error(
 
+      "VERIFY PAYMENT ERROR:",
 
+      error.response?.data || error.message
 
-res.status(500).json({
+    );
 
-success:false,
 
-message:"Verification failed"
+    return res.status(500).json({
 
-});
+      success: false,
 
+      message: "Verification failed"
 
-}
+    });
 
+  }
 
 };

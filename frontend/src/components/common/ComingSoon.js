@@ -1,95 +1,132 @@
+// =====================================================
+// PBODY FULLSTACK ACADEMY
+// COMING SOON COMPONENT
+// FULL REPLACEMENT
+// =====================================================
+
 import { useNavigate } from "react-router-dom";
-import AppLayout from "../layout/AppLayout";
+
 import "../../styles/comingSoon.css";
+
 
 export default function ComingSoon({
 
-icon,
+  icon,
 
-title,
+  title,
 
-description
+  description
 
-}){
+}) {
 
-const navigate=useNavigate();
+  const navigate = useNavigate();
 
-return(
 
-<AppLayout>
+  return (
 
-<div className="comingSoonPage">
+    <div className="comingSoonPage">
 
-<div className="comingCard">
+      <div className="comingCard">
 
-<div className="comingIcon">
 
-{icon}
+        {/* =================================================
+            ICON
+        ================================================= */}
 
-</div>
+        <div className="comingIcon">
 
-<h1>
+          {icon}
 
-{title}
+        </div>
 
-</h1>
 
-<p>
+        {/* =================================================
+            TITLE
+        ================================================= */}
 
-{description}
+        <h1>
 
-</p>
+          {title}
 
-<div className="comingButtons">
+        </h1>
 
-<button
 
-className="primaryComing"
+        {/* =================================================
+            DESCRIPTION
+        ================================================= */}
 
-onClick={()=>navigate("/dashboard")}
+        <p>
 
->
+          {description}
 
-🏠 Dashboard
+        </p>
 
-</button>
 
-<button
+        {/* =================================================
+            ACTIONS
+        ================================================= */}
 
-className="secondaryComing"
+        <div className="comingButtons">
 
-onClick={()=>navigate("/learning")}
 
->
+          <button
 
-📚 Continue Learning
+            type="button"
 
-</button>
+            className="primaryComing"
 
-</div>
+            onClick={() => navigate("/dashboard")}
 
-<div className="comingFooter">
+          >
 
-<h3>
+            🏠 Dashboard
 
-🚀 PBody Fullstack Academy
+          </button>
 
-</h3>
 
-<span>
+          <button
 
-New features are being added continuously.
+            type="button"
 
-</span>
+            className="secondaryComing"
 
-</div>
+            onClick={() => navigate("/learning-hub")}
 
-</div>
+          >
 
-</div>
+            📚 Continue Learning
 
-</AppLayout>
+          </button>
 
-);
+
+        </div>
+
+
+        {/* =================================================
+            FOOTER
+        ================================================= */}
+
+        <div className="comingFooter">
+
+          <h3>
+
+            🚀 PBody Fullstack Academy
+
+          </h3>
+
+          <span>
+
+            New features are being added continuously.
+
+          </span>
+
+        </div>
+
+
+      </div>
+
+    </div>
+
+  );
 
 }

@@ -1,168 +1,317 @@
-import { useLocation, useNavigate } from "react-router-dom";
-import { useState } from "react";
+// =====================================================
+// PBODY FULLSTACK ACADEMY
+// ASSIGNMENT PAGE
+// FULL REPLACEMENT
+// =====================================================
 
-import AppLayout from "../components/layout/AppLayout";
+import {
+  useLocation,
+  useNavigate
+} from "react-router-dom";
 
-import assignments from "../data/assignments";
+import {
+  useState
+} from "react";
 
-import { useProgress } from "../context/ProgressContext";
-import { useUserEngine } from "../context/UserEngineContext";
+
+import assignments
+  from "../data/assignments";
+
+
+import {
+  useProgress
+} from "../context/ProgressContext";
+
+
+import {
+  useUserEngine
+} from "../context/UserEngineContext";
+
 
 import "../styles/assignment.css";
 
+
 export default function Assignment() {
 
-  const navigate = useNavigate();
 
-  const location = useLocation();
+  // ===================================================
+  // ROUTER
+  // ===================================================
 
-  const { lesson, course } = location.state || {};
+  const navigate =
+    useNavigate();
+
+  const location =
+    useLocation();
+
+
+  // ===================================================
+  // ROUTE DATA
+  // ===================================================
+
+  const {
+    lesson,
+    course
+  } =
+    location.state || {};
+
+
+  // ===================================================
+  // ASSIGNMENT
+  // ===================================================
 
   const assignment =
-    assignments[course?.id]?.[lesson?.id];
+    assignments?.[course?.id]?.[lesson?.id];
 
-  const [submitted, setSubmitted] = useState(false);
 
-  const { completeLesson } = useProgress();
+  // ===================================================
+  // STATE
+  // ===================================================
 
-  const { completeLesson: addXP } = useUserEngine();
+  const [
+    submitted,
+    setSubmitted
+  ] = useState(false);
+
+
+  // ===================================================
+  // PROGRESS
+  // ===================================================
+
+  const {
+    completeLesson
+  } =
+    useProgress();
+
+
+  const {
+    completeLesson: addXP
+  } =
+    useUserEngine();
+
+
+  // ===================================================
+  // MISSING ASSIGNMENT
+  // ===================================================
 
   if (!assignment) {
 
     return (
 
-      <AppLayout>
+      <div
+        style={{
+          color: "white",
+          textAlign: "center",
+          padding: "60px"
+        }}
+      >
 
-        <div
-          style={{
-            color: "white",
-            textAlign: "center",
-            padding: "60px"
-          }}
+        <h1>
+          No Assignment Found
+        </h1>
+
+
+        <button
+          type="button"
+          onClick={() =>
+            navigate("/dashboard")
+          }
         >
 
-          <h1>No Assignment Found</h1>
+          ← Back to Dashboard
 
-        </div>
+        </button>
 
-      </AppLayout>
+      </div>
 
     );
 
   }
 
+
+  // ===================================================
+  // SUBMIT
+  // ===================================================
+
   const submitAssignment = () => {
 
-    if (submitted) return;
+    if (submitted) {
+
+      return;
+
+    }
+
 
     setSubmitted(true);
 
-    addXP(assignment.xp);
+
+    addXP(
+      assignment.xp
+    );
+
 
     completeLesson({
 
-      id: `${course.id}-${lesson.id}-assignment`,
+      id:
+        `${course.id}-${lesson.id}-assignment`,
 
-      xp: assignment.xp
+      xp:
+        assignment.xp
 
     });
 
   };
 
+
+  // ===================================================
+  // CONTINUE
+  // ===================================================
+
+  const continueToProject = () => {
+
+    navigate(
+
+      "/project",
+
+      {
+
+        state: {
+
+          lesson,
+
+          course
+
+        }
+
+      }
+
+    );
+
+  };
+
+
+  // ===================================================
+  // RENDER
+  // ===================================================
+
   return (
 
-    <AppLayout>
+    <div className="assignment-page">
 
-      <div className="assignment-page">
 
-        <div className="assignment-card">
+      <div className="assignment-card">
 
-          <h1>
 
-            📚 {assignment.title}
+        {/* =================================================
+            TITLE
+        ================================================= */}
 
-          </h1>
+        <h1>
 
-          <p>
+          📚 {assignment.title}
 
-            Complete the following tasks.
+        </h1>
 
-          </p>
 
-          <ul>
+        {/* =================================================
+            DESCRIPTION
+        ================================================= */}
 
-            {assignment.instructions.map((item,index)=>(
+        <p>
 
-              <li key={index}>
+          Complete the following tasks.
+
+        </p>
+
+
+        {/* =================================================
+            INSTRUCTIONS
+        ================================================= */}
+
+        <ul>
+
+          {assignment.instructions.map(
+
+            (item, index) => (
+
+              <li
+                key={index}
+              >
 
                 {item}
 
               </li>
 
-            ))}
+            )
 
-          </ul>
+          )}
 
-          <div className="assignment-footer">
+        </ul>
 
-            <h2>
 
-              Reward
+        {/* =================================================
+            FOOTER
+        ================================================= */}
 
-            </h2>
+        <div className="assignment-footer">
 
-            <h1>
 
-              ⭐ {assignment.xp} XP
+          <h2>
 
-            </h1>
+            Reward
 
-            {
+          </h2>
 
-              !submitted ?
 
-              (
+          <h1>
 
-                <button
-                  onClick={submitAssignment}
-                >
+            ⭐ {assignment.xp} XP
 
-                  Submit Assignment
+          </h1>
 
-                </button>
 
-              )
+          {!submitted ? (
 
-              :
+            <button
 
-              (
+              type="button"
 
-                <button
-                  onClick={()=>
-                    navigate("/project",{
-                      state:{
-                        lesson,
-                        course
-                      }
-                    })
-                  }
-                >
+              onClick={
+                submitAssignment
+              }
 
-                  Continue To Project →
+            >
 
-                </button>
+              Submit Assignment
 
-              )
+            </button>
 
-            }
+          ) : (
 
-          </div>
+            <button
+
+              type="button"
+
+              onClick={
+                continueToProject
+              }
+
+            >
+
+              Continue To Project →
+
+            </button>
+
+          )}
+
 
         </div>
 
+
       </div>
 
-    </AppLayout>
+
+    </div>
 
   );
 

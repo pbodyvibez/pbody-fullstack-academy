@@ -1,65 +1,19 @@
-import { useLocation } from "react-router-dom";
+// ======================================================
+// PBODY FULLSTACK ACADEMY
+// LEGACY LAYOUT COMPATIBILITY WRAPPER
+// FULL REPLACEMENT
+// ======================================================
+//
+// StudentLayout and PublicLayout are now controlled
+// directly by the main application router.
+//
+// Older pages/components may still import AppLayout.
+// This compatibility wrapper prevents duplicate
+// sidebars, duplicate navbars and broken Outlet usage.
+//
 
-import PublicLayout from "./PublicLayout";
-import StudentLayout from "./StudentLayout";
+export default function AppLayout({ children }) {
 
-
-export default function AppLayout({
-children
-}){
-
-
-const location = useLocation();
-
-
-
-const publicRoutes = [
-
-"/",
-"/about",
-"/contact",
-"/pricing",
-"/privacy",
-"/terms"
-
-];
-
-
-
-const isPublic =
-publicRoutes.includes(
-location.pathname
-);
-
-
-
-if(isPublic){
-
-
-return(
-
-<PublicLayout>
-
-{children}
-
-</PublicLayout>
-
-);
-
-
-}
-
-
-
-return(
-
-<StudentLayout>
-
-{children}
-
-</StudentLayout>
-
-);
-
+  return children;
 
 }

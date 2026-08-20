@@ -1,10 +1,11 @@
 // ===============================================
 // PBODY FULLSTACK ACADEMY
 // AI ROUTES
+// GEMINI AI ENGINEERING MENTOR
 // ===============================================
 
 const express = require("express");
-const OpenAI = require("openai");
+const { GoogleGenAI } = require("@google/genai");
 
 const auth = require("../middleware/authMiddleware");
 
@@ -12,18 +13,14 @@ const router = express.Router();
 
 
 // ===============================================
-// OPENAI CLIENT
+// GEMINI CLIENT
 // ===============================================
 
-const client = new OpenAI({
+const ai = new GoogleGenAI({
 
-  apiKey: process.env.OPENAI_API_KEY,
-
-  timeout: 30000
+  apiKey: process.env.GEMINI_API_KEY
 
 });
-
-
 
 
 // ===============================================
@@ -31,16 +28,17 @@ const client = new OpenAI({
 // ===============================================
 
 router.post(
+
   "/chat",
+
   auth,
+
   async (req, res) => {
 
-
-    console.log("🤖 AI REQUEST RECEIVED");
+    console.log("🤖 PBody AI REQUEST RECEIVED");
 
 
     try {
-
 
       const {
 
@@ -55,75 +53,93 @@ router.post(
       } = req.body;
 
 
-
       console.log(
         "Message:",
         message
       );
 
 
+      // =========================================
+      // VALIDATE MESSAGE
+      // =========================================
 
-      if(!message){
-
+      if (!message || !message.trim()) {
 
         return res.status(400).json({
 
-          success:false,
+          success: false,
 
-          message:"Message required"
+          message: "Message required"
 
         });
-
 
       }
 
 
+      // =========================================
+      // BUILD AI SYSTEM INSTRUCTION
+      // =========================================
 
-
-      console.log(
-        "Calling OpenAI..."
-      );
-
-
-
-
-      const completion = await client.chat.completions.create({
-
-        model:"gpt-4o-mini",
-
-
-        temperature:0.5,
-
-
-        messages:[
-
-
-          {
-
-
-            role:"system",
-
-
-            content:`
+      const systemInstruction = `
 
 You are PBody FullStack Academy AI Engineering Mentor.
 
-You are a senior software engineering instructor.
+You are a senior software engineering instructor
+inside PBody FullStack Academy.
 
-Teach students clearly with practical examples.
+Your job is to help students become professional
+software engineers.
 
-Help with:
+Teach clearly, practically, patiently, and
+professionally.
 
-- Frontend development
-- Backend development
+You specialize in:
+
+- HTML
+- CSS
+- JavaScript
+- React
+- Frontend Engineering
+- Node.js
+- Express.js
+- Backend Engineering
+- REST APIs
+- Authentication
+- MongoDB
 - Databases
-- APIs
-- Artificial Intelligence
-- Software architecture
+- Software Architecture
+- Git and GitHub
 - Debugging
-- Career growth
+- Testing
+- Artificial Intelligence
+- AI APIs
+- Cloud Deployment
+- Full Stack Development
+- Software Engineering Careers
 
-Always encourage learning.
+Teaching rules:
+
+1. Explain concepts clearly.
+
+2. Prefer practical examples.
+
+3. When code is requested, provide clean,
+   production-quality examples.
+
+4. Help students understand WHY something works,
+   not only WHAT to type.
+
+5. When debugging, identify the likely cause first
+   and then provide the fix.
+
+6. Do not unnecessarily overwhelm beginners.
+
+7. Encourage the student and maintain a professional
+   engineering tone.
+
+8. If the student's question is unrelated to
+   software engineering, answer briefly and guide
+   them back toward their learning goal.
 
 Current course:
 
@@ -137,61 +153,83 @@ Student:
 
 ${student?.name || "Student"}
 
-`
-
-          },
-
-
-          {
-
-
-            role:"user",
-
-
-            content:message
-
-
-          }
-
-
-        ]
-
-
-      });
-
-
+`;
 
 
       console.log(
-        "OpenAI response received"
+        "Calling Gemini..."
       );
 
 
+      // =========================================
+      // GEMINI REQUEST
+      // =========================================
 
+      const response = await ai.models.generateContent({
 
-      return res.json({
+       model: "gemini-2.5-flash-lite",
 
-        success:true,
+        contents: message,
 
-        reply:
-        completion.choices[0].message.content
+        config: {
 
+          systemInstruction,
+
+          temperature: 0.5,
+
+          maxOutputTokens: 2048
+
+        }
 
       });
 
+
+      console.log(
+        "Gemini response received"
+      );
+
+
+      // =========================================
+      // EXTRACT RESPONSE
+      // =========================================
+
+      const reply = response.text;
+
+
+      if (!reply) {
+
+        throw new Error(
+          "Gemini returned an empty response"
+        );
+
+      }
+
+
+      // =========================================
+      // SUCCESS
+      // =========================================
+
+      return res.json({
+
+        success: true,
+
+        reply
+
+      });
 
 
     }
 
-    catch(error){
+    catch (error) {
 
 
       console.log(
-        "========== AI ERROR =========="
+        "========== GEMINI AI ERROR =========="
       );
 
 
       console.log(
+        "Message:",
         error.message
       );
 
@@ -209,56 +247,89 @@ ${student?.name || "Student"}
 
 
       console.log(
-        "=============================="
+        "Name:",
+        error.name
       );
 
 
+      console.log(
+        "======================================"
+      );
 
 
-      if(
+      // =========================================
+      // GEMINI RATE LIMIT / FREE TIER
+      // =========================================
+
+      if (
 
         error.status === 429 ||
 
-        error.code === "insufficient_quota"
+        error.code === "RESOURCE_EXHAUSTED"
 
-      ){
+      ) {
 
+        return res.status(429).json({
 
-        return res.json({
+          success: false,
 
-          success:true,
+          fallback: true,
 
-          fallback:true,
-
-          reply:
-          "⚠️ AI Mentor is temporarily unavailable because AI credits need renewal."
+          message:
+            "PBody AI Mentor is temporarily unavailable because the Gemini API free-tier limit has been reached."
 
         });
-
 
       }
 
 
+      // =========================================
+      // AUTHENTICATION / API KEY ERROR
+      // =========================================
 
+      if (
+
+        error.status === 401 ||
+
+        error.status === 403
+
+      ) {
+
+        return res.status(500).json({
+
+          success: false,
+
+          message:
+            "PBody AI Mentor API authentication failed. Please check the Gemini API key."
+
+        });
+
+      }
+
+
+      // =========================================
+      // GENERAL ERROR
+      // =========================================
 
       return res.status(500).json({
 
-        success:false,
+        success: false,
 
         message:
-        error.message || "AI service failed"
+          error.message ||
+          "PBody AI Mentor service failed."
 
       });
 
-
-
     }
-
 
   }
 
 );
 
 
+// ===============================================
+// EXPORT ROUTER
+// ===============================================
 
 module.exports = router;

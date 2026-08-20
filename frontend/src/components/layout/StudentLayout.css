@@ -1,53 +1,53 @@
 /* =====================================================
    PBODY FULLSTACK ACADEMY
    STUDENT APPLICATION LAYOUT
-   PREMIUM RESPONSIVE
-   FULL REPLACEMENT
+   FULL RESPONSIVE SHELL
+   DESKTOP + TABLET + MOBILE
 ===================================================== */
 
 .studentLayout {
+  --sidebar-width: 280px;
+  --sidebar-collapsed-width: 82px;
+  --student-navbar-height: 80px;
 
-  min-height: 100vh;
+  position: relative;
 
   width: 100%;
+  min-width: 0;
+  min-height: 100vh;
 
   display: flex;
 
   background: #020617;
-
   color: #ffffff;
 
-  overflow-x: hidden;
-
-  position: relative;
-
+  overflow-x: clip;
 }
 
 
 /* =====================================================
-   WORKSPACE
+   MAIN WORKSPACE
 ===================================================== */
 
 .studentWorkspace {
+  position: relative;
 
-  width: calc(100% - 280px);
-
-  margin-left: 280px;
-
+  width: calc(100% - var(--sidebar-width));
+  min-width: 0;
   min-height: 100vh;
 
-  display: flex;
+  margin-left: var(--sidebar-width);
 
+  display: flex;
   flex-direction: column;
 
-  transition:
-    width 0.35s ease,
-    margin-left 0.35s ease;
-
-  overflow-x: hidden;
+  overflow-x: clip;
 
   box-sizing: border-box;
 
+  transition:
+    width 0.3s ease,
+    margin-left 0.3s ease;
 }
 
 
@@ -55,61 +55,75 @@
    COLLAPSED SIDEBAR
 ===================================================== */
 
-.studentLayout.sidebarCollapsed
-.studentWorkspace {
+.studentLayout.sidebarCollapsed .studentWorkspace {
+  width: calc(100% - var(--sidebar-collapsed-width));
 
-  width: calc(100% - 82px);
-
-  margin-left: 82px;
-
+  margin-left: var(--sidebar-collapsed-width);
 }
 
 
 /* =====================================================
-   CONTENT
+   PAGE CONTENT
 ===================================================== */
 
 .studentContent {
+  position: relative;
 
   flex: 1;
 
   width: 100%;
+  min-width: 0;
 
-  min-height: calc(100vh - 80px);
+  min-height:
+    calc(100vh - var(--student-navbar-height));
 
   padding: 30px;
 
   box-sizing: border-box;
 
-  overflow-x: hidden;
-
+  overflow-x: clip;
 }
 
 
 /* =====================================================
-   PAGE CHILDREN
+   DIRECT PAGE CHILDREN
 ===================================================== */
 
 .studentContent > * {
-
   width: 100%;
+  max-width: 100%;
 
-  max-width: none;
+  min-width: 0;
 
   box-sizing: border-box;
-
 }
 
 
-/* Prevent common horizontal overflow */
+/* =====================================================
+   MEDIA SAFETY
+===================================================== */
 
 .studentContent img,
 .studentContent video,
 .studentContent iframe,
-.studentContent canvas {
-
+.studentContent canvas,
+.studentContent svg {
   max-width: 100%;
+}
 
+
+/* =====================================================
+   FLEX / GRID SAFETY
+===================================================== */
+
+.studentContent .row,
+.studentContent .grid,
+.studentContent .container,
+.studentContent .content,
+.studentContent section,
+.studentContent article {
+  min-width: 0;
+  max-width: 100%;
 }
 
 
@@ -118,9 +132,28 @@
 ===================================================== */
 
 .mobileSidebarOverlay {
-
   display: none;
 
+  position: fixed;
+
+  inset: 0;
+
+  width: 100vw;
+  height: 100vh;
+
+  margin: 0;
+  padding: 0;
+
+  border: 0;
+
+  background: rgba(0, 0, 0, 0.62);
+
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
+
+  cursor: pointer;
+
+  z-index: 199;
 }
 
 
@@ -130,29 +163,14 @@
 
 @media (max-width: 1100px) {
 
-  .studentWorkspace {
-
-    width: calc(100% - 250px);
-
-    margin-left: 250px;
-
-  }
-
-
-  .studentLayout.sidebarCollapsed
-  .studentWorkspace {
-
-    width: calc(100% - 78px);
-
-    margin-left: 78px;
-
+  .studentLayout {
+    --sidebar-width: 250px;
+    --sidebar-collapsed-width: 78px;
   }
 
 
   .studentContent {
-
     padding: 25px;
-
   }
 
 }
@@ -165,83 +183,58 @@
 @media (max-width: 768px) {
 
   .studentLayout {
+    --student-navbar-height: 70px;
 
     display: block;
 
+    width: 100%;
+    min-width: 0;
     min-height: 100vh;
 
-    width: 100%;
-
+    overflow-x: clip;
   }
 
 
   .studentWorkspace,
-  .studentLayout.sidebarCollapsed
-  .studentWorkspace {
+  .studentLayout.sidebarCollapsed .studentWorkspace {
 
     width: 100%;
 
-    margin-left: 0;
-
+    min-width: 0;
     min-height: 100vh;
 
+    margin-left: 0;
+
+    display: flex;
+    flex-direction: column;
+
+    overflow-x: clip;
   }
 
 
   .studentContent {
 
     width: 100%;
+    min-width: 0;
+
+    min-height:
+      calc(100vh - var(--student-navbar-height));
 
     padding: 20px;
 
-    min-height: calc(100vh - 70px);
-
+    overflow-x: clip;
   }
 
 
   /* =================================================
-     MOBILE SIDEBAR OVERLAY
+     MOBILE OVERLAY
   ================================================= */
 
   .mobileSidebarOverlay {
 
     display: block;
 
-    position: fixed;
-
-    inset: 0;
-
-    width: 100%;
-
-    height: 100%;
-
-    margin: 0;
-
-    padding: 0;
-
-    border: none;
-
-    background: rgba(0, 0, 0, 0.62);
-
-    backdrop-filter: blur(3px);
-
-    -webkit-backdrop-filter: blur(3px);
-
     z-index: 199;
-
-    cursor: pointer;
-
-  }
-
-
-  /* Keep workspace above normal page content */
-
-  .studentWorkspace {
-
-    position: relative;
-
-    z-index: 1;
-
   }
 
 }
@@ -254,9 +247,46 @@
 @media (max-width: 480px) {
 
   .studentContent {
-
     padding: 15px;
+  }
 
+}
+
+
+/* =====================================================
+   VERY SMALL MOBILE
+===================================================== */
+
+@media (max-width: 360px) {
+
+  .studentContent {
+    padding: 12px;
+  }
+
+}
+
+
+/* =====================================================
+   TOUCH DEVICES
+===================================================== */
+
+@media (hover: none) and (pointer: coarse) {
+
+  .studentContent {
+    -webkit-overflow-scrolling: touch;
+  }
+
+}
+
+
+/* =====================================================
+   ACCESSIBILITY
+===================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+
+  .studentWorkspace {
+    transition: none;
   }
 
 }

@@ -1,875 +1,720 @@
-/* ===========================================================
-PBODY FULLSTACK ACADEMY
-CAREER CENTER DASHBOARD
-=========================================================== */
+// ======================================================
+// PBODY FULLSTACK ACADEMY
+// CAREER CENTER DASHBOARD
+// CURRENT STUDENT APPLICATION ARCHITECTURE
+// FULL REPLACEMENT
+// ======================================================
 
 import { useNavigate } from "react-router-dom";
 
-import AppLayout from "../components/layout/AppLayout";
-
 import "../styles/careerDashboard.css";
 
-export default function CareerDashboard(){
-
-const navigate = useNavigate();
-
-const careerStats=[
-
-{
-title:"Resume",
-value:"92%",
-status:"Professional",
-icon:"📄",
-color:"blue"
-},
-
-{
-title:"Portfolio",
-value:"68%",
-status:"Needs Update",
-icon:"💼",
-color:"gold"
-},
-
-{
-title:"Certificates",
-value:"12",
-status:"Earned",
-icon:"🏆",
-color:"green"
-},
+export default function CareerDashboard() {
+
+  const navigate = useNavigate();
+
+  const careerStats = [
+
+    {
+      title: "Resume",
+      value: "92%",
+      status: "Professional",
+      icon: "📄",
+      color: "blue"
+    },
+
+    {
+      title: "Portfolio",
+      value: "68%",
+      status: "Needs Update",
+      icon: "💼",
+      color: "gold"
+    },
+
+    {
+      title: "Certificates",
+      value: "12",
+      status: "Earned",
+      icon: "🏆",
+      color: "green"
+    },
+
+    {
+      title: "Projects",
+      value: "18",
+      status: "Completed",
+      icon: "🚀",
+      color: "purple"
+    }
+
+  ];
+
+  const recommendedJobs = [
+
+    {
+      id: 1,
+      company: "Google",
+      role: "Frontend Engineer",
+      location: "Remote",
+      salary: "$95k - $145k",
+      type: "Full Time",
+      level: "Intermediate"
+    },
+
+    {
+      id: 2,
+      company: "Microsoft",
+      role: "Backend Engineer",
+      location: "Hybrid",
+      salary: "$90k - $140k",
+      type: "Full Time",
+      level: "Junior"
+    },
+
+    {
+      id: 3,
+      company: "Flutterwave",
+      role: "Full Stack Engineer",
+      location: "Lagos",
+      salary: "Competitive",
+      type: "Hybrid",
+      level: "Mid Level"
+    }
+
+  ];
+
+  const recentApplications = [
+
+    {
+      company: "Amazon",
+      role: "Frontend Engineer",
+      status: "Interview Scheduled"
+    },
+
+    {
+      company: "Paystack",
+      role: "Backend Engineer",
+      status: "Application Sent"
+    },
+
+    {
+      company: "Google",
+      role: "React Developer",
+      status: "Under Review"
+    }
+
+  ];
+
+  return (
+
+    <div className="careerDashboard">
+
+      {/* ==================================================
+          HERO
+      ================================================== */}
 
-{
-title:"Projects",
-value:"18",
-status:"Completed",
-icon:"🚀",
-color:"purple"
-}
+      <section className="careerHero">
 
-];
+        <div className="careerHeroLeft">
 
-const recommendedJobs=[
+          <span className="careerBadge">
+            🚀 PBODY CAREER CENTER
+          </span>
 
-{
-id:1,
-company:"Google",
-role:"Frontend Engineer",
-location:"Remote",
-salary:"$95k - $145k",
-type:"Full Time",
-level:"Intermediate"
-},
+          <h1>
+            Build Your Software Engineering Career
+          </h1>
 
-{
-id:2,
-company:"Microsoft",
-role:"Backend Engineer",
-location:"Hybrid",
-salary:"$90k - $140k",
-type:"Full Time",
-level:"Junior"
-},
+          <p>
+            Everything you need to move from learning to employment.
+            Build your resume, portfolio, apply for internships,
+            track applications and receive AI career guidance.
+          </p>
 
-{
-id:3,
-company:"Flutterwave",
-role:"Full Stack Engineer",
-location:"Lagos",
-salary:"Competitive",
-type:"Hybrid",
-level:"Mid Level"
-}
+          <div className="careerButtons">
 
-];
+            <button
+              className="primaryCareerButton"
+              onClick={() => navigate("/resume-builder")}
+            >
+              Build Resume
+            </button>
 
-const recentApplications=[
+            <button
+              className="secondaryCareerButton"
+              onClick={() => navigate("/portfolio-builder")}
+            >
+              Portfolio
+            </button>
 
-{
-company:"Amazon",
-role:"Frontend Engineer",
-status:"Interview Scheduled"
-},
+            <button
+              className="secondaryCareerButton"
+              onClick={() => navigate("/jobs")}
+            >
+              Browse Jobs
+            </button>
 
-{
-company:"Paystack",
-role:"Backend Engineer",
-status:"Application Sent"
-},
+            <button
+              className="secondaryCareerButton"
+              onClick={() => navigate("/internships")}
+            >
+              Internships
+            </button>
 
-{
-company:"Google",
-role:"React Developer",
-status:"Under Review"
-}
+          </div>
 
-];
+        </div>
 
-return(
+        <div className="careerHeroRight">
 
-<AppLayout>
+          <div className="careerCircle">
+            💼
+          </div>
 
-<div className="careerDashboard">
+        </div>
 
-<section className="careerHero">
+      </section>
 
-<div className="careerHeroLeft">
 
-<span className="careerBadge">
+      {/* ==================================================
+          STATISTICS
+      ================================================== */}
 
-🚀 PBODY CAREER CENTER
+      <section className="careerStatistics">
 
-</span>
+        {careerStats.map((item, index) => (
 
-<h1>
+          <div
+            key={index}
+            className={`careerStatCard ${item.color}`}
+          >
 
-Build Your Software Engineering Career
+            <div className="careerIcon">
+              {item.icon}
+            </div>
 
-</h1>
+            <div>
 
-<p>
+              <h2>
+                {item.value}
+              </h2>
 
-Everything you need to move from learning to employment.
-Build your resume, portfolio, apply for internships,
-track applications and receive AI career guidance.
+              <h4>
+                {item.title}
+              </h4>
 
-</p>
+              <p>
+                {item.status}
+              </p>
 
-<div className="careerButtons">
+            </div>
 
-<button
-className="primaryCareerButton"
-onClick={()=>navigate("/resume-builder")}
->
+          </div>
 
-Build Resume
+        ))}
 
-</button>
+      </section>
 
-<button
-className="secondaryCareerButton"
-onClick={()=>navigate("/portfolio-builder")}
->
 
-Portfolio
+      {/* ==================================================
+          MAIN GRID
+      ================================================== */}
 
-</button>
+      <div className="careerGrid">
 
-<button
-className="secondaryCareerButton"
-onClick={()=>navigate("/jobs")}
->
 
-Browse Jobs
+        {/* ==================================================
+            LEFT COLUMN
+        ================================================== */}
 
-</button>
+        <div className="careerLeftColumn">
 
-<button
-className="secondaryCareerButton"
-onClick={()=>navigate("/internships")}
->
 
-Internships
+          {/* ==================================================
+              RECOMMENDED JOBS
+          ================================================== */}
 
-</button>
+          <section className="careerPanel">
 
-</div>
+            <div className="panelHeader">
 
-</div>
+              <h2>
+                🔥 Recommended Opportunities
+              </h2>
 
-<div className="careerHeroRight">
+              <button
+                className="viewAllButton"
+                onClick={() => navigate("/jobs")}
+              >
+                View All Jobs
+              </button>
 
-<div className="careerCircle">
+            </div>
 
-💼
+            <div className="jobList">
 
-</div>
+              {recommendedJobs.map(job => (
 
-</div>
+                <div
+                  key={job.id}
+                  className="jobCard"
+                >
 
-</section>
+                  <div className="jobCardTop">
 
-<section className="careerStatistics">
+                    <div>
 
-{
-careerStats.map((item,index)=>(
+                      <h3>
+                        {job.role}
+                      </h3>
 
-<div
-key={index}
-className={`careerStatCard ${item.color}`}
->
+                      <h4>
+                        {job.company}
+                      </h4>
 
-<div className="careerIcon">
+                    </div>
 
-{item.icon}
+                    <span className="jobType">
+                      {job.type}
+                    </span>
 
-</div>
+                  </div>
 
-<div>
+                  <div className="jobMeta">
 
-<h2>
+                    <span>
+                      📍 {job.location}
+                    </span>
 
-{item.value}
+                    <span>
+                      💰 {job.salary}
+                    </span>
 
-</h2>
+                    <span>
+                      🎯 {job.level}
+                    </span>
 
-<h4>
+                  </div>
 
-{item.title}
+                  <div className="jobActions">
 
-</h4>
+                    <button
+                      className="outlineButton"
+                      onClick={() => navigate("/resume-builder")}
+                    >
+                      Prepare Resume
+                    </button>
 
-<p>
+                    <button
+                      className="primaryCareerButton"
+                      onClick={() => navigate("/jobs")}
+                    >
+                      Apply
+                    </button>
 
-{item.status}
+                  </div>
 
-</p>
+                </div>
 
-</div>
+              ))}
 
-</div>
+            </div>
 
-))
-}
+          </section>
 
-</section>
 
-<div className="careerGrid">
+          {/* ==================================================
+              CAREER ROADMAP
+          ================================================== */}
 
-<div className="careerLeftColumn">
-    <section className="careerPanel">
+          <section className="careerPanel">
 
-<div className="panelHeader">
+            <div className="panelHeader">
 
-<h2>
+              <h2>
+                📈 Career Roadmap
+              </h2>
 
-🔥 Recommended Opportunities
+            </div>
 
-</h2>
+            <div className="roadmapList">
 
-<button
+              <div className="roadmapItem completed">
 
-className="viewAllButton"
+                <div className="roadmapCheck">
+                  ✓
+                </div>
 
-onClick={()=>navigate("/jobs")}
+                <div>
 
->
+                  <h3>
+                    HTML & CSS
+                  </h3>
 
-View All Jobs
+                  <p>
+                    Completed Successfully
+                  </p>
 
-</button>
+                </div>
 
-</div>
+              </div>
 
 
+              <div className="roadmapItem completed">
 
+                <div className="roadmapCheck">
+                  ✓
+                </div>
 
+                <div>
 
-<div className="jobList">
+                  <h3>
+                    JavaScript
+                  </h3>
 
-{
+                  <p>
+                    Completed Successfully
+                  </p>
 
-recommendedJobs.map(job=>(
+                </div>
 
-<div
+              </div>
 
-key={job.id}
 
-className="jobCard"
+              <div className="roadmapItem progress">
 
->
+                <div className="roadmapCheck">
+                  70%
+                </div>
 
-<div className="jobCardTop">
+                <div>
 
-<div>
+                  <h3>
+                    React Engineering
+                  </h3>
 
-<h3>
+                  <p>
+                    Continue Completing Lessons
+                  </p>
 
-{job.role}
+                </div>
 
-</h3>
+              </div>
 
-<h4>
 
-{job.company}
+              <div className="roadmapItem">
 
-</h4>
+                <div className="roadmapCheck">
+                  4
+                </div>
 
-</div>
+                <div>
 
-<span className="jobType">
+                  <h3>
+                    Node.js Backend
+                  </h3>
 
-{job.type}
+                  <p>
+                    Next Learning Phase
+                  </p>
 
-</span>
+                </div>
 
-</div>
+              </div>
 
 
+              <div className="roadmapItem">
 
+                <div className="roadmapCheck">
+                  5
+                </div>
 
+                <div>
 
-<div className="jobMeta">
+                  <h3>
+                    Deployment & DevOps
+                  </h3>
 
-<span>
+                  <p>
+                    Final Career Preparation
+                  </p>
 
-📍 {job.location}
+                </div>
 
-</span>
+              </div>
 
-<span>
+            </div>
 
-💰 {job.salary}
+          </section>
 
-</span>
+        </div>
 
-<span>
 
-🎯 {job.level}
+        {/* ==================================================
+            RIGHT COLUMN
+        ================================================== */}
 
-</span>
+        <div className="careerRightColumn">
 
-</div>
 
+          {/* ==================================================
+              AI CAREER COACH
+          ================================================== */}
 
+          <section className="careerPanel">
 
+            <div className="panelHeader">
 
+              <h2>
+                🤖 AI Career Coach
+              </h2>
 
-<div className="jobActions">
+            </div>
 
-<button
+            <div className="careerCoach">
 
-className="outlineButton"
+              <div className="coachScore">
 
-onClick={()=>navigate("/resume-builder")}
+                <h1>
+                  84%
+                </h1>
 
->
+                <span>
+                  Career Readiness
+                </span>
 
-Prepare Resume
+              </div>
 
-</button>
+              <div className="coachSuggestions">
 
+                <h3>
+                  AI Recommendations
+                </h3>
 
+                <ul>
 
+                  <li>
+                    ✔ Complete your React Engineering course.
+                  </li>
 
+                  <li>
+                    ✔ Upload two more production-ready projects.
+                  </li>
 
-<button
+                  <li>
+                    ✔ Finish your professional resume.
+                  </li>
 
-className="primaryCareerButton"
+                  <li>
+                    ✔ Complete your developer portfolio.
+                  </li>
 
-onClick={()=>navigate("/jobs")}
+                  <li>
+                    ✔ Earn two additional certificates.
+                  </li>
 
->
+                </ul>
 
-Apply
+                <button
+                  className="primaryCareerButton"
+                  onClick={() => navigate("/ai-mentor")}
+                >
+                  Open AI Career Coach
+                </button>
 
-</button>
+              </div>
 
-</div>
+            </div>
 
-</div>
+          </section>
 
-))
 
-}
+          {/* ==================================================
+              RESUME
+          ================================================== */}
 
-</div>
+          <section className="careerPanel">
 
-</section>
+            <div className="panelHeader">
 
+              <h2>
+                📄 Resume Status
+              </h2>
 
+            </div>
 
+            <div className="statusCard">
 
+              <div className="statusCircle">
+                92%
+              </div>
 
+              <div>
 
+                <h3>
+                  Professional Resume
+                </h3>
 
+                <p>
+                  Your resume is almost complete.
+                  Adding more projects and certifications
+                  will improve your score.
+                </p>
 
+                <button
+                  className="outlineButton"
+                  onClick={() => navigate("/resume-builder")}
+                >
+                  Edit Resume
+                </button>
 
-<section className="careerPanel">
+              </div>
 
-<div className="panelHeader">
+            </div>
 
-<h2>
+          </section>
 
-📈 Career Roadmap
 
-</h2>
+          {/* ==================================================
+              PORTFOLIO
+          ================================================== */}
 
-</div>
+          <section className="careerPanel">
 
+            <div className="panelHeader">
 
+              <h2>
+                💼 Portfolio Status
+              </h2>
 
+            </div>
 
+            <div className="statusCard">
 
-<div className="roadmapList">
+              <div className="statusCircle warning">
+                68%
+              </div>
 
-<div className="roadmapItem completed">
+              <div>
 
-<div className="roadmapCheck">
+                <h3>
+                  Developer Portfolio
+                </h3>
 
-✓
+                <p>
+                  Connect your GitHub repositories,
+                  showcase more completed projects
+                  and publish your portfolio.
+                </p>
 
-</div>
+                <button
+                  className="outlineButton"
+                  onClick={() => navigate("/portfolio-builder")}
+                >
+                  Open Portfolio
+                </button>
 
-<div>
+              </div>
 
-<h3>
+            </div>
 
-HTML & CSS
+          </section>
 
-</h3>
 
-<p>
+          {/* ==================================================
+              APPLICATIONS
+          ================================================== */}
 
-Completed Successfully
+          <section className="careerPanel">
 
-</p>
+            <div className="panelHeader">
 
-</div>
+              <h2>
+                📨 Recent Applications
+              </h2>
 
-</div>
+            </div>
 
+            <div className="applicationList">
 
+              {recentApplications.map((application, index) => (
 
+                <div
+                  key={index}
+                  className="applicationItem"
+                >
 
+                  <div>
 
-<div className="roadmapItem completed">
+                    <h4>
+                      {application.company}
+                    </h4>
 
-<div className="roadmapCheck">
+                    <p>
+                      {application.role}
+                    </p>
 
-✓
+                  </div>
 
-</div>
+                  <span className="applicationStatus">
+                    {application.status}
+                  </span>
 
-<div>
+                </div>
 
-<h3>
+              ))}
 
-JavaScript
+            </div>
 
-</h3>
+          </section>
 
-<p>
 
-Completed Successfully
+          {/* ==================================================
+              CAREER TIPS
+          ================================================== */}
 
-</p>
+          <section className="careerPanel">
 
-</div>
+            <div className="panelHeader">
 
-</div>
+              <h2>
+                💡 Career Tips
+              </h2>
 
+            </div>
 
+            <div className="tipsList">
 
+              <div>
+                🚀 Build at least 10 real-world projects.
+              </div>
 
+              <div>
+                🏆 Complete every academy certificate.
+              </div>
 
-<div className="roadmapItem progress">
+              <div>
+                💻 Keep your GitHub active every week.
+              </div>
 
-<div className="roadmapCheck">
+              <div>
+                📚 Learn one new technology every month.
+              </div>
 
-70%
+              <div>
+                🤝 Network with other developers.
+              </div>
 
-</div>
+            </div>
 
-<div>
+          </section>
 
-<h3>
+        </div>
 
-React Engineering
+      </div>
 
-</h3>
+    </div>
 
-<p>
-
-Continue Completing Lessons
-
-</p>
-
-</div>
-
-</div>
-
-
-
-
-
-<div className="roadmapItem">
-
-<div className="roadmapCheck">
-
-4
-
-</div>
-
-<div>
-
-<h3>
-
-Node.js Backend
-
-</h3>
-
-<p>
-
-Next Learning Phase
-
-</p>
-
-</div>
-
-</div>
-
-
-
-
-
-<div className="roadmapItem">
-
-<div className="roadmapCheck">
-
-5
-
-</div>
-
-<div>
-
-<h3>
-
-Deployment & DevOps
-
-</h3>
-
-<p>
-
-Final Career Preparation
-
-</p>
-
-</div>
-
-</div>
-
-</div>
-
-</section>
-
-</div>
-
-
-
-
-
-<div className="careerRightColumn">
-    <section className="careerPanel">
-
-<div className="panelHeader">
-
-<h2>
-
-🤖 AI Career Coach
-
-</h2>
-
-</div>
-
-<div className="careerCoach">
-
-<div className="coachScore">
-
-<h1>
-
-84%
-
-</h1>
-
-<span>
-
-Career Readiness
-
-</span>
-
-</div>
-
-<div className="coachSuggestions">
-
-<h3>
-
-AI Recommendations
-
-</h3>
-
-<ul>
-
-<li>✔ Complete your React Engineering course.</li>
-
-<li>✔ Upload two more production-ready projects.</li>
-
-<li>✔ Finish your professional resume.</li>
-
-<li>✔ Complete your developer portfolio.</li>
-
-<li>✔ Earn two additional certificates.</li>
-
-</ul>
-
-<button
-
-className="primaryCareerButton"
-
-onClick={()=>navigate("/ai-mentor")}
-
->
-
-Open AI Career Coach
-
-</button>
-
-</div>
-
-</div>
-
-</section>
-
-
-
-
-
-
-<section className="careerPanel">
-
-<div className="panelHeader">
-
-<h2>
-
-📄 Resume Status
-
-</h2>
-
-</div>
-
-<div className="statusCard">
-
-<div className="statusCircle">
-
-92%
-
-</div>
-
-<div>
-
-<h3>
-
-Professional Resume
-
-</h3>
-
-<p>
-
-Your resume is almost complete.
-Adding more projects and certifications will improve your score.
-
-</p>
-
-<button
-
-className="outlineButton"
-
-onClick={()=>navigate("/resume-builder")}
-
->
-
-Edit Resume
-
-</button>
-
-</div>
-
-</div>
-
-</section>
-
-
-
-
-
-
-<section className="careerPanel">
-
-<div className="panelHeader">
-
-<h2>
-
-💼 Portfolio Status
-
-</h2>
-
-</div>
-
-<div className="statusCard">
-
-<div className="statusCircle warning">
-
-68%
-
-</div>
-
-<div>
-
-<h3>
-
-Developer Portfolio
-
-</h3>
-
-<p>
-
-Connect your GitHub repositories, showcase more completed
-projects and publish your portfolio.
-
-</p>
-
-<button
-
-className="outlineButton"
-
-onClick={()=>navigate("/portfolio-builder")}
-
->
-
-Open Portfolio
-
-</button>
-
-</div>
-
-</div>
-
-</section>
-
-
-
-
-
-
-<section className="careerPanel">
-
-<div className="panelHeader">
-
-<h2>
-
-📨 Recent Applications
-
-</h2>
-
-</div>
-
-<div className="applicationList">
-
-{
-
-recentApplications.map((application,index)=>(
-
-<div
-
-key={index}
-
-className="applicationItem"
-
->
-
-<div>
-
-<h4>
-
-{application.company}
-
-</h4>
-
-<p>
-
-{application.role}
-
-</p>
-
-</div>
-
-<span className="applicationStatus">
-
-{application.status}
-
-</span>
-
-</div>
-
-))
-
-}
-
-</div>
-
-</section>
-
-
-
-
-
-
-<section className="careerPanel">
-
-<div className="panelHeader">
-
-<h2>
-
-💡 Career Tips
-
-</h2>
-
-</div>
-
-<div className="tipsList">
-
-<div>
-
-🚀 Build at least 10 real-world projects.
-
-</div>
-
-<div>
-
-🏆 Complete every academy certificate.
-
-</div>
-
-<div>
-
-💻 Keep your GitHub active every week.
-
-</div>
-
-<div>
-
-📚 Learn one new technology every month.
-
-</div>
-
-<div>
-
-🤝 Network with other developers.
-
-</div>
-
-</div>
-
-</section>
-
-</div>
-
-</div>
-
-</div>
-
-</AppLayout>
-
-);
+  );
 
 }

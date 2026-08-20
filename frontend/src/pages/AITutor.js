@@ -1,33 +1,59 @@
+// =====================================================
+// PBODY FULLSTACK ACADEMY
+// AI ENGINEERING MENTOR
+// FULL REPLACEMENT
+// =====================================================
+
 import { useLocation } from "react-router-dom";
 import { useState } from "react";
-import AppLayout from "../components/layout/AppLayout";
+
 import API from "../utils/api";
 
 import { useAuth } from "../context/AuthContext";
 
 import "../styles/aiTutor.css";
 
+
 export default function AITutor() {
 
   const location = useLocation();
 
   const {
-user
-}=useAuth();
+    user
+  } = useAuth();
 
-  const lesson = location.state?.lesson || null;
 
-  const defaultPrompt = location.state?.prompt || "";
+  // ===================================================
+  // LESSON CONTEXT
+  // ===================================================
 
-  const [prompt, setPrompt] = useState(defaultPrompt);
+  const lesson =
+    location.state?.lesson || null;
 
-  const [loading, setLoading] = useState(false);
+  const defaultPrompt =
+    location.state?.prompt || "";
+
+
+  // ===================================================
+  // STATE
+  // ===================================================
+
+  const [prompt, setPrompt] =
+    useState(defaultPrompt);
+
+  const [loading, setLoading] =
+    useState(false);
+
 
   const [messages, setMessages] = useState([
+
     {
       role: "assistant",
+
       content:
+
         lesson
+
           ? `👋 Welcome back!
 
 Current Lesson:
@@ -35,26 +61,58 @@ Current Lesson:
 ${lesson.title}
 
 Ask me anything about this lesson.`
+
           : "👋 Hello! I am your AI Engineering Mentor."
     }
+
   ]);
+
+
+  // ===================================================
+  // SEND MESSAGE
+  // ===================================================
 
   const sendMessage = async () => {
 
-    if (!prompt.trim()) return;
+    const message =
+      prompt.trim();
+
+
+    if (!message || loading) {
+
+      return;
+
+    }
+
 
     const userMessage = {
+
       role: "user",
-      content: prompt
+
+      content: message
+
     };
 
-    setMessages(prev => [...prev, userMessage]);
+
+    setMessages(prev => [
+
+      ...prev,
+
+      userMessage
+
+    ]);
+
+
+    setPrompt("");
 
     setLoading(true);
 
+
     try {
 
-      const token = localStorage.getItem("token");
+      const token =
+        localStorage.getItem("token");
+
 
       const res = await API.post(
 
@@ -62,17 +120,21 @@ Ask me anything about this lesson.`
 
         {
 
-          message: prompt,
+          message,
 
-          lesson: lesson?.title || "",
+          lesson:
+            lesson?.title || "",
 
-          course: lesson?.category || "",
+          course:
+            lesson?.category || "",
 
           student: {
 
-            level: user.level,
+            level:
+              user?.level || "",
 
-            xp: user.xp
+            xp:
+              user?.xp || 0
 
           }
 
@@ -82,7 +144,8 @@ Ask me anything about this lesson.`
 
           headers: {
 
-            Authorization: `Bearer ${token}`
+            Authorization:
+              `Bearer ${token}`
 
           }
 
@@ -90,23 +153,6 @@ Ask me anything about this lesson.`
 
       );
 
-      setMessages(prev => [
-
-        ...prev,
-
-        {
-
-          role: "assistant",
-
-          content: res.data.reply
-
-        }
-
-      ]);
-
-    }
-
-    catch (err) {
 
       setMessages(prev => [
 
@@ -117,8 +163,8 @@ Ask me anything about this lesson.`
           role: "assistant",
 
           content:
-
-            "❌ Unable to contact AI Mentor."
+            res.data?.reply ||
+            "I received your message, but the AI did not return a response."
 
         }
 
@@ -126,121 +172,193 @@ Ask me anything about this lesson.`
 
     }
 
-    setPrompt("");
+    catch (err) {
 
-    setLoading(false);
+      console.error(
+        "AI Mentor error:",
+        err
+      );
+
+
+      setMessages(prev => [
+
+        ...prev,
+
+        {
+
+          role: "assistant",
+
+          content:
+            "❌ Unable to contact AI Mentor. Please try again."
+
+        }
+
+      ]);
+
+    }
+
+    finally {
+
+      setLoading(false);
+
+    }
 
   };
 
+
+  // ===================================================
+  // ENTER KEY
+  // ===================================================
+
+  const handleKeyDown = (event) => {
+
+    if (
+      event.key === "Enter" &&
+      !event.shiftKey
+    ) {
+
+      event.preventDefault();
+
+      sendMessage();
+
+    }
+
+  };
+
+
+  // ===================================================
+  // RENDER
+  // ===================================================
+
   return (
 
-    <AppLayout>
+    <div className="aiTutorPage">
 
-      <div className="aiTutorPage">
 
-        <div className="chatHeader">
+      {/* =================================================
+          HEADER
+      ================================================= */}
 
-          <h1>
+      <div className="chatHeader">
 
-            🤖 AI Engineering Mentor
+        <h1>
 
-          </h1>
+          🤖 AI Engineering Mentor
 
-          {
+        </h1>
 
-            lesson && (
 
-              <p>
+        {lesson && (
 
-                Current Lesson:
+          <p>
 
-                <strong>
+            Current Lesson:{" "}
 
-                  {lesson.title}
+            <strong>
 
-                </strong>
+              {lesson.title}
 
-              </p>
+            </strong>
 
-            )
+          </p>
 
-          }
-
-        </div>
-
-        <div className="chatWindow">
-
-          {
-
-            messages.map((msg,index)=>(
-
-              <div
-
-                key={index}
-
-                className={
-
-                  msg.role==="assistant"
-
-                    ? "assistantBubble"
-
-                    : "userBubble"
-
-                }
-
-              >
-
-                {msg.content}
-
-              </div>
-
-            ))
-
-          }
-
-          {
-
-            loading && (
-
-              <div className="assistantBubble">
-
-                Thinking...
-
-              </div>
-
-            )
-
-          }
-
-        </div>
-
-        <div className="chatInput">
-
-          <textarea
-
-            value={prompt}
-
-            onChange={(e)=>setPrompt(e.target.value)}
-
-            placeholder="Ask your AI Mentor..."
-
-          />
-
-          <button
-
-            onClick={sendMessage}
-
-          >
-
-            Send
-
-          </button>
-
-        </div>
+        )}
 
       </div>
 
-    </AppLayout>
+
+      {/* =================================================
+          CHAT WINDOW
+      ================================================= */}
+
+      <div className="chatWindow">
+
+        {messages.map((msg, index) => (
+
+          <div
+
+            key={`${msg.role}-${index}`}
+
+            className={
+
+              msg.role === "assistant"
+
+                ? "assistantBubble"
+
+                : "userBubble"
+
+            }
+
+          >
+
+            {msg.content}
+
+          </div>
+
+        ))}
+
+
+        {loading && (
+
+          <div className="assistantBubble">
+
+            Thinking...
+
+          </div>
+
+        )}
+
+      </div>
+
+
+      {/* =================================================
+          INPUT
+      ================================================= */}
+
+      <div className="chatInput">
+
+        <textarea
+
+          value={prompt}
+
+          onChange={(event) =>
+            setPrompt(event.target.value)
+          }
+
+          onKeyDown={handleKeyDown}
+
+          placeholder="Ask your AI Mentor..."
+
+          disabled={loading}
+
+          rows={3}
+
+        />
+
+
+        <button
+
+          type="button"
+
+          onClick={sendMessage}
+
+          disabled={
+            loading ||
+            !prompt.trim()
+          }
+
+        >
+
+          {loading
+            ? "Thinking..."
+            : "Send"}
+
+        </button>
+
+      </div>
+
+
+    </div>
 
   );
 

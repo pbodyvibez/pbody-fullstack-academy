@@ -12,3 +12,6 @@ build/
 *~
 .cache/
 coverage/
+
+# Android signing credentials
+android/keystore.properties

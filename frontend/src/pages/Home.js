@@ -1,3 +1,5 @@
+```javascript
+import { useEffect, useState } from "react";
 
 import Hero from "../components/landing/Hero";
 import Stats from "../components/landing/Stats";
@@ -8,6 +10,79 @@ import Testimonials from "../components/landing/Testimonials";
 import CTA from "../components/landing/CTA";
 
 export default function Home() {
+  const [installPrompt, setInstallPrompt] = useState(null);
+  const [showIOSInstructions, setShowIOSInstructions] = useState(false);
+
+  useEffect(() => {
+    const handleBeforeInstallPrompt = (event) => {
+      event.preventDefault();
+      setInstallPrompt(event);
+    };
+
+    window.addEventListener(
+      "beforeinstallprompt",
+      handleBeforeInstallPrompt
+    );
+
+    return () => {
+      window.removeEventListener(
+        "beforeinstallprompt",
+        handleBeforeInstallPrompt
+      );
+    };
+  }, []);
+
+  const isIOS = () => {
+    return /iphone|ipad|ipod/i.test(navigator.userAgent);
+  };
+
+  const isAndroid = () => {
+    return /android/i.test(navigator.userAgent);
+  };
+
+  const isStandalone = () => {
+    return (
+      window.matchMedia("(display-mode: standalone)").matches ||
+      window.navigator.standalone === true
+    );
+  };
+
+  const handleInstallApp = async () => {
+    // Already installed
+    if (isStandalone()) {
+      return;
+    }
+
+    // iPhone / iPad
+    if (isIOS()) {
+      setShowIOSInstructions(true);
+      return;
+    }
+
+    // Android / Desktop Chrome / Edge
+    if (installPrompt) {
+      installPrompt.prompt();
+
+      const result = await installPrompt.userChoice;
+
+      if (result.outcome === "accepted") {
+        setInstallPrompt(null);
+      }
+
+      return;
+    }
+
+    // Android fallback
+    if (isAndroid()) {
+      window.location.href =
+        "/downloads/PBody-Fullstack-Academy-v1.0.apk";
+      return;
+    }
+
+    // Desktop fallback
+    window.location.href = "/";
+  };
+
   return (
     <>
       <Hero />
@@ -66,31 +141,32 @@ export default function Home() {
               opacity: 0.9
             }}
           >
-            Learn, practice, track your progress and build your developer
-            skills anywhere with the PBody Fullstack Academy Android app.
+            Install PBody Fullstack Academy on your device and learn,
+            practice, track your progress and build your developer skills
+            wherever you go.
           </p>
 
-          <a
-            href="/downloads/PBody-Fullstack-Academy-v1.0.apk"
-            download="PBody-Fullstack-Academy-v1.0.apk"
+          <button
+            type="button"
+            onClick={handleInstallApp}
             style={{
               display: "inline-flex",
               alignItems: "center",
               justifyContent: "center",
               gap: "10px",
               padding: "16px 30px",
+              border: "none",
               borderRadius: "12px",
               background: "#D4AF37",
               color: "#0B1F3A",
-              textDecoration: "none",
               fontWeight: 800,
               fontSize: "16px",
               cursor: "pointer",
               boxShadow: "0 10px 30px rgba(0,0,0,0.25)"
             }}
           >
-            📲 Download Android App
-          </a>
+            📲 Install PBody App
+          </button>
 
           <p
             style={{
@@ -99,10 +175,64 @@ export default function Home() {
               opacity: 0.7
             }}
           >
-            Android • PBody Fullstack Academy v1.0
+            Windows • macOS • Android • iPhone • iPad
           </p>
+
+          {showIOSInstructions && (
+            <div
+              style={{
+                margin: "30px auto 0",
+                maxWidth: "520px",
+                padding: "24px",
+                borderRadius: "16px",
+                background: "rgba(255,255,255,0.08)",
+                border: "1px solid rgba(255,255,255,0.15)",
+                textAlign: "left"
+              }}
+            >
+              <h3
+                style={{
+                  marginTop: 0,
+                  marginBottom: "12px",
+                  fontSize: "21px"
+                }}
+              >
+                Install PBody on iPhone or iPad
+              </h3>
+
+              <ol
+                style={{
+                  margin: 0,
+                  paddingLeft: "22px",
+                  lineHeight: 1.8
+                }}
+              >
+                <li>Tap the Share button in Safari.</li>
+                <li>Select <strong>Add to Home Screen</strong>.</li>
+                <li>Tap <strong>Add</strong>.</li>
+                <li>Open PBody Academy from your Home Screen.</li>
+              </ol>
+
+              <button
+                type="button"
+                onClick={() => setShowIOSInstructions(false)}
+                style={{
+                  marginTop: "18px",
+                  padding: "10px 18px",
+                  border: "1px solid rgba(255,255,255,0.3)",
+                  borderRadius: "8px",
+                  background: "transparent",
+                  color: "#ffffff",
+                  cursor: "pointer"
+                }}
+              >
+                Close
+              </button>
+            </div>
+          )}
         </div>
       </section>
     </>
   );
 }
+```

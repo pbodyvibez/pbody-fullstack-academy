@@ -40,3 +40,23 @@ root.render(
     </BrowserRouter>
   </React.StrictMode>
 );
+
+// Register PWA service worker in production
+if ("serviceWorker" in navigator && process.env.NODE_ENV === "production") {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker
+      .register("/service-worker.js")
+      .then((registration) => {
+        console.log(
+          "PBody Academy service worker registered:",
+          registration.scope
+        );
+      })
+      .catch((error) => {
+        console.error(
+          "PBody Academy service worker registration failed:",
+          error
+        );
+      });
+  });
+}

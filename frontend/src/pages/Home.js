@@ -1,4 +1,4 @@
-```javascript
+
 import { useEffect, useState } from "react";
 
 import Hero from "../components/landing/Hero";
@@ -36,10 +36,6 @@ export default function Home() {
     return /iphone|ipad|ipod/i.test(navigator.userAgent);
   };
 
-  const isAndroid = () => {
-    return /android/i.test(navigator.userAgent);
-  };
-
   const isStandalone = () => {
     return (
       window.matchMedia("(display-mode: standalone)").matches ||
@@ -48,39 +44,35 @@ export default function Home() {
   };
 
   const handleInstallApp = async () => {
-    // Already installed
     if (isStandalone()) {
       return;
     }
 
-    // iPhone / iPad
     if (isIOS()) {
       setShowIOSInstructions(true);
       return;
     }
 
-    // Android / Desktop Chrome / Edge
     if (installPrompt) {
-      installPrompt.prompt();
+      try {
+        installPrompt.prompt();
 
-      const result = await installPrompt.userChoice;
+        const result = await installPrompt.userChoice;
 
-      if (result.outcome === "accepted") {
-        setInstallPrompt(null);
+        if (result?.outcome === "accepted") {
+          setInstallPrompt(null);
+        }
+      } catch (error) {
+        console.error("PBody app installation failed:", error);
       }
 
       return;
     }
 
-    // Android fallback
-    if (isAndroid()) {
-      window.location.href =
-        "/downloads/PBody-Fullstack-Academy-v1.0.apk";
-      return;
-    }
-
-    // Desktop fallback
-    window.location.href = "/";
+    alert(
+      "PBody Fullstack Academy can be installed from your browser menu. " +
+        "Look for 'Install PBody Fullstack Academy' or 'Add to Home Screen'."
+    );
   };
 
   return (
@@ -207,7 +199,8 @@ export default function Home() {
                   lineHeight: 1.8
                 }}
               >
-                <li>Tap the Share button in Safari.</li>
+                <li>Open PBody Fullstack Academy in Safari.</li>
+                <li>Tap the Share button.</li>
                 <li>Select <strong>Add to Home Screen</strong>.</li>
                 <li>Tap <strong>Add</strong>.</li>
                 <li>Open PBody Academy from your Home Screen.</li>
@@ -235,4 +228,3 @@ export default function Home() {
     </>
   );
 }
-```

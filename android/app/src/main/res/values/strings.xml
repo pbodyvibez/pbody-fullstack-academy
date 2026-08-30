@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">pbody-fullstack-academy</string>
+    <string name="title_activity_main">pbody-fullstack-academy</string>
+    <string name="package_name">com.pbody.fullstackacademy</string>
+    <string name="custom_url_scheme">com.pbody.fullstackacademy</string>
+</resources>

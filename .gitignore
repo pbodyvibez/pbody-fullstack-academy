@@ -15,3 +15,9 @@ coverage/
 
 # Android signing credentials
 android/keystore.properties
+
+# Android signing credentials
+android/keystore.properties
+android/keystore.properties.backup
+android/*.jks
+android/*.keystore

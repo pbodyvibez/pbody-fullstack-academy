@@ -4,188 +4,139 @@ import { useAuth } from "../../context/AuthContext";
 import { useSubscription } from "../../context/SubscriptionContext";
 
 
-export default function PremiumRoute({children}){
+export default function PremiumRoute({ children }) {
+
+  const {
+    user,
+    loading: authLoading,
+    isAuthenticated
+  } = useAuth();
 
 
-const {
+  const {
+    isPremium,
+    isTrialActive,
+    loading: subscriptionLoading
+  } = useSubscription();
 
-user,
 
-loading,
+  const location = useLocation();
 
-isAuthenticated
 
-}=useAuth();
+  // ===============================
+  // CHECK AUTHENTICATION LOADING
+  // ===============================
 
+  if (authLoading) {
 
+    return (
+      <div
+        style={{
+          minHeight: "100vh",
+          background: "#020617",
+          color: "white",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          fontSize: "22px"
+        }}
+      >
+        Loading...
+      </div>
+    );
 
-const {
+  }
 
-isPremium,
 
-isTrialActive
+  // ===============================
+  // REQUIRE LOGIN
+  // ===============================
 
-}=useSubscription();
+  if (!isAuthenticated || !user) {
 
+    return (
+      <Navigate
+        to="/login"
+        replace
+        state={{
+          from: location
+        }}
+      />
+    );
 
+  }
 
-const location = useLocation();
 
+  // ===============================
+  // WAIT FOR SUBSCRIPTION CHECK
+  // ===============================
 
+  if (subscriptionLoading) {
 
+    return (
+      <div
+        style={{
+          minHeight: "100vh",
+          background: "#020617",
+          color: "white",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          fontSize: "22px"
+        }}
+      >
+        Checking subscription...
+      </div>
+    );
 
-// ===============================
-// CHECK USER LOADING
-// ===============================
+  }
 
-if(loading){
 
+  // ===============================
+  // FREE COURSE ACCESS
+  // ===============================
 
-return(
+  const freeCourses = [
+    "frontend",
+    "html",
+    "css",
+    "javascript"
+  ];
 
-<div
-style={{
 
-minHeight:"100vh",
+  const courseId = location.pathname.split("/")[2];
 
-background:"#020617",
 
-color:"white",
+  if (
+    location.pathname.startsWith("/course/") &&
+    freeCourses.includes(courseId)
+  ) {
 
-display:"flex",
+    return children;
 
-alignItems:"center",
+  }
 
-justifyContent:"center",
 
-fontSize:"22px"
+  // ===============================
+  // PREMIUM ACCESS
+  // ===============================
 
-}}
+  if (isPremium || isTrialActive) {
 
->
+    return children;
 
-Loading...
+  }
 
-</div>
 
-);
+  // ===============================
+  // SEND TO PRICING
+  // ===============================
 
-
-}
-
-
-
-
-
-
-// ===============================
-// REQUIRE LOGIN
-// ===============================
-
-if(!isAuthenticated || !user){
-
-
-return(
-
-<Navigate
-
-to="/login"
-
-replace
-
-state={{
-
-from:location
-
-}}
-
-/>
-
-);
-
-
-}
-
-
-
-
-
-
-// ===============================
-// FREE COURSE ACCESS
-// ===============================
-
-
-// CHANGE THESE IDS TO YOUR FREE COURSE IDS
-
-const freeCourses = [
-
-"frontend",
-
-"html",
-
-"css",
-
-"javascript"
-
-];
-
-
-
-const courseId = location.pathname.split("/")[2];
-
-
-
-if(
-
-location.pathname.startsWith("/course/")
-
-&&
-
-freeCourses.includes(courseId)
-
-){
-
-
-return children;
-
-
-}
-
-
-
-
-
-
-
-// ===============================
-// PREMIUM ACCESS
-// ===============================
-
-
-if(isPremium || isTrialActive){
-
-
-return children;
-
-
-}
-
-
-
-
-
-return(
-
-<Navigate
-
-to="/pricing"
-
-replace
-
-/>
-
-);
-
+  return (
+    <Navigate
+      to="/pricing"
+      replace
+    />
+  );
 
 }

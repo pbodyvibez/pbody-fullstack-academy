@@ -2,92 +2,103 @@ import { useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 
 import { verifyPayment } from "../services/paymentService";
+import { useSubscription } from "../context/SubscriptionContext";
 
 import AppLayout from "../components/layout/AppLayout";
 
 import Logo from "../assets/images/logo.png";
 
-export default function PaymentSuccess(){
+export default function PaymentSuccess() {
 
-const navigate = useNavigate();
+  const navigate = useNavigate();
 
-const [searchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
 
-const [message,setMessage] = useState("Verifying payment...");
+  const { activatePremium } = useSubscription();
 
-useEffect(()=>{
+  const [message, setMessage] = useState("Verifying payment...");
 
-const verify = async()=>{
+  useEffect(() => {
 
-const reference = searchParams.get("reference");
+    const reference = searchParams.get("reference");
 
-if(!reference){
+    if (!reference) {
 
-setMessage("Payment reference not found.");
+      setMessage("Payment reference not found.");
 
-return;
+      return;
+    }
 
-}
+    let cancelled = false;
 
-try{
+    const verify = async () => {
 
-const result = await verifyPayment(reference);
+      try {
 
-if(result.success){
+        const result = await verifyPayment(reference);
 
-setMessage("🎉 Payment successful! Premium activated.");
+        if (cancelled) return;
 
-setTimeout(()=>{
+        if (result?.success) {
 
-navigate("/dashboard");
+          if (result.subscription) {
+            activatePremium(result.subscription);
+          }
 
-},3000);
+          setMessage("🎉 Payment successful! Premium activated.");
 
-}
-else{
+          setTimeout(() => {
+            navigate("/dashboard", { replace: true });
+          }, 3000);
 
-setMessage("Payment verification failed.");
+        } else {
 
-}
+          setMessage("Payment verification failed.");
 
-}
-catch(error){
+        }
 
-console.error(error);
+      } catch (error) {
 
-setMessage("Unable to verify payment.");
+        console.error("PAYMENT VERIFICATION ERROR:", error);
 
-}
+        if (!cancelled) {
+          setMessage("Unable to verify payment.");
+        }
 
-};
+      }
 
-verify();
+    };
 
-},[navigate,searchParams]);
+    verify();
 
-return(
+    return () => {
+      cancelled = true;
+    };
 
-<AppLayout>
+  }, [navigate, searchParams, activatePremium]);
 
-<div className="paymentSuccessPage">
 
-<img
-src={Logo}
-alt="PBody FullStack Academy"
-/>
+  return (
 
-<h1>{message}</h1>
+    <AppLayout>
 
-<p>
+      <div className="paymentSuccessPage">
 
-Please wait while we complete your subscription.
+        <img
+          src={Logo}
+          alt="PBody FullStack Academy"
+        />
 
-</p>
+        <h1>{message}</h1>
 
-</div>
+        <p>
+          Please wait while we complete your subscription.
+        </p>
 
-</AppLayout>
+      </div>
 
-);
+    </AppLayout>
+
+  );
 
 }

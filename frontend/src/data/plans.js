@@ -1,166 +1,117 @@
 const plans = [
 
-{
+  {
 
-id:"free",
+    id: "free",
 
-name:"Free",
+    name: "Free",
 
-badge:"STARTER",
+    badge: "STARTER",
 
-price:0,
+    price: 0,
 
-currency:"USD",
+    currency: "NGN",
 
-billing:"Forever",
+    billing: "Forever",
 
-popular:false,
+    popular: false,
 
-color:"#64748B",
+    color: "#64748B",
 
-buttonText:"Get Started",
+    buttonText: "Get Started",
 
-description:
-"Perfect for beginners starting their software engineering journey.",
+    description:
+      "Perfect for beginners starting their software engineering journey.",
 
-features:[
+    features: [
 
-"Access to free lessons",
+      "Access to free lessons",
 
-"Basic quizzes",
+      "Basic quizzes",
 
-"Community support",
+      "Community support",
 
-"Progress tracking",
+      "Progress tracking",
 
-"Limited AI Mentor",
+      "Limited AI Mentor",
 
-"Basic coding exercises"
+      "Basic coding exercises"
 
-],
+    ],
 
-limitations:[
+    limitations: [
 
-"No certificates",
+      "No certificates",
 
-"No premium projects",
+      "No premium projects",
 
-"No interview preparation",
+      "No interview preparation",
 
-"No downloadable resources",
+      "No downloadable resources",
 
-"No career coaching"
+      "No career coaching"
 
-]
+    ]
 
-},
+  },
 
-{
 
-id:"pro",
+  {
 
-name:"Pro",
+    id: "pro",
 
-badge:"MOST POPULAR",
+    name: "Pro",
 
-price:19,
+    badge: "MOST POPULAR",
 
-currency:"USD",
+    price: 25000,
 
-billing:"Monthly",
+    currency: "NGN",
 
-popular:true,
+    billing: "Annual",
 
-color:"#2563EB",
+    popular: true,
 
-buttonText:"Upgrade to Pro",
+    color: "#2563EB",
 
-description:
-"Unlock the complete engineering learning experience with premium content and AI-powered tools.",
+    buttonText: "Upgrade to Pro",
 
-features:[
+    description:
+      "Unlock the complete engineering learning experience with premium content and AI-powered tools.",
 
-"Everything in Free",
+    features: [
 
-"Unlimited AI Mentor",
+      "Everything in Free",
 
-"All premium lessons",
+      "Unlimited AI Mentor",
 
-"All engineering projects",
+      "All premium lessons",
 
-"Professional certificates",
+      "All engineering projects",
 
-"Downloadable resources",
+      "Professional certificates",
 
-"Code reviews",
+      "Downloadable resources",
 
-"Portfolio projects",
+      "Code reviews",
 
-"Career roadmap",
+      "Portfolio projects",
 
-"Priority support",
+      "Career roadmap",
 
-"Interview preparation",
+      "Priority support",
 
-"Resume builder"
+      "Interview preparation",
 
-],
+      "Resume builder"
 
-limitations:[]
+    ],
 
-},
+    limitations: []
 
-{
-
-id:"lifetime",
-
-name:"Lifetime",
-
-badge:"BEST VALUE",
-
-price:249,
-
-currency:"USD",
-
-billing:"One-Time",
-
-popular:false,
-
-color:"#F59E0B",
-
-buttonText:"Get Lifetime Access",
-
-description:
-"Pay once and enjoy lifetime access to every current and future engineering program.",
-
-features:[
-
-"Everything in Pro",
-
-"Lifetime updates",
-
-"Future courses included",
-
-"VIP community",
-
-"Exclusive masterclasses",
-
-"Business startup content",
-
-"Advanced AI tools",
-
-"Founder webinars",
-
-"Priority feature access",
-
-"Lifetime certificates"
-
-],
-
-limitations:[]
-
-}
+  }
 
 ];
+
 
 export default plans;

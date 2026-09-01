@@ -36,7 +36,9 @@ export default function Pricing() {
 
 
     if (loadingCurrency) {
+
       return;
+
     }
 
 
@@ -49,7 +51,9 @@ export default function Pricing() {
 
         email: user.email,
 
-        currency
+        currency,
+
+        plan: "annual"
 
       });
 
@@ -70,11 +74,13 @@ export default function Pricing() {
 
 
       throw new Error(
-        result?.message || "Payment could not be started."
+        result?.message ||
+        "Payment could not be started."
       );
 
+    }
 
-    } catch (error) {
+    catch (error) {
 
       console.error(
         "PAYMENT INITIALIZATION ERROR:",
@@ -83,13 +89,18 @@ export default function Pricing() {
 
 
       alert(
+
         error?.response?.data?.message ||
+
         error?.message ||
+
         "Payment initialization failed. Please try again."
+
       );
 
+    }
 
-    } finally {
+    finally {
 
       setLoadingCurrency(null);
 
@@ -98,8 +109,11 @@ export default function Pricing() {
   };
 
 
-  const isLoading = (currency) =>
-    loadingCurrency === currency;
+  const isLoading = (currency) => {
+
+    return loadingCurrency === currency;
+
+  };
 
 
   return (
@@ -113,9 +127,13 @@ export default function Pricing() {
 
       <section className="pricingHero">
 
-        <div className="pricingHeroGlow pricingHeroGlowOne" />
+        <div
+          className="pricingHeroGlow pricingHeroGlowOne"
+        />
 
-        <div className="pricingHeroGlow pricingHeroGlowTwo" />
+        <div
+          className="pricingHeroGlow pricingHeroGlowTwo"
+        />
 
 
         <div className="pricingBrand">
@@ -146,18 +164,30 @@ export default function Pricing() {
 
 
         <div className="pricingEyebrow">
+
           <span />
+
           PREMIUM ENGINEERING MEMBERSHIP
+
           <span />
+
         </div>
 
 
         <h1>
+
           Build Skills.
+
           <br />
+
           Build Products.
+
           <br />
-          <strong>Build Your Future.</strong>
+
+          <strong>
+            Build Your Future.
+          </strong>
+
         </h1>
 
 
@@ -173,18 +203,41 @@ export default function Pricing() {
         <div className="pricingHeroStats">
 
           <div>
-            <strong>01</strong>
-            <span>Engineering Academy</span>
+
+            <strong>
+              01
+            </strong>
+
+            <span>
+              Engineering Academy
+            </span>
+
           </div>
 
-          <div>
-            <strong>∞</strong>
-            <span>Learning Opportunities</span>
-          </div>
 
           <div>
-            <strong>AI</strong>
-            <span>Powered Mentorship</span>
+
+            <strong>
+              ∞
+            </strong>
+
+            <span>
+              Learning Opportunities
+            </span>
+
+          </div>
+
+
+          <div>
+
+            <strong>
+              AI
+            </strong>
+
+            <span>
+              Powered Mentorship
+            </span>
+
           </div>
 
         </div>
@@ -203,17 +256,28 @@ export default function Pricing() {
         <div className="pricingSectionHeading">
 
           <span className="sectionLabel">
+
             CHOOSE YOUR MEMBERSHIP
+
           </span>
 
+
           <h2>
+
             One Membership.
-            <span> Serious Engineering Growth.</span>
+
+            <span>
+              Serious Engineering Growth.
+            </span>
+
           </h2>
 
+
           <p>
-            Select the plan that fits your journey and unlock
-            the PBody FullStack Academy learning ecosystem.
+
+            Select your region and unlock the PBody FullStack
+            Academy engineering ecosystem.
+
           </p>
 
         </div>
@@ -233,12 +297,16 @@ export default function Pricing() {
 
 
             <div className="planBadge">
+
               MOST POPULAR
+
             </div>
 
 
             <div className="planIcon">
+
               🚀
+
             </div>
 
 
@@ -248,13 +316,17 @@ export default function Pricing() {
                 NIGERIA
               </span>
 
+
               <h3>
                 PBody Pro Annual
               </h3>
 
+
               <p>
-                Everything you need to become a stronger
-                professional software engineer.
+
+                Full access to premium engineering education,
+                projects, AI mentorship and career development.
+
               </p>
 
             </div>
@@ -264,11 +336,14 @@ export default function Pricing() {
 
               <div>
 
-                <small>₦</small>
+                <small>
+                  ₦
+                </small>
 
-                120,000
+                25,000
 
               </div>
+
 
               <span>
                 / year
@@ -326,22 +401,41 @@ export default function Pricing() {
 
 
             <button
+
               type="button"
+
               className="pricingButton primaryButton"
-              onClick={() => handleUpgrade("NGN")}
+
+              onClick={() =>
+                handleUpgrade("NGN")
+              }
+
               disabled={Boolean(loadingCurrency)}
+
             >
 
               {isLoading("NGN") ? (
+
                 <>
+
                   <span className="buttonSpinner" />
+
                   Connecting to Paystack...
+
                 </>
+
               ) : (
+
                 <>
+
                   Start Engineering Journey
-                  <span>→</span>
+
+                  <span>
+                    →
+                  </span>
+
                 </>
+
               )}
 
             </button>
@@ -349,9 +443,11 @@ export default function Pricing() {
 
             <div className="securePayment">
 
-              <span>🔒</span>
+              <span>
+                🔒
+              </span>
 
-              Secure payment powered by Paystack
+              Secure Nigerian payment powered by Paystack
 
             </div>
 
@@ -369,12 +465,16 @@ export default function Pricing() {
 
 
             <div className="planBadge globalBadge">
+
               GLOBAL
+
             </div>
 
 
             <div className="planIcon">
+
               🌍
+
             </div>
 
 
@@ -384,13 +484,17 @@ export default function Pricing() {
                 INTERNATIONAL
               </span>
 
+
               <h3>
                 PBody Pro Global
               </h3>
 
+
               <p>
+
                 Premium engineering education for developers
                 and aspiring builders worldwide.
+
               </p>
 
             </div>
@@ -400,11 +504,14 @@ export default function Pricing() {
 
               <div>
 
-                <small>$</small>
+                <small>
+                  $
+                </small>
 
-                99
+                19
 
               </div>
+
 
               <span>
                 / year
@@ -462,22 +569,41 @@ export default function Pricing() {
 
 
             <button
+
               type="button"
+
               className="pricingButton secondaryButton"
-              onClick={() => handleUpgrade("USD")}
+
+              onClick={() =>
+                handleUpgrade("USD")
+              }
+
               disabled={Boolean(loadingCurrency)}
+
             >
 
               {isLoading("USD") ? (
+
                 <>
+
                   <span className="buttonSpinner" />
+
                   Connecting to Paystack...
+
                 </>
+
               ) : (
+
                 <>
+
                   Join Global Academy
-                  <span>→</span>
+
+                  <span>
+                    →
+                  </span>
+
                 </>
+
               )}
 
             </button>
@@ -485,9 +611,11 @@ export default function Pricing() {
 
             <div className="securePayment">
 
-              <span>🔒</span>
+              <span>
+                🔒
+              </span>
 
-              Secure payment powered by Paystack
+              Secure international payment
 
             </div>
 
@@ -509,17 +637,28 @@ export default function Pricing() {
         <div className="pricingSectionHeading">
 
           <span className="sectionLabel">
+
             THE PBODY DIFFERENCE
+
           </span>
 
+
           <h2>
+
             More Than A Course.
-            <span> A Complete Engineering Ecosystem.</span>
+
+            <span>
+              A Complete Engineering Ecosystem.
+            </span>
+
           </h2>
 
+
           <p>
+
             Your membership is designed around the things that
             actually move an engineer forward.
+
           </p>
 
         </div>
@@ -539,8 +678,10 @@ export default function Pricing() {
             </h3>
 
             <p>
+
               Build practical skills and a portfolio that
               demonstrates what you can actually create.
+
             </p>
 
           </div>
@@ -558,8 +699,10 @@ export default function Pricing() {
             </h3>
 
             <p>
+
               Get intelligent guidance while learning,
               solving problems and building projects.
+
             </p>
 
           </div>
@@ -577,8 +720,10 @@ export default function Pricing() {
             </h3>
 
             <p>
+
               Track your achievements and earn professional
               certificates as you progress.
+
             </p>
 
           </div>
@@ -596,8 +741,10 @@ export default function Pricing() {
             </h3>
 
             <p>
+
               Learn, build and grow alongside developers
               working toward the same future.
+
             </p>
 
           </div>
@@ -621,33 +768,54 @@ export default function Pricing() {
             YOUR NEXT LEVEL STARTS HERE
           </span>
 
+
           <h2>
+
             Stop Preparing.
+
             <br />
+
             Start Building.
+
           </h2>
 
+
           <p>
+
             Join PBody FullStack Academy and turn your
             learning into real engineering ability.
+
           </p>
 
         </div>
 
 
         <button
+
           type="button"
+
           onClick={() =>
+
             document
               .querySelector(".pricingPlans")
               ?.scrollIntoView({
+
                 behavior: "smooth",
+
                 block: "center"
+
               })
+
           }
+
         >
+
           Choose Your Plan
-          <span>↓</span>
+
+          <span>
+            ↓
+          </span>
+
         </button>
 
       </section>

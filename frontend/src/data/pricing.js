@@ -1,180 +1,154 @@
 const pricing = {
 
-currency: "USD",
+  defaultCurrency: "NGN",
 
-symbol: "$",
+  defaultBilling: "annual",
 
-defaultBilling: "monthly",
+  taxIncluded: false,
 
-taxIncluded: false,
+  trialDays: 3,
 
-trialDays: 7,
 
-plans: {
+  plans: {
 
-free: {
+    free: {
 
-monthly: 0,
+      monthly: 0,
 
-yearly: 0
+      yearly: 0
 
-},
+    },
 
-pro: {
+    pro: {
 
-monthly: 19,
+      NGN: 25000,
 
-yearly: 190,
+      USD: 19,
 
-yearlyDiscount: "Save 17%"
+      billing: "annual"
 
-},
+    }
 
-lifetime: {
+  },
 
-oneTime: 249
 
-}
+  discounts: [
 
-},
+    {
 
-discounts: [
+      id: "launch",
 
-{
+      title: "Launch Offer",
 
-id: "launch",
+      code: "LAUNCH2026",
 
-title: "Launch Offer",
+      type: "percentage",
 
-code: "LAUNCH2026",
+      value: 30,
 
-type: "percentage",
+      active: true,
 
-value: 30,
+      description:
+        "30% off for early supporters of PBody FullStack Academy."
 
-active: true,
+    },
 
-description:
-"30% off for early supporters of PBody FullStack Academy."
+    {
 
-},
+      id: "student",
 
-{
+      title: "Student Discount",
 
-id: "student",
+      code: "STUDENT50",
 
-title: "Student Discount",
+      type: "percentage",
 
-code: "STUDENT50",
+      value: 50,
 
-type: "percentage",
+      active: false,
 
-value: 50,
+      description:
+        "Verified students receive 50% off Pro subscriptions."
 
-active: false,
+    },
 
-description:
-"Verified students receive 50% off Pro subscriptions."
+    {
 
-},
+      id: "blackfriday",
 
-{
+      title: "Black Friday",
 
-id: "blackfriday",
+      code: "BLACKFRIDAY",
 
-title: "Black Friday",
+      type: "percentage",
 
-code: "BLACKFRIDAY",
+      value: 60,
 
-type: "percentage",
+      active: false,
 
-value: 60,
+      description:
+        "Limited-time Black Friday promotion."
 
-active: false,
+    }
 
-description:
-"Limited-time Black Friday promotion."
+  ],
 
-}
 
-],
+  paymentMethods: [
 
-paymentMethods: [
+    "Paystack",
 
-"Stripe",
+    "Paddle"
 
-"Paystack",
+  ],
 
-"Flutterwave",
 
-"PayPal"
+  supportedCurrencies: [
 
-],
+    "NGN",
 
-supportedCurrencies: [
+    "USD"
 
-"USD",
+  ],
 
-"NGN",
 
-"GBP",
+  regionalPricing: {
 
-"EUR"
+    NG: {
 
-],
+      currency: "NGN",
 
-regionalPricing: {
+      proYearly: 25000
 
-NG: {
+    },
 
-currency: "NGN",
+    US: {
 
-proMonthly: 15000,
+      currency: "USD",
 
-proYearly: 150000,
+      proYearly: 19
 
-lifetime: 180000
+    },
 
-},
+    UK: {
 
-US: {
+      currency: "USD",
 
-currency: "USD",
+      proYearly: 19
 
-proMonthly: 19,
+    },
 
-proYearly: 190,
+    EU: {
 
-lifetime: 249
+      currency: "USD",
 
-},
+      proYearly: 19
 
-UK: {
+    }
 
-currency: "GBP",
-
-proMonthly: 16,
-
-proYearly: 160,
-
-lifetime: 210
-
-},
-
-EU: {
-
-currency: "EUR",
-
-proMonthly: 18,
-
-proYearly: 180,
-
-lifetime: 235
-
-}
-
-}
+  }
 
 };
+
 
 export default pricing;

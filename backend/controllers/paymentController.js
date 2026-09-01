@@ -19,7 +19,8 @@ exports.initializePayment = async (req, res) => {
 
     const {
       email,
-      currency = "NGN"
+      currency = "NGN",
+      plan = "annual"
     } = req.body;
 
 
@@ -30,17 +31,15 @@ exports.initializePayment = async (req, res) => {
     if (!email) {
 
       return res.status(400).json({
-
         success: false,
-
         message: "Email is required"
-
       });
 
     }
 
 
-    const normalizedEmail = email.toLowerCase().trim();
+    const normalizedEmail =
+      email.toLowerCase().trim();
 
 
     // ----------------------------------------------------------
@@ -48,58 +47,74 @@ exports.initializePayment = async (req, res) => {
     // ----------------------------------------------------------
 
     const user = await User.findOne({
-
       email: normalizedEmail
-
     });
 
 
     if (!user) {
 
       return res.status(404).json({
-
         success: false,
-
         message: `User account not found for ${normalizedEmail}`
-
       });
 
     }
 
 
     // ----------------------------------------------------------
-    // GET PLAN
+    // NORMALIZE CURRENCY
     // ----------------------------------------------------------
 
-    const plan = pricing[currency];
+    const normalizedCurrency =
+      currency.toUpperCase();
 
 
-    if (!plan) {
+    // ----------------------------------------------------------
+    // GET SERVER-SIDE PRICING
+    // ----------------------------------------------------------
+
+    const pricingPlan =
+      pricing[normalizedCurrency];
+
+
+    if (!pricingPlan) {
 
       return res.status(400).json({
-
         success: false,
-
         message: "Currency not supported"
-
       });
 
     }
 
 
     // ----------------------------------------------------------
-    // INITIALIZE PAYSTACK TRANSACTION
+    // ONLY ANNUAL PLAN IS CURRENTLY AVAILABLE
     // ----------------------------------------------------------
 
-    const payment = await initializeTransaction({
+    if (plan !== "annual") {
 
-      email: normalizedEmail,
+      return res.status(400).json({
+        success: false,
+        message: "Only the annual plan is currently available"
+      });
 
-      amount: plan.annual,
+    }
 
-      currency: plan.currency
 
-    });
+    // ----------------------------------------------------------
+    // INITIALIZE PAYMENT
+    // ----------------------------------------------------------
+
+    const payment =
+      await initializeTransaction({
+
+        email: normalizedEmail,
+
+        amount: pricingPlan.annual,
+
+        currency: pricingPlan.currency
+
+      });
 
 
     // ----------------------------------------------------------
@@ -112,7 +127,21 @@ exports.initializePayment = async (req, res) => {
 
       message: "Payment initialized",
 
-      data: payment
+      data: {
+
+        ...payment,
+
+        plan: pricingPlan.plan,
+
+        billing: pricingPlan.billing,
+
+        currency: pricingPlan.currency,
+
+        amount: pricingPlan.annual,
+
+        provider: pricingPlan.provider
+
+      }
 
     });
 
@@ -121,11 +150,8 @@ exports.initializePayment = async (req, res) => {
   catch (error) {
 
     console.error(
-
       "INITIALIZE PAYMENT ERROR:",
-
       error.response?.data || error.message
-
     );
 
 
@@ -176,10 +202,14 @@ exports.verifyPayment = async (req, res) => {
     // VERIFY WITH PAYSTACK
     // ----------------------------------------------------------
 
-    const payment = await verifyTransaction(reference);
+    const payment =
+      await verifyTransaction(reference);
 
 
-    if (!payment || payment.status !== "success") {
+    if (
+      !payment ||
+      payment.status !== "success"
+    ) {
 
       return res.status(400).json({
 
@@ -193,10 +223,73 @@ exports.verifyPayment = async (req, res) => {
 
 
     // ----------------------------------------------------------
+    // GET PAYMENT CURRENCY
+    // ----------------------------------------------------------
+
+    const currency =
+      payment.currency?.toUpperCase();
+
+
+    // ----------------------------------------------------------
+    // GET SERVER-SIDE PRICING
+    // ----------------------------------------------------------
+
+    const pricingPlan =
+      pricing[currency];
+
+
+    if (!pricingPlan) {
+
+      return res.status(400).json({
+
+        success: false,
+
+        message: "Payment currency is not supported"
+
+      });
+
+    }
+
+
+    // ----------------------------------------------------------
+    // SECURITY CHECK — VERIFY AMOUNT
+    // ----------------------------------------------------------
+
+    if (
+      Number(payment.amount) !==
+      Number(pricingPlan.annual)
+    ) {
+
+      console.error(
+        "PAYMENT AMOUNT MISMATCH:",
+        {
+          reference,
+          received: payment.amount,
+          expected: pricingPlan.annual,
+          currency
+        }
+      );
+
+
+      return res.status(400).json({
+
+        success: false,
+
+        message: "Payment amount does not match the selected plan"
+
+      });
+
+    }
+
+
+    // ----------------------------------------------------------
     // GET CUSTOMER EMAIL
     // ----------------------------------------------------------
 
-    const email = payment.customer?.email?.toLowerCase().trim();
+    const email =
+      payment.customer?.email
+        ?.toLowerCase()
+        .trim();
 
 
     if (!email) {
@@ -216,11 +309,10 @@ exports.verifyPayment = async (req, res) => {
     // FIND USER
     // ----------------------------------------------------------
 
-    const user = await User.findOne({
-
-      email
-
-    });
+    const user =
+      await User.findOne({
+        email
+      });
 
 
     if (!user) {
@@ -237,72 +329,55 @@ exports.verifyPayment = async (req, res) => {
 
 
     // ----------------------------------------------------------
-    // DETERMINE PLAN
-    // ----------------------------------------------------------
-
-    const currency = payment.currency?.toUpperCase();
-
-    const plan = pricing[currency];
-
-
-    if (!plan) {
-
-      return res.status(400).json({
-
-        success: false,
-
-        message: "Payment currency is not supported"
-
-      });
-
-    }
-
-
-    // ----------------------------------------------------------
     // SAVE PREMIUM SUBSCRIPTION
     // ----------------------------------------------------------
 
-    const subscription = await Subscription.findOneAndUpdate(
+    const subscription =
+      await Subscription.findOneAndUpdate(
 
-      {
-        user: user._id
-      },
+        {
+          user: user._id
+        },
 
-      {
+        {
 
-        status: "premium",
+          status: "premium",
 
-        plan: "annual",
+          plan: pricingPlan.plan,
 
-        currency,
+          billing: pricingPlan.billing,
 
-        amount: payment.amount,
+          currency,
 
-        paymentReference: reference,
+          amount: payment.amount,
 
-        provider: plan.provider,
+          paymentReference: reference,
 
-        activatedAt: new Date(),
+          provider: pricingPlan.provider,
 
-        expiresAt: new Date(
+          activatedAt: new Date(),
 
-          Date.now() +
+          expiresAt:
+            new Date(
+              Date.now() +
+              365 *
+              24 *
+              60 *
+              60 *
+              1000
+            )
 
-          365 * 24 * 60 * 60 * 1000
+        },
 
-        )
+        {
 
-      },
+          new: true,
 
-      {
+          upsert: true
 
-        new: true,
+        }
 
-        upsert: true
-
-      }
-
-    );
+      );
 
 
     // ----------------------------------------------------------
@@ -324,11 +399,8 @@ exports.verifyPayment = async (req, res) => {
   catch (error) {
 
     console.error(
-
       "VERIFY PAYMENT ERROR:",
-
       error.response?.data || error.message
-
     );
 
 

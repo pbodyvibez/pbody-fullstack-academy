@@ -27,22 +27,25 @@ root.render(
   <React.StrictMode>
     <BrowserRouter>
       <ThemeProvider>
-        <SubscriptionProvider>
-          <AuthProvider>
+        <AuthProvider>
+          <SubscriptionProvider>
             <ProgressProvider>
               <AIProvider>
                 <App />
               </AIProvider>
             </ProgressProvider>
-          </AuthProvider>
-        </SubscriptionProvider>
+          </SubscriptionProvider>
+        </AuthProvider>
       </ThemeProvider>
     </BrowserRouter>
   </React.StrictMode>
 );
 
 // Register PWA service worker in production
-if ("serviceWorker" in navigator && process.env.NODE_ENV === "production") {
+if (
+  "serviceWorker" in navigator &&
+  process.env.NODE_ENV === "production"
+) {
   window.addEventListener("load", () => {
     navigator.serviceWorker
       .register("/service-worker.js")

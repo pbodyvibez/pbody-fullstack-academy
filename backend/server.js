@@ -47,6 +47,11 @@ const allowedOrigins = [
   "http://localhost:3000",
   "http://localhost:3001",
   "http://localhost:3002",
+
+  // Capacitor Android WebView
+  "https://localhost",
+
+  // Production frontend
   "https://pbodyfullstackacademy.netlify.app"
 ];
 
@@ -63,7 +68,7 @@ app.use(
         return callback(null, true);
       }
 
-      // Exact origins
+      // Exact allowed origins
       if (allowedOrigins.includes(origin)) {
         return callback(null, true);
       }
@@ -83,9 +88,32 @@ app.use(
       );
     },
 
-    credentials: true
+    credentials: true,
+
+    methods: [
+      "GET",
+      "POST",
+      "PUT",
+      "PATCH",
+      "DELETE",
+      "OPTIONS"
+    ],
+
+    allowedHeaders: [
+      "Origin",
+      "X-Requested-With",
+      "Content-Type",
+      "Accept",
+      "Authorization"
+    ]
   })
 );
+
+// ======================================================
+// EXPLICIT CORS PREFLIGHT
+// ======================================================
+
+app.options("*", cors());
 
 // ======================================================
 // BODY PARSER

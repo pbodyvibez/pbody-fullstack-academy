@@ -104,7 +104,8 @@ app.use(
       "X-Requested-With",
       "Content-Type",
       "Accept",
-      "Authorization"
+      "Authorization",
+      "x-paystack-signature"
     ]
   })
 );
@@ -118,8 +119,18 @@ app.options(/.*/, cors());
 // ======================================================
 // BODY PARSER
 // ======================================================
+// Capture the exact raw request body so Paystack webhook
+// signatures can be verified securely.
 
-app.use(express.json());
+app.use(
+  express.json({
+    verify: (req, res, buffer) => {
+
+      req.rawBody = buffer;
+
+    }
+  })
+);
 
 app.use(
   express.urlencoded({

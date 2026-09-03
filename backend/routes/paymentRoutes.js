@@ -1,45 +1,63 @@
+// ======================================================
+// PBODY FULLSTACK ACADEMY
+// PAYMENT ROUTES
+// ======================================================
+
 const express = require("express");
 
 const router = express.Router();
 
-
 const {
-initializePayment,
-verifyPayment
-}=require("../controllers/paymentController");
+  initializePayment,
+  verifyPayment,
+  handlePaystackWebhook
+} = require("../controllers/paymentController");
 
-
+// ======================================================
+// PAYMENT TEST
+// ======================================================
 
 router.get(
-"/test",
-(req,res)=>{
+  "/test",
+  (req, res) => {
 
-res.json({
+    res.json({
+      success: true,
+      message: "Payment route working"
+    });
 
-success:true,
-
-message:"Payment route working"
-
-});
-
-}
-
+  }
 );
 
-
+// ======================================================
+// INITIALIZE PAYMENT
+// ======================================================
 
 router.post(
-"/initialize",
-initializePayment
+  "/initialize",
+  initializePayment
 );
 
-
+// ======================================================
+// VERIFY PAYMENT
+// ======================================================
 
 router.get(
-"/verify/:reference",
-verifyPayment
+  "/verify/:reference",
+  verifyPayment
 );
 
+// ======================================================
+// PAYSTACK WEBHOOK
+// ======================================================
 
+router.post(
+  "/webhook",
+  handlePaystackWebhook
+);
+
+// ======================================================
+// EXPORT
+// ======================================================
 
 module.exports = router;

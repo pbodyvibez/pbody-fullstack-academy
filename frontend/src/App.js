@@ -12,15 +12,12 @@ import {
 } from "react-router-dom";
 
 // ======================================================
-// PROVIDERS
+// PROVIDER
 // ======================================================
 
-import { AuthProvider } from "./context/AuthContext";
-import { ProgressProvider } from "./context/ProgressContext";
-import { SubscriptionProvider } from "./context/SubscriptionContext";
-import { UserEngineProvider } from "./context/UserEngineContext";
-
-import AIProvider from "./ai/AIProvider";
+import {
+  UserEngineProvider
+} from "./context/UserEngineContext";
 
 // ======================================================
 // SCROLL
@@ -126,7 +123,6 @@ import AdminDashboard from "./pages/AdminDashboard";
 
 import NotFound from "./pages/NotFound";
 
-
 // ======================================================
 // APP
 // ======================================================
@@ -135,334 +131,302 @@ export default function App() {
 
   return (
 
-    <AuthProvider>
-
-      <ProgressProvider>
-
-        <SubscriptionProvider>
-
-          <UserEngineProvider>
-
-            <AIProvider>
-
-              <ScrollRestoration />
-
-              <Routes>
-
-
-                {/* ==================================================
-                    PUBLIC WEBSITE
-                ================================================== */}
-
-                <Route
-                  element={<PublicLayout />}
-                >
-
-                  <Route
-                    path="/"
-                    element={<Home />}
-                  />
-
-                  <Route
-                    path="/about"
-                    element={<About />}
-                  />
-
-                  <Route
-                    path="/contact"
-                    element={<Contact />}
-                  />
-
-                  <Route
-                    path="/pricing"
-                    element={<Pricing />}
-                  />
-
-                  <Route
-                    path="/privacy"
-                    element={<Privacy />}
-                  />
-
-                  <Route
-                    path="/terms"
-                    element={<Terms />}
-                  />
-
-                  <Route
-                    path="/login"
-                    element={<Login />}
-                  />
-
-                  <Route
-                    path="/register"
-                    element={<Register />}
-                  />
-
-                  <Route
-                    path="/forgot-password"
-                    element={<ForgotPassword />}
-                  />
-
-                  <Route
-                    path="/payment-success"
-                    element={<PaymentSuccess />}
-                  />
-
-                </Route>
-
-
-                {/* ==================================================
-                    PROTECTED CLASSROOM
-
-                    These pages intentionally do NOT use
-                    StudentLayout.
-
-                    This prevents duplicate navigation,
-                    duplicate sidebars and layout conflicts.
-                ================================================== */}
-
-                <Route
-                  path="/course/:id"
-                  element={
-                    <ProtectedRoute>
-                      <CoursePage />
-                    </ProtectedRoute>
-                  }
-                />
-
-                <Route
-                  path="/lesson/:courseId/:lessonId"
-                  element={
-                    <ProtectedRoute>
-                      <LessonView />
-                    </ProtectedRoute>
-                  }
-                />
-
-
-                {/* ==================================================
-                    PROTECTED STUDENT APPLICATION
-
-                    Everything inside this route automatically
-                    receives StudentLayout.
-                ================================================== */}
-
-                <Route
-                  element={
-                    <ProtectedRoute>
-                      <StudentLayout />
-                    </ProtectedRoute>
-                  }
-                >
-
-
-                  {/* ==================================================
-                      DASHBOARD
-                  ================================================== */}
-
-                  <Route
-                    path="/dashboard"
-                    element={<Dashboard />}
-                  />
-
-
-                  {/* ==================================================
-                      LEARNING
-                  ================================================== */}
-
-                  <Route
-                    path="/learning-hub"
-                    element={<LearningHub />}
-                  />
-
-                  <Route
-                    path="/courses"
-                    element={<Courses />}
-                  />
-
-
-                  {/* ==================================================
-                      ASSESSMENTS
-                  ================================================== */}
-
-                  <Route
-                    path="/quiz"
-                    element={<Quiz />}
-                  />
-
-                  <Route
-                    path="/assignment"
-                    element={<Assignment />}
-                  />
-
-
-                  {/* ==================================================
-                      PROJECTS
-                  ================================================== */}
-
-                  <Route
-                    path="/projects"
-                    element={<Projects />}
-                  />
-
-                  <Route
-                    path="/project/:id"
-                    element={<ProjectPage />}
-                  />
-
-
-                  {/* ==================================================
-                      COMMUNITY
-                  ================================================== */}
-
-                  <Route
-                    path="/community"
-                    element={<Community />}
-                  />
-
-                  <Route
-                    path="/community/discussions"
-                    element={<EngineeringDiscussions />}
-                  />
-
-
-                  {/* ==================================================
-                      STUDENT
-                  ================================================== */}
-
-                  <Route
-                    path="/certificates"
-                    element={<Certificates />}
-                  />
-
-                  <Route
-                    path="/profile"
-                    element={<Profile />}
-                  />
-
-                  <Route
-                    path="/settings"
-                    element={<Settings />}
-                  />
-
-                  <Route
-                    path="/leaderboard"
-                    element={<Leaderboard />}
-                  />
-
-                  <Route
-                    path="/notifications"
-                    element={<Notifications />}
-                  />
-
-
-                  {/* ==================================================
-                      CAREER CENTER
-                  ================================================== */}
-
-                  <Route
-                    path="/career"
-                    element={<Career />}
-                  />
-
-                  <Route
-                    path="/jobs"
-                    element={<JobBoard />}
-                  />
-
-                  <Route
-                    path="/internships"
-                    element={<Internship />}
-                  />
-
-
-                  {/* ==================================================
-                      PORTFOLIO
-                  ================================================== */}
-
-                  <Route
-                    path="/portfolio-builder"
-                    element={<PortfolioBuilder />}
-                  />
-
-                  <Route
-                    path="/portfolio-builder/preview"
-                    element={<PortfolioPreview />}
-                  />
-
-
-                  {/* ==================================================
-                      RESUME
-                  ================================================== */}
-
-                  <Route
-                    path="/resume-builder"
-                    element={<ResumeBuilder />}
-                  />
-
-                  <Route
-                    path="/resume-builder/preview"
-                    element={<ResumePreview />}
-                  />
-
-
-                  {/* ==================================================
-                      ROADMAPS
-                  ================================================== */}
-
-                  <Route
-                    path="/roadmaps"
-                    element={<Roadmaps />}
-                  />
-
-
-                  {/* ==================================================
-                      AI
-                  ================================================== */}
-
-                  <Route
-                    path="/ai-mentor"
-                    element={<AIMentor />}
-                  />
-
-                  <Route
-                    path="/ai-tutor"
-                    element={<AITutor />}
-                  />
-
-
-                  {/* ==================================================
-                      ADMIN
-                  ================================================== */}
-
-                  <Route
-                    path="/admin"
-                    element={<AdminDashboard />}
-                  />
-
-
-                  {/* ==================================================
-                      404
-                  ================================================== */}
-
-                  <Route
-                    path="*"
-                    element={<NotFound />}
-                  />
-
-                </Route>
-
-              </Routes>
-
-            </AIProvider>
-
-          </UserEngineProvider>
-
-        </SubscriptionProvider>
-
-      </ProgressProvider>
-
-    </AuthProvider>
+    <UserEngineProvider>
+
+      <ScrollRestoration />
+
+      <Routes>
+
+        {/* ==================================================
+            PUBLIC WEBSITE
+        ================================================== */}
+
+        <Route
+          element={<PublicLayout />}
+        >
+
+          <Route
+            path="/"
+            element={<Home />}
+          />
+
+          <Route
+            path="/about"
+            element={<About />}
+          />
+
+          <Route
+            path="/contact"
+            element={<Contact />}
+          />
+
+          <Route
+            path="/pricing"
+            element={<Pricing />}
+          />
+
+          <Route
+            path="/privacy"
+            element={<Privacy />}
+          />
+
+          <Route
+            path="/terms"
+            element={<Terms />}
+          />
+
+          <Route
+            path="/login"
+            element={<Login />}
+          />
+
+          <Route
+            path="/register"
+            element={<Register />}
+          />
+
+          <Route
+            path="/forgot-password"
+            element={<ForgotPassword />}
+          />
+
+          <Route
+            path="/payment-success"
+            element={<PaymentSuccess />}
+          />
+
+        </Route>
+
+        {/* ==================================================
+            PROTECTED CLASSROOM
+
+            These pages intentionally do NOT use
+            StudentLayout.
+
+            This prevents duplicate navigation,
+            duplicate sidebars and layout conflicts.
+        ================================================== */}
+
+        <Route
+          path="/course/:id"
+          element={
+            <ProtectedRoute>
+              <CoursePage />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/lesson/:courseId/:lessonId"
+          element={
+            <ProtectedRoute>
+              <LessonView />
+            </ProtectedRoute>
+          }
+        />
+
+        {/* ==================================================
+            PROTECTED STUDENT APPLICATION
+
+            Everything inside this route automatically
+            receives StudentLayout.
+        ================================================== */}
+
+        <Route
+          element={
+            <ProtectedRoute>
+              <StudentLayout />
+            </ProtectedRoute>
+          }
+        >
+
+          {/* ==================================================
+              DASHBOARD
+          ================================================== */}
+
+          <Route
+            path="/dashboard"
+            element={<Dashboard />}
+          />
+
+          {/* ==================================================
+              LEARNING
+          ================================================== */}
+
+          <Route
+            path="/learning-hub"
+            element={<LearningHub />}
+          />
+
+          <Route
+            path="/courses"
+            element={<Courses />}
+          />
+
+          {/* ==================================================
+              ASSESSMENTS
+          ================================================== */}
+
+          <Route
+            path="/quiz"
+            element={<Quiz />}
+          />
+
+          <Route
+            path="/assignment"
+            element={<Assignment />}
+          />
+
+          {/* ==================================================
+              PROJECTS
+          ================================================== */}
+
+          <Route
+            path="/projects"
+            element={<Projects />}
+          />
+
+          <Route
+            path="/project/:id"
+            element={<ProjectPage />}
+          />
+
+          {/* ==================================================
+              COMMUNITY
+          ================================================== */}
+
+          <Route
+            path="/community"
+            element={<Community />}
+          />
+
+          <Route
+            path="/community/discussions"
+            element={<EngineeringDiscussions />}
+          />
+
+          {/* ==================================================
+              STUDENT
+          ================================================== */}
+
+          <Route
+            path="/certificates"
+            element={<Certificates />}
+          />
+
+          <Route
+            path="/profile"
+            element={<Profile />}
+          />
+
+          <Route
+            path="/settings"
+            element={<Settings />}
+          />
+
+          <Route
+            path="/leaderboard"
+            element={<Leaderboard />}
+          />
+
+          <Route
+            path="/notifications"
+            element={<Notifications />}
+          />
+
+          {/* ==================================================
+              CAREER CENTER
+          ================================================== */}
+
+          <Route
+            path="/career"
+            element={<Career />}
+          />
+
+          <Route
+            path="/jobs"
+            element={<JobBoard />}
+          />
+
+          <Route
+            path="/internships"
+            element={<Internship />}
+          />
+
+          {/* ==================================================
+              PORTFOLIO
+          ================================================== */}
+
+          <Route
+            path="/portfolio-builder"
+            element={<PortfolioBuilder />}
+          />
+
+          <Route
+            path="/portfolio-builder/preview"
+            element={<PortfolioPreview />}
+          />
+
+          {/* ==================================================
+              RESUME
+          ================================================== */}
+
+          <Route
+            path="/resume-builder"
+            element={<ResumeBuilder />}
+          />
+
+          <Route
+            path="/resume-builder/preview"
+            element={<ResumePreview />}
+          />
+
+          {/* ==================================================
+              ROADMAPS
+          ================================================== */}
+
+          <Route
+            path="/roadmaps"
+            element={<Roadmaps />}
+          />
+
+          {/* ==================================================
+              AI
+          ================================================== */}
+
+          <Route
+            path="/ai-mentor"
+            element={<AIMentor />}
+          />
+
+          <Route
+            path="/ai-tutor"
+            element={<AITutor />}
+          />
+
+          {/* ==================================================
+              ADMIN
+          ================================================== */}
+
+          <Route
+            path="/admin"
+            element={<AdminDashboard />}
+          />
+
+          {/* ==================================================
+              404
+          ================================================== */}
+
+          <Route
+            path="*"
+            element={<NotFound />}
+          />
+
+        </Route>
+
+      </Routes>
+
+    </UserEngineProvider>
 
   );
 

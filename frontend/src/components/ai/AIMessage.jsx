@@ -1,60 +1,77 @@
+// ===============================================
+// PBODY FULLSTACK ACADEMY
+// AI MESSAGE
+// ===============================================
+
+import Logo from "../../assets/images/logo.png";
+
+import "../../styles/aiAssistant.css";
+
+
+// ===============================================
+// AI MESSAGE COMPONENT
+// ===============================================
+
 export default function AIMessage({
+  message,
+  sender = "ai"
+}) {
 
-message,
-
-sender
-
-}){
-
-
-return(
-
-<div
-
-className={`aiMessage ${sender}`}
-
->
+  const isAI = sender === "ai";
 
 
-<div className="messageAvatar">
+  if (!message) {
+    return null;
+  }
 
 
-{
+  return (
 
-sender === "ai"
+    <div
+      className={
+        isAI
+          ? "ai-message"
+          : "student-message"
+      }
+    >
 
-?
+      {/* AI BRAND */}
 
-"🤖"
+      {isAI && (
 
-:
+        <div className="ai-message-avatar">
 
-"👨‍💻"
+          <img
+            src={Logo}
+            alt="PBody FullStack Academy"
+          />
 
-}
+        </div>
 
-
-</div>
-
-
-
-<div className="messageContent">
-
-
-<p>
-
-{message}
-
-</p>
+      )}
 
 
-</div>
+      <div className="ai-message-content">
+
+        <div className="ai-message-sender">
+
+          {isAI
+            ? "PBody AI Mentor"
+            : "You"}
+
+        </div>
 
 
+        <div className="ai-message-text">
 
-</div>
+          {message}
 
-);
+        </div>
 
+      </div>
+
+    </div>
+
+  );
 
 }

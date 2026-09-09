@@ -1,17 +1,29 @@
 // ===============================================
 // PBODY FULLSTACK ACADEMY
 // AI LESSON TRACKER
-// FULL REPLACEMENT
+// STABLE VERSION
 // ===============================================
 
-import { useEffect, useRef } from "react";
+import {
+  useEffect,
+  useRef
+} from "react";
+
 import useAI from "../../ai/useAI";
 
-export default function AILessonTracker({ lesson }) {
 
-  const { setLesson } = useAI();
+export default function AILessonTracker({
+  lesson
+}) {
 
-  const lastLessonId = useRef(null);
+  const {
+    setLesson
+  } = useAI();
+
+
+  const lastLessonId =
+    useRef(null);
+
 
   useEffect(() => {
 
@@ -19,21 +31,40 @@ export default function AILessonTracker({ lesson }) {
       return;
     }
 
-    const lessonId = lesson?.id;
+
+    const lessonId =
+      lesson?.id ||
+      lesson?._id;
+
 
     if (!lessonId) {
       return;
     }
 
-    if (String(lastLessonId.current) === String(lessonId)) {
+
+    const normalizedId =
+      String(lessonId);
+
+
+    if (
+      String(lastLessonId.current) ===
+      normalizedId
+    ) {
       return;
     }
 
-    lastLessonId.current = lessonId;
+
+    lastLessonId.current =
+      normalizedId;
+
 
     setLesson(lesson);
 
-  }, [lesson, setLesson]);
+  }, [
+    lesson,
+    setLesson
+  ]);
+
 
   return null;
 }

@@ -3,63 +3,35 @@
 // AI INITIALIZATION HOOK
 // ===============================================
 
-
 import { useEffect } from "react";
 
 import useAI from "./useAI";
-
-
 
 // ===============================================
 // AI INITIALIZER
 // ===============================================
 
-
-export default function useAIInitialize(){
-
+export default function useAIInitialize() {
 
   const {
-
     initializeAI,
-
     setPage
-
-
   } = useAI();
 
-
-
-
-  useEffect(()=>{
-
-
+  useEffect(() => {
 
     initializeAI();
 
+  }, [initializeAI]);
 
-
-  },[]);
-
-
-
-
-  const updateAIPage = (page)=>{
-
+  const updateAIPage = (page) => {
 
     setPage(page);
 
-
   };
-
-
 
   return {
-
-
     updateAIPage
-
-
   };
-
 
 }

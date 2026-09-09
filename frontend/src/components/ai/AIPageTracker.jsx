@@ -3,51 +3,46 @@
 // AI PAGE TRACKER
 // ===============================================
 
-
-import { useLocation } from "react-router-dom";
-
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 
 import useAI from "../../ai/useAI";
 
 
-
 // ===============================================
-// TRACK CURRENT PAGE
+// AI PAGE TRACKER
 // ===============================================
 
+export default function AIPageTracker({
+  page = ""
+}) {
 
-export default function AIPageTracker(){
+  const { setPage } = useAI();
 
-
-  const location = useLocation();
-
-
-  const {
-
-    setPage
-
-  } = useAI();
+  const lastPage = useRef("");
 
 
+  useEffect(() => {
 
+    const normalizedPage =
+      typeof page === "string"
+        ? page.trim()
+        : "";
 
-  useEffect(()=>{
+    if (!normalizedPage) {
+      return;
+    }
 
+    if (lastPage.current === normalizedPage) {
+      return;
+    }
 
-    setPage(
+    lastPage.current = normalizedPage;
 
-      location.pathname
+    setPage(normalizedPage);
 
-    );
-
-
-  },[location.pathname]);
-
-
+  }, [page, setPage]);
 
 
   return null;
-
 
 }

@@ -1,264 +1,341 @@
 // ===============================================
 // PBODY FULLSTACK ACADEMY
-// AI ACTIONS
+// AI STATE ACTIONS
 // ===============================================
-
+//
+// IMPORTANT:
+// API communication is handled by:
+// frontend/src/services/aiService.js
+//
+// This file is responsible only for dispatching
+// AI state changes. It must not contain fake AI
+// responses or make API requests.
+// ===============================================
 
 import { AI_TYPES } from "./AITypes";
 
 
-
 // ===============================================
-// SEND STUDENT MESSAGE
+// STUDENT MESSAGE
 // ===============================================
 
+export const sendAIMessage = (dispatch, message) => {
 
-export const sendAIMessage = (
-  dispatch,
-  message
-)=>{
-
+  if (!dispatch || !message) {
+    return;
+  }
 
   dispatch({
-
     type: AI_TYPES.SEND_MESSAGE,
 
     payload: {
-
-      id: Date.now(),
-
-      sender:"student",
-
-      text:message
-
+      id: `${Date.now()}-student`,
+      sender: "student",
+      role: "user",
+      text: String(message)
     }
-
   });
-
 
 };
 
 
-
-
-
 // ===============================================
-// RECEIVE AI MESSAGE
+// AI MESSAGE
 // ===============================================
 
+export const receiveAIMessage = (dispatch, message) => {
 
-export const receiveAIMessage = (
-  dispatch,
-  message
-)=>{
-
+  if (!dispatch || !message) {
+    return;
+  }
 
   dispatch({
-
     type: AI_TYPES.RECEIVE_MESSAGE,
 
     payload: {
-
-      id: Date.now(),
-
-      sender:"ai",
-
-      text:message
-
+      id: `${Date.now()}-ai`,
+      sender: "ai",
+      role: "ai",
+      text: String(message)
     }
-
   });
 
+};
+
+
+// ===============================================
+// CLEAR CHAT
+// ===============================================
+
+export const clearAIChat = (dispatch) => {
+
+  if (!dispatch) {
+    return;
+  }
+
+  dispatch({
+    type: AI_TYPES.CLEAR_CHAT
+  });
 
 };
 
 
-
-
-
 // ===============================================
-// EXPLAIN LESSON
+// DELETE MESSAGE
 // ===============================================
 
+export const deleteAIMessage = (dispatch, messageId) => {
 
-export const explainLesson = (
-  dispatch,
-  lesson
-)=>{
+  if (!dispatch || !messageId) {
+    return;
+  }
 
-
-  const response = `
-
-I will explain ${lesson} step by step.
-
-First, understand the main concept.
-
-Then practice with examples.
-
-Finally build a small project.
-
-`;
-
-
-  receiveAIMessage(
-
-    dispatch,
-
-    response
-
-  );
-
+  dispatch({
+    type: AI_TYPES.DELETE_MESSAGE,
+    payload: messageId
+  });
 
 };
 
 
-
-
-
 // ===============================================
-// DEBUG CODE
+// SET AI PAGE
 // ===============================================
 
+export const setAIPage = (dispatch, page) => {
 
-export const debugCode = (
-  dispatch,
-  code
-)=>{
+  if (!dispatch) {
+    return;
+  }
 
-
-  const response = `
-
-I am analyzing your code.
-
-Check:
-
-1. Syntax errors
-
-2. Logic mistakes
-
-3. Missing requirements
-
-4. Possible improvements
-
-
-Your AI Mentor will guide you through fixing it.
-
-`;
-
-
-
-  receiveAIMessage(
-
-    dispatch,
-
-    response
-
-  );
-
+  dispatch({
+    type: AI_TYPES.SET_PAGE,
+    payload: page
+  });
 
 };
 
 
-
-
-
 // ===============================================
-// GENERATE QUIZ
+// SET AI COURSE
 // ===============================================
 
+export const setAICourse = (dispatch, course) => {
 
-export const generateQuiz = (
+  if (!dispatch) {
+    return;
+  }
 
- dispatch,
-
- topic
-
-)=>{
-
-
- const response = `
-
-Creating a practice quiz for:
-
-${topic}
-
-
-Question 1:
-
-Explain the purpose of this concept.
-
-
-Question 2:
-
-Give a practical example.
-
-
-Question 3:
-
-Build a small implementation.
-
-
-`;
-
-
-
- receiveAIMessage(
-
-  dispatch,
-
-  response
-
- );
-
+  dispatch({
+    type: AI_TYPES.SET_COURSE,
+    payload: course
+  });
 
 };
 
 
+// ===============================================
+// SET AI LESSON
+// ===============================================
 
+export const setAILesson = (dispatch, lesson) => {
+
+  if (!dispatch) {
+    return;
+  }
+
+  dispatch({
+    type: AI_TYPES.SET_LESSON,
+    payload: lesson
+  });
+
+};
 
 
 // ===============================================
-// CREATE PRACTICE TASK
+// SET AI USER
 // ===============================================
 
+export const setAIUser = (dispatch, user) => {
 
-export const createPracticeTask = (
+  if (!dispatch) {
+    return;
+  }
 
- dispatch,
+  dispatch({
+    type: AI_TYPES.SET_USER,
+    payload: user
+  });
 
- skill
-
-)=>{
-
-
- const response = `
-
-Practice Challenge:
-
-Build a small project using ${skill}.
-
-Requirements:
-
-- Write clean code
-
-- Explain your approach
-
-- Test your solution
-
-- Improve your design
+};
 
 
-`;
+// ===============================================
+// SET SUGGESTIONS
+// ===============================================
 
-
-
- receiveAIMessage(
-
+export const setAISuggestions = (
   dispatch,
+  suggestions
+) => {
 
-  response
+  if (!dispatch) {
+    return;
+  }
 
- );
+  dispatch({
+    type: AI_TYPES.SET_SUGGESTIONS,
+    payload: Array.isArray(suggestions)
+      ? suggestions
+      : []
+  });
 
+};
+
+
+// ===============================================
+// UPDATE AI PROGRESS
+// ===============================================
+
+export const updateAIProgress = (
+  dispatch,
+  progress
+) => {
+
+  if (!dispatch) {
+    return;
+  }
+
+  dispatch({
+    type: AI_TYPES.UPDATE_PROGRESS,
+    payload: progress || {}
+  });
+
+};
+
+
+// ===============================================
+// LOADING STATE
+// ===============================================
+
+export const setAILoading = (
+  dispatch,
+  loading
+) => {
+
+  if (!dispatch) {
+    return;
+  }
+
+  dispatch({
+    type: AI_TYPES.SET_LOADING,
+    payload: Boolean(loading)
+  });
+
+};
+
+
+// ===============================================
+// TYPING STATE
+// ===============================================
+
+export const setAITyping = (
+  dispatch,
+  typing
+) => {
+
+  if (!dispatch) {
+    return;
+  }
+
+  dispatch({
+    type: AI_TYPES.SET_TYPING,
+    payload: Boolean(typing)
+  });
+
+};
+
+
+// ===============================================
+// CHAT OPEN
+// ===============================================
+
+export const openAIChat = (dispatch) => {
+
+  if (!dispatch) {
+    return;
+  }
+
+  dispatch({
+    type: AI_TYPES.OPEN_CHAT
+  });
+
+};
+
+
+// ===============================================
+// CHAT CLOSE
+// ===============================================
+
+export const closeAIChat = (dispatch) => {
+
+  if (!dispatch) {
+    return;
+  }
+
+  dispatch({
+    type: AI_TYPES.CLOSE_CHAT
+  });
+
+};
+
+
+// ===============================================
+// CHAT TOGGLE
+// ===============================================
+
+export const toggleAIChat = (dispatch) => {
+
+  if (!dispatch) {
+    return;
+  }
+
+  dispatch({
+    type: AI_TYPES.TOGGLE_CHAT
+  });
+
+};
+
+
+// ===============================================
+// INITIALIZE AI
+// ===============================================
+
+export const initializeAI = (dispatch) => {
+
+  if (!dispatch) {
+    return;
+  }
+
+  dispatch({
+    type: AI_TYPES.INITIALIZE_AI
+  });
+
+};
+
+
+// ===============================================
+// RESET AI
+// ===============================================
+
+export const resetAI = (dispatch) => {
+
+  if (!dispatch) {
+    return;
+  }
+
+  dispatch({
+    type: AI_TYPES.RESET_AI
+  });
 
 };

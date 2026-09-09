@@ -1,17 +1,29 @@
 // ===============================================
 // PBODY FULLSTACK ACADEMY
 // AI COURSE TRACKER
-// FULL REPLACEMENT
+// STABLE VERSION
 // ===============================================
 
-import { useEffect, useRef } from "react";
+import {
+  useEffect,
+  useRef
+} from "react";
+
 import useAI from "../../ai/useAI";
 
-export default function AICourseTracker({ course }) {
 
-  const { setCourse } = useAI();
+export default function AICourseTracker({
+  course
+}) {
 
-  const lastCourseId = useRef(null);
+  const {
+    setCourse
+  } = useAI();
+
+
+  const lastCourseId =
+    useRef(null);
+
 
   useEffect(() => {
 
@@ -19,21 +31,40 @@ export default function AICourseTracker({ course }) {
       return;
     }
 
-    const courseId = course?.id;
+
+    const courseId =
+      course?.id ||
+      course?._id;
+
 
     if (!courseId) {
       return;
     }
 
-    if (String(lastCourseId.current) === String(courseId)) {
+
+    const normalizedId =
+      String(courseId);
+
+
+    if (
+      String(lastCourseId.current) ===
+      normalizedId
+    ) {
       return;
     }
 
-    lastCourseId.current = courseId;
+
+    lastCourseId.current =
+      normalizedId;
+
 
     setCourse(course);
 
-  }, [course, setCourse]);
+  }, [
+    course,
+    setCourse
+  ]);
+
 
   return null;
 }

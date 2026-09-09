@@ -1,27 +1,37 @@
 // ===============================================
 // PBODY FULLSTACK ACADEMY
-// AI INITIALIZER COMPONENT
+// AI INITIALIZER
 // ===============================================
 
+import { useEffect, useRef } from "react";
 
-import useAIInitialize from "../../ai/useAIInitialize";
-
+import useAI from "../../ai/useAI";
 
 
 // ===============================================
 // AI INITIALIZER
 // ===============================================
 
+export default function AIInitializer() {
 
-export default function AIInitializer(){
+  const { initializeAI } = useAI();
+
+  const initialized = useRef(false);
 
 
+  useEffect(() => {
 
-  useAIInitialize();
+    if (initialized.current) {
+      return;
+    }
 
+    initialized.current = true;
+
+    initializeAI();
+
+  }, [initializeAI]);
 
 
   return null;
-
 
 }

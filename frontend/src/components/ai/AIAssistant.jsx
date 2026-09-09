@@ -3,413 +3,374 @@
 // AI ASSISTANT INTERFACE
 // ===============================================
 
-
-import {
-  useState
-} from "react";
-
+import { useState } from "react";
 
 import useAI from "../../ai/useAI";
-
+import { useAuth } from "../../context/AuthContext";
+import { sendAIMessage as sendAIRequest } from "../../services/aiService";
 
 import "../../styles/aiAssistant.css";
-
 
 
 // ===============================================
 // AI ASSISTANT COMPONENT
 // ===============================================
 
+export default function AIAssistant() {
 
-export default function AIAssistant(){
+  const {
+    isOpen,
+    toggleChat,
+    messages,
+    sendMessage,
+    receiveMessage,
+    typing,
+    setTyping,
+    currentCourse,
+    currentLesson
+  } = useAI();
 
+  const {
+    user,
+    token
+  } = useAuth();
 
+  const [input, setInput] = useState("");
+  const [error, setError] = useState("");
 
-const {
+  // ===============================================
+  // QUICK SUGGESTIONS
+  // ===============================================
 
+  const suggestions = [
+    "Explain this lesson",
+    "Debug my code",
+    "Create practice quiz",
+    "Give me a project idea",
+    "Give me interview questions"
+  ];
 
-  isOpen,
 
-  toggleChat,
+  // ===============================================
+  // SEND MESSAGE TO REAL AI
+  // ===============================================
 
-  messages,
+  async function askAI(text) {
 
-  sendMessage,
+    const cleanText = text?.trim();
 
-  receiveMessage,
+    if (!cleanText || typing) {
+      return;
+    }
 
-  typing,
+    // Add student message to AI state
+    sendMessage({
+      id: `${Date.now()}-student`,
+      sender: "student",
+      role: "user",
+      text: cleanText
+    });
 
-  setTyping
+    setInput("");
+    setError("");
+    setTyping(true);
 
+    try {
 
-}=useAI();
+      const data = await sendAIRequest({
 
+        message: cleanText,
 
+        lesson: currentLesson || null,
 
+        course: currentCourse || null,
 
-const [input,setInput] = useState("");
+        student: {
+          name: user?.name || "Student",
+          level: user?.level || 1,
+          xp: user?.xp || 0
+        },
 
+        token
 
+      });
 
 
+      if (!data?.success || !data?.reply) {
 
-const suggestions = [
+        throw new Error(
+          data?.message ||
+          "PBody AI did not return a response."
+        );
 
-"Explain this lesson",
+      }
 
-"Debug my code",
 
-"Create practice quiz",
+      // Add real AI response
+      receiveMessage({
 
-"Give me a project idea"
+        id: `${Date.now()}-ai`,
 
-];
+        sender: "ai",
 
+        role: "ai",
 
+        text: data.reply
 
+      });
 
+    } catch (requestError) {
 
+      console.error(
+        "PBody AI Assistant Error:",
+        requestError
+      );
 
-const askAI = (text)=>{
 
+      const message =
+        requestError?.response?.data?.message ||
+        requestError?.message ||
+        "AI Mentor is temporarily unavailable. Please try again.";
 
-if(!text.trim()) return;
 
+      setError(message);
 
 
-const studentMessage = {
+      receiveMessage({
 
+        id: `${Date.now()}-error`,
 
-id:Date.now(),
+        sender: "ai",
 
-sender:"student",
+        role: "ai",
 
-text:text
+        text:
+          "I could not complete that request right now. " +
+          "Please try again in a moment."
 
+      });
 
-};
+    } finally {
 
+      setTyping(false);
 
+    }
 
-sendMessage(studentMessage);
+  }
 
 
+  // ===============================================
+  // HANDLE ENTER
+  // ===============================================
 
-setInput("");
+  function handleKeyDown(event) {
 
+    if (
+      event.key === "Enter" &&
+      !event.shiftKey
+    ) {
 
+      event.preventDefault();
 
-setTyping(true);
+      askAI(input);
 
+    }
 
+  }
 
 
+  // ===============================================
+  // RENDER
+  // ===============================================
 
-setTimeout(()=>{
+  return (
 
+    <>
 
+      {/* =========================================
+          FLOATING AI BUTTON
+      ========================================= */}
 
-receiveMessage({
+      <button
+        type="button"
+        className="ai-floating-button"
+        onClick={toggleChat}
+        aria-label={
+          isOpen
+            ? "Close PBody AI Mentor"
+            : "Open PBody AI Mentor"
+        }
+      >
+        🤖
+      </button>
 
 
-id:Date.now()+1,
+      {/* =========================================
+          AI WINDOW
+      ========================================= */}
 
+      {isOpen && (
 
-sender:"ai",
+        <div
+          className="ai-assistant-window"
+          role="dialog"
+          aria-label="PBody AI Engineering Mentor"
+        >
 
+          {/* HEADER */}
 
-text:
+          <div className="ai-header">
 
-"I am your PBody AI Mentor. I will guide you step by step. Let's break this concept down and learn it properly."
+            <div>
 
+              <h3>
+                PBody AI Mentor
+              </h3>
 
+              <small>
+                {currentLesson?.title
+                  ? `Learning: ${currentLesson.title}`
+                  : "Engineering Intelligence"}
+              </small>
 
-});
+            </div>
 
+            <span>
+              Online
+            </span>
 
+          </div>
 
-setTyping(false);
 
+          {/* MESSAGES */}
 
+          <div className="ai-messages">
 
-},1200);
+            {messages.length === 0 ? (
 
+              <p className="ai-empty">
 
+                Hello Student 👋
 
-};
+                <br />
 
+                I am your PBody AI Engineering Mentor.
 
+                <br />
 
+                Ask me anything about coding,
+                lessons, projects, debugging,
+                or software engineering.
 
+              </p>
 
+            ) : (
 
+              messages.map((message) => (
 
-return (
+                <div
+                  key={message.id}
+                  className={
+                    message.sender === "ai"
+                      ? "ai-message"
+                      : "student-message"
+                  }
+                >
 
-<>
+                  {message.text}
 
+                </div>
 
-<button
+              ))
 
-className="ai-floating-button"
+            )}
 
-onClick={toggleChat}
 
->
+            {/* TYPING */}
 
-🤖
+            {typing && (
 
-</button>
+              <p className="ai-typing">
+                AI Mentor is thinking...
+              </p>
 
+            )}
 
+          </div>
 
 
+          {/* ERROR */}
 
-{
+          {error && (
 
-isOpen && (
+            <div
+              className="ai-error"
+              role="alert"
+            >
+              {error}
+            </div>
 
+          )}
 
-<div className="ai-assistant-window">
 
+          {/* SUGGESTIONS */}
 
+          <div className="ai-suggestions">
 
+            {suggestions.map((item) => (
 
+              <button
+                type="button"
+                key={item}
+                onClick={() => askAI(item)}
+                disabled={typing}
+              >
+                {item}
+              </button>
 
-<div className="ai-header">
+            ))}
 
+          </div>
 
-<h3>
 
-PBody AI Mentor
+          {/* FOOTER */}
 
-</h3>
+          <div className="ai-footer">
 
+            <input
+              type="text"
+              value={input}
+              onChange={(event) => {
+                setInput(event.target.value);
+                setError("");
+              }}
+              onKeyDown={handleKeyDown}
+              disabled={typing}
+              placeholder="Ask your AI Mentor..."
+              aria-label="Ask your AI Mentor"
+            />
 
 
-<span>
+            <button
+              type="button"
+              onClick={() => askAI(input)}
+              disabled={typing || !input.trim()}
+            >
 
-Online
+              {typing
+                ? "Thinking..."
+                : "Send"}
 
-</span>
+            </button>
 
+          </div>
 
+        </div>
 
-</div>
+      )}
 
+    </>
 
-
-
-
-
-
-<div className="ai-messages">
-
-
-
-
-
-{
-
-messages.length === 0 ? (
-
-
-<p className="ai-empty">
-
-
-Hello Student 👋
-
-
-<br/>
-
-
-I am your AI engineering mentor.
-
-
-<br/>
-
-
-Ask me anything about coding, lessons, or projects.
-
-
-</p>
-
-
-)
-
-:
-
-(
-
-messages.map((message)=>(
-
-
-<div
-
-key={message.id}
-
-className={
-
-message.sender === "ai"
-
-?
-
-"ai-message"
-
-:
-
-"student-message"
-
-}
-
->
-
-{message.text}
-
-
-</div>
-
-
-))
-
-
-)
-
-}
-
-
-
-
-
-{
-
-typing && (
-
-<p className="ai-typing">
-
-AI Mentor is thinking...
-
-</p>
-
-)
-
-}
-
-
-
-</div>
-
-
-
-
-
-
-
-<div className="ai-suggestions">
-
-
-{
-
-suggestions.map((item)=>(
-
-
-<button
-
-key={item}
-
-onClick={()=>askAI(item)}
-
->
-
-{item}
-
-</button>
-
-
-))
-
-
-}
-
-
-</div>
-
-
-
-
-
-
-
-
-<div className="ai-footer">
-
-
-
-<input
-
-
-value={input}
-
-
-onChange={(e)=>setInput(e.target.value)}
-
-
-onKeyDown={(e)=>{
-
-
-if(e.key==="Enter"){
-
-askAI(input);
-
-}
-
-
-}}
-
-
-
-placeholder="Ask your AI Mentor..."
-
-
-/>
-
-
-
-
-<button
-
-onClick={()=>askAI(input)}
-
->
-
-Send
-
-</button>
-
-
-
-</div>
-
-
-
-
-
-
-</div>
-
-
-)
-
-
-}
-
-
-
-</>
-
-
-);
-
+  );
 
 }

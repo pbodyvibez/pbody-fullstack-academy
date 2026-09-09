@@ -1,11 +1,10 @@
 // ===============================================
 // PBODY FULLSTACK ACADEMY
-// AI ROUTES
-// GEMINI AI ENGINEERING MENTOR
+// OPENAI AI ENGINEERING MENTOR
 // ===============================================
 
 const express = require("express");
-const { GoogleGenAI } = require("@google/genai");
+const OpenAI = require("openai");
 
 const auth = require("../middleware/authMiddleware");
 
@@ -13,12 +12,12 @@ const router = express.Router();
 
 
 // ===============================================
-// GEMINI CLIENT
+// OPENAI CLIENT
 // ===============================================
 
-const ai = new GoogleGenAI({
+const openai = new OpenAI({
 
-  apiKey: process.env.GEMINI_API_KEY
+  apiKey: process.env.OPENAI_API_KEY
 
 });
 
@@ -63,7 +62,11 @@ router.post(
       // VALIDATE MESSAGE
       // =========================================
 
-      if (!message || !message.trim()) {
+      if (
+        !message ||
+        typeof message !== "string" ||
+        !message.trim()
+      ) {
 
         return res.status(400).json({
 
@@ -77,7 +80,29 @@ router.post(
 
 
       // =========================================
-      // BUILD AI SYSTEM INSTRUCTION
+      // VALIDATE OPENAI KEY
+      // =========================================
+
+      if (!process.env.OPENAI_API_KEY) {
+
+        console.error(
+          "OPENAI_API_KEY is missing"
+        );
+
+        return res.status(500).json({
+
+          success: false,
+
+          message:
+            "PBody AI is not configured on the server."
+
+        });
+
+      }
+
+
+      // =========================================
+      // AI SYSTEM INSTRUCTION
       // =========================================
 
       const systemInstruction = `
@@ -156,36 +181,36 @@ ${student?.name || "Student"}
 `;
 
 
+      // =========================================
+      // OPENAI REQUEST
+      // =========================================
+
       console.log(
-        "Calling Gemini..."
+        "Calling OpenAI..."
       );
 
 
-      // =========================================
-      // GEMINI REQUEST
-      // =========================================
+      const response =
+        await openai.responses.create({
 
-      const response = await ai.models.generateContent({
+          model:
+            process.env.OPENAI_AI_MODEL ||
+            "gpt-5.6-luna",
 
-       model: "gemini-2.5-flash-lite",
+          instructions:
+            systemInstruction,
 
-        contents: message,
+          input:
+            message.trim(),
 
-        config: {
+          max_output_tokens:
+            2048
 
-          systemInstruction,
-
-          temperature: 0.5,
-
-          maxOutputTokens: 2048
-
-        }
-
-      });
+        });
 
 
       console.log(
-        "Gemini response received"
+        "OpenAI response received"
       );
 
 
@@ -193,13 +218,17 @@ ${student?.name || "Student"}
       // EXTRACT RESPONSE
       // =========================================
 
-      const reply = response.text;
+      const reply =
+        response.output_text;
 
 
-      if (!reply) {
+      if (
+        !reply ||
+        !reply.trim()
+      ) {
 
         throw new Error(
-          "Gemini returned an empty response"
+          "OpenAI returned an empty response"
         );
 
       }
@@ -213,59 +242,55 @@ ${student?.name || "Student"}
 
         success: true,
 
-        reply
+        reply:
+          reply.trim()
 
       });
-
 
     }
 
     catch (error) {
 
-
-      console.log(
-        "========== GEMINI AI ERROR =========="
+      console.error(
+        "========== OPENAI AI ERROR =========="
       );
 
-
-      console.log(
+      console.error(
         "Message:",
         error.message
       );
 
-
-      console.log(
+      console.error(
         "Status:",
         error.status
       );
 
-
-      console.log(
+      console.error(
         "Code:",
         error.code
       );
 
-
-      console.log(
+      console.error(
         "Name:",
         error.name
       );
 
-
-      console.log(
+      console.error(
         "======================================"
       );
 
 
       // =========================================
-      // GEMINI RATE LIMIT / FREE TIER
+      // RATE LIMIT / BILLING / QUOTA
       // =========================================
 
       if (
 
         error.status === 429 ||
 
-        error.code === "RESOURCE_EXHAUSTED"
+        error.code === "insufficient_quota" ||
+
+        error.code === "rate_limit_exceeded"
 
       ) {
 
@@ -276,7 +301,7 @@ ${student?.name || "Student"}
           fallback: true,
 
           message:
-            "PBody AI Mentor is temporarily unavailable because the Gemini API free-tier limit has been reached."
+            "PBody AI is temporarily unavailable because the OpenAI API usage limit or billing limit has been reached."
 
         });
 
@@ -284,14 +309,14 @@ ${student?.name || "Student"}
 
 
       // =========================================
-      // AUTHENTICATION / API KEY ERROR
+      // AUTHENTICATION
       // =========================================
 
       if (
 
         error.status === 401 ||
 
-        error.status === 403
+        error.code === "invalid_api_key"
 
       ) {
 
@@ -300,7 +325,27 @@ ${student?.name || "Student"}
           success: false,
 
           message:
-            "PBody AI Mentor API authentication failed. Please check the Gemini API key."
+            "PBody AI authentication failed. Please check the OpenAI API key."
+
+        });
+
+      }
+
+
+      // =========================================
+      // PERMISSION
+      // =========================================
+
+      if (
+        error.status === 403
+      ) {
+
+        return res.status(500).json({
+
+          success: false,
+
+          message:
+            "PBody AI access was denied by OpenAI. Please check the API project and permissions."
 
         });
 
@@ -317,7 +362,7 @@ ${student?.name || "Student"}
 
         message:
           error.message ||
-          "PBody AI Mentor service failed."
+          "PBody AI service failed."
 
       });
 

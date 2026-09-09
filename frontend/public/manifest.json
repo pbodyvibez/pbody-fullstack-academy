@@ -1,7 +1,10 @@
 {
+  "id": "/",
   "short_name": "PBody Academy",
   "name": "PBody Fullstack Academy",
   "description": "Premium AI-powered software engineering education platform.",
+  "lang": "en",
+  "dir": "ltr",
   "icons": [
     {
       "src": "/icons/pbody-icon-192.png",
@@ -21,5 +24,6 @@
   "display": "standalone",
   "theme_color": "#061b4f",
   "background_color": "#061b4f",
-  "orientation": "portrait"
+  "orientation": "portrait",
+  "prefer_related_applications": false
 }

@@ -1,13 +1,15 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
-import { initializePayment } from "../services/paymentService";
+import {
+  initializePayment
+} from "../services/paymentService";
+
 import { useAuth } from "../context/AuthContext";
 
 import Logo from "../assets/images/logo.png";
 
 import "../styles/pricing.css";
-
 
 export default function Pricing() {
 
@@ -17,90 +19,112 @@ export default function Pricing() {
 
   const [loadingCurrency, setLoadingCurrency] = useState(null);
 
+  const [paymentError, setPaymentError] = useState("");
 
   // ============================================================
-  // PAYMENT
+  // PAYMENT HANDLER
   // ============================================================
 
   const handleUpgrade = async (currency) => {
 
+    if (loadingCurrency) {
+      return;
+    }
+
+    setPaymentError("");
+
     if (!user) {
 
-      alert("Please login before subscribing.");
-
-      navigate("/login");
-
-      return;
-
-    }
-
-
-    if (loadingCurrency) {
+      navigate("/login", {
+        state: {
+          from: "/pricing"
+        }
+      });
 
       return;
-
     }
 
+    if (!user.email) {
+
+      setPaymentError(
+        "Your account does not have a valid email address. Please update your profile before subscribing."
+      );
+
+      return;
+    }
 
     try {
 
       setLoadingCurrency(currency);
 
+      // ========================================================
+      // NIGERIA — PAYSTACK
+      // ========================================================
 
-      const result = await initializePayment({
+      if (currency === "NGN") {
 
-        email: user.email,
+        const result = await initializePayment({
+          email: user.email,
+          currency: "NGN",
+          plan: "annual"
+        });
 
-        currency,
+        const authorizationUrl =
+          result?.data?.authorization_url ||
+          result?.authorization_url ||
+          result?.data?.data?.authorization_url;
 
-        plan: "annual"
+        if (!authorizationUrl) {
 
-      });
+          throw new Error(
+            result?.message ||
+            "Paystack payment could not be started."
+          );
 
+        }
 
-      const authorizationUrl =
-        result?.data?.authorization_url ||
-        result?.authorization_url ||
-        result?.data?.data?.authorization_url;
-
-
-      if (authorizationUrl) {
-
-        window.location.href = authorizationUrl;
+        window.location.assign(authorizationUrl);
 
         return;
-
       }
 
+      // ========================================================
+      // INTERNATIONAL — PADDLE
+      // ========================================================
+
+      if (currency === "USD") {
+
+        const encodedEmail =
+          encodeURIComponent(
+            user.email.trim()
+          );
+
+        navigate(
+          `/paddle-checkout?email=${encodedEmail}`
+        );
+
+        return;
+      }
 
       throw new Error(
-        result?.message ||
-        "Payment could not be started."
+        "Unsupported payment option."
       );
 
-    }
-
-    catch (error) {
+    } catch (error) {
 
       console.error(
-        "PAYMENT INITIALIZATION ERROR:",
+        "PBODY PAYMENT INITIALIZATION ERROR:",
         error
       );
 
-
-      alert(
-
+      const message =
         error?.response?.data?.message ||
-
         error?.message ||
+        "Payment could not be started. Please try again.";
 
-        "Payment initialization failed. Please try again."
+      setPaymentError(message);
 
-      );
-
-    }
-
-    finally {
+    } finally {
 
       setLoadingCurrency(null);
 
@@ -108,18 +132,25 @@ export default function Pricing() {
 
   };
 
+  // ============================================================
+  // LOADING STATE
+  // ============================================================
 
   const isLoading = (currency) => {
-
     return loadingCurrency === currency;
-
   };
 
+  const isAnyPaymentLoading = Boolean(
+    loadingCurrency
+  );
+
+  // ============================================================
+  // RENDER
+  // ============================================================
 
   return (
 
     <main className="pricingPage">
-
 
       {/* ========================================================
           PREMIUM HERO
@@ -127,14 +158,9 @@ export default function Pricing() {
 
       <section className="pricingHero">
 
-        <div
-          className="pricingHeroGlow pricingHeroGlowOne"
-        />
+        <div className="pricingHeroGlow pricingHeroGlowOne" />
 
-        <div
-          className="pricingHeroGlow pricingHeroGlowTwo"
-        />
-
+        <div className="pricingHeroGlow pricingHeroGlowTwo" />
 
         <div className="pricingBrand">
 
@@ -146,7 +172,6 @@ export default function Pricing() {
             />
 
           </div>
-
 
           <div className="pricingBrandText">
 
@@ -162,7 +187,6 @@ export default function Pricing() {
 
         </div>
 
-
         <div className="pricingEyebrow">
 
           <span />
@@ -172,7 +196,6 @@ export default function Pricing() {
           <span />
 
         </div>
-
 
         <h1>
 
@@ -190,7 +213,6 @@ export default function Pricing() {
 
         </h1>
 
-
         <p className="pricingHeroDescription">
 
           Go beyond watching tutorials. Learn modern software
@@ -198,7 +220,6 @@ export default function Pricing() {
           projects, AI mentorship and career-focused learning.
 
         </p>
-
 
         <div className="pricingHeroStats">
 
@@ -214,7 +235,6 @@ export default function Pricing() {
 
           </div>
 
-
           <div>
 
             <strong>
@@ -226,7 +246,6 @@ export default function Pricing() {
             </span>
 
           </div>
-
 
           <div>
 
@@ -242,13 +261,10 @@ export default function Pricing() {
 
         </div>
 
-
       </section>
 
-
-
       {/* ========================================================
-          PRICING PLANS
+          PRICING SECTION
       ======================================================== */}
 
       <section className="pricingSection">
@@ -256,11 +272,8 @@ export default function Pricing() {
         <div className="pricingSectionHeading">
 
           <span className="sectionLabel">
-
             CHOOSE YOUR MEMBERSHIP
-
           </span>
-
 
           <h2>
 
@@ -272,43 +285,72 @@ export default function Pricing() {
 
           </h2>
 
-
           <p>
 
-            Select your region and unlock the PBody FullStack
-            Academy engineering ecosystem.
+            Choose the payment option that matches your region.
+            Both memberships provide access to the PBody FullStack
+            Academy premium learning ecosystem.
 
           </p>
 
         </div>
 
+        {/* ======================================================
+            PAYMENT ERROR
+        ====================================================== */}
 
+        {paymentError && (
+
+          <div
+            className="pricingPaymentError"
+            role="alert"
+          >
+
+            <span>
+              ⚠️
+            </span>
+
+            <div>
+
+              <strong>
+                Payment could not be started
+              </strong>
+
+              <p>
+                {paymentError}
+              </p>
+
+            </div>
+
+            <button
+              type="button"
+              onClick={() => setPaymentError("")}
+              aria-label="Dismiss payment error"
+            >
+              ×
+            </button>
+
+          </div>
+
+        )}
 
         <div className="pricingPlans">
 
-
           {/* ====================================================
-              NIGERIAN PLAN
+              NIGERIA — PAYSTACK
           ==================================================== */}
 
           <article className="pricingCard featuredCard">
 
             <div className="cardTopLine" />
 
-
             <div className="planBadge">
-
               MOST POPULAR
-
             </div>
-
 
             <div className="planIcon">
-
               🚀
-
             </div>
-
 
             <div className="planHeader">
 
@@ -316,21 +358,16 @@ export default function Pricing() {
                 NIGERIA
               </span>
 
-
               <h3>
                 PBody Pro Annual
               </h3>
 
-
               <p>
-
                 Full access to premium engineering education,
                 projects, AI mentorship and career development.
-
               </p>
 
             </div>
-
 
             <div className="price">
 
@@ -344,21 +381,22 @@ export default function Pricing() {
 
               </div>
 
-
               <span>
                 / year
               </span>
 
             </div>
 
+            <p className="pricingBillingNote">
+              Annual membership. Payment is processed securely
+              through Paystack.
+            </p>
 
             <div className="planDivider" />
-
 
             <h4>
               What's included
             </h4>
-
 
             <ul className="pricingFeatures">
 
@@ -399,26 +437,22 @@ export default function Pricing() {
 
             </ul>
 
-
             <button
-
               type="button"
-
               className="pricingButton primaryButton"
-
-              onClick={() =>
-                handleUpgrade("NGN")
-              }
-
-              disabled={Boolean(loadingCurrency)}
-
+              onClick={() => handleUpgrade("NGN")}
+              disabled={isAnyPaymentLoading}
+              aria-busy={isLoading("NGN")}
             >
 
               {isLoading("NGN") ? (
 
                 <>
 
-                  <span className="buttonSpinner" />
+                  <span
+                    className="buttonSpinner"
+                    aria-hidden="true"
+                  />
 
                   Connecting to Paystack...
 
@@ -440,7 +474,6 @@ export default function Pricing() {
 
             </button>
 
-
             <div className="securePayment">
 
               <span>
@@ -453,30 +486,21 @@ export default function Pricing() {
 
           </article>
 
-
-
           {/* ====================================================
-              GLOBAL PLAN
+              GLOBAL — PADDLE
           ==================================================== */}
 
           <article className="pricingCard globalCard">
 
             <div className="cardTopLine" />
 
-
             <div className="planBadge globalBadge">
-
               GLOBAL
-
             </div>
-
 
             <div className="planIcon">
-
               🌍
-
             </div>
-
 
             <div className="planHeader">
 
@@ -484,21 +508,16 @@ export default function Pricing() {
                 INTERNATIONAL
               </span>
 
-
               <h3>
                 PBody Pro Global
               </h3>
 
-
               <p>
-
                 Premium engineering education for developers
                 and aspiring builders worldwide.
-
               </p>
 
             </div>
-
 
             <div className="price">
 
@@ -512,21 +531,22 @@ export default function Pricing() {
 
               </div>
 
-
               <span>
                 / year
               </span>
 
             </div>
 
+            <p className="pricingBillingNote">
+              $19 USD per year. Recurring annual subscription.
+              Payment is processed securely through Paddle.
+            </p>
 
             <div className="planDivider" />
-
 
             <h4>
               What's included
             </h4>
-
 
             <ul className="pricingFeatures">
 
@@ -567,28 +587,24 @@ export default function Pricing() {
 
             </ul>
 
-
             <button
-
               type="button"
-
               className="pricingButton secondaryButton"
-
-              onClick={() =>
-                handleUpgrade("USD")
-              }
-
-              disabled={Boolean(loadingCurrency)}
-
+              onClick={() => handleUpgrade("USD")}
+              disabled={isAnyPaymentLoading}
+              aria-busy={isLoading("USD")}
             >
 
               {isLoading("USD") ? (
 
                 <>
 
-                  <span className="buttonSpinner" />
+                  <span
+                    className="buttonSpinner"
+                    aria-hidden="true"
+                  />
 
-                  Connecting to Paystack...
+                  Opening Paddle Checkout...
 
                 </>
 
@@ -608,25 +624,53 @@ export default function Pricing() {
 
             </button>
 
-
             <div className="securePayment">
 
               <span>
                 🔒
               </span>
 
-              Secure international payment
+              Secure international payment powered by Paddle
 
             </div>
 
           </article>
 
+        </div>
+
+        {/* ======================================================
+            PURCHASE TERMS
+        ====================================================== */}
+
+        <div className="pricingTermsNotice">
+
+          <p>
+            By purchasing a membership, you acknowledge that you have
+            reviewed the applicable{" "}
+            <Link to="/terms">
+              Terms & Conditions
+            </Link>
+            ,{" "}
+            <Link to="/refund">
+              Refund Policy
+            </Link>
+            , and{" "}
+            <Link to="/privacy">
+              Privacy Policy
+            </Link>
+            .
+          </p>
+
+          <p>
+            Digital academy access may begin after successful payment
+            and account activation. Subscription cancellation and
+            refund requests are handled according to the applicable
+            subscription terms and Refund Policy.
+          </p>
 
         </div>
 
       </section>
-
-
 
       {/* ========================================================
           VALUE / ECOSYSTEM
@@ -637,11 +681,8 @@ export default function Pricing() {
         <div className="pricingSectionHeading">
 
           <span className="sectionLabel">
-
             THE PBODY DIFFERENCE
-
           </span>
-
 
           <h2>
 
@@ -653,7 +694,6 @@ export default function Pricing() {
 
           </h2>
 
-
           <p>
 
             Your membership is designed around the things that
@@ -663,9 +703,7 @@ export default function Pricing() {
 
         </div>
 
-
         <div className="guaranteeGrid">
-
 
           <div className="guaranteeItem">
 
@@ -686,8 +724,6 @@ export default function Pricing() {
 
           </div>
 
-
-
           <div className="guaranteeItem">
 
             <div className="guaranteeIcon">
@@ -706,8 +742,6 @@ export default function Pricing() {
             </p>
 
           </div>
-
-
 
           <div className="guaranteeItem">
 
@@ -728,8 +762,6 @@ export default function Pricing() {
 
           </div>
 
-
-
           <div className="guaranteeItem">
 
             <div className="guaranteeIcon">
@@ -749,12 +781,9 @@ export default function Pricing() {
 
           </div>
 
-
         </div>
 
       </section>
-
-
 
       {/* ========================================================
           FINAL CTA
@@ -768,7 +797,6 @@ export default function Pricing() {
             YOUR NEXT LEVEL STARTS HERE
           </span>
 
-
           <h2>
 
             Stop Preparing.
@@ -779,7 +807,6 @@ export default function Pricing() {
 
           </h2>
 
-
           <p>
 
             Join PBody FullStack Academy and turn your
@@ -789,25 +816,18 @@ export default function Pricing() {
 
         </div>
 
-
         <button
-
           type="button"
-
-          onClick={() =>
+          onClick={() => {
 
             document
               .querySelector(".pricingPlans")
               ?.scrollIntoView({
-
                 behavior: "smooth",
-
                 block: "center"
+              });
 
-              })
-
-          }
-
+          }}
         >
 
           Choose Your Plan
@@ -820,9 +840,7 @@ export default function Pricing() {
 
       </section>
 
-
     </main>
 
   );
-
 }

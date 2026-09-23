@@ -1,9 +1,3 @@
-// ======================================================
-// PBODY FULLSTACK ACADEMY
-// PREMIUM FOOTER
-// FULL REPLACEMENT
-// ======================================================
-
 import React from "react";
 
 import {
@@ -17,7 +11,8 @@ import "./Footer.css";
 
 
 // ======================================================
-// COMPONENT
+// PBODY FULLSTACK ACADEMY
+// PREMIUM FOOTER
 // ======================================================
 
 export default function Footer() {
@@ -113,12 +108,13 @@ export default function Footer() {
 
           <p className="footer-description">
 
-            PBody FullStack Academy is an AI-powered
-            engineering academy helping aspiring developers
-            become world-class software engineers through
-            structured learning, real-world projects,
-            AI mentorship, quizzes, certifications and
-            career preparation.
+            PBody FullStack Academy is a digital,
+            AI-powered engineering education platform
+            helping aspiring and developing engineers
+            build practical software engineering skills
+            through structured courses, real-world
+            projects, AI-assisted learning, assessments,
+            certificates and career-focused resources.
 
           </p>
 
@@ -157,7 +153,7 @@ export default function Footer() {
 
 
             <a
-              href="https://www.instagram.com/kennethsampsonprecious"
+              href="https://www.instagram.com/kennethsampsonprecious/"
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -213,7 +209,7 @@ export default function Footer() {
                   quickNavigate(event, "/contact")
                 }
               >
-                Contact
+                Contact & Support
               </Link>
             </li>
 
@@ -225,7 +221,7 @@ export default function Footer() {
                   quickNavigate(event, "/pricing")
                 }
               >
-                Pricing
+                Pricing & Membership
               </Link>
             </li>
 
@@ -250,6 +246,18 @@ export default function Footer() {
                 }
               >
                 Terms & Conditions
+              </Link>
+            </li>
+
+
+            <li>
+              <Link
+                to="/refund"
+                onClick={(event) =>
+                  quickNavigate(event, "/refund")
+                }
+              >
+                Refund Policy
               </Link>
             </li>
 
@@ -327,33 +335,50 @@ export default function Footer() {
 
 
         {/* ==================================================
-            CONTACT
+            CONTACT & BUYER SUPPORT
         ================================================== */}
 
         <div className="footer-contact">
 
           <h3>
-            Contact Us
+            Contact & Support
           </h3>
 
 
           <p>
-            📧 pbodyacademy@gmail.com
+            <a href="mailto:pbodyacademy@gmail.com">
+              📧 pbodyacademy@gmail.com
+            </a>
           </p>
 
 
           <p>
-            📞 +234 904 396 3968
+            <a href="tel:+2349043963968">
+              📞 +234 904 396 3968
+            </a>
           </p>
 
 
           <p>
-            💬 +234 813 255 3031
+            <a
+              href="https://wa.me/2348132553031"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              💬 WhatsApp Support
+            </a>
           </p>
 
 
           <p>
             🌍 Lagos, Nigeria
+          </p>
+
+
+          <p className="footerSupportText">
+            Support is available for account questions,
+            membership, payments, subscriptions and
+            refund enquiries.
           </p>
 
 
@@ -374,6 +399,70 @@ export default function Footer() {
           >
             ↑ Return To Top
           </button>
+
+        </div>
+
+      </div>
+
+
+      {/* ==================================================
+          LEGAL / CUSTOMER INFORMATION
+      ================================================== */}
+
+      <div className="footer-legal">
+
+        <p>
+          By using PBody FullStack Academy and purchasing
+          membership services, users agree to the applicable
+          platform terms, subscription terms and refund policy.
+        </p>
+
+        <div className="footer-legal-links">
+
+          <Link
+            to="/terms"
+            onClick={(event) =>
+              quickNavigate(event, "/terms")
+            }
+          >
+            Terms & Conditions
+          </Link>
+
+          <Link
+            to="/refund"
+            onClick={(event) =>
+              quickNavigate(event, "/refund")
+            }
+          >
+            Refund Policy
+          </Link>
+
+          <Link
+            to="/privacy"
+            onClick={(event) =>
+              quickNavigate(event, "/privacy")
+            }
+          >
+            Privacy Policy
+          </Link>
+
+          <Link
+            to="/pricing"
+            onClick={(event) =>
+              quickNavigate(event, "/pricing")
+            }
+          >
+            Pricing
+          </Link>
+
+          <Link
+            to="/contact"
+            onClick={(event) =>
+              quickNavigate(event, "/contact")
+            }
+          >
+            Support
+          </Link>
 
         </div>
 

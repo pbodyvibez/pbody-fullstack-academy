@@ -48,6 +48,8 @@ import Contact from "./pages/Contact";
 import Pricing from "./pages/Pricing";
 import Privacy from "./pages/Privacy";
 import Terms from "./pages/Terms";
+import RefundPolicy from "./pages/RefundPolicy";
+import PaddleCheckout from "./pages/PaddleCheckout";
 
 import Login from "./pages/Login";
 import Register from "./pages/Register";
@@ -176,6 +178,11 @@ export default function App() {
           />
 
           <Route
+            path="/refund"
+            element={<RefundPolicy />}
+          />
+
+          <Route
             path="/login"
             element={<Login />}
           />
@@ -196,6 +203,26 @@ export default function App() {
           />
 
         </Route>
+
+
+        {/* ==================================================
+            PADDLE DEFAULT PAYMENT LINK
+
+            This route is intentionally public and separate
+            from the protected student application.
+
+            Paddle can use:
+
+            /paddle-checkout
+
+            as the website's default payment link.
+        ================================================== */}
+
+        <Route
+          path="/paddle-checkout"
+          element={<PaddleCheckout />}
+        />
+
 
         {/* ==================================================
             PROTECTED CLASSROOM
@@ -225,6 +252,7 @@ export default function App() {
           }
         />
 
+
         {/* ==================================================
             PROTECTED STUDENT APPLICATION
 
@@ -249,6 +277,7 @@ export default function App() {
             element={<Dashboard />}
           />
 
+
           {/* ==================================================
               LEARNING
           ================================================== */}
@@ -262,6 +291,7 @@ export default function App() {
             path="/courses"
             element={<Courses />}
           />
+
 
           {/* ==================================================
               ASSESSMENTS
@@ -277,6 +307,7 @@ export default function App() {
             element={<Assignment />}
           />
 
+
           {/* ==================================================
               PROJECTS
           ================================================== */}
@@ -291,6 +322,7 @@ export default function App() {
             element={<ProjectPage />}
           />
 
+
           {/* ==================================================
               COMMUNITY
           ================================================== */}
@@ -304,6 +336,7 @@ export default function App() {
             path="/community/discussions"
             element={<EngineeringDiscussions />}
           />
+
 
           {/* ==================================================
               STUDENT
@@ -334,6 +367,7 @@ export default function App() {
             element={<Notifications />}
           />
 
+
           {/* ==================================================
               CAREER CENTER
           ================================================== */}
@@ -353,6 +387,7 @@ export default function App() {
             element={<Internship />}
           />
 
+
           {/* ==================================================
               PORTFOLIO
           ================================================== */}
@@ -366,6 +401,7 @@ export default function App() {
             path="/portfolio-builder/preview"
             element={<PortfolioPreview />}
           />
+
 
           {/* ==================================================
               RESUME
@@ -381,6 +417,7 @@ export default function App() {
             element={<ResumePreview />}
           />
 
+
           {/* ==================================================
               ROADMAPS
           ================================================== */}
@@ -389,6 +426,7 @@ export default function App() {
             path="/roadmaps"
             element={<Roadmaps />}
           />
+
 
           {/* ==================================================
               AI
@@ -404,6 +442,7 @@ export default function App() {
             element={<AITutor />}
           />
 
+
           {/* ==================================================
               ADMIN
           ================================================== */}
@@ -412,6 +451,7 @@ export default function App() {
             path="/admin"
             element={<AdminDashboard />}
           />
+
 
           {/* ==================================================
               404
